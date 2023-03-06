@@ -1,42 +1,42 @@
 <script setup>
-	import AppFooter from '@/components/AppFooter.vue'
-	import { usePlansStore } from '@/stores/plans'
-	import { useTimeStore } from '@/stores/time'
+	import AppFooter from '@/components/AppFooter.vue';
+	import { usePlansStore } from '@/stores/plans';
+	import { useTimeStore } from '@/stores/time';
 	const plansStore = usePlansStore();
 	const timeStore = useTimeStore();
-	plansStore.getTimeTable()
-	timeStore.getTime()
+	plansStore.getTimeTable();
+	timeStore.getTime();
 	function test(e) {
-		const ob = e.target.control
-		ob.checked = !ob.checked
-		e.target.parentElement.scrollTo(0, 0)
+		const ob = e.target.control;
+		ob.checked = !ob.checked;
+		e.target.parentElement.scrollTo(0, 0);
 	}
 </script>
 
 <template>
 	<section id="sidebar">
 		<header class="logo">
-			<img src="src/assets/logo-zsm.png">
+			<img src="src/assets/logo-zsm.png" />
 		</header>
 		<nav class="list">
-			<input id="o" type="radio" name="label" value="Klasy">
+			<input id="o" type="radio" name="label" value="Klasy" />
 			<label @click.prevent="test($event)" for="o">Klasy<v-icon class="arrow" icon="mdi-vuetify" /></label>
 			<ul data-list="o">
 				<li v-for="o in plansStore.lists.classes">{{ o.name }}</li>
 			</ul>
-			<input id="n" type="radio" name="label" value="Nauczyciele">
+			<input id="n" type="radio" name="label" value="Nauczyciele" />
 			<label @click.prevent="test($event)" for="n">Nauczyciele<v-icon class="arrow" icon="mdi-vuetify" /></label>
 			<ul data-list="n">
 				<li v-for="n in plansStore.lists.teachers">{{ n.name }}</li>
 			</ul>
-			<input id="s" type="radio" name="label" value="Sale">
+			<input id="s" type="radio" name="label" value="Sale" />
 			<label @click.prevent="test($event)" for="s">Sale<v-icon class="arrow" icon="mdi-vuetify" /></label>
 			<ul data-list="s">
 				<li v-for="s in plansStore.lists.rooms">{{ s.name }}</li>
 			</ul>
 		</nav>
 		<AppFooter />
-  </section>
+	</section>
 </template>
 
 <style lang="scss">
@@ -53,7 +53,7 @@
 			img {
 				display: block;
 				margin: auto;
-				padding: 25px
+				padding: 25px;
 			}
 		}
 		.list {
@@ -62,8 +62,8 @@
 			&::-webkit-scrollbar {
 				display: none;
 			}
-			input[type="radio"] {
-				display: none
+			input[type='radio'] {
+				display: none;
 			}
 			label {
 				display: flex;
@@ -75,7 +75,7 @@
 				width: calc(100% - 20px);
 				i.arrow {
 					margin-left: auto;
-					transition: .25s ease-in-out;
+					transition: 0.25s ease-in-out;
 				}
 			}
 			ul {
@@ -86,7 +86,7 @@
 				background-color: blue;
 				border-radius: 10px;
 				li {
-					padding: 5px
+					padding: 5px;
 				}
 			}
 			input:checked + label + ul {

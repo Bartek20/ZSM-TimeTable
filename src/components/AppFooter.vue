@@ -1,19 +1,17 @@
 <script setup>
 	function getFooter() {
-		const date = new Date().getFullYear()
-		var result = '2023'
+		const date = new Date().getFullYear();
+		var result = '2023';
 		if (date != '2023') {
-			result = result + ' - ' + date
+			result = result + ' - ' + date;
 		}
-		return result
+		return result;
 	}
 </script>
 <template>
 	<v-footer class="">
-    <div class="px-4 py-2 bg-teal text-center w-100">
-      &copy; {{ getFooter() }}<br /><strong>Bartłomiej Radoń</strong>
-    </div>
-  </v-footer>
+		<div class="px-4 py-2 bg-teal text-center w-100">&copy; {{ getFooter() }}<br /><strong>Bartłomiej Radoń</strong></div>
+	</v-footer>
 </template>
 
 <style>

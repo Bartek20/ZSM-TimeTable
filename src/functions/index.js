@@ -21,9 +21,7 @@ export default class Table {
 		rows.forEach((row) => {
 			const number = parseInt(this.$(row).find('.nr').text().trim(), 10);
 			const timesText = this.$(row).find('.g').text();
-			const [timeFrom, timeTo] = timesText
-				.split('-')
-				.map((e) => e.trim());
+			const [timeFrom, timeTo] = timesText.split('-').map((e) => e.trim());
 			hours[number] = {
 				number,
 				timeFrom,
@@ -33,23 +31,20 @@ export default class Table {
 		return hours;
 	}
 	/*
-	* Return table in original form (without transposing) for easier displaying.
-	*/
+	 * Return table in original form (without transposing) for easier displaying.
+	 */
 	getRawDays() {
 		const rows = this.$('.tabela tr:not(:first-of-type)').toArray();
 		const days = [];
 		rows.forEach((row, index) => {
 			const lessons = this.$(row).find('.l').toArray();
 			lessons.forEach((lesson) => {
-				if (!days[index])
-					days.push([]);
+				if (!days[index]) days.push([]);
 				if (this.$(lesson).text().trim() === '') {
 					days[index].push([]);
-				}
-				else if (this.$(lesson).children().length === 0) {
-					days[index].push([{subject:this.$(lesson).text().trim()}]);
-				}
-				else {
+				} else if (this.$(lesson).children().length === 0) {
+					days[index].push([{ subject: this.$(lesson).text().trim() }]);
+				} else {
 					const groups = this.parseLessons(this.$(lesson).contents().toArray());
 					days[index].push(groups);
 				}
@@ -59,24 +54,16 @@ export default class Table {
 	}
 	getDays() {
 		const rows = this.$('.tabela tr:not(:first-of-type)').toArray();
-		const days = [
-			[],
-			[],
-			[],
-			[],
-			[],
-		];
+		const days = [[], [], [], [], []];
 		rows.forEach((row) => {
 			const lessons = this.$(row).find('.l').toArray();
 			lessons.forEach((lesson, index) => {
-				console.log('Edit works')
+				console.log('Edit works');
 				if (this.$(lesson).text().trim() === '') {
 					days[index].push([]);
-				}
-				else if (this.$(lesson).children().length === 0) {
+				} else if (this.$(lesson).children().length === 0) {
 					days[index].push(this.$(lesson).text().trim());
-				}
-				else {
+				} else {
 					const groups = this.parseLessons(this.$(lesson).contents().toArray());
 					days[index].push(groups);
 				}
@@ -89,33 +76,34 @@ export default class Table {
 	 */
 	getGeneratedDate() {
 		const regex = /wygenerowano (\d{1,4})[./-](\d{1,2})[./-](\d{1,4})/;
-		return this.$('td')
-			.toArray()
-			.map((e) => {
-				const match = regex.exec(this.$(e).text());
-				if (match === null)
-					return null;
-				const parts = [match[1], match[2], match[3]];
-				if (parts[0].length !== 4)
-					parts.reverse();
-				return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
-			})
-			.filter((e) => e != null)[0] || null;
+		return (
+			this.$('td')
+				.toArray()
+				.map((e) => {
+					const match = regex.exec(this.$(e).text());
+					if (match === null) return null;
+					const parts = [match[1], match[2], match[3]];
+					if (parts[0].length !== 4) parts.reverse();
+					return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+				})
+				.filter((e) => e != null)[0] || null
+		);
 	}
 	/*
 		Usually includes the dates when the table is valid.
 	 */
 	getVersionInfo() {
 		const regex = /^Obowiązuje od: (.+)$/;
-		return this.$('td')
-			.toArray()
-			.map((e) => {
-				const match = regex.exec(this.$(e).text().trim());
-				if (match === null)
-					return '';
-				return match[1].trim();
-			})
-			.filter((e) => e !== '')[0] || '';
+		return (
+			this.$('td')
+				.toArray()
+				.map((e) => {
+					const match = regex.exec(this.$(e).text().trim());
+					if (match === null) return '';
+					return match[1].trim();
+				})
+				.filter((e) => e !== '')[0] || ''
+		);
 	}
 	parseLessons(data) {
 		const lines = [[]];
@@ -131,24 +119,21 @@ export default class Table {
 			const groups = [{}];
 			line.forEach((el) => {
 				if (el[0].type === 'text') {
-					el.text().split(',').forEach((part, index) => {
-						if (index > 0)
-							groups.push({});
-						if (part.trim() === '')
-							return;
-						const groupNameMatch = part.trim().match(/-(\d+\/\d+)/);
-						if (groupNameMatch !== null)
-							groups[groups.length - 1].groupName = groupNameMatch[1];
-					});
+					el.text()
+						.split(',')
+						.forEach((part, index) => {
+							if (index > 0) groups.push({});
+							if (part.trim() === '') return;
+							const groupNameMatch = part.trim().match(/-(\d+\/\d+)/);
+							if (groupNameMatch !== null) groups[groups.length - 1].groupName = groupNameMatch[1];
+						});
 					return;
 				}
 				const group = groups[groups.length - 1];
 				const withElement = (className, callback) => {
-					if (el.hasClass(className))
-						return callback(el);
+					if (el.hasClass(className)) return callback(el);
 					const children = el.find(`.${className}`);
-					if (children.length > 0)
-						callback(children);
+					if (children.length > 0) callback(children);
 				};
 				const getId = (el, letter) => {
 					var _a;
@@ -156,14 +141,14 @@ export default class Table {
 					return (_a = new RegExp(`^${letter}(.+)\\.html$`).exec(href)) === null || _a === void 0 ? void 0 : _a[1];
 				};
 				withElement('p', (child) => {
-					const match = child.text().trim().match(/^(.*?)(?:-(\d+\/\d+))?$/);
-					if (!match)
-						return;
-					if (match[2])
-						group.groupName = match[2];
+					const match = child
+						.text()
+						.trim()
+						.match(/^(.*?)(?:-(\d+\/\d+))?$/);
+					if (!match) return;
+					if (match[2]) group.groupName = match[2];
 					if (match[1]) {
-						if (common.subject)
-							common.subject += ' ';
+						if (common.subject) common.subject += ' ';
 						common.subject += match[1].trim();
 					}
 				});
@@ -180,8 +165,7 @@ export default class Table {
 					common.roomId = getId(child, 's');
 				});
 			});
-			if (common.subject.trim() === '')
-				return [];
+			if (common.subject.trim() === '') return [];
 			return groups.map((group) => ({
 				...common,
 				...group,
