@@ -1,11 +1,11 @@
 <script setup>
-	import { RouterLink, RouterView } from 'vue-router';
+	import { RouterView } from 'vue-router';
 </script>
 
 <template>
-	<v-app>
+	<Suspense>
 		<RouterView />
-	</v-app>
+	</Suspense>
 </template>
 
 <style>
@@ -19,8 +19,10 @@
 	body {
 		min-width: 100vw;
 		min-height: 100vh;
+		background-color: #efedfe !important;
 	}
-	.v-application__wrap {
-		background-color: red;
+	#app {
+		display: flex;
+		flex-direction: row;
 	}
 </style>

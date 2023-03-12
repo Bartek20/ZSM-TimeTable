@@ -1,0 +1,128 @@
+<script setup>
+	import { computed } from 'vue';
+	import SidebarHeader from '@/components/SidebarHeader.vue';
+	import SidebarFooter from '@/components/SidebarFooter.vue';
+	import { usePlansStore } from '@/stores/plans';
+
+	const plansStore = usePlansStore();
+	const list = computed(() => plansStore.lists);
+
+	function selectSubmenu(e) {
+		var ob = e.target;
+		if (ob.localName == 'i') ob = ob.parentElement;
+		ob = ob.control;
+		ob.checked = !ob.checked;
+		ob.parentElement.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+	function selectTimeTable(mode, el) {
+		plansStore.selected = mode + el;
+		document.cookie = `selectedTimeTable=${mode + el}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+	}
+</script>
+
+<template>
+	<section id="sidebar">
+		<SidebarHeader logo="src/assets/logo-zsm.png" />
+		<nav class="list">
+			<input id="o" type="radio" name="label" value="Klasy" />
+			<label @click.prevent="selectSubmenu($event)" for="o"
+				><i class="icon zsm-user-graduate-icon"></i>Klasy<i class="arrow zsm-chevron-down-icon"></i
+			></label>
+			<ul data-list="o">
+				<li @click="selectTimeTable('o', o.value)" v-for="o in list.classes">{{ o.name }}</li>
+			</ul>
+			<input id="n" type="radio" name="label" value="Nauczyciele" />
+			<label @click.prevent="selectSubmenu($event)" for="n"
+				><i class="icon zsm-chalkboard-user-icon"></i>Nauczyciele<i class="arrow zsm-chevron-down-icon"></i
+			></label>
+			<ul data-list="n">
+				<li @click="selectTimeTable('n', n.value)" v-for="n in list.teachers">{{ n.name }}</li>
+			</ul>
+			<input id="s" type="radio" name="label" value="Sale" />
+			<label @click.prevent="selectSubmenu($event)" for="s"
+				><i class="icon zsm-door-closed-icon"></i>Sale<i class="arrow zsm-chevron-down-icon"></i
+			></label>
+			<ul data-list="s">
+				<li @click="selectTimeTable('s', s.value)" v-for="s in list.rooms">{{ s.name }}</li>
+			</ul>
+		</nav>
+		<SidebarFooter />
+	</section>
+</template>
+
+<style lang="scss">
+	#sidebar {
+		background-color: #fffffe;
+		max-width: 250px;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		color: white;
+		.list {
+			flex-grow: 1;
+			overflow: auto;
+			padding: 10px;
+			padding-top: 0;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			input[type='radio'] {
+				display: none;
+			}
+			label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: #7101ff;
+				padding: 10px;
+				border-radius: 10px;
+				margin-inline: 0;
+				margin-bottom: 10px;
+				font-weight: 700;
+				font-size: 17px;
+				i {
+					font-size: 20px;
+				}
+				i.icon {
+					padding-inline: 7px;
+					width: 40px;
+					text-align: center;
+				}
+				i.arrow {
+					margin-left: auto;
+					transition: 0.25s ease-in-out;
+				}
+			}
+			ul {
+				max-height: 0;
+				transition: 0.75s ease-in-out max-height, 0.75s ease-in padding;
+				overflow: hidden;
+				background-color: #7101ff;
+				border-radius: 10px;
+				padding-inline: 10px;
+				margin-block: 0;
+				&::-webkit-scrollbar {
+					display: none;
+				}
+				li {
+					padding: 5px;
+				}
+				&:last-of-type {
+					margin-bottom: 0 !important;
+				}
+			}
+			input:checked + label {
+				+ ul {
+					transition: 0.75s ease-in-out max-height, 0ms ease padding;
+					margin-bottom: 10px;
+					padding: 10px;
+					max-height: 1000vh;
+					overflow: auto;
+				}
+				i.arrow {
+					transform: rotate(180deg);
+				}
+			}
+		}
+	}
+</style>
