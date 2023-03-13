@@ -64,7 +64,7 @@
 			<div class="col-10 font-weight-bold">{{ data[i - 1].subject }}</div>
 			<div class="col-2 font-weight-bold">{{ data[i - 1].groupName }}</div>
 		</div>
-		<div v-else>
+		<div class="row" v-else>
 			<div class="col-12 font-weight-bold">{{ data[i - 1].subject }}</div>
 		</div>
 		<div class="row">

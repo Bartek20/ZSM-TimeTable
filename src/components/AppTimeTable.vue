@@ -91,11 +91,41 @@
 					<tr v-for="(row, i) in plan.days">
 						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
 						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[0]" :current="false" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[1]" :current="false" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[2]" :current="false" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[3]" :current="false" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[4]" :current="false" /></td>
+						<td>
+							<TimeTableCell
+								@changePlan="plansStore.setTimeTable"
+								:mode="mode"
+								:data="row[0]"
+								:current="currentLesson == plan.hours[i].number && currentDay == 0" />
+						</td>
+						<td>
+							<TimeTableCell
+								@changePlan="plansStore.setTimeTable"
+								:mode="mode"
+								:data="row[1]"
+								:current="currentLesson == plan.hours[i].number && currentDay == 1" />
+						</td>
+						<td>
+							<TimeTableCell
+								@changePlan="plansStore.setTimeTable"
+								:mode="mode"
+								:data="row[2]"
+								:current="currentLesson == plan.hours[i].number && currentDay == 2" />
+						</td>
+						<td>
+							<TimeTableCell
+								@changePlan="plansStore.setTimeTable"
+								:mode="mode"
+								:data="row[3]"
+								:current="currentLesson == plan.hours[i].number && currentDay == 3" />
+						</td>
+						<td>
+							<TimeTableCell
+								@changePlan="plansStore.setTimeTable"
+								:mode="mode"
+								:data="row[4]"
+								:current="currentLesson == plan.hours[i].number && currentDay == 4" />
+						</td>
 					</tr>
 				</tbody>
 			</table>
