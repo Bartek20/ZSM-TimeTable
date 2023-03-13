@@ -46,21 +46,44 @@
 <template>
 	<section id="timetable">
 		<div class="title">{{ plan.title }}</div>
-		<div class="table">
+		<!-- <div class="table">
 			<div class="day" v-for="day in plan.days">
 				<div class="cell" v-for="lesson in day">
 					<TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="lesson" />
 				</div>
 			</div>
+		</div> -->
+		<div class="table-responsive">
+			<table class="table table-hover table-responsive">
+				<thead>
+					<tr>
+						<th scope="col" class="text-center">#</th>
+						<th scope="col" class="text-center">Czas</th>
+						<th scope="col" class="text-center">Poniedziałek</th>
+						<th scope="col" class="text-center">Wtorek</th>
+						<th scope="col" class="text-center">Środa</th>
+						<th scope="col" class="text-center">Czwartek</th>
+						<th scope="col" class="text-center">Piątek</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(row, i) in plan.days">
+						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
+						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[0]" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[1]" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[2]" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[3]" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[4]" /></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</section>
 </template>
 
 <style lang="scss">
 	#timetable {
-		.table {
-			display: flex;
-			flex-direction: row;
-		}
+		width: 100%;
 	}
 </style>

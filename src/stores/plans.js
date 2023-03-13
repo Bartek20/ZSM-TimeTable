@@ -94,7 +94,7 @@ export const usePlansStore = defineStore('plans', {
 			const result = {
 				title: TimeTable.getTitle(),
 				hours: TimeTable.getHours(),
-				days: TimeTable.getDays(),
+				days: TimeTable.getRawDays(),
 				gen_date: TimeTable.getGeneratedDate(),
 				apply_date: TimeTable.getVersionInfo(),
 			};
