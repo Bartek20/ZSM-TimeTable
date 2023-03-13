@@ -2,7 +2,10 @@
 	import TimeTableCell from '@/components/TimeTableCell.vue';
 	import { computed } from 'vue';
 	import { usePlansStore } from '@/stores/plans';
+	import { useTimeStore } from '@/stores/time';
 	const plansStore = usePlansStore();
+	const timeStore = useTimeStore();
+	timeStore.getTime();
 	const props = defineProps({
 		print: {
 			type: Boolean,
@@ -31,6 +34,24 @@
 	const mode = computed(() => {
 		const e = props.print ? props.id : plansStore.selected;
 		return e.charAt(0);
+	});
+	const currentLesson = computed(() => {
+		var response = undefined;
+		Object.keys(plan.value.hours).forEach((lesson) => {
+			const obj = plan.value.hours[lesson];
+			if (timeStore.checkBetween(obj.timeFrom, obj.timeTo)) response = obj.number;
+		});
+		return response;
+	});
+	const currentDay = computed(() => {
+		const days = {
+			poniedziałek: 0,
+			wtorek: 1,
+			środa: 2,
+			czwartek: 3,
+			piątek: 4,
+		};
+		return days[timeStore.DAY];
 	});
 	if (props.print) {
 		const timer = window.setInterval(print, 1000);
@@ -70,11 +91,11 @@
 					<tr v-for="(row, i) in plan.days">
 						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
 						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[0]" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[1]" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[2]" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[3]" /></td>
-						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[4]" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[0]" :current="false" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[1]" :current="false" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[2]" :current="false" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[3]" :current="false" /></td>
+						<td><TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="row[4]" :current="false" /></td>
 					</tr>
 				</tbody>
 			</table>

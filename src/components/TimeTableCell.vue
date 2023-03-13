@@ -10,6 +10,10 @@
 			type: Array,
 			required: true,
 		},
+		current: {
+			type: Boolean,
+			required: true,
+		},
 	});
 	const emits = defineEmits(['changePlan']);
 	const groups = computed(() => props.data.length);
