@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia';
 
+const days = {
+	poniedziałek: 0,
+	wtorek: 1,
+	środa: 2,
+	czwartek: 3,
+	piątek: 4,
+};
+
 export const useTimeStore = defineStore('time', {
 	state: () => {
 		return {
@@ -24,8 +32,8 @@ export const useTimeStore = defineStore('time', {
 		},
 		getTime() {
 			const date = new Date();
-			this.DAY = date.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw', weekday: 'long' });
-			this.TIME = date.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' }).replace(/\d{2}\.\d{2}\.\d{4}, /, '');
+			this.DAY = days[date.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw', weekday: 'long' })];
+			this.TIME = date.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' }).replace(/\d{2}\.\d{2}\.\d{4}, /, '').replace(/:\d{2}$/, '');
 		},
 	},
 });

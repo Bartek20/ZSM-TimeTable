@@ -39,7 +39,9 @@ export const usePlansStore = defineStore('plans', {
 	},
 	actions: {
 		createURL(url) {
-			return window.location.host == 'zsm.resman.pl' ? url : PROXY + encodeURIComponent(url);
+			return window.location.host == 'zsm.resman.pl'
+				? url
+				: PROXY + encodeURIComponent(url);
 		},
 		async setCache(url) {
 			const store = await window.caches.open('timetables');
@@ -70,7 +72,8 @@ export const usePlansStore = defineStore('plans', {
 			const res = await this.getCache(URL);
 			const TimeTable_List = new TimetableList(res);
 			const result_list = TimeTable_List.getList();
-			const result_logo = 'https://zsm.resman.pl/plan_nauczyciele/' + TimeTable_List.getLogoSrc();
+			const result_logo =
+				'https://zsm.resman.pl/plan_nauczyciele/' + TimeTable_List.getLogoSrc();
 			this.lists = result_list;
 			this.logo_path = result_logo;
 			await this.putData(this.dbs.lists, 'data', 'list', result_list);
@@ -78,13 +81,13 @@ export const usePlansStore = defineStore('plans', {
 		},
 		async getPlan(mode, id) {
 			if (this.plans[mode][id] != undefined) return;
+			this.plans[mode][id] = {};
 			const db = await this.getData(this.dbs.plans, mode, id);
 			if (db != undefined) {
 				this.plans[mode][id] = db;
 				this.loaded += 1;
 				return;
 			}
-			this.plans[mode][id] = {};
 			const URL = `https://zsm.resman.pl/plan_nauczyciele/plany/${mode}${id}.html`;
 			if ((await this.getCache(URL)) == undefined) {
 				await this.setCache(URL);
@@ -116,8 +119,12 @@ export const usePlansStore = defineStore('plans', {
 		async getTimeTable() {
 			await this.getList();
 			this.loaded = 0;
-			this.amount = this.lists.classes.length + this.lists.teachers.length + this.lists.rooms.length;
+			this.amount =
+				this.lists.classes.length +
+				this.lists.teachers.length +
+				this.lists.rooms.length;
 			await this.getPlans();
+			if (this.loaded + 1 == this.amount) this.loaded += 1
 		},
 		async updateTimeTable() {
 			await window.caches.delete('timetables');
@@ -135,7 +142,9 @@ export const usePlansStore = defineStore('plans', {
 		},
 		setTimeTable(mode, id) {
 			this.selected = mode + id;
-			document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+			document.cookie = `selectedTimeTable=${
+				mode + id
+			}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		},
 	},
 });

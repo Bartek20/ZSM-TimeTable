@@ -10,10 +10,6 @@
 			type: Array,
 			required: true,
 		},
-		current: {
-			type: Boolean,
-			required: true,
-		},
 	});
 	const emits = defineEmits(['changePlan']);
 	const groups = computed(() => props.data.length);
@@ -61,8 +57,8 @@
 	<div v-if="groups === 0"></div>
 	<div v-else v-for="i in groups">
 		<div class="row" v-if="data[i - 1].groupName">
-			<div class="col-10 font-weight-bold">{{ data[i - 1].subject }}</div>
-			<div class="col-2 font-weight-bold">{{ data[i - 1].groupName }}</div>
+			<div class="col-9 font-weight-bold text-start">{{ data[i - 1].subject }}</div>
+			<div class="col-3 font-weight-bold text-end">{{ data[i - 1].groupName }}</div>
 		</div>
 		<div class="row" v-else>
 			<div class="col-12 font-weight-bold">{{ data[i - 1].subject }}</div>

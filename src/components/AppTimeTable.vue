@@ -1,6 +1,6 @@
 <script setup>
 	import TimeTableCell from '@/components/TimeTableCell.vue';
-	import { computed } from 'vue';
+	import { computed, onBeforeUnmount, onMounted } from 'vue';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
 	const plansStore = usePlansStore();
@@ -36,6 +36,7 @@
 		return e.charAt(0);
 	});
 	const currentLesson = computed(() => {
+		const current = timeStore.TIME
 		var response = undefined;
 		Object.keys(plan.value.hours).forEach((lesson) => {
 			const obj = plan.value.hours[lesson];
@@ -43,16 +44,7 @@
 		});
 		return response;
 	});
-	const currentDay = computed(() => {
-		const days = {
-			poniedziałek: 0,
-			wtorek: 1,
-			środa: 2,
-			czwartek: 3,
-			piątek: 4,
-		};
-		return days[timeStore.DAY];
-	});
+	const currentDay = computed(() => timeStore.DAY);
 	if (props.print) {
 		const timer = window.setInterval(print, 1000);
 		function print() {
@@ -61,19 +53,18 @@
 				window.print();
 			}
 		}
-	}
+	}var timer = undefined
+	onMounted(() => {
+		timer = window.setInterval(timeStore.getTime, 1000)
+	})
+	onBeforeUnmount(() => {
+		window.clearInterval(timer)
+	})
 </script>
 
 <template>
 	<section id="timetable">
 		<div class="title">{{ plan.title }}</div>
-		<!-- <div class="table">
-			<div class="day" v-for="day in plan.days">
-				<div class="cell" v-for="lesson in day">
-					<TimeTableCell @changePlan="plansStore.setTimeTable" :mode="mode" :data="lesson" />
-				</div>
-			</div>
-		</div> -->
 		<div class="table-responsive">
 			<table class="table table-hover table-responsive">
 				<thead>
@@ -91,40 +82,35 @@
 					<tr v-for="(row, i) in plan.days">
 						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
 						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
-						<td>
+						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 0 && row[0].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
-								:data="row[0]"
-								:current="currentLesson == plan.hours[i].number && currentDay == 0" />
+								:data="row[0]" />
 						</td>
-						<td>
+						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 1 && row[1].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
-								:data="row[1]"
-								:current="currentLesson == plan.hours[i].number && currentDay == 1" />
+								:data="row[1]" />
 						</td>
-						<td>
+						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 2 && row[2].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
-								:data="row[2]"
-								:current="currentLesson == plan.hours[i].number && currentDay == 2" />
+								:data="row[2]" />
 						</td>
-						<td>
+						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 3 && row[3].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
-								:data="row[3]"
-								:current="currentLesson == plan.hours[i].number && currentDay == 3" />
+								:data="row[3]" />
 						</td>
-						<td>
+						<td :class="{ 'isActive': currentLesson == plan.hours[i].number && currentDay == 4 && row[4].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
-								:data="row[4]"
-								:current="currentLesson == plan.hours[i].number && currentDay == 4" />
+								:data="row[4]" />
 						</td>
 					</tr>
 				</tbody>
