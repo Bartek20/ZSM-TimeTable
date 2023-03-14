@@ -63,7 +63,7 @@
 </script>
 
 <template>
-	<section id="timetable">
+	<section id="timetable" :class="{ 'sidebar-open': !print }">
 		<div class="title">{{ plan.title }}</div>
 		<div class="table-responsive">
 			<table class="table table-hover table-responsive">
@@ -82,31 +82,31 @@
 					<tr v-for="(row, i) in plan.days">
 						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
 						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
-						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 0 && row[0].length != 0 }">
+						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 0 && row[0].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
 								:data="row[0]" />
 						</td>
-						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 1 && row[1].length != 0 }">
+						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 1 && row[1].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
 								:data="row[1]" />
 						</td>
-						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 2 && row[2].length != 0 }">
+						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 2 && row[2].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
 								:data="row[2]" />
 						</td>
-						<td :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 3 && row[3].length != 0 }">
+						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 3 && row[3].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
 								:data="row[3]" />
 						</td>
-						<td :class="{ 'isActive': currentLesson == plan.hours[i].number && currentDay == 4 && row[4].length != 0 }">
+						<td class="align-middle" :class="{ 'isActive': currentLesson == plan.hours[i].number && currentDay == 4 && row[4].length != 0 }">
 							<TimeTableCell
 								@changePlan="plansStore.setTimeTable"
 								:mode="mode"
@@ -122,5 +122,13 @@
 <style lang="scss">
 	#timetable {
 		width: 100%;
+		&.sidebar-open {
+			padding-left: 240px;
+		}
+		table {
+			tr > td {
+				min-width: 180px;
+			}
+		}
 	}
 </style>

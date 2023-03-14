@@ -26,6 +26,9 @@
 		background-color: #fffffe;
 		min-width: 240px;
 		max-width: 240px;
+		position: fixed;
+		top: 0;
+		left: 0;
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
