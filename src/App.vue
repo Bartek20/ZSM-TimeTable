@@ -21,7 +21,7 @@
 		height: 100vh;
 		max-width: 100%;
 		max-height: 100%;
-		background-color: #efedfe !important;
+		background-color: #cfe2ff !important;
 	}
 	#app {
 		display: flex;

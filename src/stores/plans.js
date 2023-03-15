@@ -21,27 +21,11 @@ export const usePlansStore = defineStore('plans', {
 				s: {},
 			},
 			selected: '',
-			dbs: {
-				lists: openDB('lists', 1, {
-					upgrade(db) {
-						db.createObjectStore('data');
-					},
-				}),
-				plans: openDB('plans', 1, {
-					upgrade(db) {
-						db.createObjectStore('o');
-						db.createObjectStore('n');
-						db.createObjectStore('s');
-					},
-				}),
-			},
 		};
 	},
 	actions: {
 		createURL(url) {
-			return window.location.host == 'zsm.resman.pl'
-				? url
-				: PROXY + encodeURIComponent(url);
+			return window.location.host == 'zsm.resman.pl' ? url : PROXY + encodeURIComponent(url);
 		},
 		async setCache(url) {
 			const store = await window.caches.open('timetables');
@@ -53,41 +37,19 @@ export const usePlansStore = defineStore('plans', {
 			if (res != undefined) return await res.text();
 			return undefined;
 		},
-		async putData(db, store, key, value) {
-			(await db).put(store, value, key);
-		},
-		async getData(db, store, key) {
-			return (await db).get(store, key);
-		},
 		async getList() {
-			const db_list = await this.getData(this.dbs.lists, 'data', 'list');
-			const db_logo = await this.getData(this.dbs.lists, 'data', 'logo');
-			if (db_list != undefined && db_logo != undefined) {
-				this.lists = db_list;
-				this.logo_path = db_logo;
-				return;
-			}
 			const URL = 'https://zsm.resman.pl/plan_nauczyciele/lista.html';
 			if ((await this.getCache(URL)) == undefined) await this.setCache(URL);
 			const res = await this.getCache(URL);
 			const TimeTable_List = new TimetableList(res);
 			const result_list = TimeTable_List.getList();
-			const result_logo =
-				'https://zsm.resman.pl/plan_nauczyciele/' + TimeTable_List.getLogoSrc();
+			const result_logo = 'https://zsm.resman.pl/plan_nauczyciele/' + TimeTable_List.getLogoSrc();
 			this.lists = result_list;
 			this.logo_path = result_logo;
-			await this.putData(this.dbs.lists, 'data', 'list', result_list);
-			await this.putData(this.dbs.lists, 'data', 'logo', result_logo);
 		},
 		async getPlan(mode, id) {
 			if (this.plans[mode][id] != undefined) return;
 			this.plans[mode][id] = {};
-			const db = await this.getData(this.dbs.plans, mode, id);
-			if (db != undefined) {
-				this.plans[mode][id] = db;
-				this.loaded += 1;
-				return;
-			}
 			const URL = `https://zsm.resman.pl/plan_nauczyciele/plany/${mode}${id}.html`;
 			if ((await this.getCache(URL)) == undefined) {
 				await this.setCache(URL);
@@ -102,7 +64,6 @@ export const usePlansStore = defineStore('plans', {
 				apply_date: TimeTable.getVersionInfo(),
 			};
 			this.plans[mode][id] = result;
-			await this.putData(this.dbs.plans, mode, id, result);
 			this.loaded += 1;
 		},
 		async getPlans() {
@@ -119,12 +80,9 @@ export const usePlansStore = defineStore('plans', {
 		async getTimeTable() {
 			await this.getList();
 			this.loaded = 0;
-			this.amount =
-				this.lists.classes.length +
-				this.lists.teachers.length +
-				this.lists.rooms.length;
+			this.amount = this.lists.classes.length + this.lists.teachers.length + this.lists.rooms.length;
 			await this.getPlans();
-			if (this.loaded + 1 == this.amount) this.loaded += 1
+			if (this.loaded + 1 == this.amount) this.loaded += 1;
 		},
 		async updateTimeTable() {
 			await window.caches.delete('timetables');
@@ -141,12 +99,12 @@ export const usePlansStore = defineStore('plans', {
 			await this.getTimeTable();
 		},
 		setTimeTable(mode, id) {
+			if (id == undefined || this.selected == mode + id) return;
 			this.selected = mode + id;
-			document.cookie = `selectedTimeTable=${
-				mode + id
-			}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+			document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		},
 	},
+	persist: true,
 });
 
 /*

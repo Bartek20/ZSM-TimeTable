@@ -1,5 +1,6 @@
 <script setup>
-	import TimeTableCell from '@/components/TimeTableCell.vue';
+	import TimeTableRow from '@/components/TimeTableRow.vue';
+	import TimeTableTitle from '@/components/TimeTableTitle.vue';
 	import { computed, onBeforeUnmount, onMounted } from 'vue';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
@@ -36,8 +37,8 @@
 		return e.charAt(0);
 	});
 	const currentLesson = computed(() => {
-		const current = timeStore.TIME
-		var response = undefined;
+		const current = timeStore.TIME;
+		var response = 999;
 		Object.keys(plan.value.hours).forEach((lesson) => {
 			const obj = plan.value.hours[lesson];
 			if (timeStore.checkBetween(obj.timeFrom, obj.timeTo)) response = obj.number;
@@ -53,20 +54,35 @@
 				window.print();
 			}
 		}
-	}var timer = undefined
+	}
+	var timer = undefined;
 	onMounted(() => {
-		timer = window.setInterval(timeStore.getTime, 1000)
-	})
+		timer = window.setInterval(timeStore.getTime, 1000);
+	});
 	onBeforeUnmount(() => {
-		window.clearInterval(timer)
-	})
+		window.clearInterval(timer);
+	});
+	function calcBreak(start, end) {
+		if (start == undefined || end == undefined) return 0;
+		const start_el = start.timeTo.split(':');
+		const start_time = new Date();
+		start_time.setHours(start_el[0], start_el[1], 0, 0);
+		const end_el = end.timeFrom.split(':');
+		const end_time = new Date();
+		end_time.setHours(end_el[0], end_el[1], 0, 0);
+		return (end_time - start_time) / 1000 / 60;
+	}
+	function checkBreak(start, end) {
+		if (start == undefined || end == undefined) return false;
+		return timeStore.checkBetween(start.timeTo, end.timeFrom);
+	}
 </script>
 
 <template>
 	<section id="timetable" :class="{ 'sidebar-open': !print }">
-		<div class="title">{{ plan.title }}</div>
+		<TimeTableTitle :title="plan.title" :id="print ? id : plansStore.selected" />
 		<div class="table-responsive">
-			<table class="table table-hover table-responsive">
+			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">
 				<thead>
 					<tr>
 						<th scope="col" class="text-center">#</th>
@@ -79,40 +95,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(row, i) in plan.days">
-						<th scope="row" class="text-center align-middle">{{ plan.hours[i].number }}</th>
-						<td class="text-center text-nowrap align-middle">{{ plan.hours[i].timeFrom + ' - ' + plan.hours[i].timeTo }}</td>
-						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 0 && row[0].length != 0 }">
-							<TimeTableCell
-								@changePlan="plansStore.setTimeTable"
-								:mode="mode"
-								:data="row[0]" />
-						</td>
-						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 1 && row[1].length != 0 }">
-							<TimeTableCell
-								@changePlan="plansStore.setTimeTable"
-								:mode="mode"
-								:data="row[1]" />
-						</td>
-						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 2 && row[2].length != 0 }">
-							<TimeTableCell
-								@changePlan="plansStore.setTimeTable"
-								:mode="mode"
-								:data="row[2]" />
-						</td>
-						<td class="align-middle" :class="{ 'bg-info': currentLesson == plan.hours[i].number && currentDay == 3 && row[3].length != 0 }">
-							<TimeTableCell
-								@changePlan="plansStore.setTimeTable"
-								:mode="mode"
-								:data="row[3]" />
-						</td>
-						<td class="align-middle" :class="{ 'isActive': currentLesson == plan.hours[i].number && currentDay == 4 && row[4].length != 0 }">
-							<TimeTableCell
-								@changePlan="plansStore.setTimeTable"
-								:mode="mode"
-								:data="row[4]" />
-						</td>
-					</tr>
+					<TimeTableRow
+						@changePlan="plansStore.setTimeTable"
+						v-for="(row, i) in plan.days"
+						:mode="mode"
+						:hours="plan.hours[i]"
+						:lessons="row"
+						:currentDay="currentDay"
+						:currentLesson="currentLesson"
+						:breakTime="calcBreak(plan.hours[i], plan.hours[i + 1])"
+						:currentBreak="checkBreak(plan.hours[i], plan.hours[i + 1])" />
 				</tbody>
 			</table>
 		</div>
@@ -126,8 +118,16 @@
 			padding-left: 240px;
 		}
 		table {
-			tr > td {
-				min-width: 180px;
+			tr {
+				> th {
+					min-width: auto;
+				}
+				> td {
+					min-width: 180px;
+					&.time {
+						min-width: auto;
+					}
+				}
 			}
 		}
 	}
