@@ -2,8 +2,10 @@
 	import TimeTableRow from '@/components/TimeTableRow.vue';
 	import TimeTableTitle from '@/components/TimeTableTitle.vue';
 	import { computed, onBeforeUnmount, onMounted } from 'vue';
+	import { useRouter } from 'vue-router';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
+	const router = useRouter();
 	const plansStore = usePlansStore();
 	const timeStore = useTimeStore();
 	timeStore.getTime();
@@ -15,12 +17,21 @@
 		},
 		id: {
 			type: String,
-			required: false,
+			required: true,
 		},
 	});
-	var ready = false;
+	if (props.print) {
+		var ready = false;
+		const timer = window.setInterval(print, 1000);
+		function print() {
+			if (ready) {
+				window.clearInterval(timer);
+				window.print();
+			}
+		}
+	}
 	const plan = computed(() => {
-		const e = props.print ? props.id : plansStore.selected;
+		const e = props.id;
 		const mode = e.charAt(0);
 		const id = e.replace(mode, '');
 		var res = plansStore.plans[mode][id];
@@ -33,7 +44,7 @@
 		return res == undefined ? {} : res;
 	});
 	const mode = computed(() => {
-		const e = props.print ? props.id : plansStore.selected;
+		const e = props.id;
 		return e.charAt(0);
 	});
 	const currentLesson = computed(() => {
@@ -46,15 +57,6 @@
 		return response;
 	});
 	const currentDay = computed(() => timeStore.DAY);
-	if (props.print) {
-		const timer = window.setInterval(print, 1000);
-		function print() {
-			if (ready) {
-				window.clearInterval(timer);
-				window.print();
-			}
-		}
-	}
 	var timer = undefined;
 	onMounted(() => {
 		timer = window.setInterval(timeStore.getTime, 1000);
@@ -76,11 +78,16 @@
 		if (start == undefined || end == undefined) return false;
 		return timeStore.checkBetween(start.timeTo, end.timeFrom);
 	}
+	function setPlan(mode, id) {
+		if (id == undefined) return;
+		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+		router.push({ name: 'plan', params: { mode: mode, id: id } });
+	}
 </script>
 
 <template>
 	<section id="timetable" :class="{ 'sidebar-open': !print }">
-		<TimeTableTitle :title="plan.title" :id="print ? id : plansStore.selected" />
+		<TimeTableTitle :title="plan.title" :id="id" />
 		<div class="table-responsive">
 			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">
 				<thead>
@@ -96,7 +103,7 @@
 				</thead>
 				<tbody>
 					<TimeTableRow
-						@changePlan="plansStore.setTimeTable"
+						@changePlan="setPlan"
 						v-for="(row, i) in plan.days"
 						:mode="mode"
 						:hours="plan.hours[i]"
@@ -118,6 +125,11 @@
 			padding-left: 240px;
 		}
 		table {
+			position: relative;
+			thead {
+				position: sticky;
+				top: 0;
+			}
 			tr {
 				> th {
 					min-width: auto;

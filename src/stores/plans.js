@@ -20,7 +20,6 @@ export const usePlansStore = defineStore('plans', {
 				n: {},
 				s: {},
 			},
-			selected: '',
 		};
 	},
 	actions: {
@@ -82,7 +81,6 @@ export const usePlansStore = defineStore('plans', {
 			this.loaded = 0;
 			this.amount = this.lists.classes.length + this.lists.teachers.length + this.lists.rooms.length;
 			await this.getPlans();
-			if (this.loaded + 1 == this.amount) this.loaded += 1;
 		},
 		async updateTimeTable() {
 			await window.caches.delete('timetables');
@@ -97,11 +95,6 @@ export const usePlansStore = defineStore('plans', {
 			this.classes.n = {};
 			this.classes.s = {};
 			await this.getTimeTable();
-		},
-		setTimeTable(mode, id) {
-			if (id == undefined || this.selected == mode + id) return;
-			this.selected = mode + id;
-			document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		},
 	},
 	persist: true,

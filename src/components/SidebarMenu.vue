@@ -1,5 +1,7 @@
 <script setup>
 	import { usePlansStore } from '@/stores/plans';
+	import { useRouter } from 'vue-router';
+	const router = useRouter();
 
 	const plansStore = usePlansStore();
 	const props = defineProps({
@@ -27,15 +29,18 @@
 		ob.checked = !ob.checked;
 		ob.parentElement.scrollTo({ top: 0, behavior: 'smooth' });
 	}
+	function setPlan(mode, id) {
+		if (id == undefined) return;
+		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+		router.push({ name: 'plan', params: { mode: mode, id: id } });
+	}
 </script>
 
 <template>
 	<input :id="id" type="radio" name="label" :value="name" />
-	<label @click.prevent="selectSubmenu($event)" :for="id"
-		><i class="icon" :class="symbol"></i>{{ name }}<i class="arrow zsm-chevron-down-icon"></i
-	></label>
+	<label @click.prevent="selectSubmenu($event)" :for="id"><i class="icon" :class="symbol"></i>{{ name }}<i class="arrow zsm-chevron-down-icon"></i></label>
 	<ul data-list="o">
-		<li @click="plansStore.setTimeTable(id, el.value)" v-for="el in list">{{ el.name }}</li>
+		<li @click="setPlan(id, el.value)" v-for="el in list">{{ el.name }}</li>
 	</ul>
 </template>
 
@@ -55,9 +60,9 @@
 			border-radius: 10px;
 			margin-inline: 0;
 			margin-bottom: 10px;
-      font-family: "Roboto","Arial",sans-serif;
+			font-family: 'Roboto', 'Arial', sans-serif;
 			font-weight: 400;
-      line-height: 24px;
+			line-height: 24px;
 			font-size: 16px;
 			i {
 				font-size: 20px;
