@@ -22,7 +22,7 @@ const router = createRouter({
 			component: PlanView,
 		},
 		{
-			path: '/print/:mode/:id',
+			path: '/print/:mode([ons])/:id(\\d+)',
 			name: 'print',
 			component: PrintView,
 		},

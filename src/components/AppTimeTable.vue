@@ -50,6 +50,7 @@
 	const currentLesson = computed(() => {
 		const current = timeStore.TIME;
 		var response = 999;
+		if (props.print) return response;
 		Object.keys(plan.value.hours).forEach((lesson) => {
 			const obj = plan.value.hours[lesson];
 			if (timeStore.checkBetween(obj.timeFrom, obj.timeTo)) response = obj.number;
@@ -75,11 +76,11 @@
 		return (end_time - start_time) / 1000 / 60;
 	}
 	function checkBreak(start, end) {
-		if (start == undefined || end == undefined) return false;
+		if (props.print || start == undefined || end == undefined) return false;
 		return timeStore.checkBetween(start.timeTo, end.timeFrom);
 	}
 	function setPlan(mode, id) {
-		if (id == undefined) return;
+		if (props.print || id == undefined) return;
 		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		router.push({ name: 'plan', params: { mode: mode, id: id } });
 	}

@@ -8,10 +8,11 @@
 	const route = useRoute();
 	var mode = route.params.mode;
 	var id = route.params.id;
-	plansStore.getPlan(mode, id);
-	watch(route, (old_el, new_el) => {
-		mode = new_el.params.mode
-		id = new_el.params.id
+	await plansStore.getPlan(mode, id);
+	await plansStore.getList();
+	watch(route, (_, data) => {
+		mode = data.params.mode;
+		id = data.params.id;
 	});
 </script>
 
