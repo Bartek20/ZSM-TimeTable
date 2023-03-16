@@ -11,7 +11,7 @@
 
 <template>
 	<section id="sidebar">
-		<SidebarHeader logo="/src/assets/logo-zsm.png" />
+		<SidebarHeader logo="/logo-zsm.png" />
 		<nav class="list">
 			<SidebarMenu id="o" symbol="zsm-user-graduate-icon" name="Klasy" :list="list.classes" />
 			<SidebarMenu id="n" symbol="zsm-chalkboard-user-icon" name="Nauczyciele" :list="list.teachers" />
