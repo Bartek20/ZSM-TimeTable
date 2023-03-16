@@ -54,6 +54,10 @@ export const usePlansStore = defineStore('plans', {
 				await this.setCache(URL);
 			}
 			const res = await this.getCache(URL);
+			if (res == undefined) {
+				this.plans[mode][id] = undefined;
+				return;
+			}
 			const TimeTable = new Table(res);
 			const result = {
 				title: TimeTable.getTitle(),
