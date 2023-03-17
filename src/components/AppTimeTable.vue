@@ -88,6 +88,7 @@
 
 <template>
 	<section id="timetable" :class="{ 'sidebar-open': !print }">
+		<label class="sidebar-toggle" for="sidebar-btn"><i class="menu zsm-menu-icon"></i></label>
 		<TimeTableTitle :title="plan.title" :id="id" />
 		<div class="table-responsive">
 			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">
@@ -122,6 +123,16 @@
 <style lang="scss">
 	#timetable {
 		width: 100%;
+		position: relative;
+		.sidebar-toggle {
+			display: none;
+			position: absolute;
+			top: 8px;
+			left: 8px;
+			i {
+				font-size: 32px;
+			}
+		}
 		&.sidebar-open {
 			padding-left: 240px;
 		}
@@ -141,6 +152,14 @@
 						min-width: auto;
 					}
 				}
+			}
+		}
+	}
+	@media (max-width: 991.98px) {
+		#timetable {
+			padding-left: 0 !important;
+			.sidebar-toggle {
+				display: block;
 			}
 		}
 	}

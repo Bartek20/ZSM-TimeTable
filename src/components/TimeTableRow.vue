@@ -55,6 +55,6 @@
 
 <style lang="scss">
 	td.bg-info {
-		box-shadow: none;
+		box-shadow: none !important;
 	}
 </style>

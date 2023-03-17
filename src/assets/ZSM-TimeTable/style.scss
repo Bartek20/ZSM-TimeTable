@@ -2,8 +2,7 @@
 
 @font-face {
 	font-family: '#{$icomoon-font-family}';
-	src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2') format('woff2'),
-		url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff') format('woff'),
+	src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2') format('woff2'), url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff') format('woff'),
 		url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
@@ -24,38 +23,48 @@ i {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.zsm-chevron-down-icon {
-	&:before {
-		content: $zsm-chevron-down-icon;
-	}
+.zsm-menu-icon {
+  &:before {
+    content: $zsm-menu-icon; 
+  }
 }
-.zsm-user-graduate-icon {
-	&:before {
-		content: $zsm-user-graduate-icon;
-	}
+.zsm-close-icon {
+  &:before {
+    content: $zsm-close-icon; 
+  }
 }
-.zsm-chalkboard-user-icon {
-	&:before {
-		content: $zsm-chalkboard-user-icon;
-	}
+.zsm-chevron-icon {
+  &:before {
+    content: $zsm-chevron-icon; 
+  }
 }
-.zsm-door-closed-icon {
-	&:before {
-		content: $zsm-door-closed-icon;
-	}
+.zsm-student-icon {
+  &:before {
+    content: $zsm-student-icon; 
+  }
+}
+.zsm-teacher-icon {
+  &:before {
+    content: $zsm-teacher-icon; 
+  }
+}
+.zsm-room-icon {
+  &:before {
+    content: $zsm-room-icon; 
+  }
 }
 .zsm-print-icon {
-	&:before {
-		content: $zsm-print-icon;
-	}
+  &:before {
+    content: $zsm-print-icon; 
+  }
 }
 .zsm-clock-icon {
-	&:before {
-		content: $zsm-clock-icon;
-	}
+  &:before {
+    content: $zsm-clock-icon; 
+  }
 }
 .zsm-copyright-icon {
-	&:before {
-		content: $zsm-copyright-icon;
-	}
+  &:before {
+    content: $zsm-copyright-icon; 
+  }
 }
