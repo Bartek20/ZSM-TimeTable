@@ -38,14 +38,14 @@
 
 <template>
 	<input :id="id" type="radio" name="label" :value="name" />
-	<label @click.prevent="selectSubmenu($event)" :for="id"><i class="icon" :class="symbol"></i>{{ name }}<i class="arrow zsm-chevron-down-icon"></i></label>
+	<label @click.prevent="selectSubmenu($event)" :for="id"><i class="icon" :class="symbol"></i>{{ name }}<i class="arrow zsm-chevron-icon"></i></label>
 	<ul data-list="o">
 		<li @click="setPlan(id, el.value)" v-for="el in list">{{ el.name }}</li>
 	</ul>
 </template>
 
 <style lang="scss">
-	#sidebar {
+	#sidebar nav {
 		input[type='radio'] {
 			display: none;
 		}
