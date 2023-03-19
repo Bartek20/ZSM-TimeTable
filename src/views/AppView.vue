@@ -5,11 +5,11 @@
 	import getCookie from '@/functions/getCookie';
 	const plansStore = usePlansStore();
 	plansStore.selected = getCookie('selectedTimeTable');
-	if (plansStore.selected == undefined) plansStore.setTimeTable('o', '1')
+	if (plansStore.selected == undefined) plansStore.setTimeTable('o', '1');
 	const mode = plansStore.selected.charAt(0);
 	const id = plansStore.selected.replace(mode, '');
-	plansStore.getPlan(mode, id);
 	await plansStore.getTimeTable();
+	await plansStore.loadPlan(mode, id);
 </script>
 
 <template>

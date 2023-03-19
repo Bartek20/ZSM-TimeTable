@@ -24,47 +24,52 @@ i {
 }
 
 .zsm-menu-icon {
-  &:before {
-    content: $zsm-menu-icon; 
-  }
+	&:before {
+		content: $zsm-menu-icon;
+	}
 }
 .zsm-close-icon {
-  &:before {
-    content: $zsm-close-icon; 
-  }
+	&:before {
+		content: $zsm-close-icon;
+	}
+}
+.zsm-download-icon {
+	&:before {
+		content: $zsm-download-icon;
+	}
 }
 .zsm-chevron-icon {
-  &:before {
-    content: $zsm-chevron-icon; 
-  }
+	&:before {
+		content: $zsm-chevron-icon;
+	}
 }
 .zsm-student-icon {
-  &:before {
-    content: $zsm-student-icon; 
-  }
+	&:before {
+		content: $zsm-student-icon;
+	}
 }
 .zsm-teacher-icon {
-  &:before {
-    content: $zsm-teacher-icon; 
-  }
+	&:before {
+		content: $zsm-teacher-icon;
+	}
 }
 .zsm-room-icon {
-  &:before {
-    content: $zsm-room-icon; 
-  }
+	&:before {
+		content: $zsm-room-icon;
+	}
 }
 .zsm-print-icon {
-  &:before {
-    content: $zsm-print-icon; 
-  }
+	&:before {
+		content: $zsm-print-icon;
+	}
 }
 .zsm-clock-icon {
-  &:before {
-    content: $zsm-clock-icon; 
-  }
+	&:before {
+		content: $zsm-clock-icon;
+	}
 }
 .zsm-copyright-icon {
-  &:before {
-    content: $zsm-copyright-icon; 
-  }
+	&:before {
+		content: $zsm-copyright-icon;
+	}
 }

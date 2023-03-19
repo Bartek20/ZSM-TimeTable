@@ -33,6 +33,7 @@ export const useTimeStore = defineStore('time', {
 		getTime() {
 			const date = new Date();
 			this.DAY = days[date.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw', weekday: 'long' })];
+			if (this.DAY == undefined) this.DAY = 9;
 			this.TIME = date
 				.toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' })
 				.replace(/\d{2}\.\d{2}\.\d{4}, /, '')

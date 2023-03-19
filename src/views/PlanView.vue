@@ -8,8 +8,8 @@
 	const route = useRoute();
 	var mode = route.params.mode;
 	var id = route.params.id;
-	await plansStore.getPlan(mode, id);
-	await plansStore.getList();
+	await plansStore.loadList();
+	await plansStore.loadPlan(mode, id);
 	watch(route, (_, data) => {
 		mode = data.params.mode;
 		id = data.params.id;
