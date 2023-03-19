@@ -36,7 +36,7 @@
 		const id = e.replace(mode, '');
 		var res = plansStore.plans[mode][id];
 		if (res == undefined) {
-			plansStore.getPlan(mode, id).then(() => {
+			plansStore.loadPlan(mode, id).then(() => {
 				res = plansStore.plans[mode][id];
 			});
 		}

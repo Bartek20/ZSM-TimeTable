@@ -3,6 +3,7 @@ import { openDB } from 'idb';
 import { TimetableList, Table } from '@wulkanowy/timetable-parser';
 
 const PROXY = 'https://corsproxy.io/?';
+const WEBPAGE = 'https://zsm.resman.pl/plan_nauczyciele/';
 
 export const usePlansStore = defineStore('plans', {
 	state: () => {
@@ -13,8 +14,6 @@ export const usePlansStore = defineStore('plans', {
 				rooms: [],
 			},
 			logo_path: '',
-			amount: 0,
-			loaded: 0,
 			plans: {
 				o: {},
 				n: {},
@@ -26,34 +25,36 @@ export const usePlansStore = defineStore('plans', {
 		createURL(url) {
 			return window.location.host == 'zsm.resman.pl' ? url : PROXY + encodeURIComponent(url);
 		},
-		async setCache(url) {
+		async cacheURL(url) {
+			const URL = this.createURL(url);
 			const store = await window.caches.open('timetables');
-			await store.add(this.createURL(url));
-		},
-		async getCache(url) {
-			const store = await window.caches.open('timetables');
-			const res = await store.match(this.createURL(url));
+			var res = await store.match(URL);
+			if (res == undefined) {
+				try {
+					await store.add(URL);
+				} catch (error) {
+					return undefined;
+				}
+			}
+			var res = await store.match(URL);
 			if (res != undefined) return await res.text();
 			return undefined;
 		},
-		async getList() {
-			const URL = 'https://zsm.resman.pl/plan_nauczyciele/lista.html';
-			if ((await this.getCache(URL)) == undefined) await this.setCache(URL);
-			const res = await this.getCache(URL);
+		async loadList() {
+			const URL = WEBPAGE + 'lista.html';
+			const res = await this.cacheURL(URL);
+			if (res == undefined) return;
 			const TimeTable_List = new TimetableList(res);
 			const result_list = TimeTable_List.getList();
-			const result_logo = 'https://zsm.resman.pl/plan_nauczyciele/' + TimeTable_List.getLogoSrc();
+			const result_logo = WEBPAGE + TimeTable_List.getLogoSrc();
 			this.lists = result_list;
 			this.logo_path = result_logo;
 		},
-		async getPlan(mode, id) {
+		async loadPlan(mode, id) {
 			if (this.plans[mode][id] != undefined) return;
 			this.plans[mode][id] = {};
-			const URL = `https://zsm.resman.pl/plan_nauczyciele/plany/${mode}${id}.html`;
-			if ((await this.getCache(URL)) == undefined) {
-				await this.setCache(URL);
-			}
-			const res = await this.getCache(URL);
+			const URL = WEBPAGE + `plany/${mode}${id}.html`;
+			const res = await this.cacheURL(URL);
 			if (res == undefined) {
 				this.plans[mode][id] = undefined;
 				return;
@@ -67,23 +68,20 @@ export const usePlansStore = defineStore('plans', {
 				apply_date: TimeTable.getVersionInfo(),
 			};
 			this.plans[mode][id] = result;
-			this.loaded += 1;
 		},
 		async getPlans() {
-			this.lists.classes.forEach((class_obj) => {
-				this.getPlan('o', class_obj.value);
+			this.lists.classes.forEach((obj) => {
+				this.cacheURL(WEBPAGE + 'plany/o' + obj.value + '.html');
 			});
-			this.lists.teachers.forEach((teacher_obj) => {
-				this.getPlan('n', teacher_obj.value);
+			this.lists.teachers.forEach((obj) => {
+				this.cacheURL(WEBPAGE + 'plany/n' + obj.value + '.html');
 			});
-			this.lists.rooms.forEach((room_obj) => {
-				this.getPlan('s', room_obj.value);
+			this.lists.rooms.forEach((obj) => {
+				this.cacheURL(WEBPAGE + 'plany/s' + obj.value + '.html');
 			});
 		},
 		async getTimeTable() {
-			await this.getList();
-			this.loaded = 0;
-			this.amount = this.lists.classes.length + this.lists.teachers.length + this.lists.rooms.length;
+			await this.loadList();
 			await this.getPlans();
 		},
 		async updateTimeTable() {

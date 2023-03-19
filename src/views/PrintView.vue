@@ -6,9 +6,9 @@
 	const route = useRoute();
 	const mode = route.params.mode;
 	const id = route.params.id;
-	plansStore.getPlan(mode, id);
+	await plansStore.loadPlan(mode, id);
 </script>
 
 <template>
-	<AppTimeTable :print="true" :id="mode+id" />
+	<AppTimeTable :print="true" :id="mode + id" />
 </template>
