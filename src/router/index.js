@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PlanView from '@/views/PlanView.vue';
-import PrintView from '@/views/PrintView.vue';
 import getCookie from '@/functions/getCookie';
 
 var cookie = getCookie('selectedTimeTable');
@@ -19,12 +17,12 @@ const router = createRouter({
 		{
 			path: '/plan/:mode([ons])/:id(\\d+)',
 			name: 'plan',
-			component: PlanView,
+			component: () => import('@/views/PlanView.vue'),
 		},
 		{
 			path: '/print/:mode([ons])/:id(\\d+)',
 			name: 'print',
-			component: PrintView,
+			component: () => import('@/views/PrintView.vue'),
 		},
 		{
 			path: '/:catchAll(.*)',
