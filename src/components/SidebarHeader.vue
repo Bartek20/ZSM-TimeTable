@@ -9,7 +9,7 @@
 
 <template>
 	<header>
-		<img :src="logo" />
+		<img :src="logo" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
 	</header>
 </template>
 
