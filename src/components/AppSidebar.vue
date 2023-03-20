@@ -13,7 +13,7 @@
 	<input id="sidebar-btn" type="checkbox" />
 	<section id="sidebar">
 		<label class="sidebar-toggle" for="sidebar-btn"><i class="menu zsm-close-icon"></i></label>
-		<SidebarHeader logo="/logo-zsm.png" />
+		<SidebarHeader logo="/assets/images/logo.png" />
 		<nav class="list">
 			<SidebarMenu id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
 			<SidebarMenu id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />

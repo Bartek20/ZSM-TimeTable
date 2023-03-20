@@ -12,7 +12,7 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			workbox: {
-				globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2}'],
 			},
 			manifest: {
 				id: 'https://zsm-timetable.pages.dev/',
@@ -25,22 +25,22 @@ export default defineConfig({
 				orientation: 'portrait',
 				icons: [
 					{
-						src: 'android-chrome-192x192.png',
+						src: '/assets/images/android-chrome-192x192.png',
 						sizes: '192x192',
 						type: 'image/png',
 					},
 					{
-						src: 'android-chrome-256x256.png',
+						src: '/assets/images/android-chrome-256x256.png',
 						sizes: '256x256',
 						type: 'image/png',
 					},
 					{
-						src: 'android-chrome-512x512.png',
+						src: '/assets/images/android-chrome-512x512.png',
 						sizes: '512x512',
 						type: 'image/png',
 					},
 					{
-						src: 'safari-pinned-tab.svg',
+						src: '/assets/images/safari-pinned-tab.svg',
 						type: 'image/svg',
 						purpose: 'maskable',
 					},
