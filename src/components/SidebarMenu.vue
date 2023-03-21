@@ -1,9 +1,7 @@
 <script setup>
-	import { usePlansStore } from '@/stores/plans';
 	import { useRouter } from 'vue-router';
 	const router = useRouter();
 
-	const plansStore = usePlansStore();
 	const props = defineProps({
 		id: {
 			type: String,
@@ -22,13 +20,6 @@
 			required: true,
 		},
 	});
-	function selectSubmenu(e) {
-		var ob = e.target;
-		if (ob.localName == 'i') ob = ob.parentElement;
-		ob = ob.control;
-		ob.checked = !ob.checked;
-		ob.parentElement.scrollTo({ top: 0, behavior: 'smooth' });
-	}
 	function setPlan(mode, id) {
 		if (id == undefined) return;
 		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
@@ -37,75 +28,196 @@
 </script>
 
 <template>
-	<input :id="id" type="radio" name="label" :value="name" />
-	<label @click.prevent="selectSubmenu($event)" :for="id"><i class="icon" :class="symbol"></i>{{ name }}<i class="arrow zsm-chevron-icon"></i></label>
-	<ul data-list="o">
-		<li @click="setPlan(id, el.value)" v-for="el in list">{{ el.name }}</li>
-	</ul>
+	<li class="menu-item sub-menu">
+		<a href="#">
+			<span class="menu-icon">
+				<i :class="symbol"></i>
+			</span>
+			<span class="menu-title">{{ name }}</span>
+		</a>
+		<div class="sub-menu-list">
+			<ul>
+				<li v-for="el in list" class="menu-item" @click="setPlan(id, el.value)">
+					<a href="#">
+						<span class="menu-title">{{ el.name }}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</li>
 </template>
 
 <style lang="scss">
-	#sidebar nav {
-		input[type='radio'] {
-			display: none;
+	$text-color: #7d84ab;
+	$secondary-text-color: #dee2ec;
+	$bg-color: #0c1e35;
+	$secondary-bg-color: #0b1a2c;
+	@keyframes swing {
+		0%,
+		30%,
+		50%,
+		70%,
+		100% {
+			transform: rotate(0deg);
 		}
-		label {
-			width: calc(100% - 12px);
-			padding-inline: 12px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #7101ff;
-			padding: 10px;
-			border-radius: 10px;
-			margin-inline: 0;
-			margin-bottom: 10px;
-			font-family: 'Roboto', 'Arial', sans-serif;
-			font-weight: 400;
-			line-height: 24px;
-			font-size: 16px;
-			i {
-				font-size: 20px;
-			}
-			i.icon {
-				width: 24px;
-				margin-right: 24px;
-				text-align: center;
-			}
-			i.arrow {
-				margin-left: auto;
-				transition: 0.25s ease-in-out;
-			}
+
+		10% {
+			transform: rotate(10deg);
+		}
+
+		40% {
+			transform: rotate(-10deg);
+		}
+
+		60% {
+			transform: rotate(5deg);
+		}
+
+		80% {
+			transform: rotate(-5deg);
+		}
+	}
+	.menu {
+		> ul > .menu-item.sub-menu > .sub-menu-list {
+			visibility: visible !important;
+			position: static !important;
+			transform: translate(0, 0) !important;
 		}
 		ul {
-			max-height: 0;
-			transition: 0.75s ease-in-out max-height, 0.75s ease-in padding;
-			overflow: hidden;
-			background-color: #7101ff;
-			border-radius: 10px;
-			padding-inline: 10px;
-			margin-block: 0;
-			&::-webkit-scrollbar {
-				display: none;
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+		.menu-header {
+			font-weight: 600;
+			padding: 10px 25px;
+			font-size: 0.8em;
+			letter-spacing: 2px;
+			transition: opacity 0.3s;
+			opacity: 0.5;
+		}
+		.menu-item {
+			a {
+				display: flex;
+				align-items: center;
+				height: 50px;
+				padding: 0 20px;
+				color: $text-color;
+
+				.menu-icon {
+					font-size: 1.2rem;
+					width: 35px;
+					min-width: 35px;
+					height: 35px;
+					line-height: 35px;
+					text-align: center;
+					display: inline-block;
+					margin-right: 10px;
+					border-radius: 2px;
+					transition: color 0.3s;
+					i {
+						display: inline-block;
+					}
+				}
+
+				.menu-title {
+					font-size: 0.9em;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					flex-grow: 1;
+					transition: color 0.3s;
+				}
+				.menu-prefix,
+				.menu-suffix {
+					display: inline-block;
+					padding: 5px;
+					opacity: 1;
+					transition: opacity 0.3s;
+				}
+				&:hover {
+					.menu-title {
+						color: $secondary-text-color;
+					}
+					.menu-icon {
+						color: $secondary-text-color;
+						i {
+							animation: swing ease-in-out 0.5s 1 alternate;
+						}
+					}
+					&::after {
+						border-color: $secondary-text-color !important;
+					}
+				}
 			}
-			li {
-				padding: 5px;
+
+			&.sub-menu {
+				position: relative;
+				> a {
+					&::after {
+						content: '';
+						transition: transform 0.3s;
+						border-right: 2px solid currentcolor;
+						border-bottom: 2px solid currentcolor;
+						width: 5px;
+						height: 5px;
+						transform: rotate(-45deg);
+					}
+				}
+
+				> .sub-menu-list {
+					padding-left: 20px;
+					display: none;
+					overflow: hidden;
+					z-index: 999;
+				}
+				&.open {
+					> a {
+						color: $secondary-text-color;
+						&::after {
+							transform: rotate(45deg);
+						}
+					}
+				}
 			}
-			&:last-of-type {
-				margin-bottom: 0 !important;
+
+			&.active {
+				> a {
+					.menu-title {
+						color: $secondary-text-color;
+					}
+					&::after {
+						border-color: $secondary-text-color;
+					}
+					.menu-icon {
+						color: $secondary-text-color;
+					}
+				}
 			}
 		}
-		input:checked + label {
-			+ ul {
-				transition: 0.75s ease-in-out max-height, 0ms ease padding;
-				margin-bottom: 10px;
-				padding: 10px;
-				max-height: 1000vh;
-				overflow: auto;
+		> ul > .sub-menu.open {
+			background-color: rgba($secondary-bg-color, 0.5);
+		}
+
+		&.icon-shape-circle,
+		&.icon-shape-rounded,
+		&.icon-shape-square {
+			.menu-item a .menu-icon {
+				background-color: $secondary-bg-color;
 			}
-			i.arrow {
-				transform: rotate(180deg);
-			}
+		}
+
+		&.icon-shape-circle .menu-item a .menu-icon {
+			border-radius: 50%;
+		}
+		&.icon-shape-rounded .menu-item a .menu-icon {
+			border-radius: 4px;
+		}
+		&.icon-shape-square .menu-item a .menu-icon {
+			border-radius: 0;
+		}
+		a {
+			text-decoration: none;
 		}
 	}
 </style>
