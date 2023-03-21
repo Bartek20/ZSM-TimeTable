@@ -84,11 +84,17 @@
 		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		router.push({ name: 'plan', params: { mode: mode, id: id } });
 	}
+	function sidebarToggle() {
+		const el = document.getElementById('sidebar');
+		if (el) el.classList.toggle('toggled');
+	}
 </script>
 
 <template>
 	<section id="timetable" :class="{ 'sidebar-open': !print }">
-		<label class="sidebar-toggle" for="sidebar-btn"><i class="menu zsm-menu-icon"></i></label>
+		<div v-if="!print" class="sidebar-toggle" @click="sidebarToggle">
+			<i class="menu zsm-menu-icon"></i>
+		</div>
 		<TimeTableTitle :title="plan.title" :id="id" />
 		<div class="table-responsive">
 			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">

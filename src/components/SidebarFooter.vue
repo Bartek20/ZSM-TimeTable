@@ -20,10 +20,10 @@
 </script>
 <template>
 	<footer>
-		<div class="app px-4 py-2 text-center w-100" @click="PWAStore.install" v-if="appLoad && appStatus">
+		<div class="app text-white px-4 py-2 text-center w-100" @click="PWAStore.install" v-if="appLoad && appStatus">
 			<i class="zsm-download-icon"></i><strong>Zainstaluj Aplikację</strong>
 		</div>
-		<div class="footer px-4 py-2 text-center w-100"><i class="zsm-copyright-icon"></i>{{ getFooter() }}<br /><strong>Bartłomiej Radoń</strong></div>
+		<div class="footer text-white px-4 py-2 text-center w-100"><i class="zsm-copyright-icon"></i>{{ getFooter() }}<br /><strong>Bartłomiej Radoń</strong></div>
 	</footer>
 </template>
 

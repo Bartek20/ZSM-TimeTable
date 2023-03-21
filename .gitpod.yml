@@ -5,10 +5,17 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: npm install
+  - name: Development Environment
+    before: npm install -g npm@latest
+    init: npm install
     command: npm run dev
+
+ports:
+  - name: HotSwap Web Preview
+    description: Website Preview with dynamic changes on edit
+    port: 5173
+    onOpen: open-browser
 
 vscode:
   extensions:
     - vue.volar
-
