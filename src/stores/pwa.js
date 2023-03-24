@@ -10,6 +10,7 @@ export const usePWAStore = defineStore('pwa', {
 	},
 	actions: {
 		status() {
+			if (!window.onbeforeinstallprompt) return false;
 			return this.event != undefined && !this.installed && !window.matchMedia('(display-mode:standalone)').matches;
 		},
 		install() {

@@ -111,7 +111,6 @@
 		}
 	}
 	function sidebarSetup() {
-		const SIDEBAR_EL = document.getElementById('sidebar');
 		const SUB_MENU_ELS = document.querySelectorAll('.menu > ul > .menu-item.sub-menu');
 		const FIRST_SUB_MENUS_BTN = document.querySelectorAll('.menu > ul > .menu-item.sub-menu > a');
 		class Poppers {
@@ -165,6 +164,7 @@
 		if (el) {
 			el.classList.toggle('toggled');
 			updatePoppersTimeout();
+			document.querySelectorAll('.menu > ul > .menu-item.sub-menu').forEach(el => el.classList.remove('open'))
 		}
 	}
 </script>

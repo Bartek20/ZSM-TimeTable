@@ -153,7 +153,7 @@
 					min-width: auto;
 				}
 				> td {
-					min-width: 180px;
+					min-width: 200px;
 					&.time {
 						min-width: auto;
 					}
