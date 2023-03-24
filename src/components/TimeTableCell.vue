@@ -2,6 +2,7 @@
 	import { computed } from 'vue';
 	import stc from 'string-to-color';
 	import chroma from 'chroma-js';
+	import { LESSONS } from '../functions/constants';
 
 	const props = defineProps({
 		mode: {
@@ -55,39 +56,14 @@
 	});
 	function getColor(subject, mod = 0) {
 		if (mod != 0) {
-			const [r, g, b] = chroma.scale([stc(subject), 'white'])(mod)._rgb;
+			const [r, g, b] = chroma.scale([stc(subject.replace(/ \([UR]{1}\)/, '')), 'white'])(mod)._rgb;
 			return `rgb(${r}, ${g}, ${b})`;
 		}
-		return stc(subject);
+		return stc(subject.replace(/ \([UR]{1}\)/, ''));
 	}
 	function subjectParser(subject) {
-		const alts = {
-			wf: 'WF',
-			wos: 'WOS',
-			matematyka: 'Matematyka',
-			r_matematyka: 'Matematyka',
-			'j.polski': 'J. Polski',
-			'j.angielski': 'J. Angielski',
-			r_angielski: 'J. Angielski',
-			'j.niemiecki': 'J. Niemiecki',
-			informatyka: 'Informatyka',
-			'r_informat.': 'Informatyka',
-			fizyka: 'Fizyka',
-			r_fizyka: 'Fizyka',
-			geografia: 'Geografia',
-			r_geografia: 'Geografia',
-			biologia: 'Biologia',
-			historia: 'Historia',
-			chemia: 'Chemia',
-			e_dla_bezp: 'EDB',
-			Fil: 'Filozofia',
-			religia: 'Religia',
-			'przedsięb.': 'Przedsiębiorczość',
-			'zaj. wych.': 'L. Wychowawcza',
-			'godz. wych.': 'L. Wychowawcza',
-		};
-		if (alts[subject] == undefined) return subject;
-		return alts[subject];
+		if (LESSONS[subject] == undefined) return subject;
+		return LESSONS[subject];
 	}
 </script>
 
@@ -99,11 +75,11 @@
 		v-else
 		v-for="i in groups">
 		<div class="row" v-if="data[i - 1].groupName">
-			<div class="col-9 fw-bold text-start">{{ subjectParser(data[i - 1].subject) }}</div>
+			<div class="col-9 fw-bold text-start text-nowrap">{{ subjectParser(data[i - 1].subject) }}</div>
 			<div class="col-3 ps-0 fw-bold text-end">{{ data[i - 1].groupName }}</div>
 		</div>
 		<div class="row" v-else>
-			<div class="col-12 fw-bold">{{ subjectParser(data[i - 1].subject) }}</div>
+			<div class="col-12 fw-bold text-nowrap">{{ subjectParser(data[i - 1].subject) }}</div>
 		</div>
 		<div class="row">
 			<div class="col-6 text-muted text-start" @click="$emit('changePlan', col1[i - 1].mode, col1[i - 1].id)">{{ col1[i - 1].name }}</div>
