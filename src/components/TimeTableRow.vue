@@ -41,8 +41,10 @@
 		<td class="time text-center text-nowrap align-middle">
 			{{ hours.timeFrom + ' - ' + hours.timeTo }}
 		</td>
-		<td v-for="(lesson, i) in lessons" class="align-middle" :class="{ 'bg-info': currentLesson == hours.number && currentDay == i && lesson.length != 0 }">
-			<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lesson" />
+		<td v-for="(lesson, i) in lessons" class="align-middle">
+			<div class="cell" :class="{ 'bg-info': currentLesson == hours.number && currentDay == i && lesson.length != 0 }">
+				<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lesson" />
+			</div>
 		</td>
 	</tr>
 	<tr v-if="breakTime != 0">
@@ -54,7 +56,21 @@
 </template>
 
 <style lang="scss">
-	td.bg-info {
-		box-shadow: none !important;
+	.cell {
+		margin: -8px;
+		padding: 8px;
+		&.bg-info {
+			border-radius: 10px;
+			animation: blink 3s linear infinite;
+		}
+	}
+	@keyframes blink {
+		0%,
+		100% {
+			background-color: var(--bs-info-rgb);
+		}
+		50% {
+			background-color: transparent;
+		}
 	}
 </style>

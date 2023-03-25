@@ -77,7 +77,7 @@
 	}
 	function checkBreak(start, end) {
 		if (props.print || start == undefined || end == undefined) return false;
-		return timeStore.checkBetween(start.timeTo, end.timeFrom);
+		return timeStore.checkBetween(start.timeTo, end.timeFrom) && timeStore.DAY < 5;
 	}
 	function setPlan(mode, id) {
 		if (props.print || id == undefined) return;
@@ -88,6 +88,13 @@
 		const el = document.getElementById('sidebar');
 		if (el) el.classList.toggle('toggled');
 	}
+	const rowsNr = computed(() => {
+		if (plan.value.days && plan.value.days.length == 5) return plan.value.days[0].length;
+		return 0;
+	});
+	function getRow(nr) {
+		return [plan.value.days[0][nr], plan.value.days[1][nr], plan.value.days[2][nr], plan.value.days[3][nr], plan.value.days[4][nr]];
+	}
 </script>
 
 <template>
@@ -95,7 +102,7 @@
 		<div v-if="!print" class="sidebar-toggle" @click="sidebarToggle">
 			<i class="menu zsm-menu-icon"></i>
 		</div>
-		<TimeTableTitle :title="plan.title" :id="id" />
+		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
 		<div class="table-responsive">
 			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">
 				<thead>
@@ -112,14 +119,14 @@
 				<tbody>
 					<TimeTableRow
 						@changePlan="setPlan"
-						v-for="(row, i) in plan.days"
+						v-for="nr in rowsNr"
 						:mode="mode"
-						:hours="plan.hours[i]"
-						:lessons="row"
+						:hours="plan.hours[nr - 1]"
+						:lessons="getRow(nr - 1)"
 						:currentDay="currentDay"
 						:currentLesson="currentLesson"
-						:breakTime="calcBreak(plan.hours[i], plan.hours[i + 1])"
-						:currentBreak="checkBreak(plan.hours[i], plan.hours[i + 1])" />
+						:breakTime="calcBreak(plan.hours[nr - 1], plan.hours[nr])"
+						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])" />
 				</tbody>
 			</table>
 		</div>
@@ -132,7 +139,7 @@
 		position: relative;
 		.sidebar-toggle {
 			display: none;
-			position: absolute;
+			position: fixed;
 			top: 8px;
 			left: 8px;
 			i {

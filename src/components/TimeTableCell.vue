@@ -62,6 +62,7 @@
 		return stc(subject.replace(/ \([UR]{1}\)/, ''));
 	}
 	function subjectParser(subject) {
+		if (subject.includes('ckz')) return LESSONS['praktyki'];
 		if (LESSONS[subject] == undefined) return subject;
 		return LESSONS[subject];
 	}
@@ -70,7 +71,7 @@
 <template>
 	<div v-if="groups === 0"></div>
 	<div
-		class="lesson px-2 py-1 mb-1"
+		class="lesson px-2 py-1 mb-2"
 		:style="{ backgroundColor: getColor(subjectParser(data[i - 1].subject), 0.8), borderColor: getColor(subjectParser(data[i - 1].subject)) }"
 		v-else
 		v-for="i in groups">
