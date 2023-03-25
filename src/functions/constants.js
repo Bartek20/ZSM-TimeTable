@@ -4,9 +4,12 @@ export const DAYS = {
 	środa: 2,
 	czwartek: 3,
 	piątek: 4,
+	sobota: 5,
+	niedziela: 6,
 };
 
 export const LESSONS = {
+	praktyki: 'Praktyki CKZ',
 	wf: 'WF',
 	wos: 'WOS',
 	matematyka: 'Matematyka',
@@ -28,97 +31,441 @@ export const LESSONS = {
 	e_dla_bezp: 'EDB',
 	Fil: 'Filozofia',
 	religia: 'Religia',
-  'u_hist.i sp.': 'Hist. i Sp. (U)',
+	'u_hist.i sp.': 'Hist. i Sp. (U)',
 	'przedsięb.': 'Przedsiębiorczość',
 	'zaj. wych.': 'L. Wychowawcza',
 	'godz. wych.': 'L. Wychowawcza',
 };
 
 export const TEACHERS = {
-	'S.Świetlik (SS)': 'Śławomir Świetlik (SS)',
-	'B.Piękoś-Kwolek (BP)': 'Bożena Piękoś-Kwolek (BP)',
-	'A.Romaszuk (RA)': 'Alicja Romaszuk (RA)',
-	'A.Kulasa (KU)': 'Andrzej Kulasa (KU)',
-	'I.Adamiec-Zielińska (IZ)': 'Iwona Adamiec-Zielińska (IZ)',
-	'A.Aeroklub Rzeszowski (AA)': 'Aeroklub Rzeszowki (AA)',
-	'M.Bajor (MB)': 'Monika Bajor (MB)',
-	'M.Bardzik (BR)': 'Magdalena Bardzik (BR)',
-	'A.Bartyzel (AB)': 'Alicja Bartyzel (AB)',
-	'M.Berrahal (BM)': 'Mariola Berrahal (BM)',
-	'N.Bołba (NK)': 'N. Bołba (NK)', // Brak rozwinięcia
-	'B.Brzęk (BB)': 'Barbara Brzęk (BB)',
-	'A.Buć (Bu)': 'Agnieszka Buć (Bu)',
-	'c.Centrum Kształcenia Zawodowego (CK)': 'Centrum Kształcenia Zawodowego (CK)',
-	'J.Cichoń (JC)': 'Joanna Cichoń (JC)',
-	'P.Cyrek (CY)': 'P. Cyrek (CY)', // Brak rozwinięcia
-	'B.Czach (CB)': 'Bogdan Czach (CY)',
-	'P.Czajor (CP)': 'Piotr Czajor (CP)',
-	'A.Czechowicz (CZ)': 'Agata Czechowicz (CZ)',
-	'A.Domagała (LA)': 'Anna Domagała (LA)',
-	'E.Dragulska (ED)': 'Edyta Dragulska (ED)',
-	'M.Drozd (DO)': 'Mariusz Drozd (DO)',
-	'A.Dytko (DA)': 'Adam Dytko (DA)',
-	'E.Emeaero (EE)': 'E. Emeaero (EE)', // Brak rozwinięcia
-	'A.Frydrych (AF)': 'Andrzej Frydrych (AF)',
-	'M.Gorol (MG)': 'M. Gorol (MG)', // Brak rozwinięcia
-	'O.Gorol (OG)': 'O. Gorol (OG)', // Brak rozwinięcia
-	'D.Grudziński (DG)': 'Dawid Grudziński (DG)',
-	'L.Grzesik (LG)': 'Leokadia Grzesik (LG)',
-	'M.Haber (HM)': 'Marek Haber (HM)',
-	'B.Hałucha  (BH)': 'Bożena Hałucha (BH)',
-	'H.Heli One (HO)': 'Heli One (HO)',
-	'A.Kapłon (KA)': 'Agnieszka Kapłon (KA)',
-	'B.Kataniak-Stefańska (SB)': 'Bożena Kataniak-Stefańska (SB)',
-	'E.Kijowska (GV)': 'E. Kijowska (GV)', // Brak rozwinięcia
-	'M.Kisiel (MK)': 'Mariusz Kisiel (MK)',
-	'Z.Kłeczek (ZK)': 'Zdzisław Kłeczek (ZK)',
-	'K.Kołodziej (KR)': 'K. Kołodziej (KR)', // Brak rozwinięcia
-	'M.Kołodziej (KI)': 'Magdalena Kołodziej (KI)',
-	'P.Korbecki (KE)': 'Piotr Korbecki (KE)',
-	'A.Kot (KT)': 'Alicja Kot (KT)',
-	'M.Kot-Nowicka (MN)': 'Magdalena Kot-Nowicka (MN)',
-	'D.Kotowicz (DK)': 'D. Kotowicz (DK)', // Brak rozwinięcia
-	'J.Kozicki (KC)': 'J. Kozicki (KC)', // Brak rozwinięcia
-	'I.Krużel (IK)': 'Iwona Krużel (IK)',
-	'W.Kubala (KB)': 'Wojciech Kubala (KB)',
-	'D.Kustra (KD)': 'Dorota Kustra (KD)',
-	'L.LineTech (LL)': 'LineTech (LL)',
-	'K.Lizak (LK)': 'Kinga Lizak (LK)',
-	'D.Łagowska (DL)': 'Dorota Łagowska (DL)',
-	'S.Łoboda  (SŁ)': 'Sławomir Łoboda (SŁ)',
-	'W.Machowska (WM)': 'Wioletta Machowska (WM)',
-	'D.Michnia (MI)': 'Dorota Michnia (MI)',
-	'M.Mucha (MU)': 'Marta Mucha (MU)',
-	'J.Nazarko (JN)': 'Jolanta Nazarko (JN)',
-	'A.Nazimek (NA)': 'Adam Nazimek (NA)',
-	'J.Pasterz (JU)': 'Justyna Pasterz (JU)',
-	'A.Pawlak (AP)': 'Agata Pawlak (AP)',
-	'E.Pitera (EP)': 'Elżbieta Pitera (EP)',
-	'J.Płonka (PŁ)': 'Jarosław Płonka (PŁ)',
-	'K.Potoczna (KP)': 'Krystyna Potoczna (KP)',
-	'P.Pratt Whitney AeroPower (PT)': 'Pratt & Whitney AeroPower (PT)',
-	'C.Prokop (PK)': 'Cezary Prokop (PK)',
-	'D.Prokopik (DP)': 'Daniel Prokopik (DP)',
-	'P.Pustelny (PP)': 'Piotr Pustelny (PP)',
-	'P.Rosa (RP)': 'Paweł Rosa (RP)',
-	'G.Różycki (RG)': 'Grzegorz Różycki (RG)',
-	'S.Salony fryzjerskie (FR)': 'Salony fryzjerskie (FR)',
-	'B.Stadnik (BS)': 'B. Stadnik (BS)', // Brak rozwinięcia
-	'S.Stawarz (ST)': 'Sławomir Stawarz (ST)',
-	'L.Sulencka (SL)': 'Lucyna Sulencka (SL)',
-	'E.Surowiec (SR)': 'Ewelina Surowiec (SR)',
-	'S.Szcząchor (SC)': 'Sebastian Szcząchor (SC)',
-	'S.Szela (SE)': 'Stanisław Szela (SE)',
-	'I.Szetela (IS)': 'Ilona Szetela (IS)',
-	'U.Szpuga (SU)': 'Urszula Szpuga (SU)',
-	'E.Świder (ES)': 'Ewa Świder (ES)',
-	'S.Topolewicz (TO)': 'Stanisław Topolewicz (TO)',
-	'A.Uchman (UA)': 'Agnieszka Uchman (UA)',
-	'E.Wojakowska (WE)': 'Ewa Wojakowska (WE)',
-	'M.Wojtaszek-Hudzik (MW)': 'Magdalena Wojtaszek-Hudzik (MW)',
-	'M.Wiśniowska (WI)': 'Monika Wiśniowska (WI)',
-	'P.Zwiercan (ZW)': 'P. Zwiercan (ZW)', // Brak rozwinięcia
-	'p.vacat (PV)': 'Vacat (PV)',
-	'r.vacat (VR)': 'Vacat (VR)',
-	'W.vacat (VW)': 'Vacat (VW)',
+	'S.Świetlik (SS)': {
+		name: 'Sławomir',
+		surname: 'Świetlik',
+		code: 'SS',
+	},
+	'B.Piękoś-Kwolek (BP)': {
+		name: 'Bożena',
+		surname: 'Piękoś-Kwolek',
+		code: 'BP',
+	},
+	'A.Romaszuk (RA)': {
+		name: 'Alicja',
+		surname: 'Romaszuk',
+		code: 'RA',
+	},
+	'A.Kulasa (KU)': {
+		name: 'Andrzej',
+		surname: 'Kulasa',
+		code: 'KU',
+	},
+	'I.Adamiec-Zielińska (IZ)': {
+		name: 'Iwona',
+		surname: 'Adamiec-Zielińska',
+		code: 'IZ',
+	},
+	'A.Aeroklub Rzeszowski (AA)': {
+		name: 'Aeroklub Rzeszowki',
+		code: 'AA',
+	},
+	'M.Bajor (MB)': {
+		name: 'Monika',
+		surname: 'Bajor',
+		code: 'MB',
+	},
+	'M.Bardzik (BR)': {
+		name: 'Magdalena',
+		surname: 'Bardzik',
+		code: 'BR',
+	},
+	'A.Bartyzel (AB)': {
+		name: 'Alicja',
+		surname: 'Bartyzel',
+		code: 'AB',
+	},
+	'M.Berrahal (BM)': {
+		name: 'Mariola',
+		surname: 'Berrahal',
+		code: 'BM',
+	},
+	// Brak rozwinięcia
+	'N.Bołba (NK)': {
+		name: 'N.',
+		surname: 'Bołba',
+		code: 'NK',
+	},
+	'B.Brzęk (BB)': {
+		name: 'Barbara',
+		surname: 'Brzęk',
+		code: 'BB',
+	},
+	'A.Buć (Bu)': {
+		name: 'Agnieszka',
+		surname: 'Buć',
+		code: 'Bu',
+	},
+	'c.Centrum Kształcenia Zawodowego (CK)': {
+		name: 'Centrum Kształcenia Zawodowego',
+		code: 'CK',
+	},
+	'J.Cichoń (JC)': {
+		name: 'Joanna',
+		surname: 'Cichoń',
+		code: 'JC',
+	},
+	// Brak rozwinięcia
+	'P.Cyrek (CY)': {
+		name: 'P.',
+		surname: 'Cyrek',
+		code: 'CY',
+	},
+	'B.Czach (CB)': {
+		name: 'Bogdan',
+		surname: 'Czach',
+		code: 'CY',
+	},
+	'P.Czajor (CP)': {
+		name: 'Piotr',
+		surname: 'Czajor',
+		code: 'CP',
+	},
+	'A.Czechowicz (CZ)': {
+		name: 'Agata',
+		surname: 'Czechowicz',
+		code: 'CZ',
+	},
+	'A.Domagała (LA)': {
+		name: 'Anna',
+		surname: 'Domagała',
+		code: 'LA',
+	},
+	'E.Dragulska (ED)': {
+		name: 'Edyta',
+		surname: 'Dragulska',
+		code: 'ED',
+	},
+	'M.Drozd (DO)': {
+		name: 'Mariusz',
+		surname: 'Drozd',
+		code: 'DO',
+	},
+	'A.Dytko (DA)': {
+		name: 'Adam',
+		surname: 'Dytko',
+		code: 'DA',
+	},
+	'E.Emeaero (EE)': {
+		name: 'Emeaero',
+		code: 'EE',
+	},
+	'A.Frydrych (AF)': {
+		name: 'Andrzej',
+		surname: 'Frydrych',
+		code: 'AF',
+	},
+	// Brak rozwinięcia
+	'M.Gorol (MG)': {
+		name: 'M.',
+		surname: 'Gorol',
+		code: 'MG',
+	},
+	// Brak rozwinięcia
+	'O.Gorol (OG)': {
+		name: 'O.',
+		surname: 'Gorol',
+		code: 'OG',
+	},
+	'D.Grudziński (DG)': {
+		name: 'Dawid',
+		surname: 'Grudziński',
+		code: 'DG',
+	},
+	'L.Grzesik (LG)': {
+		name: 'Leokadia',
+		surname: 'Grzesik',
+		code: 'LG',
+	},
+	'M.Haber (HM)': {
+		name: 'Marek',
+		surname: 'Haber',
+		code: 'HM',
+	},
+	'B.Hałucha  (BH)': {
+		name: 'Bożena',
+		surname: 'Hałucha',
+		code: 'BH',
+	},
+	'H.Heli One (HO)': {
+		name: 'Heli One',
+		code: 'HO',
+	},
+	'A.Kapłon (KA)': {
+		name: 'Agnieszka',
+		surname: 'Kapłon',
+		code: 'KA',
+	},
+	'B.Kataniak-Stefańska (SB)': {
+		name: 'Bożena',
+		surname: 'Kataniak-Stefańska',
+		code: 'SB',
+	},
+	// Brak rozwinięcia
+	'E.Kijowska (GV)': {
+		name: 'E.',
+		surname: 'Kijowska',
+		code: 'GV',
+	},
+	'M.Kisiel (MK)': {
+		name: 'Mariusz',
+		surname: 'Kisiel',
+		code: 'MK',
+	},
+	'Z.Kłeczek (ZK)': {
+		name: 'Zdzisław',
+		surname: 'Kłeczek',
+		code: 'ZK',
+	},
+	// Brak rozwinięcia
+	'K.Kołodziej (KR)': {
+		name: 'K.',
+		surname: 'Kołodziej',
+		code: 'KR',
+	},
+	'M.Kołodziej (KI)': {
+		name: 'Magdalena',
+		surname: 'Kołodziej',
+		code: 'KI',
+	},
+	'P.Korbecki (KE)': {
+		name: 'Piotr',
+		surname: 'Korbecki',
+		code: 'KE',
+	},
+	'A.Kot (KT)': {
+		name: 'Alicja',
+		surname: 'Kot',
+		code: 'KT',
+	},
+	'M.Kot-Nowicka (MN)': {
+		name: 'Magdalena',
+		surname: 'Kot-Nowicka',
+		code: 'MN',
+	},
+	// Brak rozwinięcia
+	'D.Kotowicz (DK)': {
+		name: 'D.',
+		surname: 'Kotowicz',
+		code: 'DK',
+	},
+	// Brak rozwinięcia
+	'J.Kozicki (KC)': {
+		name: 'J.',
+		surname: 'Kozicki',
+		code: 'KC',
+	},
+	'I.Krużel (IK)': {
+		name: 'Iwona',
+		surname: 'Krużel',
+		code: 'IK',
+	},
+	'W.Kubala (KB)': {
+		name: 'Wojciech',
+		surname: 'Kubala',
+		code: 'KB',
+	},
+	'D.Kustra (KD)': {
+		name: 'Dorota',
+		surname: 'Kustra',
+		code: 'KD',
+	},
+	'L.LineTech (LL)': {
+		name: 'LineTech',
+		code: 'LL',
+	},
+	'K.Lizak (LK)': {
+		name: 'Kinga',
+		surname: 'Lizak',
+		code: 'LK',
+	},
+	'D.Łagowska (DL)': {
+		name: 'Dorota',
+		surname: 'Łagowska',
+		code: 'DL',
+	},
+	'S.Łoboda  (SŁ)': {
+		name: 'Sławomir',
+		surname: 'Łoboda',
+		code: 'SŁ',
+	},
+	'W.Machowska (WM)': {
+		name: 'Wioletta',
+		surname: 'Machowska',
+		code: 'WM',
+	},
+	'D.Michnia (MI)': {
+		name: 'Dorota',
+		surname: 'Michnia',
+		code: 'MI',
+	},
+	'M.Mucha (MU)': {
+		name: 'Marta',
+		surname: 'Mucha',
+		code: 'MU',
+	},
+	'J.Nazarko (JN)': {
+		name: 'Jolanta',
+		surname: 'Nazarko',
+		code: 'JN',
+	},
+	'A.Nazimek (NA)': {
+		name: 'Adam',
+		surname: 'Nazimek',
+		code: 'NA',
+	},
+	'J.Pasterz (JU)': {
+		name: 'Justyna',
+		surname: 'Pasterz',
+		code: 'JU',
+	},
+	'A.Pawlak (AP)': {
+		name: 'Agata',
+		surname: 'Pawlak',
+		code: 'AP',
+	},
+	'E.Pitera (EP)': {
+		name: 'Elżbieta',
+		surname: 'Pitera',
+		code: 'EP',
+	},
+	'J.Płonka (PŁ)': {
+		name: 'Jarosław',
+		surname: 'Płonka',
+		code: 'PŁ',
+	},
+	'K.Potoczna (KP)': {
+		name: 'Krystyna',
+		surname: 'Potoczna',
+		code: 'KP',
+	},
+	'P.Pratt Whitney AeroPower (PT)': {
+		name: 'Pratt & Whitney AeroPower',
+		code: 'PT',
+	},
+	'C.Prokop (PK)': {
+		name: 'Cezary',
+		surname: 'Prokop',
+		code: 'PK',
+	},
+	'D.Prokopik (DP)': {
+		name: 'Daniel',
+		surname: 'Prokopik',
+		code: 'DP',
+	},
+	'P.Pustelny (PP)': {
+		name: 'Piotr',
+		surname: 'Pustelny',
+		code: 'PP',
+	},
+	'P.Rosa (RP)': {
+		name: 'Paweł',
+		surname: 'Rosa',
+		code: 'RP',
+	},
+	'G.Różycki (RG)': {
+		name: 'Grzegorz',
+		surname: 'Różycki',
+		code: 'RG',
+	},
+	'S.Salony fryzjerskie (FR)': {
+		name: 'Salony fryzjerskie',
+		code: 'FR',
+	},
+	// Brak rozwinięcia
+	'B.Stadnik (BS)': {
+		name: 'B.',
+		surname: 'Stadnik',
+		code: 'BS',
+	},
+	'S.Stawarz (ST)': {
+		name: 'Sławomir',
+		surname: 'Stawarz',
+		code: 'ST',
+	},
+	'L.Sulencka (SL)': {
+		name: 'Lucyna',
+		surname: 'Sulencka',
+		code: 'SL',
+	},
+	'E.Surowiec (SR)': {
+		name: 'Ewelina',
+		surname: 'Surowiec',
+		code: 'SR',
+	},
+	'S.Szcząchor (SC)': {
+		name: 'Sebastian',
+		surname: 'Szcząchor',
+		code: 'SC',
+	},
+	'S.Szela (SE)': {
+		name: 'Stanisław',
+		surname: 'Szela',
+		code: 'SE',
+	},
+	'I.Szetela (IS)': {
+		name: 'Ilona',
+		surname: 'Szetela',
+		code: 'IS',
+	},
+	'U.Szpuga (SU)': {
+		name: 'Urszula',
+		surname: 'Szpuga',
+		code: 'SU',
+	},
+	'E.Świder (ES)': {
+		name: 'Ewa',
+		surname: 'Świder',
+		code: 'ES',
+	},
+	'S.Topolewicz (TO)': {
+		name: 'Stanisław',
+		surname: 'Topolewicz',
+		code: 'TO',
+	},
+	'A.Uchman (UA)': {
+		name: 'Agnieszka',
+		surname: 'Uchman',
+		code: 'UA',
+	},
+	'E.Wojakowska (WE)': {
+		name: 'Ewa',
+		surname: 'Wojakowska',
+		code: 'WE',
+	},
+	'M.Wojtaszek-Hudzik (MW)': {
+		name: 'Magdalena',
+		surname: 'Wojtaszek-Hudzik',
+		code: 'MW',
+	},
+	'M.Wiśniowska (WI)': {
+		name: 'Monika',
+		surname: 'Wiśniowska',
+		code: 'WI',
+	},
+	// Brak rozwinięcia
+	'P.Zwiercan (ZW)': {
+		name: 'P.',
+		surname: 'Zwiercan',
+		code: 'ZW',
+	},
+	'p.vacat (PV)': {
+		name: 'Vacat',
+		code: 'PV',
+	},
+	'r.vacat (VR)': {
+		name: 'Vacat',
+		code: 'VR',
+	},
+	'W.vacat (VW)': {
+		name: 'Vacat',
+		code: 'VW',
+	},
 };

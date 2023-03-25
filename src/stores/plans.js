@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { openDB } from 'idb';
-import { TimetableList, Table } from '@wulkanowy/timetable-parser';
+import { TimetableList/*, Table*/ } from '@wulkanowy/timetable-parser';
+// Temporary fix until @wulkanowy/timetable-parser #24 PR update
+import Table from '@/functions/tableParser';
 
 const PROXY = 'https://corsproxy.io/?';
 const WEBPAGE = 'https://zsm.resman.pl/plan_nauczyciele/';
@@ -63,7 +65,7 @@ export const usePlansStore = defineStore('plans', {
 			const result = {
 				title: TimeTable.getTitle(),
 				hours: TimeTable.getHours(),
-				days: TimeTable.getRawDays(),
+				days: TimeTable.getDays(),
 				gen_date: TimeTable.getGeneratedDate(),
 				apply_date: TimeTable.getVersionInfo(),
 			};

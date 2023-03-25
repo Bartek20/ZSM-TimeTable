@@ -58,11 +58,10 @@ export default class Table {
 		rows.forEach((row) => {
 			const lessons = this.$(row).find('.l').toArray();
 			lessons.forEach((lesson, index) => {
-				console.log('Edit works');
 				if (this.$(lesson).text().trim() === '') {
 					days[index].push([]);
 				} else if (this.$(lesson).children().length === 0) {
-					days[index].push(this.$(lesson).text().trim());
+					days[index].push([{ subject: this.$(lesson).text().trim() }]);
 				} else {
 					const groups = this.parseLessons(this.$(lesson).contents().toArray());
 					days[index].push(groups);

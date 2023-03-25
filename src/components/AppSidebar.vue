@@ -164,7 +164,7 @@
 		if (el) {
 			el.classList.toggle('toggled');
 			updatePoppersTimeout();
-			document.querySelectorAll('.menu > ul > .menu-item.sub-menu').forEach(el => el.classList.remove('open'))
+			document.querySelectorAll('.menu > ul > .menu-item.sub-menu').forEach((el) => el.classList.remove('open'));
 		}
 	}
 </script>
@@ -245,7 +245,7 @@
 			z-index: 5;
 			.sidebar-content {
 				flex-grow: 1;
-				padding: 10px 0;
+				margin: 10px 0;
 				overflow-y: auto;
 				&::-webkit-scrollbar-thumb {
 					border-radius: 4px;

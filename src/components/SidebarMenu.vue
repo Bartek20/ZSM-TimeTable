@@ -1,5 +1,6 @@
 <script setup>
 	import { useRouter } from 'vue-router';
+	import { TEACHERS } from '../functions/constants';
 	const router = useRouter();
 
 	const props = defineProps({
@@ -25,6 +26,40 @@
 		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
 		router.push({ name: 'plan', params: { mode: mode, id: id } });
 	}
+	function titleParser(title) {
+		if (TEACHERS[title] == undefined) return title;
+		const data = TEACHERS[title];
+		var out = '';
+		switch (title) {
+			case 'A.Aeroklub Rzeszowski (AA)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			case 'c.Centrum Kształcenia Zawodowego (CK)':
+				out = 'CKZ (' + data.code + ')';
+				break;
+			case 'E.Emeaero (EE)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			case 'H.Heli One (HO)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			case 'L.LineTech (LL)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			case 'P.Pratt Whitney AeroPower (PT)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			case 'S.Salony fryzjerskie (FR)':
+				out = data.name + ' (' + data.code + ')';
+				break;
+			default:
+				out = data.name.charAt(0) + '. ';
+				if (data.surname) out = out + data.surname + ' ';
+				out = out + '(' + data.code + ')';
+				break;
+		}
+		return out;
+	}
 </script>
 
 <template>
@@ -39,7 +74,7 @@
 			<ul>
 				<li v-for="el in list" class="menu-item" @click="setPlan(id, el.value)">
 					<a href="#">
-						<span class="menu-title">{{ el.name }}</span>
+						<span class="menu-title">{{ titleParser(el.name) }}</span>
 					</a>
 				</li>
 			</ul>

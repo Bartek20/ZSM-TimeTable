@@ -10,9 +10,13 @@
 			required: true,
 		},
 	});
-	function titleParser(subject) {
-		if (TEACHERS[subject] == undefined) return subject;
-		return TEACHERS[subject];
+	function titleParser(title) {
+		if (TEACHERS[title] == undefined) return title;
+		title = TEACHERS[title];
+		var out = title.name;
+		if (title.surname) out = out + ' ' + title.surname;
+		out = out + ' (' + title.code + ')';
+		return out;
 	}
 </script>
 
