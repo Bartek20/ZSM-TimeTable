@@ -14,7 +14,7 @@ const intervalMS = 60 * 1000;
 const updateSW = registerSW({
 	immediate: true,
 	onNeedRefresh() {
-		location.reload();
+		console.log('Update found');
 	},
 	onRegistered(r) {
 		console.log('SW Registered');
