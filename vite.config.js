@@ -13,6 +13,28 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			workbox: {
 				globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg,ttf,woff,woff2}'],
+				runtimeCaching: [
+					{
+						urlPattern: /https:\/\/zsm\.resman\.pl\/plan_nauczyciele/,
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'timetables-data',
+							cacheableResponse: {
+								statuses: [200],
+							},
+						},
+					},
+					{
+						urlPattern: /https%3A%2F%2Fzsm.resman.pl%2Fplan_nauczyciele/,
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'timetables-data',
+							cacheableResponse: {
+								statuses: [200],
+							},
+						},
+					},
+				],
 			},
 			manifest: {
 				id: 'https://zsm-timetable.pages.dev/',
