@@ -12,7 +12,7 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			workbox: {
-				globPatterns: ['**/*.{js,css,ico,png,jpg,svg,ttf,woff,woff2}'],
+				globPatterns: ['**/*.{html,js,css,png,jpg,ico,ttf,woff,woff2}'],
 				runtimeCaching: [
 					{
 						urlPattern: /^https:\/\/zsm\.resman\.pl\/plan_nauczyciele/,
@@ -68,7 +68,6 @@ export default defineConfig({
 					},
 				],
 			},
-			injectRegister: 'script',
 		}),
 	],
 	resolve: {
