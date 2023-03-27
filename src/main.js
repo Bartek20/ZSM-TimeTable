@@ -15,6 +15,7 @@ const updateSW = registerSW({
 	immediate: true,
 	onNeedRefresh() {
 		console.log('Update found');
+		window.updatable = true;
 	},
 	onRegistered(r) {
 		console.log('SW Registered');
