@@ -1,7 +1,6 @@
 <script setup>
 	import AppSidebar from '@/components/AppSidebar.vue';
 	import AppTimeTable from '@/components/AppTimeTable.vue';
-	import PWAReloadPromptVue from '../components/PWAReloadPrompt.vue';
 	import { usePlansStore } from '@/stores/plans';
 	import { watch } from 'vue';
 	import { useRoute } from 'vue-router';
@@ -21,5 +20,4 @@
 <template>
 	<AppSidebar />
 	<AppTimeTable :print="false" :id="mode + id" />
-	<PWAReloadPromptVue />
 </template>
