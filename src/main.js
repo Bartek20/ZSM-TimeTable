@@ -17,7 +17,7 @@ const updateSW = registerSW({
 		console.log('Update found');
 		window.updatable = true;
 	},
-	onRegistered(r) {
+	onRegisteredSW(workerURL, r) {
 		console.log('SW Registered');
 		console.log(r);
 		r &&
