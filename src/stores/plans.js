@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import { openDB } from 'idb';
-import { TimetableList/*, Table*/ } from '@wulkanowy/timetable-parser';
+import { TimetableList /*, Table*/ } from '@wulkanowy/timetable-parser';
 // Temporary fix until @wulkanowy/timetable-parser #24 PR update
 import Table from '@/functions/tableParser';
 
@@ -30,19 +29,20 @@ export const usePlansStore = defineStore('plans', {
 		async cacheURL(url) {
 			const URL = this.createURL(url);
 			const store = await window.caches.open('timetables');
+			var online = true;
 			var res = await store.match(URL);
 			if (res == undefined) {
-				try {
-					await store.add(URL);
-				} catch (error) {
-					return undefined;
-				}
+				await store.add(URL).catch((err) => {
+					online = false;
+				});
 			}
+			if (!online) return undefined;
 			var res = await store.match(URL);
 			if (res != undefined) return await res.text();
 			return undefined;
 		},
 		async loadList() {
+			if (this.logo_path != '') return;
 			const URL = WEBPAGE + 'lista.html';
 			const res = await this.cacheURL(URL);
 			if (res == undefined) return;
@@ -84,14 +84,10 @@ export const usePlansStore = defineStore('plans', {
 		},
 		async getTimeTable() {
 			await this.loadList();
-			await this.getPlans();
+			this.getPlans();
 		},
 		async updateTimeTable() {
 			await window.caches.delete('timetables');
-			(await this.dbs.lists).clear('data');
-			(await this.dbs.plans).clear('o');
-			(await this.dbs.plans).clear('n');
-			(await this.dbs.plans).clear('s');
 			this.lists.classes = [];
 			this.lists.teachers = [];
 			this.lists.rooms = [];

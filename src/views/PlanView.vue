@@ -14,6 +14,7 @@
 		mode = data.params.mode;
 		id = data.params.id;
 	});
+	plansStore.getTimeTable();
 </script>
 
 <template>

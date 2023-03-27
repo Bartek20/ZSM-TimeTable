@@ -25,3 +25,9 @@
 		<h3 class="mb-0 p-2">{{ titleParser(title) }}</h3>
 	</div>
 </template>
+
+<style lang="scss">
+	.title {
+		height: 50px;
+	}
+</style>
