@@ -137,6 +137,12 @@
 	#timetable {
 		width: 100%;
 		position: relative;
+		.table-responsive {
+			max-height: calc(100vh - 50px);
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		}
 		.sidebar-toggle {
 			display: none;
 			position: fixed;
@@ -151,13 +157,20 @@
 		}
 		table {
 			position: relative;
-			thead {
+			thead th {
 				position: sticky;
 				top: 0;
+				z-index: 5;
+				&:first-child {
+					z-index: 7;
+					left: 0;
+				}
 			}
-			tr {
+			tbody tr {
 				> th {
 					min-width: auto;
+					position: sticky;
+					left: 0;
 				}
 				> td {
 					min-width: 200px;
