@@ -92,28 +92,40 @@
 		if (plan.value.days && plan.value.days.length == 5) return plan.value.days[0].length;
 		return 0;
 	});
+	const isEmpty = computed(() => {
+		if (
+			plan.value.days[0].length == 1 &&
+			plan.value.days[0][0].length == 0 &&
+			plan.value.days[1][0].length == 0 &&
+			plan.value.days[2][0].length == 0 &&
+			plan.value.days[3][0].length == 0 &&
+			plan.value.days[4][0].length == 0
+		)
+			return true;
+		return false;
+	});
 	function getRow(nr) {
 		return [plan.value.days[0][nr], plan.value.days[1][nr], plan.value.days[2][nr], plan.value.days[3][nr], plan.value.days[4][nr]];
 	}
 </script>
 
 <template>
-	<section id="timetable" :class="{ 'sidebar-open': !print }">
-		<div v-if="!print" class="sidebar-toggle" @click="sidebarToggle">
+	<section id="timetable">
+		<div v-if="!print" class="btn-open" @click="sidebarToggle">
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
 		<div class="table-responsive">
-			<table class="table table-primary table-striped table-hover mb-0" :class="{ 'table-sm': print, 'table-responsive': !print }">
+			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
-						<th scope="col" class="text-center">#</th>
-						<th scope="col" class="text-center">Czas</th>
-						<th scope="col" class="text-center">Poniedziałek</th>
-						<th scope="col" class="text-center">Wtorek</th>
-						<th scope="col" class="text-center">Środa</th>
-						<th scope="col" class="text-center">Czwartek</th>
-						<th scope="col" class="text-center">Piątek</th>
+						<th>#</th>
+						<th>Czas</th>
+						<th>Poniedziałek</th>
+						<th>Wtorek</th>
+						<th>Środa</th>
+						<th>Czwartek</th>
+						<th>Piątek</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -126,7 +138,8 @@
 						:currentDay="currentDay"
 						:currentLesson="currentLesson"
 						:breakTime="calcBreak(plan.hours[nr - 1], plan.hours[nr])"
-						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])" />
+						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])"
+						:isEmpty="isEmpty" />
 				</tbody>
 			</table>
 		</div>
@@ -134,16 +147,9 @@
 </template>
 
 <style lang="scss">
-	#timetable {
-		width: 100%;
-		position: relative;
-		.table-responsive {
-			max-height: calc(100vh - 50px);
-			&::-webkit-scrollbar {
-				display: none;
-			}
-		}
-		.sidebar-toggle {
+	#sidebar + #overlay + #timetable {
+		padding-left: 240px;
+		.btn-open {
 			display: none;
 			position: fixed;
 			top: 8px;
@@ -152,12 +158,24 @@
 				font-size: 32px;
 			}
 		}
-		&.sidebar-open {
-			padding-left: 240px;
+		@media (max-width: 991.98px) {
+			padding-left: 0 !important;
+			.btn-open {
+				display: block;
+			}
+		}
+	}
+	#timetable {
+		width: 100%;
+		position: relative;
+		.table-responsive {
+			max-height: calc(100vh - 50px);
 		}
 		table {
 			position: relative;
+			margin-bottom: 0;
 			thead th {
+				text-align: center;
 				position: sticky;
 				top: 0;
 				z-index: 5;
@@ -165,27 +183,6 @@
 					z-index: 7;
 					left: 0;
 				}
-			}
-			tbody tr {
-				> th {
-					min-width: auto;
-					position: sticky;
-					left: 0;
-				}
-				> td {
-					min-width: 200px;
-					&.time {
-						min-width: auto;
-					}
-				}
-			}
-		}
-	}
-	@media (max-width: 991.98px) {
-		#timetable {
-			padding-left: 0 !important;
-			.sidebar-toggle {
-				display: block;
 			}
 		}
 	}
