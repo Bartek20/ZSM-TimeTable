@@ -17,9 +17,8 @@
 	header {
 		flex-shrink: 0;
 		height: 200px;
+		text-align: center;
 		img {
-			display: block;
-			margin: auto;
 			padding: 25px;
 			height: 100%;
 			aspect-ratio: 1 /1;

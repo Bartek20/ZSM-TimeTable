@@ -73,3 +73,8 @@ i {
 		content: $zsm-copyright-icon;
 	}
 }
+.zsm-empty-icon {
+	&:before {
+		content: $zsm-empty-icon;
+	}
+}

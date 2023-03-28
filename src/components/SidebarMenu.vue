@@ -87,31 +87,6 @@
 	$secondary-text-color: #dee2ec;
 	$bg-color: #0c1e35;
 	$secondary-bg-color: #0b1a2c;
-	@keyframes swing {
-		0%,
-		30%,
-		50%,
-		70%,
-		100% {
-			transform: rotate(0deg);
-		}
-
-		10% {
-			transform: rotate(10deg);
-		}
-
-		40% {
-			transform: rotate(-10deg);
-		}
-
-		60% {
-			transform: rotate(5deg);
-		}
-
-		80% {
-			transform: rotate(-5deg);
-		}
-	}
 	.menu {
 		> ul > .menu-item.sub-menu > .sub-menu-list {
 			visibility: visible !important;

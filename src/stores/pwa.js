@@ -5,7 +5,6 @@ export const usePWAStore = defineStore('pwa', {
 		return {
 			event: undefined,
 			installed: true,
-			load: false,
 		};
 	},
 	actions: {
@@ -40,7 +39,6 @@ export const usePWAStore = defineStore('pwa', {
 				if (res.outcome == 'accepted') {
 					console.log('Aplikacja zainstalowana pomyślnie.');
 					this.installed = true;
-					this.load = true;
 				} else {
 					console.log('Instalacja została anulowana.');
 				}

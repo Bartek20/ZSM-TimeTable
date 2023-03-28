@@ -71,20 +71,20 @@
 <template>
 	<div v-if="groups === 0"></div>
 	<div
-		class="lesson px-2 py-1 mb-2"
+		class="lesson"
 		:style="{ backgroundColor: getColor(subjectParser(data[i - 1].subject), 0.8), borderColor: getColor(subjectParser(data[i - 1].subject)) }"
 		v-else
 		v-for="i in groups">
-		<div class="row" v-if="data[i - 1].groupName">
-			<div class="col-9 fw-bold text-start text-nowrap">{{ subjectParser(data[i - 1].subject) }}</div>
-			<div class="col-3 ps-0 fw-bold text-end">{{ data[i - 1].groupName }}</div>
+		<div class="row fw-bold" v-if="data[i - 1].groupName">
+			<div class="col-9">{{ subjectParser(data[i - 1].subject) }}</div>
+			<div class="col-3">{{ data[i - 1].groupName }}</div>
 		</div>
-		<div class="row" v-else>
-			<div class="col-12 fw-bold text-nowrap">{{ subjectParser(data[i - 1].subject) }}</div>
+		<div class="row fw-bold" v-else>
+			<div class="col-12">{{ subjectParser(data[i - 1].subject) }}</div>
 		</div>
-		<div class="row">
-			<div class="col-6 text-muted text-start" @click="$emit('changePlan', col1[i - 1].mode, col1[i - 1].id)">{{ col1[i - 1].name }}</div>
-			<div class="col-6 text-muted text-end" @click="$emit('changePlan', col2[i - 1].mode, col2[i - 1].id)">{{ col2[i - 1].name }}</div>
+		<div class="row text-muted">
+			<div class="col-6" @click="$emit('changePlan', col1[i - 1].mode, col1[i - 1].id)">{{ col1[i - 1].name }}</div>
+			<div class="col-6" @click="$emit('changePlan', col2[i - 1].mode, col2[i - 1].id)">{{ col2[i - 1].name }}</div>
 		</div>
 	</div>
 </template>
@@ -94,6 +94,27 @@
 		border-radius: 6px;
 		border: 0;
 		border-bottom: 5px solid;
+		margin-bottom: 0.5rem;
+		padding: 4px 8px;
+		.row {
+			.col-9,
+			.col-12 {
+				text-align: start;
+				white-space: nowrap;
+			}
+			.col-3 {
+				text-align: end;
+				padding-left: 0;
+			}
+			.col-6 {
+				&:first-of-type {
+					text-align: start;
+				}
+				&:last-of-type {
+					text-align: end;
+				}
+			}
+		}
 	}
 	.lesson:last-child {
 		margin: 0 !important;

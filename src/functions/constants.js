@@ -1,3 +1,11 @@
+export const MESSAGES = {
+	EMPTY: {
+		o: 'Wybrana klasa nie ma w planie żadnych zajęć',
+		n: 'Wybrany nauczyciel nie ma w planie żadnych lekcji',
+		s: 'W wybranej sali nie ma żadnych lekcji'
+	}
+}
+
 export const DAYS = {
 	poniedziałek: 0,
 	wtorek: 1,

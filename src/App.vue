@@ -26,12 +26,6 @@
 	body {
 		width: 100vw;
 		height: 100vh;
-		max-width: 100%;
-		max-height: 100%;
 		background-color: #cfe2ff !important;
-	}
-	#app {
-		display: flex;
-		flex-direction: row;
 	}
 </style>

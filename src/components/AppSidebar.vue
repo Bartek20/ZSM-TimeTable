@@ -171,14 +171,14 @@
 
 <template>
 	<section id="sidebar">
-		<div id="btn-close" @click="sidebarClose"><i class="menu zsm-close-icon"></i></div>
+		<div class="btn-close" @click="sidebarClose"><i class="menu zsm-close-icon"></i></div>
 		<div class="image-wrapper">
 			<img src="/assets/images/sidebar-bg.jpg" alt="" />
 		</div>
 		<div class="sidebar-layout">
 			<SidebarHeader logo="/assets/images/logo.png" />
 			<div class="sidebar-content">
-				<nav class="menu open-current-submenu">
+				<nav class="menu">
 					<ul>
 						<SidebarMenu id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
 						<SidebarMenu id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />
@@ -189,15 +189,16 @@
 			<SidebarFooter />
 		</div>
 	</section>
-	<div id="overlay" @click="sidebarClose"></div>
+	<section id="overlay" @click="sidebarClose"></section>
 </template>
 
 <style lang="scss">
 	$bg-color: #0c1e35;
+	$sidebar-width: 240px;
 	#sidebar {
 		color: #7d84ab;
 		overflow-x: hidden !important;
-		width: 240px;
+		width: $sidebar-width;
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -207,12 +208,11 @@
 		transition: left 0.3s;
 		z-index: 10;
 		@media (max-width: 991.98px) {
-			left: -250px;
-			&.toggled {
-				left: 0;
+			&:not(.toggled) {
+				left: -#{$sidebar-width};
 			}
 		}
-		#btn-close {
+		.btn-close {
 			display: none;
 			right: 8px;
 			top: 8px;
