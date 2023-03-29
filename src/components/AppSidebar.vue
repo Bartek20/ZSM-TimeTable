@@ -171,7 +171,7 @@
 
 <template>
 	<section id="sidebar">
-		<div class="btn-close" @click="sidebarClose"><i class="menu zsm-close-icon"></i></div>
+		<div class="sb-btn-close" @click="sidebarClose"><i class="menu zsm-close-icon"></i></div>
 		<div class="image-wrapper">
 			<img src="/assets/images/sidebar-bg.jpg" alt="" />
 		</div>
@@ -212,7 +212,7 @@
 				left: -#{$sidebar-width};
 			}
 		}
-		.btn-close {
+		.sb-btn-close {
 			display: none;
 			right: 8px;
 			top: 8px;
