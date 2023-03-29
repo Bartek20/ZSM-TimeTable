@@ -55,9 +55,14 @@ export const usePlansStore = defineStore('plans', {
 			this.plans[mode][id] = result;
 		},
 		async getPlans() {
-			const li = [].concat(this.lists.classes).concat(this.lists.teachers).concat(this.lists.rooms);
-			li.forEach((obj) => {
-				axios.get('/data/plany/' + obj.value + '.html');
+			this.lists.classes.forEach((obj) => {
+				axios.get('/data/plany/o' + obj.value + '.html');
+			});
+			this.lists.teachers.forEach((obj) => {
+				axios.get('/data/plany/n' + obj.value + '.html');
+			});
+			this.lists.rooms.forEach((obj) => {
+				axios.get('/data/plany/s' + obj.value + '.html');
 			});
 		},
 		async getTimeTable() {
