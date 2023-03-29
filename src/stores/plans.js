@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { TimetableList /*, Table*/ } from '@wulkanowy/timetable-parser';
 // Temporary fix until @wulkanowy/timetable-parser #24 PR update
 import Table from '@/functions/tableParser';
+import axios from 'axios';
 
 const PROXY = 'https://corsproxy.io/?';
 const WEBPAGE = 'https://zsm.resman.pl/plan_nauczyciele/';
@@ -23,30 +24,12 @@ export const usePlansStore = defineStore('plans', {
 		};
 	},
 	actions: {
-		createURL(url) {
-			return window.location.host == 'zsm.resman.pl' ? url : PROXY + encodeURIComponent(url);
-		},
-		async cacheURL(url) {
-			const URL = this.createURL(url);
-			const store = await window.caches.open('timetables');
-			var online = true;
-			var res = await store.match(URL);
-			if (res == undefined) {
-				await store.add(URL).catch((err) => {
-					online = false;
-				});
-			}
-			if (!online) return undefined;
-			var res = await store.match(URL);
-			if (res != undefined) return await res.text();
-			return undefined;
-		},
 		async loadList() {
 			if (this.logo_path != '') return;
-			const URL = WEBPAGE + 'lista.html';
-			const res = await this.cacheURL(URL);
+			const URL = '/data/lista.html';
+			const res = await axios.get(URL);
 			if (res == undefined) return;
-			const TimeTable_List = new TimetableList(res);
+			const TimeTable_List = new TimetableList(res.data);
 			const result_list = TimeTable_List.getList();
 			const result_logo = WEBPAGE + TimeTable_List.getLogoSrc();
 			this.lists = result_list;
@@ -55,13 +38,13 @@ export const usePlansStore = defineStore('plans', {
 		async loadPlan(mode, id) {
 			if (this.plans[mode][id] != undefined) return;
 			this.plans[mode][id] = {};
-			const URL = WEBPAGE + `plany/${mode}${id}.html`;
-			const res = await this.cacheURL(URL);
+			const URL = `/data/plany/${mode}${id}.html`;
+			const res = await axios.get(URL);
 			if (res == undefined) {
 				this.plans[mode][id] = undefined;
 				return;
 			}
-			const TimeTable = new Table(res);
+			const TimeTable = new Table(res.data);
 			const result = {
 				title: TimeTable.getTitle(),
 				hours: TimeTable.getHours(),
@@ -72,14 +55,9 @@ export const usePlansStore = defineStore('plans', {
 			this.plans[mode][id] = result;
 		},
 		async getPlans() {
-			this.lists.classes.forEach((obj) => {
-				this.cacheURL(WEBPAGE + 'plany/o' + obj.value + '.html');
-			});
-			this.lists.teachers.forEach((obj) => {
-				this.cacheURL(WEBPAGE + 'plany/n' + obj.value + '.html');
-			});
-			this.lists.rooms.forEach((obj) => {
-				this.cacheURL(WEBPAGE + 'plany/s' + obj.value + '.html');
+			const li = [].concat(this.lists.classes).concat(this.lists.teachers).concat(this.lists.rooms);
+			li.forEach((obj) => {
+				axios.get('/data/plany/' + obj.value + '.html');
 			});
 		},
 		async getTimeTable() {
@@ -87,7 +65,6 @@ export const usePlansStore = defineStore('plans', {
 			this.getPlans();
 		},
 		async updateTimeTable() {
-			await window.caches.delete('timetables');
 			this.lists.classes = [];
 			this.lists.teachers = [];
 			this.lists.rooms = [];
