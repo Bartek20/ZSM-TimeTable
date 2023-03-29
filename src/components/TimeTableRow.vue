@@ -53,7 +53,7 @@
 		</td>
 	</tr>
 	<tr v-if="!isEmpty && breakTime != 0">
-		<td colspan="7" :class="{ current: currentBreak }">
+		<td colspan="7" class="break" :class="{ current: currentBreak }">
 			{{ 'Przerwa ' + breakTime + '-minutowa' }}
 		</td>
 	</tr>
@@ -87,6 +87,9 @@
 				animation: blink 2s linear infinite;
 				background-color: rgba(var(--bs-info-rgb), 1);
 			}
+		}
+		.break.current {
+			background-color: rgba(var(--bs-info-rgb), 1);
 		}
 		th[scope='row'] {
 			position: sticky;

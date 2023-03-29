@@ -111,7 +111,7 @@
 
 <template>
 	<section id="timetable">
-		<div v-if="!print" class="btn-open" @click="sidebarToggle">
+		<div v-if="!print" class="sb-btn-open" @click="sidebarToggle">
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
@@ -149,7 +149,7 @@
 <style lang="scss">
 	#sidebar + #overlay + #timetable {
 		padding-left: 240px;
-		.btn-open {
+		.sb-btn-open {
 			display: none;
 			position: fixed;
 			top: 8px;
@@ -160,7 +160,7 @@
 		}
 		@media (max-width: 991.98px) {
 			padding-left: 0 !important;
-			.btn-open {
+			.sb-btn-open {
 				display: block;
 			}
 		}
