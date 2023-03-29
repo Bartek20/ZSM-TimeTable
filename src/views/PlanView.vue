@@ -2,6 +2,7 @@
 	import AppSidebar from '@/components/AppSidebar.vue';
 	import AppTimeTable from '@/components/AppTimeTable.vue';
 	import { usePlansStore } from '@/stores/plans';
+	import sleep from '../functions/sleep';
 	import { watch } from 'vue';
 	import { useRoute } from 'vue-router';
 	const plansStore = usePlansStore();
@@ -14,15 +15,10 @@
 		mode = data.params.mode;
 		id = data.params.id;
 	});
-	async function loadTimeTables() {
-		if ('serviceWorker' in navigator) {
-			await navigator.serviceWorker.ready;
-			plansStore.getTimeTable();
-		} else {
-			plansStore.getTimeTable();
-		}
-	}
-	loadTimeTables();
+	window.addEventListener('DOMContentLoaded', async () => {
+		await sleep(10000);
+		plansStore.getTimeTable();
+	});
 </script>
 
 <template>
