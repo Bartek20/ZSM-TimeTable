@@ -12,20 +12,10 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			workbox: {
-				globPatterns: ['**/*.{html,js,css,png,jpg,ico,ttf,woff,woff2}'],
+				globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
 				runtimeCaching: [
 					{
-						urlPattern: /^https:\/\/zsm\.resman\.pl\/plan_nauczyciele/,
-						handler: 'NetworkFirst',
-						options: {
-							cacheName: 'timetables-data',
-							cacheableResponse: {
-								statuses: [200],
-							},
-						},
-					},
-					{
-						urlPattern: /https%3A%2F%2Fzsm.resman.pl%2Fplan_nauczyciele/,
+						urlPattern: /data/,
 						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'timetables-data',
