@@ -14,7 +14,15 @@
 		mode = data.params.mode;
 		id = data.params.id;
 	});
-	plansStore.getTimeTable();
+	async function loadTimeTables() {
+		if ('serviceWorker' in navigator) {
+			await navigator.serviceWorker.ready;
+			plansStore.getTimeTable();
+		} else {
+			plansStore.getTimeTable();
+		}
+	}
+	loadTimeTables();
 </script>
 
 <template>
