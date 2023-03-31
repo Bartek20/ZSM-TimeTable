@@ -14,7 +14,7 @@ export default defineConfig({
 			workbox: {
 				globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
 				navigateFallback: '/index.html',
-				navigateFallbackAllowlist: /^\/(print|plan)\//i,
+				navigateFallbackAllowlist: [/^\/plan/, /^\/print/],
 				runtimeCaching: [
 					{
 						urlPattern: /data/,
