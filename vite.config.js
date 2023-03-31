@@ -13,6 +13,8 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			workbox: {
 				globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
+				navigateFallback: '/index.html',
+				navigateFallbackAllowlist: /^\/(print|plan)\//i,
 				runtimeCaching: [
 					{
 						urlPattern: /data/,
