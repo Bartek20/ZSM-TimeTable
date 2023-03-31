@@ -15,10 +15,11 @@
 		mode = data.params.mode;
 		id = data.params.id;
 	});
-	window.addEventListener('DOMContentLoaded', async () => {
+	async function load() {
 		await sleep(10000);
 		plansStore.getTimeTable();
-	});
+	};
+	load()
 </script>
 
 <template>
