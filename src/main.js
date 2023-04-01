@@ -12,6 +12,7 @@ import { registerSW } from 'virtual:pwa-register';
 const updateSW = registerSW({
 	immediate: true,
 	onRegisteredSW(workerURL, r) {
+		window.WorkerReady = true
 		r &&
 			setInterval(() => {
 				r.update();
