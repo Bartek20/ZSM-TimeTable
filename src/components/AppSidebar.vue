@@ -163,8 +163,6 @@
 		const el = document.getElementById('sidebar');
 		if (el) {
 			el.classList.toggle('toggled');
-			updatePoppersTimeout();
-			document.querySelectorAll('.menu > ul > .menu-item.sub-menu').forEach((el) => el.classList.remove('open'));
 		}
 	}
 </script>
@@ -178,7 +176,7 @@
 		<div class="sidebar-layout">
 			<SidebarHeader logo="/assets/images/logo.png" />
 			<div class="sidebar-content">
-				<nav class="menu">
+				<nav class="menu open-current-submenu">
 					<ul>
 						<SidebarMenu id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
 						<SidebarMenu id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />

@@ -16,10 +16,11 @@
 		id = data.params.id;
 	});
 	async function load() {
+		console.log(window.WorkerReady);
 		await sleep(10000);
 		plansStore.getTimeTable();
-	};
-	load()
+	}
+	load();
 </script>
 
 <template>
