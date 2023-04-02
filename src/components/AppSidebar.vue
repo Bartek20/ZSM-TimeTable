@@ -165,6 +165,7 @@
 			el.classList.toggle('toggled');
 		}
 	}
+	await plansStore.loadList()
 </script>
 
 <template>
