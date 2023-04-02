@@ -1,11 +1,21 @@
 {
   "name": "zsm-timetable",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "App for more futuristic preview of timetables for Zesół Szkół Mechanicznych w Rzeszowie",
+  "homepage": "https://github.com/Bartek20/ZSM-TimeTable",
+  "author": {
+    "name": "Bartłomiej Radoń",
+    "url": "https://github.com/Bartek20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bartek20/ZSM-TimeTable.git"
+  },
   "private": true,
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

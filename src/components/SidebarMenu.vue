@@ -23,7 +23,7 @@
 	});
 	function setPlan(mode, id) {
 		if (id == undefined) return;
-		document.cookie = `selectedTimeTable=${mode + id}; expires=Tue, 19 Jan 2038 04:14:07 GMT; path=/`;
+		window.localStorage.setItem('selectedTimeTable', mode + id)
 		router.push({ name: 'plan', params: { mode: mode, id: id } });
 	}
 	function titleParser(title) {
