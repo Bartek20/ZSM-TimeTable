@@ -29,5 +29,6 @@
 <style lang="scss">
 	.title {
 		height: 50px;
+		white-space: nowrap;
 	}
 </style>
