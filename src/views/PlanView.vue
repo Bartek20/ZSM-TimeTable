@@ -14,6 +14,9 @@
 		id = data.params.id;
 	});
 	async function load() {
+		const last = window.localStorage.getItem('lastFetched')
+		if (last != null && last + 86400000 > Date.now()) return
+		console.log('Fetching timetable updates...')
 		var i = 0;
 		while (window.WorkerReady == undefined && i < 600) {
 			await sleep(100);
@@ -21,8 +24,9 @@
 		}
 		await sleep(1000);
 		plansStore.getTimeTable();
+		window.localStorage.setItem('lastFetched', Date.now())
 	}
-	//load();
+	load();
 </script>
 
 <template>
