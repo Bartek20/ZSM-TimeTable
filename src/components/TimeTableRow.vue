@@ -1,5 +1,4 @@
 <script setup>
-	import { MESSAGES } from '../functions/constants';
 	import TimeTableCell from '@/components/TimeTableCell.vue';
 	const props = defineProps({
 		mode: {
@@ -30,16 +29,12 @@
 			type: Boolean,
 			required: true,
 		},
-		isEmpty: {
-			type: Boolean,
-			required: true,
-		},
 	});
 	const emits = defineEmits(['changePlan']);
 </script>
 
 <template>
-	<tr v-if="!isEmpty">
+	<tr>
 		<th scope="row">
 			{{ hours.number }}
 		</th>
@@ -52,17 +47,9 @@
 			</div>
 		</td>
 	</tr>
-	<tr v-if="!isEmpty && breakTime != 0">
+	<tr v-if="breakTime != 0">
 		<td colspan="7" class="break" :class="{ current: currentBreak }">
 			{{ 'Przerwa ' + breakTime + '-minutowa' }}
-		</td>
-	</tr>
-	<tr v-if="isEmpty">
-		<td colspan="7" class="msg">
-			<div>
-				<i class="zsm-empty-icon"></i>
-				<h5>{{ MESSAGES.EMPTY[mode] }}</h5>
-			</div>
 		</td>
 	</tr>
 </template>

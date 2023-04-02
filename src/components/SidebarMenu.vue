@@ -31,24 +31,14 @@
 		const data = TEACHERS[title];
 		var out = '';
 		switch (title) {
-			case 'A.Aeroklub Rzeszowski (AA)':
-				out = data.name + ' (' + data.code + ')';
-				break;
 			case 'c.Centrum Kształcenia Zawodowego (CK)':
 				out = 'CKZ (' + data.code + ')';
 				break;
+			case 'A.Aeroklub Rzeszowski (AA)':
 			case 'E.Emeaero (EE)':
-				out = data.name + ' (' + data.code + ')';
-				break;
 			case 'H.Heli One (HO)':
-				out = data.name + ' (' + data.code + ')';
-				break;
 			case 'L.LineTech (LL)':
-				out = data.name + ' (' + data.code + ')';
-				break;
 			case 'P.Pratt Whitney AeroPower (PT)':
-				out = data.name + ' (' + data.code + ')';
-				break;
 			case 'S.Salony fryzjerskie (FR)':
 				out = data.name + ' (' + data.code + ')';
 				break;

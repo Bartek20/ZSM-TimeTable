@@ -2,9 +2,9 @@ export const MESSAGES = {
 	EMPTY: {
 		o: 'Wybrana klasa nie ma w planie żadnych zajęć',
 		n: 'Wybrany nauczyciel nie ma w planie żadnych lekcji',
-		s: 'W wybranej sali nie ma żadnych lekcji'
-	}
-}
+		s: 'W wybranej sali nie ma żadnych lekcji',
+	},
+};
 
 export const DAYS = {
 	poniedziałek: 0,
@@ -14,6 +14,23 @@ export const DAYS = {
 	piątek: 4,
 	sobota: 5,
 	niedziela: 6,
+};
+
+export const HOURS = {
+	0: { number: 0, timeFrom: '7:10', timeTo: '7:55' },
+	1: { number: 1, timeFrom: '8:00', timeTo: '8:45' },
+	2: { number: 2, timeFrom: '8:50', timeTo: '9:35' },
+	3: { number: 3, timeFrom: '9:40', timeTo: '10:25' },
+	4: { number: 4, timeFrom: '10:40', timeTo: '11:25' },
+	5: { number: 5, timeFrom: '11:30', timeTo: '12:15' },
+	6: { number: 6, timeFrom: '12:20', timeTo: '13:05' },
+	7: { number: 7, timeFrom: '13:10', timeTo: '13:55' },
+	8: { number: 8, timeFrom: '14:00', timeTo: '14:45' },
+	9: { number: 9, timeFrom: '14:50', timeTo: '15:35' },
+	10: { number: 10, timeFrom: '15:40', timeTo: '16:25' },
+	11: { number: 11, timeFrom: '16:40', timeTo: '17:25' },
+	12: { number: 12, timeFrom: '17:30', timeTo: '18:15' },
+	13: { number: 13, timeFrom: '18:20', timeTo: '19:05' },
 };
 
 export const LESSONS = {
