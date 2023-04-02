@@ -1,11 +1,11 @@
 <script setup>
 	import TimeTableRow from '@/components/TimeTableRow.vue';
 	import TimeTableTitle from '@/components/TimeTableTitle.vue';
-	import { computed, onBeforeUnmount, onMounted } from 'vue';
+	import TimeTableMessage from './TimeTableMessage.vue';
+	import { computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
-	import { MESSAGES } from '../functions/constants';
 	const router = useRouter();
 	const plansStore = usePlansStore();
 	const timeStore = useTimeStore();
@@ -16,38 +16,25 @@
 			required: false,
 			default: false,
 		},
+		mode: {
+			type: String,
+			required: true
+		},
 		id: {
 			type: String,
 			required: true,
 		},
 	});
 	if (props.print) {
-		var ready = false;
 		const timer = window.setInterval(print, 1000);
 		function print() {
-			if (ready) {
+			if (plan.value != undefined) {
 				window.clearInterval(timer);
 				window.print();
 			}
 		}
 	}
-	const plan = computed(() => {
-		const e = props.id;
-		const mode = e.charAt(0);
-		const id = e.replace(mode, '');
-		var res = plansStore.plans[mode][id];
-		if (res == undefined) {
-			plansStore.loadPlan(mode, id).then(() => {
-				res = plansStore.plans[mode][id];
-			});
-		}
-		ready = true;
-		return res == undefined ? {} : res;
-	});
-	const mode = computed(() => {
-		const e = props.id;
-		return e.charAt(0);
-	});
+	const plan = computed(() => plansStore.plans[props.mode][props.id]);
 	const currentLesson = computed(() => {
 		const current = timeStore.TIME;
 		var response = 999;
@@ -94,7 +81,8 @@
 	});
 	const isEmpty = computed(() => {
 		if (
-			plan.value.days &&
+			'days' in plan.value &&
+			plan.value.days.length == 5 &&
 			plan.value.days[0].length == 1 &&
 			plan.value.days[0][0].length == 0 &&
 			plan.value.days[1][0].length == 0 &&
@@ -103,6 +91,10 @@
 			plan.value.days[4][0].length == 0
 		)
 			return true;
+		return false;
+	});
+	const isError = computed(() => {
+		if ([404, 900].includes(plan.value.status)) return true;
 		return false;
 	});
 	function getRow(nr) {
@@ -114,6 +106,7 @@
 			plan.value.days[4][nr],
 		];
 	}
+	onBeforeMount(() => plansStore.loadPlan(props.mode, props.id))
 </script>
 
 <template>
@@ -122,7 +115,7 @@
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
-		<div v-if="!isEmpty" class="table-responsive">
+		<div v-if="plan && !isEmpty && !isError" class="table-responsive">
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
@@ -149,10 +142,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="msg" v-else>
-			<i class="zsm-empty-icon"></i>
-			<h5>{{ MESSAGES.EMPTY[mode] }}</h5>
-		</div>
+		<TimeTableMessage v-if="isError || isEmpty && typeof plan.status == 'number'" :isEmpty="isEmpty" :isError="isError" :mode="mode" :status="plan.status" />
 	</section>
 </template>
 
@@ -194,22 +184,6 @@
 					z-index: 7;
 					left: 0;
 				}
-			}
-		}
-		.msg {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			min-height: calc(100vh - 100px);
-			max-height: calc(100vh - 100px);
-			i {
-				font-size: 64px;
-				padding: 25px;
-			}
-			h5 {
-				margin-top: 10px;
-				white-space: normal;
 			}
 		}
 	}

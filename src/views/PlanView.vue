@@ -9,8 +9,6 @@
 	const route = useRoute();
 	var mode = route.params.mode;
 	var id = route.params.id;
-	await plansStore.loadList();
-	await plansStore.loadPlan(mode, id);
 	watch(route, (_, data) => {
 		mode = data.params.mode;
 		id = data.params.id;
@@ -24,10 +22,10 @@
 		await sleep(1000);
 		plansStore.getTimeTable();
 	}
-	load();
+	//load();
 </script>
 
 <template>
 	<AppSidebar />
-	<AppTimeTable :print="false" :id="mode + id" />
+	<AppTimeTable :print="false" :mode="mode" :id="id" :key="mode + id" />
 </template>
