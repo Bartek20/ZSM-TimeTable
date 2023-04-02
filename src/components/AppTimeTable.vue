@@ -149,7 +149,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div v-else>
+		<div class="msg" v-else>
 			<i class="zsm-empty-icon"></i>
 			<h5>{{ MESSAGES.EMPTY[mode] }}</h5>
 		</div>
@@ -180,6 +180,7 @@
 		position: relative;
 		.table-responsive {
 			max-height: calc(100vh - 50px);
+			min-height: calc(100vh - 50px);
 		}
 		table {
 			position: relative;
@@ -193,6 +194,22 @@
 					z-index: 7;
 					left: 0;
 				}
+			}
+		}
+		.msg {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			min-height: calc(100vh - 100px);
+			max-height: calc(100vh - 100px);
+			i {
+				font-size: 64px;
+				padding: 25px;
+			}
+			h5 {
+				margin-top: 10px;
+				white-space: normal;
 			}
 		}
 	}

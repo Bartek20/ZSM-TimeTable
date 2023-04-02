@@ -88,17 +88,5 @@
 			left: 0;
 			right: 0;
 		}
-		.msg div {
-			width: 100%;
-			height: 100%;
-			text-align: center;
-			i {
-				font-size: 48px;
-				padding: 25px;
-			}
-			h5 {
-				margin-top: 10px;
-			}
-		}
 	}
 </style>
