@@ -59,7 +59,7 @@ export const usePlansStore = defineStore('plans', {
       this.logo_path = result_logo;
     },
     async loadPlan(mode, id, force = false) {
-      if (!force && this.plans[mode][id] != undefined) return;
+      if (!force && this.plans[mode][id] != undefined && [200, 404].includes(this.plans[mode][id])) return;
       this.plans[mode][id] = {};
       const URL = `/data/plany/${mode}${id}.html`;
       var res;
