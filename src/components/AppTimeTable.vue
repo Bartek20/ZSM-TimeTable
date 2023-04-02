@@ -5,6 +5,7 @@
 	import { useRouter } from 'vue-router';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
+	import { MESSAGES } from '../functions/constants';
 	const router = useRouter();
 	const plansStore = usePlansStore();
 	const timeStore = useTimeStore();
@@ -51,9 +52,8 @@
 		const current = timeStore.TIME;
 		var response = 999;
 		if (props.print) return response;
-		Object.keys(plan.value.hours).forEach((lesson) => {
-			const obj = plan.value.hours[lesson];
-			if (timeStore.checkBetween(obj.timeFrom, obj.timeTo)) response = obj.number;
+		plan.value.hours.forEach((lesson) => {
+			if (timeStore.checkBetween(lesson.timeFrom, lesson.timeTo)) response = lesson.number;
 		});
 		return response;
 	});
@@ -94,6 +94,7 @@
 	});
 	const isEmpty = computed(() => {
 		if (
+			plan.value.days &&
 			plan.value.days[0].length == 1 &&
 			plan.value.days[0][0].length == 0 &&
 			plan.value.days[1][0].length == 0 &&
@@ -105,7 +106,13 @@
 		return false;
 	});
 	function getRow(nr) {
-		return [plan.value.days[0][nr], plan.value.days[1][nr], plan.value.days[2][nr], plan.value.days[3][nr], plan.value.days[4][nr]];
+		return [
+			plan.value.days[0][nr],
+			plan.value.days[1][nr],
+			plan.value.days[2][nr],
+			plan.value.days[3][nr],
+			plan.value.days[4][nr],
+		];
 	}
 </script>
 
@@ -115,7 +122,7 @@
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
-		<div class="table-responsive">
+		<div v-if="!isEmpty" class="table-responsive">
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
@@ -138,10 +145,13 @@
 						:currentDay="currentDay"
 						:currentLesson="currentLesson"
 						:breakTime="calcBreak(plan.hours[nr - 1], plan.hours[nr])"
-						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])"
-						:isEmpty="isEmpty" />
+						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])" />
 				</tbody>
 			</table>
+		</div>
+		<div v-else>
+			<i class="zsm-empty-icon"></i>
+			<h5>{{ MESSAGES.EMPTY[mode] }}</h5>
 		</div>
 	</section>
 </template>

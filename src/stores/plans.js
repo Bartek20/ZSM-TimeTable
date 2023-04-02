@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { TimetableList /*, Table*/ } from '@wulkanowy/timetable-parser';
+import { HOURS } from '../functions/constants';
 // Temporary fix until @wulkanowy/timetable-parser #24 PR update
 import Table from '@/functions/tableParser';
 import axios from 'axios';
 
-const PROXY = 'https://corsproxy.io/?';
 const WEBPAGE = 'https://zsm.resman.pl/plan_nauczyciele/';
 
 export const usePlansStore = defineStore('plans', {
@@ -24,6 +24,15 @@ export const usePlansStore = defineStore('plans', {
 		};
 	},
 	actions: {
+		getHours(html) {
+			const li = html.match(/<td class="nr">\d+<\/td>/gm);
+			var out = [];
+			li.forEach((el) => {
+				const id = el.replace('<td class="nr">', '').replace('</td>', '');
+				out.push(HOURS[id]);
+			});
+			return out;
+		},
 		async loadList() {
 			if (this.logo_path != '') return;
 			const URL = '/data/lista.html';
@@ -47,7 +56,7 @@ export const usePlansStore = defineStore('plans', {
 			const TimeTable = new Table(res.data);
 			const result = {
 				title: TimeTable.getTitle(),
-				hours: TimeTable.getHours(),
+				hours: this.getHours(res.data),
 				days: TimeTable.getDays(),
 				gen_date: TimeTable.getGeneratedDate(),
 				apply_date: TimeTable.getVersionInfo(),
@@ -79,7 +88,7 @@ export const usePlansStore = defineStore('plans', {
 			await this.getTimeTable();
 		},
 	},
-	persist: true,
+	persist: import.meta.env.MODE != 'development',
 });
 
 /*
