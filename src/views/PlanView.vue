@@ -16,13 +16,14 @@
 	async function load() {
 		const last = window.localStorage.getItem('lastFetched')
 		if (last != null && last + 86400000 > Date.now()) return
-		console.log('Fetching timetable updates...')
+		console.log('Waiting for SW before fetching...')
 		var i = 0;
 		while (window.WorkerReady == undefined && i < 600) {
 			await sleep(100);
 			i++;
 		}
-		await sleep(1000);
+		await sleep(3000);
+		console.log('Fetching timetable updates...')
 		plansStore.getTimeTable();
 		window.localStorage.setItem('lastFetched', Date.now())
 	}
