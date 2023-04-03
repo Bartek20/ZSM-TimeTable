@@ -15,7 +15,7 @@
 	});
 	async function load() {
 		const last = window.localStorage.getItem('lastFetched')
-		if (last != null && last + 86400000 > Date.now()) return
+		if (import.meta.env.MODE == 'development' && last != null && last + 86400000 > Date.now()) return
 		console.log('Waiting for SW before fetching...')
 		var i = 0;
 		while (window.WorkerReady == undefined && i < 600) {
