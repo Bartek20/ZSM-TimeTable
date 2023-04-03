@@ -124,7 +124,7 @@
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
-		<div v-if="plan && !isEmpty && !isError" class="table-responsive" :style="{ minHeight: `calc(100vh - ${device == 'PC' ? '50px' : '100px'})`, maxHeight: `calc(100vh - ${device == 'PC' ? '50px' : '100px'})` }">
+		<div v-if="plan && !isEmpty && !isError" class="table-responsive" :style="{ minHeight: `calc(100% - ${device == 'PC' ? '50px' : '100px'})`, maxHeight: `calc(100% - ${device == 'PC' ? '50px' : '100px'})` }">
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
@@ -179,7 +179,10 @@
 	}
 	#timetable {
 		width: 100%;
-		position: relative;
+		position: fixed;
+		top:0;
+		left: 0;
+		height: 100%;
 		.buttons {
 			text-align: center;
 			font-size: large;
