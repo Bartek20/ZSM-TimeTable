@@ -61,7 +61,7 @@
 		</td>
 	</tr>
 	<tr v-if="breakTime != 0">
-		<td colspan="7" class="break" :class="{ current: currentBreak && currentDay == selectedDay }">
+		<td colspan="7" class="break" :class="{ current: currentBreak && ((device == 'Phone' && currentDay == selectedDay) || device == 'PC') }">
 			{{ 'Przerwa ' + breakTime + '-minutowa' }}
 		</td>
 	</tr>
