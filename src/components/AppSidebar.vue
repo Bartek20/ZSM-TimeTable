@@ -112,7 +112,6 @@
 	}
 	function sidebarSetup() {
 		const SUB_MENU_ELS = document.querySelectorAll('.menu > ul > .menu-item.sub-menu');
-		const FIRST_SUB_MENUS_BTN = document.querySelectorAll('.menu > ul > .menu-item.sub-menu > a');
 		class Poppers {
 			subMenuPoppers = [];
 			constructor() {
@@ -146,16 +145,17 @@
 				PoppersInstance.updatePoppers();
 			}, ANIMATION_DURATION);
 		};
-		FIRST_SUB_MENUS_BTN.forEach((element) => {
-			element.addEventListener('click', () => {
-				const parentMenu = element.closest('.menu.open-current-submenu');
-				if (parentMenu)
-					parentMenu
-						.querySelectorAll(':scope > ul > .menu-item.sub-menu > a')
-						.forEach((el) => window.getComputedStyle(el.nextElementSibling).display !== 'none' && slideUp(el.nextElementSibling));
-				slideToggle(element.nextElementSibling);
-			});
-		});
+	}
+	function selectList(el) {
+		var element = el.target
+		if (element.tagName != 'A') element = element.parentElement
+		if (element.tagName != 'A') element = element.parentElement
+		const parentMenu = element.closest('.menu.open-current-submenu');
+		if (parentMenu)
+			parentMenu
+				.querySelectorAll(':scope > ul > .menu-item.sub-menu > a')
+				.forEach((el) => window.getComputedStyle(el.nextElementSibling).display !== 'none' && slideUp(el.nextElementSibling));
+		slideToggle(element.nextElementSibling);
 	}
 	onMounted(sidebarSetup);
 	onUpdated(sidebarSetup);
@@ -179,9 +179,9 @@
 			<div class="sidebar-content">
 				<nav class="menu open-current-submenu">
 					<ul>
-						<SidebarMenu id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
-						<SidebarMenu id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />
-						<SidebarMenu id="s" symbol="zsm-room-icon" name="Sale" :list="list.rooms" />
+						<SidebarMenu @selectList="selectList" id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
+						<SidebarMenu @selectList="selectList" id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />
+						<SidebarMenu @selectList="selectList" id="s" symbol="zsm-room-icon" name="Sale" :list="list.rooms" />
 					</ul>
 				</nav>
 			</div>
