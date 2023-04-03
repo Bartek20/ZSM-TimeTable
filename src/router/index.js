@@ -31,4 +31,9 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to) => {
+  if (to.name != 'plan') return;
+  window.localStorage.setItem('selectedTimeTable', to.params.mode + to.params.id);
+});
+
 export default router;

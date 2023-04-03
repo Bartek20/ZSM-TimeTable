@@ -1,5 +1,5 @@
 <script setup>
-	import { useRouter } from 'vue-router';
+	import { useRouter, RouterLink } from 'vue-router';
 	import { TEACHERS } from '../functions/constants';
 	const router = useRouter();
 
@@ -21,11 +21,6 @@
 			required: true,
 		},
 	});
-	function setPlan(mode, id) {
-		if (id == undefined) return;
-		window.localStorage.setItem('selectedTimeTable', mode + id)
-		router.push({ name: 'plan', params: { mode: mode, id: id } });
-	}
 	function titleParser(title) {
 		if (TEACHERS[title] == undefined) return title;
 		const data = TEACHERS[title];
@@ -62,10 +57,10 @@
 		</a>
 		<div class="sub-menu-list">
 			<ul>
-				<li v-for="el in list" class="menu-item" @click="setPlan(id, el.value)">
-					<a href="#">
+				<li v-for="el in list" class="menu-item">
+					<RouterLink :to="{ name: 'plan', params: {mode: id, id: el.value}}" >
 						<span class="menu-title">{{ titleParser(el.name) }}</span>
-					</a>
+					</RouterLink>
 				</li>
 			</ul>
 		</div>

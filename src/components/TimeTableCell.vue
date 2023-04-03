@@ -5,6 +5,10 @@
 	import { LESSONS } from '../functions/constants';
 
 	const props = defineProps({
+		print: {
+			type: Boolean,
+			required: true
+		},
 		mode: {
 			type: String,
 			required: true,
@@ -14,9 +18,11 @@
 			required: true,
 		},
 	});
-	const emits = defineEmits(['changePlan']);
 	const groups = computed(() => props.data.length);
 	const col1 = computed(() => {
+		if (props.data[0].subject.includes('ckz')) return [{
+			name: '@'
+		}]
 		const mode = ['n', 's'].includes(props.mode);
 		var response = [];
 		for (let i = 0; i < groups.value; i++) {
@@ -36,6 +42,9 @@
 		return response;
 	});
 	const col2 = computed(() => {
+		if (props.data[0].subject.includes('ckz')) return [{
+			name: 'CKZ'
+		}]
 		const mode = ['o', 'n'].includes(props.mode);
 		var response = [];
 		for (let i = 0; i < groups.value; i++) {
@@ -82,9 +91,11 @@
 		<div class="row fw-bold" v-else>
 			<div class="col-12">{{ subjectParser(data[i - 1].subject) }}</div>
 		</div>
-		<div class="row text-muted">
-			<div class="col-6" @click="$emit('changePlan', col1[i - 1].mode, col1[i - 1].id)">{{ col1[i - 1].name }}</div>
-			<div class="col-6" @click="$emit('changePlan', col2[i - 1].mode, col2[i - 1].id)">{{ col2[i - 1].name }}</div>
+		<div class="row">
+			<div class="col-6" v-if="!print && col1[i - 1].id"><RouterLink :to="{ name: 'plan', params: { mode: col1[i - 1].mode, id: col1[i - 1].id}}" class="text-muted text-decoration-none">{{ col1[i - 1].name }}</RouterLink></div>
+			<div class="col-6 text-muted" v-else>{{ col1[i - 1].name }}</div>
+			<div class="col-6" v-if="!print && col2[i - 1].id"><RouterLink :to="{ name: 'plan', params: { mode: col2[i - 1].mode, id: col2[i - 1].id}}" class="text-muted text-decoration-none">{{ col2[i - 1].name }}</RouterLink></div>
+			<div class="col-6 text-muted" v-else>{{ col2[i - 1].name }}</div>
 		</div>
 	</div>
 </template>
