@@ -197,16 +197,18 @@
 	#sidebar {
 		color: #7d84ab;
 		overflow-x: hidden !important;
-		width: $sidebar-width;
-		position: fixed;
-		top: 0;
-		left: 0;
+		min-width: $sidebar-width;
+		max-width: $sidebar-width;
+		position: relative;
 		min-height: 100%;
 		max-height: 100%;
 		height: 100%;
-		transition: left 0.3s;
-		z-index: 10;
 		@media (max-width: 991.98px) {
+			transition: left 0.3s;
+			z-index: 10;
+			position: fixed;
+			top: 0;
+			left: 0;
 			&:not(.toggled) {
 				left: -#{$sidebar-width};
 			}
