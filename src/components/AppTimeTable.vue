@@ -2,14 +2,19 @@
 	import TimeTableRow from '@/components/TimeTableRow.vue';
 	import TimeTableTitle from '@/components/TimeTableTitle.vue';
 	import TimeTableMessage from './TimeTableMessage.vue';
-	import { computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
+	import { ref, computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { usePlansStore } from '@/stores/plans';
 	import { useTimeStore } from '@/stores/time';
+	const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek']
 	const router = useRouter();
 	const plansStore = usePlansStore();
 	const timeStore = useTimeStore();
 	timeStore.getTime();
+	const screenWidth = ref(window.innerWidth)
+	window.addEventListener('resize', () => {
+		screenWidth.value = window.innerWidth
+	})
 	const props = defineProps({
 		print: {
 			type: Boolean,
@@ -34,17 +39,22 @@
 			}
 		}
 	}
+	const device = computed(() => {
+		if (screenWidth.value < 576) return 'Phone'
+		return 'PC'
+	})
 	const plan = computed(() => plansStore.plans[props.mode][props.id]);
 	const currentLesson = computed(() => {
 		const current = timeStore.TIME;
 		var response = 999;
-		if (props.print) return response;
+		if (props.print || !('hours' in plan.value)) return response;
 		plan.value.hours.forEach((lesson) => {
 			if (timeStore.checkBetween(lesson.timeFrom, lesson.timeTo)) response = lesson.number;
 		});
 		return response;
 	});
 	const currentDay = computed(() => timeStore.DAY);
+	const selectedDay = ref(timeStore.DAY);
 	var timer = undefined;
 	onMounted(() => {
 		timer = window.setInterval(timeStore.getTime, 1000);
@@ -107,6 +117,10 @@
 		];
 	}
 	onBeforeMount(() => plansStore.loadPlan(props.mode, props.id))
+	function changeDay(d) {
+		if (d == 'Prev') selectedDay.value == 0 ? selectedDay.value = 4 : selectedDay.value -= 1
+		else selectedDay.value == 4 ? selectedDay.value = 0 : selectedDay.value += 1
+	}
 </script>
 
 <template>
@@ -116,31 +130,32 @@
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
 		<div v-if="plan && !isEmpty && !isError" class="table-responsive">
+			<div v-if="device == 'Phone'" @click="changeDay('Prev')" class="button">&lt;</div>
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Czas</th>
-						<th>Poniedziałek</th>
-						<th>Wtorek</th>
-						<th>Środa</th>
-						<th>Czwartek</th>
-						<th>Piątek</th>
+						<th v-if="device == 'PC'" v-for="day in DAYS">{{ day }}</th>
+						<th v-else>{{ DAYS[selectedDay] }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<TimeTableRow
 						@changePlan="setPlan"
 						v-for="nr in rowsNr"
+						:device="device"
 						:mode="mode"
 						:hours="plan.hours[nr - 1]"
 						:lessons="getRow(nr - 1)"
+						:selectedDay="selectedDay"
 						:currentDay="currentDay"
 						:currentLesson="currentLesson"
 						:breakTime="calcBreak(plan.hours[nr - 1], plan.hours[nr])"
 						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])" />
 				</tbody>
 			</table>
+			<div v-if="device == 'Phone'" @click="changeDay('Next')" class="button">&gt;</div>
 		</div>
 		<TimeTableMessage v-if="isError || isEmpty && typeof plan.status == 'number'" :isEmpty="isEmpty" :isError="isError" :mode="mode" :status="plan.status" />
 	</section>
@@ -171,6 +186,12 @@
 		.table-responsive {
 			max-height: calc(100vh - 50px);
 			min-height: calc(100vh - 50px);
+			display: flex;
+		}
+		.button {
+			font-size: xx-large;
+			margin: auto;
+			padding-inline: 5px;
 		}
 		table {
 			position: relative;

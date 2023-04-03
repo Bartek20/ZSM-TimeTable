@@ -1,6 +1,10 @@
 <script setup>
 	import TimeTableCell from '@/components/TimeTableCell.vue';
 	const props = defineProps({
+		device: {
+			type: String,
+			required: true,
+		},
 		mode: {
 			type: String,
 			required: true,
@@ -11,6 +15,10 @@
 		},
 		lessons: {
 			type: Array,
+			required: true,
+		},
+		selectedDay: {
+			type: Number,
 			required: true,
 		},
 		currentDay: {
@@ -41,14 +49,19 @@
 		<td>
 			{{ hours.timeFrom + ' - ' + hours.timeTo }}
 		</td>
-		<td v-for="(lesson, i) in lessons">
+		<td v-if="device == 'PC'" v-for="(lesson, i) in lessons">
 			<div class="cell" :class="{ current: currentLesson == hours.number && currentDay == i && lesson.length != 0 }">
 				<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lesson" />
 			</div>
 		</td>
+		<td v-else>
+			<div class="cell" :class="{ current: currentLesson == hours.number && currentDay == selectedDay && lessons[selectedDay].length != 0 }">
+				<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lessons[selectedDay]" />
+			</div>
+		</td>
 	</tr>
 	<tr v-if="breakTime != 0">
-		<td colspan="7" class="break" :class="{ current: currentBreak }">
+		<td colspan="7" class="break" :class="{ current: currentBreak && currentDay == selectedDay }">
 			{{ 'Przerwa ' + breakTime + '-minutowa' }}
 		</td>
 	</tr>
