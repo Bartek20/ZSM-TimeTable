@@ -45,11 +45,12 @@
 		}
 		return out;
 	}
+	const emits = defineEmits(['selectList'])
 </script>
 
 <template>
 	<li class="menu-item sub-menu">
-		<a href="#">
+		<a href="#" @click="$emit('selectList', $event)">
 			<span class="menu-icon">
 				<i :class="symbol"></i>
 			</span>
