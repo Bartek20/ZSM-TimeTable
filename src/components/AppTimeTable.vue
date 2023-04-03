@@ -76,11 +76,6 @@
 		if (props.print || start == undefined || end == undefined) return false;
 		return timeStore.checkBetween(start.timeTo, end.timeFrom) && timeStore.DAY < 5;
 	}
-	function setPlan(mode, id) {
-		if (props.print || id == undefined) return;
-		window.localStorage.setItem('selectedTimeTable', mode + id)
-		router.push({ name: 'plan', params: { mode: mode, id: id } });
-	}
 	function sidebarToggle() {
 		const el = document.getElementById('sidebar');
 		if (el) el.classList.toggle('toggled');
@@ -129,8 +124,7 @@
 			<i class="menu zsm-menu-icon"></i>
 		</div>
 		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
-		<div v-if="plan && !isEmpty && !isError" class="table-responsive">
-			<div v-if="device == 'Phone'" @click="changeDay('Prev')" class="button">&lt;</div>
+		<div v-if="plan && !isEmpty && !isError" class="table-responsive" :style="{ minHeight: `calc(100vh - ${device == 'PC' ? '50px' : '100px'})`, maxHeight: `calc(100vh - ${device == 'PC' ? '50px' : '100px'})` }">
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
 					<tr>
@@ -142,9 +136,9 @@
 				</thead>
 				<tbody>
 					<TimeTableRow
-						@changePlan="setPlan"
 						v-for="nr in rowsNr"
 						:device="device"
+						:print="print"
 						:mode="mode"
 						:hours="plan.hours[nr - 1]"
 						:lessons="getRow(nr - 1)"
@@ -155,7 +149,10 @@
 						:currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])" />
 				</tbody>
 			</table>
-			<div v-if="device == 'Phone'" @click="changeDay('Next')" class="button">&gt;</div>
+		</div>
+		<div v-if="plan && !isEmpty && !isError && device == 'Phone'" class="row buttons">
+			<div class="col-6" @click="changeDay('Prev')">&lt; Poprzedni</div>
+			<div class="col-6" @click="changeDay('Next')">Następny &gt;</div>
 		</div>
 		<TimeTableMessage v-if="isError || isEmpty && typeof plan.status == 'number'" :isEmpty="isEmpty" :isError="isError" :mode="mode" :status="plan.status" />
 	</section>
@@ -183,15 +180,13 @@
 	#timetable {
 		width: 100%;
 		position: relative;
-		.table-responsive {
-			max-height: calc(100vh - 50px);
-			min-height: calc(100vh - 50px);
-			display: flex;
-		}
-		.button {
-			font-size: xx-large;
-			margin: auto;
-			padding-inline: 5px;
+		.buttons {
+			text-align: center;
+			font-size: large;
+			font-weight: 700;
+			height: 50px;
+			align-items: center;
+			margin: 0;
 		}
 		table {
 			position: relative;

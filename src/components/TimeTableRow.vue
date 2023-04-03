@@ -5,6 +5,10 @@
 			type: String,
 			required: true,
 		},
+		print: {
+			type: Boolean,
+			required: true
+		},
 		mode: {
 			type: String,
 			required: true,
@@ -38,7 +42,6 @@
 			required: true,
 		},
 	});
-	const emits = defineEmits(['changePlan']);
 </script>
 
 <template>
@@ -51,12 +54,12 @@
 		</td>
 		<td v-if="device == 'PC'" v-for="(lesson, i) in lessons">
 			<div class="cell" :class="{ current: currentLesson == hours.number && currentDay == i && lesson.length != 0 }">
-				<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lesson" />
+				<TimeTableCell :print="print" :mode="mode" :data="lesson" />
 			</div>
 		</td>
 		<td v-else>
 			<div class="cell" :class="{ current: currentLesson == hours.number && currentDay == selectedDay && lessons[selectedDay].length != 0 }">
-				<TimeTableCell @changePlan="(mode, id) => $emit('changePlan', mode, id)" :mode="mode" :data="lessons[selectedDay]" />
+				<TimeTableCell :print="print" :mode="mode" :data="lessons[selectedDay]" />
 			</div>
 		</td>
 	</tr>
