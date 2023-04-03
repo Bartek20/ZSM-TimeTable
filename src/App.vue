@@ -23,9 +23,18 @@
 		-webkit-user-select: none;
 		-webkit-user-drag: none;
 	}
+	html {
+		height: 100%;
+	}
 	body {
 		width: 100vw;
-		height: 100vh;
+		height: 100%;
 		background-color: #cfe2ff !important;
+	}
+	#app {
+		height: 100%;
+		max-width: 100%;
+		display: flex;
+		flex-wrap: nowrap;
 	}
 </style>

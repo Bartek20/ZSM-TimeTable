@@ -160,28 +160,25 @@
 
 <style lang="scss">
 	#sidebar + #overlay + #timetable {
-		padding-left: 240px;
+		max-width: calc(100% - 240px);
+		@media (max-width: 991.98px) {
+			max-width: 100%;
+		}
 		.sb-btn-open {
 			display: none;
 			position: fixed;
 			top: 8px;
 			left: 8px;
+			@media (max-width: 991.98px) {
+				display: block;
+			}
 			i {
 				font-size: 32px;
-			}
-		}
-		@media (max-width: 991.98px) {
-			padding-left: 0 !important;
-			.sb-btn-open {
-				display: block;
 			}
 		}
 	}
 	#timetable {
 		width: 100%;
-		position: fixed;
-		top:0;
-		left: 0;
 		height: 100%;
 		.buttons {
 			text-align: center;
