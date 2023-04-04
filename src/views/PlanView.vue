@@ -33,5 +33,9 @@
 
 <template>
 	<AppSidebar />
-	<AppTimeTable :print="false" :mode="mode" :id="id" :key="mode + id" />
+	<AppTimeTable
+		:print="false"
+		:mode="mode"
+		:id="id"
+		:key="mode + id" />
 </template>
