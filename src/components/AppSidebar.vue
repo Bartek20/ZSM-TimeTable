@@ -270,6 +270,6 @@
 		z-index: -999;
 	}
 	#sidebar.toggled + #overlay {
-		z-index: 1;
+		z-index: 8;
 	}
 </style>
