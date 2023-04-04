@@ -10,5 +10,9 @@
 </script>
 
 <template>
-	<AppTimeTable :print="true" :mode="mode" :id="id" :key="mode + id" />
+	<AppTimeTable
+		:print="true"
+		:mode="mode"
+		:id="id"
+		:key="mode + id" />
 </template>

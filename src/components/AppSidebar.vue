@@ -3,13 +3,10 @@
 	import SidebarMenu from '@/components/SidebarMenu.vue';
 	import SidebarFooter from '@/components/SidebarFooter.vue';
 	import { usePlansStore } from '@/stores/plans';
-
-	import { createPopper } from '@popperjs/core';
-	import { computed, onMounted, onUpdated } from 'vue';
+	import { computed } from 'vue';
 	const plansStore = usePlansStore();
 	const list = computed(() => plansStore.lists);
 
-	var updatePoppersTimeout;
 	const ANIMATION_DURATION = 300;
 	const slideUp = (target, duration = ANIMATION_DURATION) => {
 		const { parentElement } = target;
@@ -71,81 +68,6 @@
 		if (window.getComputedStyle(target).display === 'none') return slideDown(target, duration);
 		return slideUp(target, duration);
 	};
-	class PopperObject {
-		instance = null;
-		reference = null;
-		popperTarget = null;
-		constructor(reference, popperTarget) {
-			this.init(reference, popperTarget);
-		}
-		init(reference, popperTarget) {
-			this.reference = reference;
-			this.popperTarget = popperTarget;
-			this.instance = createPopper(this.reference, this.popperTarget, {
-				placement: 'right',
-				strategy: 'fixed',
-				resize: true,
-				modifiers: [
-					{
-						name: 'computeStyles',
-						options: {
-							adaptive: false,
-						},
-					},
-					{
-						name: 'flip',
-						options: {
-							fallbackPlacements: ['left', 'right'],
-						},
-					},
-				],
-			});
-			const ro = new ResizeObserver(() => {
-				this.instance.update();
-			});
-			ro.observe(this.popperTarget);
-			ro.observe(this.reference);
-		}
-		hide() {
-			this.instance.state.elements.popper.style.visibility = 'hidden';
-		}
-	}
-	function sidebarSetup() {
-		const SUB_MENU_ELS = document.querySelectorAll('.menu > ul > .menu-item.sub-menu');
-		class Poppers {
-			subMenuPoppers = [];
-			constructor() {
-				this.init();
-			}
-			init() {
-				SUB_MENU_ELS.forEach((element) => {
-					this.subMenuPoppers.push(new PopperObject(element, element.lastElementChild));
-					this.closePoppers();
-				});
-			}
-			togglePopper(target) {
-				if (window.getComputedStyle(target).visibility === 'hidden') target.style.visibility = 'visible';
-				else target.style.visibility = 'hidden';
-			}
-			updatePoppers() {
-				this.subMenuPoppers.forEach((element) => {
-					element.instance.state.elements.popper.style.display = 'none';
-					element.instance.update();
-				});
-			}
-			closePoppers() {
-				this.subMenuPoppers.forEach((element) => {
-					element.hide();
-				});
-			}
-		}
-		const PoppersInstance = new Poppers();
-		updatePoppersTimeout = () => {
-			setTimeout(() => {
-				PoppersInstance.updatePoppers();
-			}, ANIMATION_DURATION);
-		};
-	}
 	function selectList(el) {
 		var element = el.target
 		if (element.tagName != 'A') element = element.parentElement
@@ -157,8 +79,6 @@
 				.forEach((el) => window.getComputedStyle(el.nextElementSibling).display !== 'none' && slideUp(el.nextElementSibling));
 		slideToggle(element.nextElementSibling);
 	}
-	onMounted(sidebarSetup);
-	onUpdated(sidebarSetup);
 	function sidebarClose() {
 		const el = document.getElementById('sidebar');
 		if (el) {
@@ -170,7 +90,9 @@
 
 <template>
 	<section id="sidebar">
-		<div class="sb-btn-close" @click="sidebarClose"><i class="menu zsm-close-icon"></i></div>
+		<div class="sb-btn-close" @click="sidebarClose">
+			<i class="menu zsm-close-icon"></i>
+		</div>
 		<div class="image-wrapper">
 			<img src="/assets/images/sidebar-bg.jpg" alt="" />
 		</div>
@@ -179,9 +101,24 @@
 			<div class="sidebar-content">
 				<nav class="menu open-current-submenu">
 					<ul>
-						<SidebarMenu @selectList="selectList" id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
-						<SidebarMenu @selectList="selectList" id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />
-						<SidebarMenu @selectList="selectList" id="s" symbol="zsm-room-icon" name="Sale" :list="list.rooms" />
+						<SidebarMenu
+							@selectList="selectList"
+							id="o"
+							symbol="zsm-student-icon"
+							name="Klasy"
+							:list="list.classes" />
+						<SidebarMenu
+							@selectList="selectList"
+							id="n"
+							symbol="zsm-teacher-icon"
+							name="Nauczyciele"
+							:list="list.teachers" />
+						<SidebarMenu
+							@selectList="selectList"
+							id="s"
+							symbol="zsm-room-icon"
+							name="Sale"
+							:list="list.rooms" />
 					</ul>
 				</nav>
 			</div>
