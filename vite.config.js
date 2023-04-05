@@ -5,21 +5,24 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const root = '/';
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: root,
   plugins: [
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
-        navigateFallback: '/index.html',
-        navigateFallbackAllowlist: [/^\/plan/, /^\/print/],
+        navigateFallback: `${root}index.html`,
+        navigateFallbackAllowlist: [/plan/, /print/],
         navigateFallbackDenylist: [/data/, /assets/],
         runtimeCaching: [
           {
             urlPattern: /data/,
-            handler: 'NetworkFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'timetables-data',
               cacheableResponse: {
@@ -30,7 +33,8 @@ export default defineConfig({
         ],
       },
       manifest: {
-        id: 'https://zsm-timetable.pages.dev/',
+        scope: root,
+        id: `https://zsm-timetable.pages.dev${root}`,
         name: 'ZSM Plan Lekcji',
         short_name: 'ZSM Plan Lekcji',
         description: 'Aplikacja do przeglądu planu lekcji w Zespole Szkół Mechanicznych w Rzeszowie',
@@ -40,22 +44,22 @@ export default defineConfig({
         orientation: 'portrait',
         icons: [
           {
-            src: '/assets/images/android-chrome-192x192.png',
+            src: `${root}/assets/images/android-chrome-192x192.png`,
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/assets/images/android-chrome-256x256.png',
+            src: `${root}/assets/images/android-chrome-256x256.png`,
             sizes: '256x256',
             type: 'image/png',
           },
           {
-            src: '/assets/images/android-chrome-512x512.png',
+            src: `${root}/assets/images/android-chrome-512x512.png`,
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: '/assets/images/safari-pinned-tab.svg',
+            src: `${root}/assets/images/safari-pinned-tab.svg`,
             type: 'image/svg',
             purpose: 'maskable',
           },

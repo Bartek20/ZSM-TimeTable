@@ -1,15 +1,6 @@
-<script setup>
-	const props = defineProps({
-		logo: {
-			type: String,
-			required: true,
-		},
-	});
-</script>
-
 <template>
 	<header>
-		<img :src="logo" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
+		<img src="/assets/images/logo.png" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
 	</header>
 </template>
 
