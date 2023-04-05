@@ -97,7 +97,7 @@
 			<img src="/assets/images/sidebar-bg.jpg" alt="" />
 		</div>
 		<div class="sidebar-layout">
-			<SidebarHeader logo="/assets/images/logo.png" />
+			<SidebarHeader />
 			<div class="sidebar-content">
 				<nav class="menu open-current-submenu">
 					<ul>

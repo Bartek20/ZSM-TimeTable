@@ -5,8 +5,6 @@ import { MONTHS, HOURS } from '../functions/constants';
 import Table from '@/functions/tableParser';
 import axios from 'axios';
 
-const WEBPAGE = 'https://zsm.resman.pl/plan_nauczyciele/';
-
 export const usePlansStore = defineStore('plans', {
   state: () => {
     return {
@@ -15,7 +13,6 @@ export const usePlansStore = defineStore('plans', {
         teachers: [],
         rooms: [],
       },
-      logo_path: '',
       plans: {
         o: {},
         n: {},
@@ -42,8 +39,8 @@ export const usePlansStore = defineStore('plans', {
       return date_parts[0] + '/' + MONTHS[date_parts[1]] + '/' + date_parts[2];
     },
     async loadList(force = false) {
-      if (!force && this.logo_path != '') return;
-      const URL = '/data/lista.html';
+      if (!force && this.lists.classes != []) return;
+      const URL = `${import.meta.env.BASE_URL}data/lista.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -54,16 +51,14 @@ export const usePlansStore = defineStore('plans', {
       if (res == undefined) return;
       const TimeTable_List = new TimetableList(res.data);
       const result_list = TimeTable_List.getList();
-      const result_logo = WEBPAGE + TimeTable_List.getLogoSrc();
       this.lists = result_list;
-      this.logo_path = result_logo;
     },
     async loadPlan(mode, id, force = false) {
       if (!force && this.plans[mode][id] != undefined && [0, 200, 404].includes(this.plans[mode][id])) return;
       this.plans[mode][id] = {
         status: 0,
       };
-      const URL = `/data/plany/${mode}${id}.html`;
+      const URL = `${import.meta.env.BASE_URL}data/plany/${mode}${id}.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -100,13 +95,13 @@ export const usePlansStore = defineStore('plans', {
     },
     async getPlans() {
       this.lists.classes.forEach((obj) => {
-        axios.get('/data/plany/o' + obj.value + '.html');
+        axios.get(`${import.meta.env.BASE_URL}data/plany/o${obj.value}.html`);
       });
       this.lists.teachers.forEach((obj) => {
-        axios.get('/data/plany/n' + obj.value + '.html');
+        axios.get(`${import.meta.env.BASE_URL}data/plany/n${obj.value}.html`);
       });
       this.lists.rooms.forEach((obj) => {
-        axios.get('/data/plany/s' + obj.value + '.html');
+        axios.get(`${import.meta.env.BASE_URL}data/plany/s${obj.value}.html`);
       });
     },
     async getTimeTable() {
