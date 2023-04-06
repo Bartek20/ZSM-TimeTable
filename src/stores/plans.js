@@ -77,8 +77,15 @@ export const usePlansStore = defineStore('plans', {
         return;
       }
       if (res == undefined) {
-        this.plans[mode][id] = undefined;
+        this.plans[mode][id] = {
+          status: 999,
+        };
         return;
+      }
+      if (!res.data.includes('table')) {
+        this.plans[mode][id] = {
+          status: 404,
+        };
       }
       const TimeTable = new Table(res.data);
       const result = {
