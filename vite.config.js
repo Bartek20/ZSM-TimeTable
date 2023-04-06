@@ -18,10 +18,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
         navigateFallback: `${root}index.html`,
         navigateFallbackAllowlist: [/plan/, /print/],
-        navigateFallbackDenylist: [/data/, /assets/],
+        navigateFallbackDenylist: [/plan_nauczyciele/, /assets/],
         runtimeCaching: [
           {
-            urlPattern: /data/,
+            urlPattern: /plan_nauczyciele/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'timetables-data',
@@ -44,22 +44,22 @@ export default defineConfig({
         orientation: 'portrait',
         icons: [
           {
-            src: `${root}/assets/images/android-chrome-192x192.png`,
+            src: `${root}assets/images/android-chrome-192x192.png`,
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: `${root}/assets/images/android-chrome-256x256.png`,
+            src: `${root}assets/images/android-chrome-256x256.png`,
             sizes: '256x256',
             type: 'image/png',
           },
           {
-            src: `${root}/assets/images/android-chrome-512x512.png`,
+            src: `${root}assets/images/android-chrome-512x512.png`,
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: `${root}/assets/images/safari-pinned-tab.svg`,
+            src: `${root}assets/images/safari-pinned-tab.svg`,
             type: 'image/svg',
             purpose: 'maskable',
           },
