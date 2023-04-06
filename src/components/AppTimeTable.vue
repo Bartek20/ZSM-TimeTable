@@ -76,10 +76,6 @@
 		if (props.print || start == undefined || end == undefined) return false;
 		return timeStore.checkBetween(start.timeTo, end.timeFrom) && timeStore.DAY < 5;
 	}
-	function sidebarToggle() {
-		const el = document.getElementById('sidebar');
-		if (el) el.classList.toggle('toggled');
-	}
 	const rowsNr = computed(() => {
 		if (plan.value.days && plan.value.days.length == 5) return plan.value.days[0].length;
 		return 0;
@@ -120,10 +116,7 @@
 
 <template>
 	<section id="timetable">
-		<div v-if="!print" class="sb-btn-open" @click="sidebarToggle">
-			<i class="menu zsm-menu-icon"></i>
-		</div>
-		<TimeTableTitle v-if="plan.title" :title="plan.title" :id="id" />
+		<TimeTableTitle :title="plan.title || ''" :id="id" />
 		<div v-if="plan && !isEmpty && !isError" class="table-responsive" :style="{ minHeight: `calc(100% - ${device == 'PC' ? '50px' : '100px'})`, maxHeight: `calc(100% - ${device == 'PC' ? '50px' : '100px'})` }">
 			<table class="table table-primary table-striped table-hover" :class="{ 'table-sm': print }">
 				<thead>
@@ -163,18 +156,6 @@
 		max-width: calc(100% - 240px);
 		@media (max-width: 991.98px) {
 			max-width: 100%;
-		}
-		.sb-btn-open {
-			display: none;
-			position: fixed;
-			top: 8px;
-			left: 8px;
-			@media (max-width: 991.98px) {
-				display: block;
-			}
-			i {
-				font-size: 32px;
-			}
 		}
 	}
 	#timetable {

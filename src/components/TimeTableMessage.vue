@@ -38,13 +38,9 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			&.empty {
+			&.empty, &.error {
 				min-height: calc(100vh - 100px);
 			max-height: calc(100vh - 100px);
-			}
-			&.error {
-				min-height: 100vh;
-				max-height: 100vh;
 			}
 			i {
 				font-size: 64px;

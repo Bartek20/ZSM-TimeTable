@@ -5,8 +5,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const root = process.env.ROOT_PATH || '/';
-console.log('Building for:', process.env.ROOT_PATH);
+const root = process.env.ROOT_PATH || '/development/';
 
 // https://vitejs.dev/config/
 export default defineConfig({

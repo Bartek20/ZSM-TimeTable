@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia';
-import { TimetableList /*, Table*/ } from '@wulkanowy/timetable-parser';
+import { TimetableList, Table } from '@wulkanowy/timetable-parser';
 import { MONTHS, HOURS } from '../functions/constants';
-// Temporary fix until @wulkanowy/timetable-parser #24 PR update
-import Table from '@/functions/tableParser';
 import axios from 'axios';
 
 export const usePlansStore = defineStore('plans', {
@@ -39,7 +37,7 @@ export const usePlansStore = defineStore('plans', {
       return date_parts[0] + '/' + MONTHS[date_parts[1]] + '/' + date_parts[2];
     },
     async loadList(force = false) {
-      if (!force && this.lists.classes != []) return;
+      if (!force && this.lists.classes.length != 0) return;
       const URL = `${import.meta.env.BASE_URL}data/lista.html`;
       var res;
       try {
