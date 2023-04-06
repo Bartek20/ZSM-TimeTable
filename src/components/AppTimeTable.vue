@@ -36,10 +36,12 @@ if (props.print) {
     if (plan.value != undefined) {
       window.clearInterval(timer);
       window.print();
+      window.close();
     }
   }
 }
 const device = computed(() => {
+  if (props.print) return 'Printer';
   if (screenWidth.value < 576) return 'Phone';
   return 'PC';
 });
@@ -116,13 +118,15 @@ function changeDay(d) {
 
 <template>
   <section id="timetable" class="z-0 w-100 h-100">
-    <TimeTableTitle :title="plan.title || ''" :mode="mode" :id="id" />
+    <TimeTableTitle :title="plan.title || ''" :print="device == 'Printer'" :mode="mode" :id="id" />
     <div
       v-if="plan && !isEmpty && !isError"
       class="table-responsive"
       :style="{
-        minHeight: `calc(100% - ${device == 'PC' ? '48px' : '96px'})`,
-        maxHeight: `calc(100% - ${device == 'PC' ? '48px' : '96px'})`,
+        minHeight: `calc(100% - ${device == 'PC' ? '48px' : device == 'Mobile' ? '96px' : 'auto'})`,
+        maxHeight: `calc(100% - ${device == 'PC' ? '48px' : device == 'Mobile' ? '96px' : 'auto'})`,
+        overflow: device == 'Printer' ? 'hidden' : 'auto',
+        fontSize: device == 'Printer' ? '0.9rem' : undefined,
       }"
     >
       <table class="table table-primary table-striped table-hover position-relative mb-0" :class="{ 'table-sm': print }">
@@ -130,7 +134,7 @@ function changeDay(d) {
           <tr>
             <th class="z-2 position-sticky top-0 start-0">#</th>
             <th class="z-1 position-sticky top-0">Czas</th>
-            <th class="z-1 position-sticky top-0" v-if="device == 'PC'" v-for="day in DAYS">{{ day }}</th>
+            <th class="z-1 position-sticky top-0" v-if="['PC', 'Printer'].includes(device)" v-for="day in DAYS">{{ day }}</th>
             <th class="z-1 position-sticky top-0" v-else>{{ DAYS[selectedDay] }}</th>
           </tr>
         </thead>
@@ -138,7 +142,6 @@ function changeDay(d) {
           <TimeTableRow
             v-for="nr in rowsNr"
             :device="device"
-            :print="print"
             :mode="mode"
             :hours="plan.hours[nr - 1]"
             :lessons="getRow(nr - 1)"

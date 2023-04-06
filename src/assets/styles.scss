@@ -11,6 +11,9 @@ $zindex-levels: (
   7: 7,
   999: 999,
 );
+.minw-auto {
+  min-width: auto !important;
+}
 .minh-100 {
   min-height: 100% !important;
 }

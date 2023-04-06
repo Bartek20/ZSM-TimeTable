@@ -1,12 +1,9 @@
 <script setup>
+import { computed } from 'vue';
 import TimeTableCell from '@/components/TimeTableCell.vue';
 const props = defineProps({
   device: {
     type: String,
-    required: true,
-  },
-  print: {
-    type: Boolean,
     required: true,
   },
   mode: {
@@ -42,19 +39,20 @@ const props = defineProps({
     required: true,
   },
 });
+const width = computed(() => (props.device == 'Printer' ? 'auto' : '200px'));
 </script>
 
 <template>
   <tr class="text-nowrap align-middle">
-    <th class="mw-auto text-center position-sticky start-0" scope="row">
+    <th class="minw-auto text-center position-sticky start-0" scope="row">
       {{ hours.number }}
     </th>
-    <td class="mw-auto text-center">
+    <td class="minw-auto text-center">
       {{ hours.timeFrom + ' - ' + hours.timeTo }}
     </td>
-    <td v-if="device == 'PC'" v-for="(lesson, i) in lessons">
+    <td v-if="['PC', 'Printer'].includes(device)" v-for="(lesson, i) in lessons">
       <div class="cell m-n2 p-2" :class="{ current: currentLesson == hours.number && currentDay == i && lesson.length != 0 }">
-        <TimeTableCell :print="print" :mode="mode" :data="lesson" />
+        <TimeTableCell :print="device == 'Printer'" :mode="mode" :data="lesson" />
       </div>
     </td>
     <td v-else>
@@ -62,7 +60,7 @@ const props = defineProps({
         class="cell m-n2 p-2"
         :class="{ current: currentLesson == hours.number && currentDay == selectedDay && lessons[selectedDay].length != 0 }"
       >
-        <TimeTableCell :print="print" :mode="mode" :data="lessons[selectedDay]" />
+        <TimeTableCell :print="device == 'Printer'" :mode="mode" :data="lessons[selectedDay]" />
       </div>
     </td>
   </tr>
@@ -79,8 +77,9 @@ const props = defineProps({
 
 <style lang="scss">
 tbody tr {
+  break-inside: avoid;
   td:not(:first-of-type) {
-    min-width: 200px;
+    min-width: v-bind(width);
   }
   .cell.current {
     border-radius: 10px;

@@ -5,6 +5,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  print: {
+    type: Boolean,
+    required: true,
+  },
   mode: {
     type: String,
     required: true,
@@ -27,14 +31,14 @@ function sidebarToggle() {
   if (el) el.classList.toggle('toggled');
 }
 function timetablePrint() {
-  window.open(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/${props.mode + props.id}.html`, '_blank');
+  window.open(`${import.meta.env.BASE_URL}print/${props.mode}/${props.id}`, '_blank');
 }
 </script>
 
 <template>
   <div class="timetable-header d-flex">
     <div class="fn-btn m-auto px-2">
-      <div class="sb-btn-open d-none align-items-center" @click="sidebarToggle">
+      <div v-if="!print" class="sb-btn-open d-none align-items-center" @click="sidebarToggle">
         <i class="d-block zsm-menu-icon"></i>
       </div>
     </div>
@@ -42,7 +46,7 @@ function timetablePrint() {
       <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser(title) }}</h3>
     </div>
     <div class="fn-btn m-auto px-2">
-      <div v-if="title != ''" class="btn-print" @click="timetablePrint">
+      <div v-if="title != '' && !print" class="btn-print" @click="timetablePrint">
         <i class="d-block zsm-print-icon"></i>
       </div>
     </div>
