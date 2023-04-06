@@ -1,18 +1,16 @@
 <template>
-	<header>
-		<img src="/assets/images/logo.png" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
-	</header>
+  <header class="text-center">
+    <img class="p-4 h-100" src="/assets/images/logo.png" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
+  </header>
 </template>
 
 <style lang="scss">
-	header {
-		flex-shrink: 0;
-		height: 200px;
-		text-align: center;
-		img {
-			padding: 25px;
-			height: 100%;
-			aspect-ratio: 1 /1;
-		}
-	}
+header {
+  min-height: 200px;
+  height: 200px;
+  max-height: 200px;
+  img {
+    aspect-ratio: 1 / 1;
+  }
+}
 </style>

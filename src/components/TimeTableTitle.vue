@@ -1,9 +1,11 @@
 <script setup>
 import { TEACHERS } from '@/functions/constants';
-import { useRoute } from 'vue-router';
-const route = useRoute();
 const props = defineProps({
   title: {
+    type: String,
+    required: true,
+  },
+  mode: {
     type: String,
     required: true,
   },
@@ -25,65 +27,47 @@ function sidebarToggle() {
   if (el) el.classList.toggle('toggled');
 }
 function timetablePrint() {
-  window.open(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/${route.params.mode + route.params.id}.html`, '_blank');
+  window.open(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/${props.mode + props.id}.html`, '_blank');
 }
 </script>
 
 <template>
-  <div class="title">
-    <div class="icon">
-      <div class="sb-btn-open" @click="sidebarToggle">
-        <i class="menu zsm-menu-icon"></i>
+  <div class="timetable-header d-flex">
+    <div class="fn-btn m-auto px-2">
+      <div class="sb-btn-open d-none align-items-center" @click="sidebarToggle">
+        <i class="d-block zsm-menu-icon"></i>
       </div>
     </div>
-    <div class="text">
-      <h3>{{ titleParser(title) }}</h3>
+    <div class="text d-flex align-items-center justify-content-center">
+      <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser(title) }}</h3>
     </div>
-    <div class="icon">
-      <div class="btn-print" @click="timetablePrint">
-        <i class="menu zsm-print-icon"></i>
+    <div class="fn-btn m-auto px-2">
+      <div v-if="title != ''" class="btn-print" @click="timetablePrint">
+        <i class="d-block zsm-print-icon"></i>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.row.title {
-  align-items: center;
-}
-.icon {
-  margin: auto;
-  padding-inline: 12px;
-  width: 56px;
-  i {
-    font-size: 32px;
-    display: block;
+$header-height: 48px;
+.timetable-header {
+  height: $header-height;
+  .fn-btn {
+    width: $header-height;
+    i {
+      font-size: 32px;
+    }
   }
-}
-.text {
-  width: calc(100% - 112px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  h3 {
-    overflow: hidden;
-    margin: 0;
-    white-space: nowrap;
+  .text {
+    width: calc(100% - ($header-height * 2));
   }
-}
-.sb-btn-open {
-  display: none;
 }
 #sidebar + #overlay + #timetable {
   .sb-btn-open {
     @media (max-width: 991.98px) {
-      display: flex;
-      align-items: center;
+      display: flex !important;
     }
   }
-}
-.title {
-  height: 50px;
-  display: flex;
 }
 </style>
