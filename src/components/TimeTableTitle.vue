@@ -1,5 +1,7 @@
 <script setup>
 import { TEACHERS } from '@/functions/constants';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 const props = defineProps({
   title: {
     type: String,
@@ -22,6 +24,9 @@ function sidebarToggle() {
   const el = document.getElementById('sidebar');
   if (el) el.classList.toggle('toggled');
 }
+function timetablePrint() {
+  window.open(`${import.meta.env.BASE_URL}/plan_nauczyciele/plany/${route.params.mode + route.params.id}.html`, '_blank');
+}
 </script>
 
 <template>
@@ -36,7 +41,7 @@ function sidebarToggle() {
     </div>
     <div class="icon">
       <div class="btn-print">
-        <i class="menu zsm-print-icon"></i>
+        <i class="menu zsm-print-icon" @click="timetablePrint"></i>
       </div>
     </div>
   </div>

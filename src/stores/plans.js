@@ -38,7 +38,7 @@ export const usePlansStore = defineStore('plans', {
     },
     async loadList(force = false) {
       if (!force && this.lists.classes.length != 0) return;
-      const URL = `${import.meta.env.BASE_URL}data/lista.html`;
+      const URL = `${import.meta.env.BASE_URL}plan_nauczyciele/lista.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -56,7 +56,7 @@ export const usePlansStore = defineStore('plans', {
       this.plans[mode][id] = {
         status: 0,
       };
-      const URL = `${import.meta.env.BASE_URL}data/plany/${mode}${id}.html`;
+      const URL = `${import.meta.env.BASE_URL}plan_nauczyciele/plany/${mode}${id}.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -93,13 +93,13 @@ export const usePlansStore = defineStore('plans', {
     },
     async getPlans() {
       this.lists.classes.forEach((obj) => {
-        axios.get(`${import.meta.env.BASE_URL}data/plany/o${obj.value}.html`);
+        axios.get(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/o${obj.value}.html`);
       });
       this.lists.teachers.forEach((obj) => {
-        axios.get(`${import.meta.env.BASE_URL}data/plany/n${obj.value}.html`);
+        axios.get(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/n${obj.value}.html`);
       });
       this.lists.rooms.forEach((obj) => {
-        axios.get(`${import.meta.env.BASE_URL}data/plany/s${obj.value}.html`);
+        axios.get(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/s${obj.value}.html`);
       });
     },
     async getTimeTable() {
