@@ -25,7 +25,7 @@ function sidebarToggle() {
   if (el) el.classList.toggle('toggled');
 }
 function timetablePrint() {
-  window.open(`${import.meta.env.BASE_URL}/plan_nauczyciele/plany/${route.params.mode + route.params.id}.html`, '_blank');
+  window.open(`${import.meta.env.BASE_URL}plan_nauczyciele/plany/${route.params.mode + route.params.id}.html`, '_blank');
 }
 </script>
 
@@ -40,8 +40,8 @@ function timetablePrint() {
       <h3>{{ titleParser(title) }}</h3>
     </div>
     <div class="icon">
-      <div class="btn-print">
-        <i class="menu zsm-print-icon" @click="timetablePrint"></i>
+      <div class="btn-print" @click="timetablePrint">
+        <i class="menu zsm-print-icon"></i>
       </div>
     </div>
   </div>
