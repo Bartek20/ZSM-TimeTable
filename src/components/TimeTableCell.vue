@@ -1,9 +1,4 @@
 <script setup>
-import { computed } from 'vue';
-import stc from 'string-to-color';
-import chroma from 'chroma-js';
-import { LESSONS } from '../functions/constants';
-
 const props = defineProps({
   print: {
     type: Boolean,

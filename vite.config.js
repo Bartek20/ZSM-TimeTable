@@ -1,3 +1,5 @@
+import Components from 'unplugin-vue-components/vite';
+import AutoImport from 'unplugin-auto-import/vite';
 import { fileURLToPath, URL } from 'node:url';
 const path = require('path');
 
@@ -12,6 +14,27 @@ export default defineConfig({
   base: root,
   plugins: [
     vue(),
+    Components({
+      dirs: ['src/components'],
+      extensions: ['vue'],
+    }),
+    AutoImport({
+      include: [/\.js$/, /\.vue$/, /\.vue\?vue/],
+      imports: [
+        'vue',
+        'vue-router',
+        'pinia',
+        {
+          'virtual:pwa-register': ['registerSW'],
+          '@wulkanowy/timetable-parser': ['TimetableList', 'Table'],
+          axios: [['default', 'axios']],
+          'string-to-color': [['default', 'stc']],
+          'chroma-js': [['default', 'chroma']],
+          'pinia-plugin-persistedstate': [['default', 'piniaPluginPersistedstate']],
+        },
+      ],
+      dirs: ['src/functions', 'src/stores'],
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {

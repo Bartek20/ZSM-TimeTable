@@ -1,8 +1,3 @@
-import { defineStore } from 'pinia';
-import { TimetableList, Table } from '@wulkanowy/timetable-parser';
-import { MONTHS, HOURS } from '../functions/constants';
-import axios from 'axios';
-
 export const usePlansStore = defineStore('plans', {
   state: () => {
     return {

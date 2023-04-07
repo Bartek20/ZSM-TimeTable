@@ -1,3 +1,5 @@
+export const SB_ANIMATION_DURATION = 300;
+
 export const MESSAGES = {
   ERR: {
     404: 'Wybrany plan nie został odnaleziony',

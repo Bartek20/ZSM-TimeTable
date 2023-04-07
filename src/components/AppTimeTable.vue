@@ -1,10 +1,4 @@
 <script setup>
-import TimeTableRow from '@/components/TimeTableRow.vue';
-import TimeTableTitle from '@/components/TimeTableTitle.vue';
-import TimeTableMessage from './TimeTableMessage.vue';
-import { ref, computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
-import { usePlansStore } from '@/stores/plans';
-import { useTimeStore } from '@/stores/time';
 const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 const plansStore = usePlansStore();
 const timeStore = useTimeStore();

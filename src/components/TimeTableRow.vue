@@ -1,6 +1,4 @@
 <script setup>
-import { computed } from 'vue';
-import TimeTableCell from '@/components/TimeTableCell.vue';
 const props = defineProps({
   device: {
     type: String,

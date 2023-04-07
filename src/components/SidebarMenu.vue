@@ -1,8 +1,4 @@
 <script setup>
-import { useRouter, RouterLink } from 'vue-router';
-import { TEACHERS } from '../functions/constants';
-const router = useRouter();
-
 const props = defineProps({
   id: {
     type: String,

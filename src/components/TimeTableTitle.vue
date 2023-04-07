@@ -1,6 +1,4 @@
 <script setup>
-import { TEACHERS } from '@/functions/constants';
-import { computed } from 'vue';
 const props = defineProps({
   title: {
     type: String,

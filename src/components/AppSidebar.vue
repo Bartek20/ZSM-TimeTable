@@ -1,14 +1,8 @@
 <script setup>
-import SidebarHeader from '@/components/SidebarHeader.vue';
-import SidebarMenu from '@/components/SidebarMenu.vue';
-import SidebarFooter from '@/components/SidebarFooter.vue';
-import { usePlansStore } from '@/stores/plans';
-import { computed } from 'vue';
 const plansStore = usePlansStore();
 const list = computed(() => plansStore.lists);
 
-const ANIMATION_DURATION = 300;
-const slideUp = (target, duration = ANIMATION_DURATION) => {
+const slideUp = (target, duration = SB_ANIMATION_DURATION) => {
   const { parentElement } = target;
   parentElement.classList.remove('open');
   target.style.transitionProperty = 'height, margin, padding';
@@ -34,7 +28,7 @@ const slideUp = (target, duration = ANIMATION_DURATION) => {
     target.style.removeProperty('transition-property');
   }, duration);
 };
-const slideDown = (target, duration = ANIMATION_DURATION) => {
+const slideDown = (target, duration = SB_ANIMATION_DURATION) => {
   const { parentElement } = target;
   parentElement.classList.add('open');
   target.style.removeProperty('display');
@@ -64,7 +58,7 @@ const slideDown = (target, duration = ANIMATION_DURATION) => {
     target.style.removeProperty('transition-property');
   }, duration);
 };
-const slideToggle = (target, duration = ANIMATION_DURATION) => {
+const slideToggle = (target, duration = SB_ANIMATION_DURATION) => {
   if (window.getComputedStyle(target).display === 'none') return slideDown(target, duration);
   return slideUp(target, duration);
 };
