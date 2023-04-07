@@ -89,6 +89,7 @@ function subjectParser(subject) {
     class="lesson mb-2 px-2 py-1 rounded-2"
     :style="{
       backgroundColor: getColor(subjectParser(data[i - 1].subject), 0.8),
+      boxShadow: `inset 0 0 0 9999px ${getColor(subjectParser(data[i - 1].subject), 0.8)}`,
       borderColor: getColor(subjectParser(data[i - 1].subject)),
     }"
     v-else
