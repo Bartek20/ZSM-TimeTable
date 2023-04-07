@@ -64,3 +64,18 @@ $zindex-levels: (
     transform: rotate(-5deg);
   }
 }
+
+@media print {
+  body {
+    orientation: landscape;
+    size: auto;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+@page {
+  margin: 0.5cm;
+  @top-center {
+    content: 'Wydrukowano z ZSM TimeTable';
+  }
+}

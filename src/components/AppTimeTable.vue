@@ -3,11 +3,9 @@ import TimeTableRow from '@/components/TimeTableRow.vue';
 import TimeTableTitle from '@/components/TimeTableTitle.vue';
 import TimeTableMessage from './TimeTableMessage.vue';
 import { ref, computed, onBeforeMount, onBeforeUnmount, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { usePlansStore } from '@/stores/plans';
 import { useTimeStore } from '@/stores/time';
 const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
-const router = useRouter();
 const plansStore = usePlansStore();
 const timeStore = useTimeStore();
 timeStore.getTime();
@@ -129,7 +127,10 @@ function changeDay(d) {
         fontSize: device == 'Printer' ? '0.9rem' : undefined,
       }"
     >
-      <table class="table table-primary table-striped table-hover position-relative mb-0" :class="{ 'table-sm': print }">
+      <table
+        class="table table-striped table-borderless table-hover position-relative mb-0"
+        :class="{ 'table-sm': print, 'table-primary': !print, 'table-light': print }"
+      >
         <thead class="text-center">
           <tr>
             <th class="z-2 position-sticky top-0 start-0">#</th>

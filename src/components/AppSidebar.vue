@@ -158,6 +158,6 @@ $sidebar-width: 240px;
   }
 }
 #sidebar.toggled + #overlay {
-  z-index: 3;
+  z-index: 3 !important;
 }
 </style>
