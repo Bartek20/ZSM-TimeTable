@@ -1,6 +1,4 @@
 <script setup>
-import { onMounted } from 'vue';
-import { MESSAGES } from '../functions/constants';
 const props = defineProps({
   isEmpty: {
     type: Boolean,

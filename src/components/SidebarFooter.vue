@@ -1,8 +1,4 @@
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { usePWAStore } from '../stores/pwa';
-import { usePlansStore } from '../stores/plans';
 const route = useRoute();
 const PWAStore = usePWAStore();
 const plansStore = usePlansStore();
