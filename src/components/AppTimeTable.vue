@@ -123,8 +123,8 @@ function changeDay(d) {
       v-if="plan && !isEmpty && !isError"
       class="table-responsive"
       :style="{
-        minHeight: `calc(100% - ${device == 'PC' ? '48px' : device == 'Mobile' ? '96px' : 'auto'})`,
-        maxHeight: `calc(100% - ${device == 'PC' ? '48px' : device == 'Mobile' ? '96px' : 'auto'})`,
+        minHeight: device == 'Printer' ? 'auto' : `calc(100% - ${device == 'PC' ? '48px' : '96px'})`,
+        maxHeight: device == 'Printer' ? 'auto' : `calc(100% - ${device == 'PC' ? '48px' : '96px'})`,
         overflow: device == 'Printer' ? 'hidden' : 'auto',
         fontSize: device == 'Printer' ? '0.9rem' : undefined,
       }"
