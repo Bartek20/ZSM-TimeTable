@@ -19,9 +19,13 @@ const props = defineProps({
     required: true,
   },
 });
-const color = computed(() => (props.print ? undefined : '#cfe2ff'));
+const color = computed(() => (props.print || props.title == '' ? undefined : '#cfe2ff'));
 function titleParser(title) {
-  if (TEACHERS[title] == undefined) return title;
+  if (TEACHERS[title] == undefined) {
+    const symbol = props.print ? ' - ' : ' | ';
+    document.title = title + symbol + 'Plan Lekcji';
+    return title;
+  }
   title = TEACHERS[title];
   var out = title.name;
   if (title.surname) out = out + ' ' + title.surname;

@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue';
 import { MESSAGES } from '../functions/constants';
 const props = defineProps({
   isEmpty: {
@@ -17,6 +18,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+});
+onMounted(() => {
+  if (props.isEmpty && !props.isError) document.title = MESSAGES.EMPTY[props.mode] + ' | ZSM Plan Lekcji';
+  else document.title = MESSAGES.ERR[props.status] + ' | ZSM Plan Lekcji';
 });
 </script>
 
