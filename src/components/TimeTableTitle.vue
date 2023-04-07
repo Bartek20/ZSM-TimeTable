@@ -1,5 +1,6 @@
 <script setup>
 import { TEACHERS } from '@/functions/constants';
+import { computed } from 'vue';
 const props = defineProps({
   title: {
     type: String,
@@ -18,11 +19,14 @@ const props = defineProps({
     required: true,
   },
 });
+const color = computed(() => (props.print ? undefined : '#cfe2ff'));
 function titleParser(title) {
   if (TEACHERS[title] == undefined) return title;
   title = TEACHERS[title];
   var out = title.name;
   if (title.surname) out = out + ' ' + title.surname;
+  const symbol = props.print ? ' - ' : ' | ';
+  document.title = out + symbol + 'Plan Lekcji';
   out = out + ' (' + title.code + ')';
   return out;
 }
@@ -56,6 +60,7 @@ function timetablePrint() {
 <style lang="scss">
 $header-height: 48px;
 .timetable-header {
+  background-color: v-bind(color);
   height: $header-height;
   .fn-btn {
     width: $header-height;
