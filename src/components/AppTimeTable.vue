@@ -49,6 +49,7 @@ const currentLesson = computed(() => {
 });
 const currentDay = computed(() => timeStore.DAY);
 const selectedDay = ref(timeStore.DAY);
+if (selectedDay.value > 4) selectedDay.value = 0;
 var timer = undefined;
 onMounted(() => {
   timer = window.setInterval(timeStore.getTime, 1000);
@@ -176,6 +177,7 @@ function changeDay(d) {
 #timetable {
   .buttons {
     height: 48px;
+    background-color: #cfe2ff;
   }
 }
 </style>
