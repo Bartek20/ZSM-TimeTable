@@ -34,6 +34,7 @@ export default defineConfig({
         },
       ],
       dirs: ['src/functions', 'src/stores'],
+      vueTemplate: true,
     }),
     VitePWA({
       registerType: 'autoUpdate',
