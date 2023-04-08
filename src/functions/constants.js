@@ -2,9 +2,18 @@ export const SB_ANIMATION_DURATION = 300;
 
 export const MESSAGES = {
   ERR: {
-    404: 'Wybrany plan nie został odnaleziony',
-    900: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
-		999: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.'
+    404: {
+      icon: 'zsm-not-found-error-icon',
+      msg: 'Wybrany plan nie został odnaleziony',
+    },
+    900: {
+      icon: 'zsm-offline-error-icon',
+      msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
+    },
+    999: {
+      icon: 'zsm-unknown-error-icon',
+      msg: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.',
+    },
   },
   EMPTY: {
     o: 'Wybrana klasa nie ma w planie żadnych zajęć',
