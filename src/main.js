@@ -14,6 +14,17 @@ const updateSW = registerSW({
   },
 });
 
+const schoolData = useStorage('schoolData', {});
+const DATA_URL = `${import.meta.env.BASE_URL}school-data.json`;
+axios
+  .get(DATA_URL)
+  .then((res) => {
+    schoolData.value = res.data;
+  })
+  .catch((err) => {
+    console.error('Wczytywanie danych szkoły nie powiodło się:', err);
+  });
+
 const app = createApp(App);
 
 app.use(createPinia().use(piniaPluginPersistedstate));

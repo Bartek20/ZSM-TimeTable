@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const usePlansStore = defineStore('plans', {
   state: () => {
     return {
@@ -38,7 +40,7 @@ export const usePlansStore = defineStore('plans', {
       try {
         res = await axios.get(URL);
       } catch (err) {
-        console.warn('Wystąpił błąd przy wczytywaniu listy:\n', err);
+        console.error('Wystąpił błąd przy wczytywaniu listy:\n', err);
         return;
       }
       if (res == undefined) return;
@@ -56,7 +58,7 @@ export const usePlansStore = defineStore('plans', {
       try {
         res = await axios.get(URL);
       } catch (err) {
-        console.warn('Wystąpił błąd przy wczytywaniu planu:\n', err);
+        console.error('Wystąpił błąd przy wczytywaniu planu:\n', err);
         if (err.response && err.response.status == 404) {
           this.plans[mode][id] = {
             status: 404,
@@ -105,6 +107,7 @@ export const usePlansStore = defineStore('plans', {
       });
     },
     async getTimeTable() {
+      await axios.get(`${import.meta.env.BASE_URL}school-data.json`);
       await this.loadList(true);
       this.getPlans();
     },
