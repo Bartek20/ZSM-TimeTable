@@ -1,8 +1,15 @@
 <script setup>
 const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
+const DAYS_IDS = {
+  poniedziałek: 0,
+  wtorek: 1,
+  środa: 2,
+  czwartek: 3,
+  piątek: 4,
+  sobota: 5,
+  niedziela: 6,
+};
 const plansStore = usePlansStore();
-const timeStore = useTimeStore();
-timeStore.getTime();
 const screenWidth = ref(window.innerWidth);
 window.addEventListener('resize', () => {
   screenWidth.value = window.innerWidth;
@@ -37,44 +44,13 @@ const device = computed(() => {
   if (screenWidth.value < 576) return 'Phone';
   return 'PC';
 });
+const DAY_NAME = useDateFormat(useNow({ interval: 3600000 }), 'dddd', {
+  locales: 'pl-PL',
+});
+const DAY = computed(() => DAYS_IDS[DAY_NAME.value]);
 const plan = computed(() => plansStore.plans[props.mode][props.id]);
-const currentLesson = computed(() => {
-  const current = timeStore.TIME;
-  var response = 999;
-  if (props.print || !('hours' in plan.value)) return response;
-  plan.value.hours.forEach((lesson) => {
-    if (timeStore.checkBetween(lesson.timeFrom, lesson.timeTo)) response = lesson.number;
-  });
-  return response;
-});
-const currentDay = computed(() => timeStore.DAY);
-const selectedDay = ref(timeStore.DAY);
+const selectedDay = ref(DAY.value);
 if (selectedDay.value > 4) selectedDay.value = 0;
-var timer = undefined;
-onMounted(() => {
-  timer = window.setInterval(timeStore.getTime, 1000);
-});
-onBeforeUnmount(() => {
-  window.clearInterval(timer);
-});
-function calcBreak(start, end) {
-  if (start == undefined || end == undefined) return 0;
-  const start_el = start.timeTo.split(':');
-  const start_time = new Date();
-  start_time.setHours(start_el[0], start_el[1], 0, 0);
-  const end_el = end.timeFrom.split(':');
-  const end_time = new Date();
-  end_time.setHours(end_el[0], end_el[1], 0, 0);
-  return (end_time - start_time) / 1000 / 60;
-}
-function checkBreak(start, end) {
-  if (props.print || start == undefined || end == undefined) return false;
-  return timeStore.checkBetween(start.timeTo, end.timeFrom) && timeStore.DAY < 5;
-}
-const rowsNr = computed(() => {
-  if (plan.value.days && plan.value.days.length == 5) return plan.value.days[0].length;
-  return 0;
-});
 const isEmpty = computed(() => {
   if (
     'days' in plan.value &&
@@ -93,15 +69,6 @@ const isError = computed(() => {
   if ([404, 900].includes(plan.value.status)) return true;
   return false;
 });
-function getRow(nr) {
-  return [
-    plan.value.days[0][nr],
-    plan.value.days[1][nr],
-    plan.value.days[2][nr],
-    plan.value.days[3][nr],
-    plan.value.days[4][nr],
-  ];
-}
 onBeforeMount(() => plansStore.loadPlan(props.mode, props.id));
 function changeDay(d) {
   if (d == 'Prev') selectedDay.value == 0 ? (selectedDay.value = 4) : (selectedDay.value -= 1);
@@ -113,7 +80,7 @@ function changeDay(d) {
   <section id="timetable" class="z-0 w-100 h-100">
     <TimeTableTitle :title="plan.title || ''" :print="device == 'Printer'" :mode="mode" :id="id" />
     <div
-      v-if="plan && !isEmpty && !isError"
+      v-if="plan && plan.days && !isEmpty && !isError"
       class="table-responsive"
       :style="{
         minHeight: device == 'Printer' ? 'auto' : `calc(100% - ${device == 'PC' ? '48px' : '96px'})`,
@@ -136,18 +103,26 @@ function changeDay(d) {
           </tr>
         </thead>
         <tbody>
-          <TimeTableRow
-            v-for="nr in rowsNr"
-            :device="device"
-            :mode="mode"
-            :hours="plan.hours[nr - 1]"
-            :lessons="getRow(nr - 1)"
-            :selectedDay="selectedDay"
-            :currentDay="currentDay"
-            :currentLesson="currentLesson"
-            :breakTime="calcBreak(plan.hours[nr - 1], plan.hours[nr])"
-            :currentBreak="checkBreak(plan.hours[nr - 1], plan.hours[nr])"
-          />
+          <template v-for="nr in plan.days[0].length">
+            <TimeTableLessonsRow
+              :device="device"
+              :hour="plan.hours[nr - 1]"
+              :lessons="[
+                plan.days[0][nr - 1],
+                plan.days[1][nr - 1],
+                plan.days[2][nr - 1],
+                plan.days[3][nr - 1],
+                plan.days[4][nr - 1],
+              ]"
+              :selectedDay="selectedDay"
+            />
+            <TimeTableBreakRow
+              v-if="plan.hours[nr - 1] && plan.hours[nr]"
+              :breakFrom="plan.hours[nr - 1].timeTo"
+              :breakTo="plan.hours[nr].timeFrom"
+              :isShown="(device == 'Phone' && DAY == selectedDay) || device == 'PC'"
+            />
+          </template>
         </tbody>
       </table>
     </div>

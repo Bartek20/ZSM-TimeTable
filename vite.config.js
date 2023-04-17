@@ -24,7 +24,9 @@ export default defineConfig({
         'vue',
         'vue-router',
         'pinia',
+        '@vueuse/core',
         {
+          '@vueuse/router': ['useRouteParams'],
           'virtual:pwa-register': ['registerSW'],
           '@wulkanowy/timetable-parser': ['TimetableList', 'Table'],
           axios: [['default', 'axios']],

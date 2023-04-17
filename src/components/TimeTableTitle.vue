@@ -18,17 +18,21 @@ const props = defineProps({
   },
 });
 const color = computed(() => (props.print || props.title == '' ? undefined : '#cfe2ff'));
+const reftitle = useTitle();
+const schoolData = useStorage('schoolData', {});
 function titleParser(title) {
-  if (TEACHERS[title] == undefined) {
+  if (!('teachers' in schoolData.value)) return title;
+  if (schoolData.value.teachers[title] == undefined) {
     const symbol = props.print ? ' - ' : ' | ';
-    document.title = title + symbol + 'Plan Lekcji';
+    reftitle.value = title + symbol + 'Plan Lekcji';
+    if (props.mode == 'n') console.warn('Nieznany nauczyciel:', title);
     return title;
   }
-  title = TEACHERS[title];
+  title = schoolData.value.teachers[title];
   var out = title.name;
   if (title.surname) out = out + ' ' + title.surname;
   const symbol = props.print ? ' - ' : ' | ';
-  document.title = out + symbol + 'Plan Lekcji';
+  reftitle.value = out + symbol + 'Plan Lekcji';
   out = out + ' (' + title.code + ')';
   return out;
 }

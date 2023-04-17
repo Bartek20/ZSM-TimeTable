@@ -17,9 +17,10 @@ const props = defineProps({
     required: true,
   },
 });
+const title = useTitle();
 onMounted(() => {
-  if (props.isEmpty && !props.isError) document.title = MESSAGES.EMPTY[props.mode] + ' | ZSM Plan Lekcji';
-  else document.title = MESSAGES.ERR[props.status].msg + ' | ZSM Plan Lekcji';
+  if (props.isEmpty && !props.isError) title.value = MESSAGES.EMPTY[props.mode] + ' | ZSM Plan Lekcji';
+  else title.value = MESSAGES.ERR[props.status].msg + ' | ZSM Plan Lekcji';
 });
 const color = computed(() => (props.isEmpty && !props.isError ? '#cfe2ff' : undefined));
 </script>

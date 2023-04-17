@@ -17,9 +17,14 @@ const props = defineProps({
     required: true,
   },
 });
+const schoolData = useStorage('schoolData', {});
 function titleParser(title) {
-  if (TEACHERS[title] == undefined) return title;
-  const data = TEACHERS[title];
+  if (!('teachers' in schoolData.value)) return title;
+  if (schoolData.value.teachers[title] == undefined) {
+    if (props.id == 'n') console.warn('Nieznany nauczyciel:', title);
+    return title;
+  }
+  const data = schoolData.value.teachers[title];
   var out = '';
   switch (title) {
     case 'c.Centrum Kształcenia Zawodowego (CK)':
