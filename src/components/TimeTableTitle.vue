@@ -39,7 +39,7 @@ function titleParser(title) {
       }
     });
     return out;
-  } else if ((props.mode = 'n')) {
+  } else if (props.mode == 'n') {
     if (!('teachers' in schoolData.value)) return title;
     if (schoolData.value.teachers[title] == undefined) {
       const symbol = props.print ? ' - ' : ' | ';
