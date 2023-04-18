@@ -19,32 +19,52 @@ const props = defineProps({
 });
 const schoolData = useStorage('schoolData', {});
 function titleParser(title) {
-  if (!('teachers' in schoolData.value)) return title;
-  if (schoolData.value.teachers[title] == undefined) {
-    if (props.id == 'n') console.warn('Nieznany nauczyciel:', title);
-    return title;
+  if (props.id == 'o') {
+    if (!('classes' in schoolData.value)) return title;
+    const reg = title.match(/(\d\w+) (\d)([\w ]+)/);
+    const data = {
+      class: reg[1],
+      specialities: reg[3].split(' '),
+    };
+    var out = data.class;
+    data.specialities.forEach((speciality) => {
+      if (schoolData.value.classes[speciality] == undefined) {
+        console.warn('Nieznany kierunek:', speciality);
+        out = out + ' ' + speciality;
+      } else {
+        out = out + ' ' + speciality;
+      }
+    });
+    return out;
+  } else if (props.id == 'n') {
+    if (!('teachers' in schoolData.value)) return title;
+    if (schoolData.value.teachers[title] == undefined) {
+      console.warn('Nieznany nauczyciel:', title);
+      return title;
+    }
+    const data = schoolData.value.teachers[title];
+    var out = '';
+    switch (title) {
+      case 'c.Centrum Kształcenia Zawodowego (CK)':
+        out = 'CKZ (' + data.code + ')';
+        break;
+      case 'A.Aeroklub Rzeszowski (AA)':
+      case 'E.Emeaero (EE)':
+      case 'H.Heli One (HO)':
+      case 'L.LineTech (LL)':
+      case 'P.Pratt Whitney AeroPower (PT)':
+      case 'S.Salony fryzjerskie (FR)':
+        out = data.name + ' (' + data.code + ')';
+        break;
+      default:
+        out = data.name.charAt(0) + '. ';
+        if (data.surname) out = out + data.surname + ' ';
+        out = out + '(' + data.code + ')';
+        break;
+    }
+    return out;
   }
-  const data = schoolData.value.teachers[title];
-  var out = '';
-  switch (title) {
-    case 'c.Centrum Kształcenia Zawodowego (CK)':
-      out = 'CKZ (' + data.code + ')';
-      break;
-    case 'A.Aeroklub Rzeszowski (AA)':
-    case 'E.Emeaero (EE)':
-    case 'H.Heli One (HO)':
-    case 'L.LineTech (LL)':
-    case 'P.Pratt Whitney AeroPower (PT)':
-    case 'S.Salony fryzjerskie (FR)':
-      out = data.name + ' (' + data.code + ')';
-      break;
-    default:
-      out = data.name.charAt(0) + '. ';
-      if (data.surname) out = out + data.surname + ' ';
-      out = out + '(' + data.code + ')';
-      break;
-  }
-  return out;
+  return title;
 }
 const emits = defineEmits(['selectList']);
 </script>

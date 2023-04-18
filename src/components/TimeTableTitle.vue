@@ -21,20 +21,41 @@ const color = computed(() => (props.print || props.title == '' ? undefined : '#c
 const reftitle = useTitle();
 const schoolData = useStorage('schoolData', {});
 function titleParser(title) {
-  if (!('teachers' in schoolData.value)) return title;
-  if (schoolData.value.teachers[title] == undefined) {
+  if (title == '') return title;
+  if (props.mode == 'o') {
+    if (!('classes' in schoolData.value)) return title;
+    const reg = title.match(/(\d\w+) (\d)([\w ]+)/);
+    const data = {
+      class: reg[1],
+      specialities: reg[3].split(' '),
+    };
+    var out = data.class;
+    data.specialities.forEach((speciality) => {
+      if (schoolData.value.classes[speciality] == undefined) {
+        console.warn('Nieznany kierunek:', speciality);
+        out = out + ' ' + speciality;
+      } else {
+        out = out + ' ' + schoolData.value.classes[speciality];
+      }
+    });
+    return out;
+  } else if ((props.mode = 'n')) {
+    if (!('teachers' in schoolData.value)) return title;
+    if (schoolData.value.teachers[title] == undefined) {
+      const symbol = props.print ? ' - ' : ' | ';
+      reftitle.value = title + symbol + 'Plan Lekcji';
+      if (props.mode == 'n') console.warn('Nieznany nauczyciel:', title);
+      return title;
+    }
+    title = schoolData.value.teachers[title];
+    var out = title.name;
+    if (title.surname) out = out + ' ' + title.surname;
     const symbol = props.print ? ' - ' : ' | ';
-    reftitle.value = title + symbol + 'Plan Lekcji';
-    if (props.mode == 'n') console.warn('Nieznany nauczyciel:', title);
-    return title;
+    reftitle.value = out + symbol + 'Plan Lekcji';
+    out = out + ' (' + title.code + ')';
+    return out;
   }
-  title = schoolData.value.teachers[title];
-  var out = title.name;
-  if (title.surname) out = out + ' ' + title.surname;
-  const symbol = props.print ? ' - ' : ' | ';
-  reftitle.value = out + symbol + 'Plan Lekcji';
-  out = out + ' (' + title.code + ')';
-  return out;
+  return title;
 }
 function sidebarToggle() {
   const el = document.getElementById('sidebar');
