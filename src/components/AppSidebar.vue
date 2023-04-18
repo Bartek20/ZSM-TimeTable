@@ -151,7 +151,9 @@ $sidebar-width: 240px;
     }
   }
 }
-#sidebar.toggled + #overlay {
-  z-index: 3 !important;
+@media (max-width: 991.98px) {
+  #sidebar.toggled + #overlay {
+    z-index: 3 !important;
+  }
 }
 </style>

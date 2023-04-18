@@ -60,7 +60,7 @@ export default defineConfig({
       },
       manifest: {
         scope: root,
-        id: `https://zsm-timetable.pages.dev${root}`,
+        id: root,
         name: 'ZSM Plan Lekcji',
         short_name: 'ZSM Plan Lekcji',
         description: 'Aplikacja do przeglądu planu lekcji w Zespole Szkół Mechanicznych w Rzeszowie',
