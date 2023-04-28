@@ -19,7 +19,4 @@ window.addEventListener('beforeinstallprompt', (e) => {
 *::after {
   user-select: none;
 }
-body {
-  background-color: #f8f9fa !important;
-}
 </style>

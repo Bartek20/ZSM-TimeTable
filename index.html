@@ -15,7 +15,21 @@
     <link rel="preload" as="image" href="/assets/images/logo.png" />
   </head>
   <body class="vw-100 h-100">
+    <div id="load" class="position-fixed text-center top-50 start-50 translate-middle d-none">
+      <h1>Trwa wczytywanie aplikacji</h1>
+      <p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
+    </div>
     <div id="app" class="h-100 mw-100 d-flex flex-nowrap"></div>
+    <script>
+      document.getElementById('load').classList.remove('d-none');
+    </script>
+    <noscript>
+      <div class="position-fixed text-center top-50 start-50 translate-middle">
+        <h1>Błąd</h1>
+        <p>Niestety twoja przeglądarka nie wspiera javascript, który jest wymagany przez tą stronę.</p>
+        <a href="https://zsm.resman.pl/plan_nauczyciele/">Otwórz starszą wersję strony</a>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

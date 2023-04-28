@@ -74,6 +74,9 @@ function changeDay(d) {
   if (d == 'Prev') selectedDay.value == 0 ? (selectedDay.value = 4) : (selectedDay.value -= 1);
   else selectedDay.value == 4 ? (selectedDay.value = 0) : (selectedDay.value += 1);
 }
+onMounted(() => {
+  document.getElementById('load').classList.add('d-none')
+})
 </script>
 
 <template>

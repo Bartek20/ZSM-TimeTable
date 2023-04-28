@@ -1,13 +1,12 @@
 {
   "classes": {
-    "TMt": "TMt",
-    "TM": "TM",
-    "TUF": "TUF",
-    "TML": "TML",
-    "TMR": "TMR",
-    "TA": "TA",
-    "TLSO": "TLSO",
-    "TR": "TR"
+    "TMt": "Technik Mechatronik",
+    "TM": "Technik Mechanik",
+    "TUF": "Technik Usług Fryzjerskich",
+    "TML": "Technik Mechanik Lotniczy",
+    "TA": "Technik Awionik",
+    "TLSO": "Technik Lotniskowych Służb Operacyjnych",
+    "TR": "Technik Robotyk"
   },
   "teachers": {
     "S.Świetlik (SS)": {
@@ -409,7 +408,7 @@
     "przedsięb.": "Przedsiębiorczość",
     "zaj. wych.": "L. Wychowawcza",
     "godz. wych.": "L. Wychowawcza",
-    
+
     "PMt": "PMt",
     "HiT": "HiT",
     "j.aW": "j.aW",
