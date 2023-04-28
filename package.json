@@ -19,7 +19,6 @@
     "compress": "rm zsm-timetable.tar.gz -f && tar -czvf zsm-timetable.tar.gz dist/"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.6",
     "@vueuse/core": "^9.13.0",
     "@vueuse/router": "^9.13.0",
     "@wulkanowy/timetable-parser": "github:Bartek20/timetable-parser-js#zsm-fix",
@@ -34,7 +33,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
     "sass": "^1.58.3",
+    "terser": "^5.17.1",
     "unplugin-auto-import": "^0.15.2",
     "unplugin-vue-components": "^0.24.1",
     "vite": "^4.1.3",

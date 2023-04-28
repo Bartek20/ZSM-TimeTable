@@ -1,5 +1,6 @@
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
+import autoprefixer from 'autoprefixer';
 import { fileURLToPath, URL } from 'node:url';
 const path = require('path');
 
@@ -7,11 +8,19 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const root = process.env.ROOT_PATH || '/development/';
+const root = process.env.ROOT_PATH || '/';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: root,
+  server: {
+    base: '/',
+    proxy: {
+      '/plan_nauczyciele': {
+        target: 'https://zsm.resman.pl',
+        changeOrigin: true,
+      },
+    },
+  },
   plugins: [
     vue(),
     Components({
@@ -93,10 +102,18 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    minify: 'terser',
+  },
+  css: {
+    postcss: {
+      plugins: [autoprefixer({})],
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+      '@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
     },
   },
 });

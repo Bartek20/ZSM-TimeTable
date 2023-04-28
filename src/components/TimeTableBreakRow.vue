@@ -57,6 +57,6 @@ watch(TIME, () => {
 
 <style lang="scss">
 .break.current {
-  background-color: rgba(var(--bs-info-rgb), 1);
+  background-color: rgba(13, 202, 240, 1);
 }
 </style>

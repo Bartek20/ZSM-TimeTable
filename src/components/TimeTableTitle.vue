@@ -35,7 +35,7 @@ function titleParser(title) {
         console.warn('Nieznany kierunek:', speciality);
         out = out + ' ' + speciality;
       } else {
-        out = out + ' ' + schoolData.value.classes[speciality];
+        out = out + ' ' + speciality;
       }
     });
     return out;

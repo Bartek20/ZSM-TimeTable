@@ -45,7 +45,7 @@ watch(TIME, () => {
 </script>
 
 <template>
-  <tr class="text-nowrap align-middle">
+  <tr class="lesson-row text-nowrap align-middle">
     <th class="minw-auto text-center position-sticky start-0" scope="row">
       {{ hour.number }}
     </th>
@@ -66,12 +66,15 @@ watch(TIME, () => {
 </template>
 
 <style>
+.lesson-row {
+  break-inside: avoid;
+}
 td:not(:first-of-type) {
   min-width: v-bind(width);
 }
 .cell.current {
   border-radius: 10px;
   animation: blink 2s linear infinite;
-  background-color: rgba(var(--bs-info-rgb), 1);
+  background-color: rgba(13, 202, 240, 1);
 }
 </style>
