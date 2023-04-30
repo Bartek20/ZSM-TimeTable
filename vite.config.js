@@ -1,14 +1,29 @@
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import autoprefixer from 'autoprefixer';
-import { fileURLToPath, URL } from 'node:url';
-const path = require('path');
+import banner from 'vite-plugin-banner';
+import path from 'path';
+import glob from 'glob';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
 
+function getGlobs(pattern) {
+  return glob.sync(pattern);
+}
+
 const root = process.env.ROOT_PATH || '/';
+const now = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Europe/Warsaw',
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+}).format(new Date());
 
 export default defineConfig({
   base: root,
@@ -101,9 +116,33 @@ export default defineConfig({
         ],
       },
     }),
+    banner((fileName) => {
+      return `
+        File name: ${fileName.slice(0, fileName.lastIndexOf('-')) + fileName.slice(fileName.lastIndexOf('.'))}
+        Generated: ${now}
+        App name: ZSM TimeTable
+      `;
+    }),
   ],
   build: {
     minify: 'terser',
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vueuse: ['@vueuse/core', '@vueuse/router'],
+          'timetable-parser': ['@wulkanowy/timetable-parser'],
+          axios: ['axios'],
+          'color': ['chroma-js', 'string-to-color'],
+          vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+          components: getGlobs('./src/components/**/*'),
+          functions: getGlobs('./src/functions/**/*'),
+          router: getGlobs('./src/router/**/*'),
+          stores: getGlobs('./src/stores/**/*'),
+          views: getGlobs('./src/views/**/*'),
+        },
+      },
+    },
   },
   css: {
     postcss: {
@@ -112,7 +151,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': path.resolve(__dirname, 'src'),
       '@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
     },
   },
