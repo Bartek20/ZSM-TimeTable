@@ -43,6 +43,10 @@ $zindex-levels: (
 
 @import 'ZSM-TimeTable/style';
 
+.list-unstyled {
+  @include list-unstyled();
+}
+
 .minw-auto {
   min-width: auto !important;
 }
@@ -104,8 +108,5 @@ $zindex-levels: (
     orientation: landscape !important;
     size: landscape !important;
     margin: 0.5cm;
-    @top-center {
-      content: 'Wydrukowano z ZSM TimeTable';
-    }
   }
 }
