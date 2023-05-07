@@ -19,7 +19,7 @@
     "compress": "rm zsm-timetable.tar.gz -f && tar -czvf zsm-timetable.tar.gz dist/"
   },
   "dependencies": {
-    "@vueuse/core": "^10.1.0",
+    "@vueuse/core": "^10.1.2",
     "@vueuse/router": "^10.1.0",
     "@wulkanowy/timetable-parser": "github:Bartek20/timetable-parser-js#zsm-fix",
     "axios": "^1.4.0",
