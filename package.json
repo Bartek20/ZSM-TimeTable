@@ -39,7 +39,7 @@
     "terser": "^5.17.1",
     "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.3.3",
+    "vite": "^4.3.5",
     "vite-plugin-banner": "^0.7.0",
     "vite-plugin-pwa": "^0.14.7"
   }
