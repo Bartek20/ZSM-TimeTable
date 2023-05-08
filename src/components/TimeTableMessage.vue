@@ -1,4 +1,26 @@
 <script setup>
+const MESSAGES = {
+  ERR: {
+    404: {
+      icon: 'zsm-not-found-error-icon',
+      msg: 'Wybrany plan nie został odnaleziony',
+    },
+    900: {
+      icon: 'zsm-offline-error-icon',
+      msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
+    },
+    999: {
+      icon: 'zsm-unknown-error-icon',
+      msg: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.',
+    },
+  },
+  EMPTY: {
+    o: 'Wybrana klasa nie ma w planie żadnych zajęć',
+    n: 'Wybrany nauczyciel nie ma w planie żadnych lekcji',
+    s: 'W wybranej sali nie ma żadnych lekcji',
+  },
+};
+
 const props = defineProps({
   isEmpty: {
     type: Boolean,

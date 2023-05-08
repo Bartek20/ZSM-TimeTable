@@ -19,13 +19,12 @@
     "compress": "rm zsm-timetable.tar.gz -f && tar -czvf zsm-timetable.tar.gz dist/"
   },
   "dependencies": {
-    "@vueuse/core": "^10.1.0",
-    "@vueuse/router": "^10.1.0",
-    "@wulkanowy/timetable-parser": "github:Bartek20/timetable-parser-js#zsm-fix",
+    "@vueuse/core": "^10.1.2",
+    "@vueuse/router": "^10.1.2",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0-alpha3",
     "chroma-js": "^2.4.2",
-    "pinia": "^2.0.35",
+    "pinia": "^2.0.36",
     "pinia-plugin-persistedstate": "^3.1.0",
     "string-to-color": "^2.2.2",
     "vue": "^3.2.47",
@@ -36,10 +35,10 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "sass": "^1.62.1",
-    "terser": "^5.17.1",
+    "terser": "^5.17.2",
     "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.3.3",
+    "vite": "^4.3.5",
     "vite-plugin-banner": "^0.7.0",
     "vite-plugin-pwa": "^0.14.7"
   }

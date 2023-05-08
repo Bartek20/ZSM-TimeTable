@@ -52,7 +52,6 @@ export default defineConfig({
         {
           '@vueuse/router': ['useRouteParams'],
           'virtual:pwa-register': ['registerSW'],
-          '@wulkanowy/timetable-parser': ['TimetableList', 'Table'],
           axios: [['default', 'axios']],
           'string-to-color': [['default', 'stc']],
           'chroma-js': [['default', 'chroma']],
@@ -131,15 +130,10 @@ export default defineConfig({
       output: {
         manualChunks: {
           vueuse: ['@vueuse/core', '@vueuse/router'],
-          'timetable-parser': ['@wulkanowy/timetable-parser'],
           axios: ['axios'],
-          'color': ['chroma-js', 'string-to-color'],
+          color: ['chroma-js', 'string-to-color'],
           vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
-          components: getGlobs('./src/components/**/*'),
-          functions: getGlobs('./src/functions/**/*'),
-          router: getGlobs('./src/router/**/*'),
-          stores: getGlobs('./src/stores/**/*'),
-          views: getGlobs('./src/views/**/*'),
+          components: getGlobs('./src/{views,components,functions,stores,router}/**/*'),
         },
       },
     },
