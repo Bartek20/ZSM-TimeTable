@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const usePlansStore = defineStore('plans', {
   state: () => {
     return {
@@ -16,23 +14,6 @@ export const usePlansStore = defineStore('plans', {
     };
   },
   actions: {
-    getHours(html) {
-      const li = html.match(/<td class="nr">\d+<\/td>/gm);
-      var out = [];
-      li.forEach((el) => {
-        const id = el.replace('<td class="nr">', '').replace('</td>', '');
-        out.push(HOURS[id]);
-      });
-      return out;
-    },
-    parseDate(mode, date) {
-      if (mode == 'gen') {
-        const date_parts = date.split('-');
-        return date_parts[2] + '/' + date_parts[1] + '/' + date_parts[0];
-      }
-      const date_parts = date.split(' ');
-      return date_parts[0] + '/' + MONTHS[date_parts[1]] + '/' + date_parts[2];
-    },
     async loadList(force = false) {
       if (!force && this.lists.classes.length != 0) return;
       const URL = `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/lista.html`;
@@ -44,8 +25,8 @@ export const usePlansStore = defineStore('plans', {
         return;
       }
       if (res == undefined) return;
-      const TimeTable_List = new TimetableList(res.data);
-      const result_list = TimeTable_List.getList();
+      const TTList = new TimeTableList(res.data);
+      const result_list = TTList.getList();
       this.lists = result_list;
     },
     async loadPlan(mode, id, force = false) {
@@ -53,7 +34,9 @@ export const usePlansStore = defineStore('plans', {
       this.plans[mode][id] = {
         status: 0,
       };
-      const URL = `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/${mode}${id}.html`;
+      const URL = `${
+        location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'
+      }plan_nauczyciele/plany/${mode}${id}.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -84,26 +67,32 @@ export const usePlansStore = defineStore('plans', {
           status: 404,
         };
       }
-      const TimeTable = new Table(res.data);
+      const TT = new TimeTable(res.data);
       const result = {
-        title: TimeTable.getTitle(),
-        hours: this.getHours(res.data),
-        days: TimeTable.getDays(),
-        gen_date: this.parseDate('gen', TimeTable.getGeneratedDate()),
-        apply_date: this.parseDate('ver', TimeTable.getVersionInfo()),
+        title: TT.getTitle(),
+        hours: TT.getHours(),
+        days: TT.getDays(),
+        gen_date: TT.getGeneratedDate(),
+        apply_date: TT.getVersionInfo(),
         status: 200,
       };
       this.plans[mode][id] = result;
     },
     async getPlans() {
       this.lists.classes.forEach((obj) => {
-        axios.get(`${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/o${obj.value}.html`);
+        axios.get(
+          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/o${obj.value}.html`
+        );
       });
       this.lists.teachers.forEach((obj) => {
-        axios.get(`${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/n${obj.value}.html`);
+        axios.get(
+          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/n${obj.value}.html`
+        );
       });
       this.lists.rooms.forEach((obj) => {
-        axios.get(`${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/s${obj.value}.html`);
+        axios.get(
+          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/s${obj.value}.html`
+        );
       });
     },
     async getTimeTable() {

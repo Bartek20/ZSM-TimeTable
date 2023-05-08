@@ -2,6 +2,8 @@
 const plansStore = usePlansStore();
 const list = computed(() => plansStore.lists);
 
+const SB_ANIMATION_DURATION = 300;
+
 const slideUp = (target, duration = SB_ANIMATION_DURATION) => {
   const { parentElement } = target;
   parentElement.classList.remove('open');
