@@ -9,9 +9,7 @@ export class TimeTableList {
   $;
   constructor(html) {
     this.$ = document.createElement('vdom');
-    this.$.innerHTML = html
-      .slice(html.indexOf('<body>'), html.indexOf('</body>'))
-      .replace(/<img name=\".*\" border=\"0\" src=\".*\" width=\"16\" height=\"16\"\/>/, '');
+    this.$.innerHTML = html.slice(html.indexOf('<body>'), html.indexOf('</body>')).replaceAll('src=', 'url=');
   }
   getList() {
     const listType = this.getListType();
@@ -33,7 +31,7 @@ export class TimeTableList {
     return 'unordered';
   }
   getLogoSrc() {
-    return qs(this.$, '.logo img').getAttribute('src') || '';
+    return qs(this.$, '.logo img').getAttribute('url') || '';
   }
   getSelectList() {
     return {
@@ -94,7 +92,7 @@ export class TimeTable {
   $;
   constructor(html) {
     this.$ = document.createElement('vdom');
-    this.$.innerHTML = html.slice(html.indexOf('<body>'), html.indexOf('</body>'));
+    this.$.innerHTML = html.slice(html.indexOf('<body>'), html.indexOf('</body>')).replaceAll('src=', 'url=');
   }
   getTitle() {
     return qs(this.$, '.tytulnapis').innerText;

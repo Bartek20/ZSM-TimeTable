@@ -1,11 +1,14 @@
 <script setup>
 const plansStore = usePlansStore();
-const route = useRoute();
-const mode = route.params.mode;
-const id = route.params.id;
-await plansStore.loadPlan(mode, id);
+const mode = useRouteParams('mode');
+const id = useRouteParams('id');
 </script>
 
 <template>
-  <AppTimeTable :print="true" :mode="mode" :id="id" :key="mode + id" />
+  <Suspense :timeout="0">
+    <AppTimeTable :print="true" :mode="mode" :id="id" :key="mode + id" />
+    <template #fallback>
+      <AppTimeTableSkeleton />
+    </template>
+  </Suspense>
 </template>
