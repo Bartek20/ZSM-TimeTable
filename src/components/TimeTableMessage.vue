@@ -22,6 +22,10 @@ const MESSAGES = {
 };
 
 const props = defineProps({
+  isLoading: {
+    type: Boolean,
+    required: true,
+  },
   isEmpty: {
     type: Boolean,
     required: true,
@@ -41,18 +45,23 @@ const props = defineProps({
 });
 const title = useTitle();
 onMounted(() => {
-  if (props.isEmpty && !props.isError) title.value = MESSAGES.EMPTY[props.mode] + ' | ZSM Plan Lekcji';
+  if (props.isLoading) title.value = 'Wczytywanie | ZSM Plan Lekcji';
+  else if (props.isEmpty && !props.isError) title.value = MESSAGES.EMPTY[props.mode] + ' | ZSM Plan Lekcji';
   else title.value = MESSAGES.ERR[props.status].msg + ' | ZSM Plan Lekcji';
 });
 const color = computed(() => (props.isEmpty && !props.isError ? '#cfe2ff' : undefined));
 </script>
 
 <template>
-  <div class="timetable-msg d-flex flex-column justify-content-center align-items-center" v-if="isEmpty && !isError">
+  <div class="timetable-msg d-flex flex-column justify-content-center align-items-center" v-if="isLoading">
+    <i class="zsm-loading-icon p-4 loading"></i>
+    <h5 class="mt-2 text-wrap text-center">Trwa wczytywanie planu lekcji</h5>
+  </div>
+  <div class="timetable-msg d-flex flex-column justify-content-center align-items-center" v-else-if="isEmpty && !isError">
     <i class="zsm-empty-error-icon p-4"></i>
     <h5 class="mt-2 text-wrap text-center">{{ MESSAGES.EMPTY[mode] }}</h5>
   </div>
-  <div v-else class="timetable-msg d-flex flex-column justify-content-center align-items-center">
+  <div class="timetable-msg d-flex flex-column justify-content-center align-items-center" v-else>
     <i class="p-4" :class="MESSAGES.ERR[status].icon"></i>
     <h5 class="mt-2 text-wrap text-center">{{ MESSAGES.ERR[status].msg }}</h5>
   </div>
@@ -65,6 +74,9 @@ const color = computed(() => (props.isEmpty && !props.isError ? '#cfe2ff' : unde
     min-height: calc(100% - 48px);
     max-height: calc(100% - 48px);
     padding-bottom: 48px;
+    .loading {
+      animation: spin 2s linear infinite;
+    }
     i {
       font-size: 64px;
     }

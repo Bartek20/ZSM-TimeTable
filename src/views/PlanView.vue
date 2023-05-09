@@ -1,12 +1,7 @@
 <script setup>
 const plansStore = usePlansStore();
-const route = useRoute();
-var mode = route.params.mode;
-var id = route.params.id;
-watch(route, (_, data) => {
-  mode = data.params.mode;
-  id = data.params.id;
-});
+const mode = useRouteParams('mode');
+const id = useRouteParams('id');
 async function load() {
   const last = window.localStorage.getItem('lastFetched');
   if (import.meta.env.MODE == 'development') return;
@@ -26,6 +21,16 @@ load();
 </script>
 
 <template>
-  <AppSidebar />
-  <AppTimeTable :print="false" :mode="mode" :id="id" :key="mode + id" />
+  <Suspense>
+    <AppSidebar />
+    <template #fallback>
+      <AppSidebarSkeleton />
+    </template>
+  </Suspense>
+  <Suspense :timeout="0">
+    <AppTimeTable :print="false" :mode="mode" :id="id" :key="mode + id" />
+    <template #fallback>
+      <AppTimeTableSkeleton />
+    </template>
+  </Suspense>
 </template>

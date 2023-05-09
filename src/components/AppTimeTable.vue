@@ -69,14 +69,14 @@ const isError = computed(() => {
   if ([404, 900].includes(plan.value.status)) return true;
   return false;
 });
-onBeforeMount(() => plansStore.loadPlan(props.mode, props.id));
 function changeDay(d) {
   if (d == 'Prev') selectedDay.value == 0 ? (selectedDay.value = 4) : (selectedDay.value -= 1);
   else selectedDay.value == 4 ? (selectedDay.value = 0) : (selectedDay.value += 1);
 }
 onMounted(() => {
-  document.getElementById('load').classList.add('d-none')
-})
+  document.getElementById('load').classList.add('d-none');
+});
+await plansStore.loadPlan(props.mode, props.id);
 </script>
 
 <template>
@@ -138,6 +138,7 @@ onMounted(() => {
     </div>
     <TimeTableMessage
       v-if="isError || (isEmpty && typeof plan.status == 'number')"
+      :isLoading="false"
       :isEmpty="isEmpty"
       :isError="isError"
       :mode="mode"

@@ -48,7 +48,7 @@ watch(TIME, () => {
 </script>
 
 <template>
-  <tr class="text-nowrap align-middle" v-if="breakTime != 0">
+  <tr class="break-row text-nowrap align-middle" v-if="breakTime != 0">
     <td colspan="7" class="text-center break" :class="{ current: isActive && isShown && DAY < 5 }">
       {{ 'Przerwa ' + breakTime + '-minutowa' }}
     </td>
@@ -56,6 +56,9 @@ watch(TIME, () => {
 </template>
 
 <style lang="scss">
+.break-row {
+  break-inside: avoid;
+}
 .break.current {
   background-color: rgba(13, 202, 240, 1);
 }
