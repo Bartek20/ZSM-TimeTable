@@ -20,7 +20,8 @@ const props = defineProps({
 const color = computed(() => (props.print || props.title == '' ? undefined : '#cfe2ff'));
 const reftitle = useTitle();
 const schoolData = useStorage('schoolData', {});
-function titleParser(title) {
+const titleParser = computed(() => {
+  var title = props.title;
   if (title == '') return title;
   if (props.mode == 'o') {
     if (!('classes' in schoolData.value)) return title;
@@ -56,7 +57,7 @@ function titleParser(title) {
     return out;
   }
   return title;
-}
+});
 function sidebarToggle() {
   const el = document.getElementById('sidebar');
   if (el) el.classList.toggle('toggled');
@@ -64,6 +65,10 @@ function sidebarToggle() {
 function timetablePrint() {
   window.open(`${import.meta.env.BASE_URL}print/${props.mode}/${props.id}`, '_blank');
 }
+onMounted(() => {
+  const symbol = props.print ? ' - ' : ' | ';
+  reftitle.value = titleParser.value.replace(/ \(.*\)/g, '') + symbol + 'Plan Lekcji';
+});
 </script>
 
 <template>
@@ -74,7 +79,7 @@ function timetablePrint() {
       </div>
     </div>
     <div class="text d-flex align-items-center justify-content-center">
-      <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser(title) }}</h3>
+      <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser }}</h3>
     </div>
     <div class="fn-btn m-auto px-2">
       <div v-if="title != '' && !print" class="btn-print" @click="timetablePrint">
