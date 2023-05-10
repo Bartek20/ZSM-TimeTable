@@ -133,7 +133,9 @@ export default defineConfig({
           axios: ['axios'],
           color: ['chroma-js', 'string-to-color'],
           vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
-          components: getGlobs('./src/{views,components,functions,stores,router}/**/*'),
+          components: []
+            .concat(getGlobs('./src/{views,functions,stores,router}/**/*'))
+            .concat(getGlobs('./src/components/{Generator,Sidebar,TimeTable}/**/*')),
         },
       },
     },
