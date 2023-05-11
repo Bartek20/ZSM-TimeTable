@@ -27,7 +27,7 @@
     "pinia": "^2.0.36",
     "pinia-plugin-persistedstate": "^3.1.0",
     "string-to-color": "^2.2.2",
-    "vue": "^3.2.47",
+    "vue": "^3.3.1",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
