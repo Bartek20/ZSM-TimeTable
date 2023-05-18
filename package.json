@@ -28,7 +28,7 @@
     "pinia-plugin-persistedstate": "^3.1.0",
     "string-to-color": "^2.2.2",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.1",
