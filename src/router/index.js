@@ -26,8 +26,8 @@ const router = createRouter({
     {
       path: '/generator',
       name: 'generatorSelector',
-      // component: () => import('@/views/GeneratorView.vue'),
-      redirect: '/'
+      component: import.meta.env.MODE != 'development' ? undefined : () => import('@/views/GeneratorView.vue'),
+      redirect: import.meta.env.MODE != 'development' ? '/' : undefined,
     },
     {
       path: '/:catchAll(.*)',
