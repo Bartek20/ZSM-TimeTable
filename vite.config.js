@@ -13,7 +13,8 @@ function getGlobs(pattern) {
   return glob.sync(pattern);
 }
 
-const root = process.env.ROOT_PATH || '/';
+const root = process.env.ROOT_PATH || '/development/';
+
 const now = new Intl.DateTimeFormat('en-US', {
   timeZone: 'Europe/Warsaw',
   weekday: 'long',
@@ -28,13 +29,13 @@ const now = new Intl.DateTimeFormat('en-US', {
 export default defineConfig({
   base: root,
   server: {
-    base: '/',
-    proxy: {
-      '/plan_nauczyciele': {
-        target: 'https://zsm.resman.pl',
-        changeOrigin: true,
-      },
-    },
+    base: root,
+    // proxy: {
+    //   'plan_nauczyciele': {
+    //     target: 'https://zsm.resman.pl',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
   plugins: [
     vue(),
@@ -53,6 +54,7 @@ export default defineConfig({
           '@vueuse/router': ['useRouteParams'],
           'virtual:pwa-register': ['registerSW'],
           axios: [['default', 'axios']],
+          dropzone: [['default', 'Dropzone']],
           'string-to-color': [['default', 'stc']],
           'chroma-js': [['default', 'chroma']],
           'pinia-plugin-persistedstate': [['default', 'piniaPluginPersistedstate']],
@@ -149,6 +151,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
+      '@dropzone': path.resolve(__dirname, 'node_modules/dropzone/dist')
     },
   },
 });

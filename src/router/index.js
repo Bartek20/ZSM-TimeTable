@@ -24,10 +24,10 @@ const router = createRouter({
       component: () => import('@/views/PrintView.vue'),
     },
     {
-      path: '/generator/:mode(specialities|teachers|subjects)',
-      name: 'generator',
-      component: () => import('@/views/GeneratorView.vue'),
-      // redirect: '/'
+      path: '/generator',
+      name: 'generatorSelector',
+      // component: () => import('@/views/GeneratorView.vue'),
+      redirect: '/'
     },
     {
       path: '/:catchAll(.*)',
