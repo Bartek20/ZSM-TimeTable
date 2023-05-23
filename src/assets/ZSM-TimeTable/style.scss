@@ -99,3 +99,43 @@ i {
     content: $zsm-unknown-error-icon; 
   }
 }
+.zsm-generator-new-icon {
+  &:before {
+    content: $zsm-generator-new-icon; 
+  }
+}
+.zsm-generator-current-icon {
+  &:before {
+    content: $zsm-generator-current-icon; 
+  }
+}
+.zsm-specialities-icon {
+  &:before {
+    content: $zsm-specialities-icon; 
+  }
+}
+.zsm-teachers-icon {
+  &:before {
+    content: $zsm-teachers-icon; 
+  }
+}
+.zsm-subjects-icon {
+  &:before {
+    content: $zsm-subjects-icon; 
+  }
+}
+.zsm-data-add-icon {
+  &:before {
+    content: $zsm-data-add-icon; 
+  }
+}
+.zsm-data-edit-icon {
+  &:before {
+    content: $zsm-data-edit-icon; 
+  }
+}
+.zsm-data-remove-icon {
+  &:before {
+    content: $zsm-data-remove-icon; 
+  }
+}
