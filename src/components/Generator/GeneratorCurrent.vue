@@ -11,7 +11,7 @@ const subjects = ref({});
 function loadList() {
   return new Promise(async (resolve) => {
     var out = [];
-    const URL = `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/lista.html`;
+    const URL = '/plan_nauczyciele/lista.html';
     const res = await axios.get(URL);
     const lists = new TimeTableList(res.data).getList();
     classes.value = lists.classes;
@@ -27,7 +27,7 @@ function loadPlans() {
       subjects: [],
     };
     for (let i = 1; i <= classes.value.length; i++) {
-      const URL = `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/o${i}.html`;
+      const URL = `/plan_nauczyciele/plany/o${i}.html`;
       const res = await axios.get(URL);
       const TT = new TimeTable(res.data);
       TT.getTitle()
@@ -62,5 +62,4 @@ progress.value = '';
   <section id="generator" class="z-0 w-100 h-100"></section>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

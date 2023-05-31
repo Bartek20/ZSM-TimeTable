@@ -16,7 +16,7 @@ export const usePlansStore = defineStore('plans', {
   actions: {
     async loadList(force = false) {
       if (!force && this.lists.classes.length != 0) return;
-      const URL = `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/lista.html`;
+      const URL = '/plan_nauczyciele/lista.html';
       var res;
       try {
         res = await axios.get(URL);
@@ -34,9 +34,7 @@ export const usePlansStore = defineStore('plans', {
       this.plans[mode][id] = {
         status: 0,
       };
-      const URL = `${
-        location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'
-      }plan_nauczyciele/plany/${mode}${id}.html`;
+      const URL = `/plan_nauczyciele/plany/${mode}${id}.html`;
       var res;
       try {
         res = await axios.get(URL);
@@ -80,19 +78,13 @@ export const usePlansStore = defineStore('plans', {
     },
     async getPlans() {
       this.lists.classes.forEach((obj) => {
-        axios.get(
-          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/o${obj.value}.html`
-        );
+        axios.get(`/plan_nauczyciele/plany/o${obj.value}.html`);
       });
       this.lists.teachers.forEach((obj) => {
-        axios.get(
-          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/n${obj.value}.html`
-        );
+        axios.get(`/plan_nauczyciele/plany/n${obj.value}.html`);
       });
       this.lists.rooms.forEach((obj) => {
-        axios.get(
-          `${location.host != 'zsm.resman.pl' ? import.meta.env.BASE_URL : '/'}plan_nauczyciele/plany/s${obj.value}.html`
-        );
+        axios.get(`/plan_nauczyciele/plany/s${obj.value}.html`);
       });
     },
     async getTimeTable() {
