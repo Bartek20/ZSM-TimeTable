@@ -1,11 +1,16 @@
 <script setup>
 const files = ref([]);
+
+const JWT = '';
+
 onMounted(() => {
   new Dropzone('#dz', {
     url: '/',
-    paramName: 'timetableData',
+    method: 'post',
+    headers: {
+      Authorization: `Bearer ${JWT}`,
+    },
     autoProcessQueue: false,
-    autoQueue: false,
     disablePreviews: true,
     accept: (file, done) => {
       const timetableRegEx = /[ons]{1}\d+\.html/;
@@ -108,9 +113,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="generator" v-if="!files.length">
-    <div id="dz">Przeciągnij pliki lub kliknij i wybierz folder</div>
+  <section id="generator" class="z-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <div
+      id="dz"
+      class="dropzone text-center d-flex flex-column justify-content-center align-items-center"
+      v-show="!files.length"
+    >
+      Przeciągnij pliki
+      <br />
+      lub
+      <br />
+      <div class="btn rounded-2">Wybierz pliki</div>
+    </div>
   </section>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.dropzone {
+  width: 400px;
+  height: 200px;
+  border: 3px darkgoldenrod dashed;
+  .btn {
+    background-color: aquamarine;
+    padding: 5px 10px;
+  }
+}
+</style>
