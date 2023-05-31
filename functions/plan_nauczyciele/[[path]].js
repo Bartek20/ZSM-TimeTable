@@ -1,12 +1,9 @@
 async function getFile(url) {
-  const res = await fetch(url);
-  return await res.text();
+  return await fetch(url);
 }
 
 export async function onRequest(context) {
-  return new Response(await getFile(`https://zsm.resman.pl/plan_nauczyciele/${context.params.path.join('/')}`), {
-    headers: {
-      'Access-Control-Allow-Origin': 'https://zsm-timetable.pages.dev',
-    },
-  });
+  const res = await getFile(`https://zsm.resman.pl/plan_nauczyciele/${context.params.path.join('/')}`);
+  res.headers.set('Access-Control-Allow-Origin', 'https://zsm-timetable.pages.dev');
+  return res;
 }
