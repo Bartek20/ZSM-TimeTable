@@ -31,7 +31,7 @@ export default defineConfig({
   server: {
     base: root,
     // proxy: {
-    //   'plan_nauczyciele': {
+    //   'plan_vulcan': {
     //     target: 'https://zsm.resman.pl',
     //     changeOrigin: true,
     //   },
@@ -69,10 +69,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
         navigateFallback: `${root}index.html`,
         navigateFallbackAllowlist: [/plan/, /print/],
-        navigateFallbackDenylist: [/plan_nauczyciele/, /assets/],
+        navigateFallbackDenylist: [/plan_vulcan/, /assets/],
         runtimeCaching: [
           {
-            urlPattern: /plan_nauczyciele/,
+            urlPattern: /plan_vulcan/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'timetables-data',
