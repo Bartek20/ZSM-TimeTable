@@ -6,5 +6,5 @@ async function getFile(url) {
 }
 
 export async function onRequest(context) {
-  return await getFile(`https://zsm.resman.pl/plan_nauczyciele/${context.params.path.join('/')}`);
+  return await getFile(`https://zsm.resman.pl/plan_vulcan/${context.params.path.join('/')}`);
 }
