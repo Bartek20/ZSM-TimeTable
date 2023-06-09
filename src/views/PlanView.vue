@@ -1,5 +1,4 @@
 <script setup>
-const plansStore = usePlansStore();
 const mode = useRouteParams('mode');
 const id = useRouteParams('id');
 async function load() {
@@ -14,7 +13,18 @@ async function load() {
   }
   await sleep(3000);
   console.log('Fetching timetable updates...');
-  plansStore.getTimeTable();
+  axios.get(`${import.meta.env.BASE_URL}school-data.json`);
+  const res = await axios.get('/plan_vulcan/lista.html');
+  const list = new TimeTableList(res.data).getList();
+  list.classes.forEach((obj) => {
+    axios.get(`/plan_vulcan/plany/o${obj.value}.html`);
+  });
+  list.teachers.forEach((obj) => {
+    axios.get(`/plan_vulcan/plany/n${obj.value}.html`);
+  });
+  list.rooms.forEach((obj) => {
+    axios.get(`/plan_vulcan/plany/s${obj.value}.html`);
+  });
   window.localStorage.setItem('lastFetched', Date.now());
 }
 load();

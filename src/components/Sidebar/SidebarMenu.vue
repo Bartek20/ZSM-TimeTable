@@ -22,7 +22,7 @@ const emits = defineEmits(['selectList']);
 
 <template>
   <li class="menu-item sub-menu position-relative">
-    <a href="#" @click="$emit('selectList', $event)" class="d-flex align-items-center px-3 text-decoration-none">
+    <a @click="$emit('selectList', $event)" class="d-flex align-items-center px-3 text-decoration-none">
       <span class="menu-icon text-center d-inline-block me-2 rounded-1">
         <i :class="symbol" class="d-inline-block"></i>
       </span>

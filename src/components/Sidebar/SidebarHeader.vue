@@ -1,6 +1,8 @@
 <template>
   <header class="text-center">
-    <img class="p-4 h-100" src="/assets/images/logo.png" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
+    <a href="https://zsm.resman.pl" target="_blank" rel="noopener noreferrer">
+      <img class="p-4 h-100" src="/assets/images/logo.png" alt="Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie" />
+    </a>
   </header>
 </template>
 

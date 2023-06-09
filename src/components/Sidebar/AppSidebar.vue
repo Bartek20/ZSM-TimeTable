@@ -1,6 +1,9 @@
 <script setup>
-const plansStore = usePlansStore();
-const list = computed(() => plansStore.lists);
+const list = useStorage('lists', {
+  classes: [],
+  teachers: [],
+  rooms: [],
+});
 
 const SB_ANIMATION_DURATION = 300;
 
@@ -81,7 +84,19 @@ function sidebarClose() {
     el.classList.toggle('toggled');
   }
 }
-await plansStore.loadList();
+async function loadList() {
+  var res;
+  try {
+    res = await axios.get('/plan_vulcan/lista.html');
+  } catch (err) {
+    console.error('Wystąpił błąd przy wczytywaniu listy:\n', err);
+    return;
+  }
+  if (res == undefined) return;
+  const TTList = new TimeTableList(res.data);
+  list.value = TTList.getList();
+}
+await loadList();
 </script>
 
 <template>
@@ -97,9 +112,30 @@ await plansStore.loadList();
       <div class="sidebar-content flex-grow-1 my-2 overflow-y-auto">
         <nav class="menu open-current-submenu">
           <ul class="m-0 p-0 list-unstyled">
-            <SidebarMenu @selectList="selectList" id="o" symbol="zsm-student-icon" name="Klasy" :list="list.classes" />
-            <SidebarMenu @selectList="selectList" id="n" symbol="zsm-teacher-icon" name="Nauczyciele" :list="list.teachers" />
-            <SidebarMenu @selectList="selectList" id="s" symbol="zsm-room-icon" name="Sale" :list="list.rooms" />
+            <SidebarMenu
+              v-if="list.classes.length"
+              @selectList="selectList"
+              id="o"
+              symbol="zsm-student-icon"
+              name="Klasy"
+              :list="list.classes"
+            />
+            <SidebarMenu
+              v-if="list.teachers.length"
+              @selectList="selectList"
+              id="n"
+              symbol="zsm-teacher-icon"
+              name="Nauczyciele"
+              :list="list.teachers"
+            />
+            <SidebarMenu
+              v-if="list.rooms.length"
+              @selectList="selectList"
+              id="s"
+              symbol="zsm-room-icon"
+              name="Sale"
+              :list="list.rooms"
+            />
           </ul>
         </nav>
       </div>
