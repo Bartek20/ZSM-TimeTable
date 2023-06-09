@@ -17,32 +17,31 @@
     "build": "vite build",
     "preview": "vite preview --host",
     "compress": "rm zsm-timetable.tar.gz -f && tar -czvf zsm-timetable.tar.gz dist/",
-    "update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@5.3.0-alpha3 chroma-js@latest dropzone@latest pinia@latest pinia-plugin-persistedstate@latest string-to-color@latest vue@latest vue-router@latest",
+    "update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest dropzone@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
     "update:dev": "npm i @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
     "@vueuse/router": "^10.1.2",
     "axios": "^1.4.0",
-    "bootstrap": "^5.3.0-alpha3",
+    "bootstrap": "^5.3.0",
     "chroma-js": "^2.4.2",
     "dropzone": "^6.0.0-beta.2",
     "pinia": "^2.1.3",
-    "pinia-plugin-persistedstate": "^3.1.0",
     "string-to-color": "^2.2.2",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.1"
+    "vue-router": "^4.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.23",
-    "sass": "^1.62.1",
-    "terser": "^5.17.5",
-    "unplugin-auto-import": "^0.16.2",
-    "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.3.8",
+    "postcss": "^8.4.24",
+    "sass": "^1.63.3",
+    "terser": "^5.17.7",
+    "unplugin-auto-import": "^0.16.4",
+    "unplugin-vue-components": "^0.25.1",
+    "vite": "^4.3.9",
     "vite-plugin-banner": "^0.7.0",
-    "vite-plugin-pwa": "^0.15.0"
+    "vite-plugin-pwa": "^0.16.3"
   }
 }

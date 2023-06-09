@@ -29,13 +29,13 @@ const now = new Intl.DateTimeFormat('en-US', {
 export default defineConfig({
   base: root,
   server: {
-    base: root,
-    // proxy: {
-    //   'plan_vulcan': {
-    //     target: 'https://zsm.resman.pl',
-    //     changeOrigin: true,
-    //   },
-    // },
+    base: '/',
+    proxy: {
+      plan_vulcan: {
+        target: 'https://zsm.resman.pl',
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [
     vue(),
@@ -57,7 +57,6 @@ export default defineConfig({
           dropzone: [['default', 'Dropzone']],
           'string-to-color': [['default', 'stc']],
           'chroma-js': [['default', 'chroma']],
-          'pinia-plugin-persistedstate': [['default', 'piniaPluginPersistedstate']],
         },
       ],
       dirs: ['src/functions', 'src/stores'],
@@ -134,7 +133,7 @@ export default defineConfig({
           vueuse: ['@vueuse/core', '@vueuse/router'],
           axios: ['axios'],
           color: ['chroma-js', 'string-to-color'],
-          vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+          vue: ['vue', 'vue-router', 'pinia'],
           components: []
             .concat(getGlobs('./src/{views,functions,stores,router}/**/*'))
             .concat(getGlobs('./src/components/{Generator,Sidebar,TimeTable}/**/*')),

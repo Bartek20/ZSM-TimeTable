@@ -1,7 +1,13 @@
 <script setup>
-const route = useRoute();
 const PWAStore = usePWAStore();
-const plansStore = usePlansStore();
+const plan = useStorage('plan', {
+  apply_date: undefined,
+  days: [[], [], [], [], []],
+  gen_date: undefined,
+  hours: [],
+  status: undefined,
+  title: undefined,
+});
 function getFooter() {
   const date = new Date().getFullYear();
   var result = '2023';
@@ -12,7 +18,7 @@ function getFooter() {
 }
 const appStatus = computed(() => PWAStore.status());
 const dates = computed(() => {
-  const obj = plansStore.plans[route.params.mode][route.params.id];
+  const obj = plan.value;
   if (!obj || obj.status == 0 || obj.gen_date == undefined || obj.apply_date == undefined) return undefined;
   return {
     gen: obj.gen_date,

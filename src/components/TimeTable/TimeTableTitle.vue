@@ -16,8 +16,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isEmpty: {
+    type: Boolean,
+    required: true,
+  },
 });
-const color = computed(() => (props.print || props.title == '' ? undefined : '#cfe2ff'));
+const color = computed(() => ((props.print || props.title == '') && !props.isEmpty ? undefined : '#cfe2ff'));
 const reftitle = useTitle();
 const schoolData = useStorage('schoolData', {});
 const titleParser = computed(() => {
@@ -82,7 +86,7 @@ onMounted(() => {
       <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser }}</h3>
     </div>
     <div class="fn-btn m-auto px-2">
-      <div v-if="title != '' && !print" class="btn-print" @click="timetablePrint">
+      <div v-if="title != '' && !print && !isEmpty" class="btn-print" @click="timetablePrint">
         <i class="d-block zsm-print-icon"></i>
       </div>
     </div>

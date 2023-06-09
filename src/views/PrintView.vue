@@ -1,5 +1,4 @@
 <script setup>
-const plansStore = usePlansStore();
 const mode = useRouteParams('mode');
 const id = useRouteParams('id');
 </script>

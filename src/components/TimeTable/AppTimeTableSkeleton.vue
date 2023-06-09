@@ -6,7 +6,7 @@ onMounted(() => {
 
 <template>
   <section id="timetable" class="z-0 w-100 h-100">
-    <TimeTableTitle :title="''" :print="false" :mode="''" :id="''" />
+    <TimeTableTitle :title="''" :print="false" :mode="''" :id="''" :isEmpty="true" />
     <TimeTableMessage :isLoading="true" :isEmpty="false" :isError="false" :mode="''" :status="0" />
   </section>
 </template>
