@@ -37,11 +37,11 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "sass": "^1.63.3",
-    "terser": "^5.17.7",
+    "terser": "^5.18.0",
     "unplugin-auto-import": "^0.16.4",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.3.9",
     "vite-plugin-banner": "^0.7.0",
-    "vite-plugin-pwa": "^0.16.3"
+    "vite-plugin-pwa": "^0.16.4"
   }
 }

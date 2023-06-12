@@ -54,7 +54,6 @@ export default defineConfig({
           '@vueuse/router': ['useRouteParams'],
           'virtual:pwa-register': ['registerSW'],
           axios: [['default', 'axios']],
-          dropzone: [['default', 'Dropzone']],
           'string-to-color': [['default', 'stc']],
           'chroma-js': [['default', 'chroma']],
         },
