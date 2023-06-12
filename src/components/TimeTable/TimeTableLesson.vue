@@ -103,13 +103,15 @@ const col2 = computed(() => {
           col1.name
         }}</RouterLink>
       </div>
-      <div class="col-6 text-start text-muted" v-else>{{ col1.name }}</div>
+      <div class="col-6 text-start text-muted" v-else-if="!col1.id && col1.name">{{ col1.name }}</div>
+      <div class="col-6 text-start text-muted" v-else>-</div>
       <div class="col-6 text-end" v-if="!print && col2.id">
         <RouterLink :to="{ name: 'plan', params: { mode: col2.mode, id: col2.id } }" class="text-muted text-decoration-none">{{
           col2.name
         }}</RouterLink>
       </div>
-      <div class="col-6 text-end text-muted" v-else>{{ col2.name }}</div>
+      <div class="col-6 text-end text-muted" v-else-if="!col2.id && col2.name">{{ col2.name }}</div>
+      <div class="col-6 text-end text-muted" v-else>-</div>
     </div>
   </div>
 </template>
