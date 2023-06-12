@@ -24,12 +24,6 @@ const router = createRouter({
       component: () => import('@/views/PrintView.vue'),
     },
     {
-      path: '/generator',
-      name: 'generatorSelector',
-      component: import.meta.env.MODE != 'development' ? undefined : () => import('@/views/GeneratorView.vue'),
-      redirect: import.meta.env.MODE != 'development' ? '/' : undefined,
-    },
-    {
       path: '/:catchAll(.*)',
       name: '404',
       redirect: '/',
