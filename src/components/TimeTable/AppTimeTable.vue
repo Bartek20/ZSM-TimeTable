@@ -126,6 +126,23 @@ async function loadPlan(mode, id) {
     apply_date: TT.getVersionInfo(),
     status: 200,
   };
+  const lessonsNr = result.days[0].length;
+  for (let i = 0; i < lessonsNr; i++) {
+    if (
+      result.days[0][0].length == 0 &&
+      result.days[1][0].length == 0 &&
+      result.days[2][0].length == 0 &&
+      result.days[3][0].length == 0 &&
+      result.days[4][0].length == 0
+    ) {
+      result.days[0].shift();
+      result.days[1].shift();
+      result.days[2].shift();
+      result.days[3].shift();
+      result.days[4].shift();
+      result.hours.shift();
+    } else break;
+  }
   plan.value = result;
 }
 await loadPlan(props.mode, props.id);
