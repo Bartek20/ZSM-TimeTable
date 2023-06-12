@@ -67,7 +67,7 @@ const slideToggle = (target, duration = SB_ANIMATION_DURATION) => {
   if (window.getComputedStyle(target).display === 'none') return slideDown(target, duration);
   return slideUp(target, duration);
 };
-function selectList(el, id) {
+function selectList(el) {
   var element = el.target;
   if (element.tagName != 'A') element = element.parentElement;
   if (element.tagName != 'A') element = element.parentElement;
@@ -78,7 +78,7 @@ function selectList(el, id) {
       .forEach((el) => window.getComputedStyle(el.nextElementSibling).display !== 'none' && slideUp(el.nextElementSibling));
   slideToggle(element.nextElementSibling);
   document.querySelector('.sidebar-content').scrollTo({
-    top: id * 50,
+    top: 0,
     behavior: 'instant',
   });
 }
@@ -118,7 +118,7 @@ await loadList();
           <ul class="m-0 p-0 list-unstyled">
             <SidebarMenu
               v-if="list.classes.length"
-              @selectList="selectList($event, 0)"
+              @selectList="selectList"
               id="o"
               symbol="zsm-student-icon"
               name="Klasy"
@@ -126,7 +126,7 @@ await loadList();
             />
             <SidebarMenu
               v-if="list.teachers.length"
-              @selectList="selectList($event, 1)"
+              @selectList="selectList"
               id="n"
               symbol="zsm-teacher-icon"
               name="Nauczyciele"
@@ -134,7 +134,7 @@ await loadList();
             />
             <SidebarMenu
               v-if="list.rooms.length"
-              @selectList="selectList($event, 2)"
+              @selectList="selectList"
               id="s"
               symbol="zsm-room-icon"
               name="Sale"
