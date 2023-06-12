@@ -21,7 +21,7 @@ const props = defineProps({
     required: true,
   },
 });
-const color = computed(() => ((props.print || props.title == '') && !props.isEmpty ? undefined : '#cfe2ff'));
+const color = computed(() => ((props.print && !props.isEmpty) || (props.title == '')) ? undefined : '#cfe2ff');
 const reftitle = useTitle();
 const schoolData = useStorage('schoolData', {});
 const titleParser = computed(() => {
