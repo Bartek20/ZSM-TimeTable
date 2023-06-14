@@ -42,6 +42,10 @@ watch(TIME, () => {
   const out = checkBetween(props.hour.timeFrom, props.hour.timeTo);
   if (isActive != out) isActive.value = out;
 });
+const screenWidth = ref(window.innerWidth);
+window.addEventListener('resize', () => {
+  screenWidth.value = window.innerWidth;
+});
 </script>
 
 <template>
@@ -49,8 +53,9 @@ watch(TIME, () => {
     <th class="minw-auto text-center position-sticky start-0" scope="row">
       {{ hour.number }}
     </th>
-    <td class="minw-auto text-center">
-      {{ hour.timeFrom + ' - ' + hour.timeTo }}
+    <td class="time text-nowrap minw-auto text-center">
+      {{ hour.timeFrom }}<br v-if="device == 'PC' && screenWidth < 1400" />
+      - <br v-if="device == 'PC' && screenWidth < 1400" />{{ hour.timeTo }}
     </td>
     <td v-if="['PC', 'Printer'].includes(device)" v-for="(lesson, i) in lessons">
       <div class="cell m-n2 p-2" :class="{ current: isActive && DAY == i && lesson.length != 0 }">
@@ -66,6 +71,9 @@ watch(TIME, () => {
 </template>
 
 <style>
+.time {
+  line-height: 1;
+}
 .lesson-row {
   break-inside: avoid;
 }
