@@ -23,7 +23,7 @@ function sidebarClose() {
       <SidebarFooter />
     </div>
   </section>
-  <section id="overlay" class="z-n1 position-fixed inset-0" @click="sidebarClose"></section>
+  <section id="sidebarOverlay" class="z-n1 position-fixed inset-0" @click="sidebarClose"></section>
 </template>
 
 <style lang="scss">
@@ -71,8 +71,9 @@ $sidebar-width: 240px;
   }
 }
 @media (max-width: 991.98px) {
-  #sidebar.toggled + #overlay {
+  #sidebar.toggled + #sidebarOverlay {
     z-index: 3 !important;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 }
 </style>

@@ -225,7 +225,7 @@ await loadPlan(props.mode, props.id);
 </template>
 
 <style lang="scss">
-#sidebar + #overlay + #timetable {
+#sidebar + #sidebarOverlay + #timetable {
   max-width: calc(100% - 240px);
   @media (max-width: 991.98px) {
     max-width: 100%;

@@ -21,7 +21,7 @@ const props = defineProps({
     required: true,
   },
 });
-const color = computed(() => ((props.print && !props.isEmpty) || (props.title == '')) ? undefined : '#cfe2ff');
+const color = computed(() => ((props.print && !props.isEmpty) || props.title == '' ? undefined : '#cfe2ff'));
 const reftitle = useTitle();
 const schoolData = useStorage('schoolData', {});
 const titleParser = computed(() => {
@@ -66,8 +66,9 @@ function sidebarToggle() {
   const el = document.getElementById('sidebar');
   if (el) el.classList.toggle('toggled');
 }
-function timetablePrint() {
-  window.open(`${import.meta.env.BASE_URL}print/${props.mode}/${props.id}`, '_blank');
+function infoOpen() {
+  const el = document.getElementById('info');
+  if (el) el.classList.toggle('toggled');
 }
 onMounted(() => {
   const symbol = props.print ? ' - ' : ' | ';
@@ -77,6 +78,7 @@ onMounted(() => {
 
 <template>
   <div class="timetable-header d-flex">
+    <TimeTableInfo v-if="title != '' && !print && !isEmpty" :mode="mode" :id="id" :title="title" />
     <div class="fn-btn m-auto px-2">
       <div v-if="!print" class="sb-btn-open d-none align-items-center" @click="sidebarToggle">
         <i class="d-block zsm-menu-icon"></i>
@@ -86,8 +88,8 @@ onMounted(() => {
       <h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser }}</h3>
     </div>
     <div class="fn-btn m-auto px-2">
-      <div v-if="title != '' && !print && !isEmpty" class="btn-print" @click="timetablePrint">
-        <i class="d-block zsm-print-icon"></i>
+      <div v-if="title != '' && !print && !isEmpty" class="btn-info" @click="infoOpen">
+        <i class="d-block zsm-info-icon"></i>
       </div>
     </div>
   </div>
@@ -108,7 +110,7 @@ $header-height: 48px;
     width: calc(100% - ($header-height * 2));
   }
 }
-#sidebar + #overlay + #timetable {
+#sidebar + #sidebarOverlay + #timetable {
   .sb-btn-open {
     @media (max-width: 991.98px) {
       display: flex !important;

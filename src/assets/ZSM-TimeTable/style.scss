@@ -26,116 +26,81 @@ i {
 
 .zsm-menu-icon {
   &:before {
-    content: $zsm-menu-icon; 
+    content: $zsm-menu-icon;
   }
 }
 .zsm-close-icon {
   &:before {
-    content: $zsm-close-icon; 
+    content: $zsm-close-icon;
   }
 }
 .zsm-download-icon {
   &:before {
-    content: $zsm-download-icon; 
+    content: $zsm-download-icon;
   }
 }
 .zsm-chevron-icon {
   &:before {
-    content: $zsm-chevron-icon; 
+    content: $zsm-chevron-icon;
   }
 }
 .zsm-student-icon {
   &:before {
-    content: $zsm-student-icon; 
+    content: $zsm-student-icon;
   }
 }
 .zsm-teacher-icon {
   &:before {
-    content: $zsm-teacher-icon; 
+    content: $zsm-teacher-icon;
   }
 }
 .zsm-room-icon {
   &:before {
-    content: $zsm-room-icon; 
+    content: $zsm-room-icon;
+  }
+}
+.zsm-info-icon {
+  &:before {
+    content: $zsm-info-icon;
+  }
+}
+.zsm-old-icon {
+  &:before {
+    content: $zsm-old-icon;
   }
 }
 .zsm-print-icon {
   &:before {
-    content: $zsm-print-icon; 
-  }
-}
-.zsm-clock-icon {
-  &:before {
-    content: $zsm-clock-icon; 
+    content: $zsm-print-icon;
   }
 }
 .zsm-copyright-icon {
   &:before {
-    content: $zsm-copyright-icon; 
+    content: $zsm-copyright-icon;
   }
 }
 .zsm-loading-icon {
   &:before {
-    content: $zsm-loading-icon; 
+    content: $zsm-loading-icon;
   }
 }
 .zsm-empty-error-icon {
   &:before {
-    content: $zsm-empty-error-icon; 
+    content: $zsm-empty-error-icon;
   }
 }
 .zsm-not-found-error-icon {
   &:before {
-    content: $zsm-not-found-error-icon; 
+    content: $zsm-not-found-error-icon;
   }
 }
 .zsm-offline-error-icon {
   &:before {
-    content: $zsm-offline-error-icon; 
+    content: $zsm-offline-error-icon;
   }
 }
 .zsm-unknown-error-icon {
   &:before {
-    content: $zsm-unknown-error-icon; 
-  }
-}
-.zsm-generator-new-icon {
-  &:before {
-    content: $zsm-generator-new-icon; 
-  }
-}
-.zsm-generator-current-icon {
-  &:before {
-    content: $zsm-generator-current-icon; 
-  }
-}
-.zsm-specialities-icon {
-  &:before {
-    content: $zsm-specialities-icon; 
-  }
-}
-.zsm-teachers-icon {
-  &:before {
-    content: $zsm-teachers-icon; 
-  }
-}
-.zsm-subjects-icon {
-  &:before {
-    content: $zsm-subjects-icon; 
-  }
-}
-.zsm-data-add-icon {
-  &:before {
-    content: $zsm-data-add-icon; 
-  }
-}
-.zsm-data-edit-icon {
-  &:before {
-    content: $zsm-data-edit-icon; 
-  }
-}
-.zsm-data-remove-icon {
-  &:before {
-    content: $zsm-data-remove-icon; 
+    content: $zsm-unknown-error-icon;
   }
 }
