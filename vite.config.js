@@ -135,7 +135,7 @@ export default defineConfig({
           vue: ['vue', 'vue-router', 'pinia'],
           components: []
             .concat(getGlobs('./src/{views,functions,stores,router}/**/*'))
-            .concat(getGlobs('./src/components/{Generator,Sidebar,TimeTable}/**/*')),
+            .concat(getGlobs('./src/components/{Sidebar,TimeTable}/**/*')),
         },
       },
     },
@@ -149,7 +149,6 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
-      '@dropzone': path.resolve(__dirname, 'node_modules/dropzone/dist'),
     },
   },
 });
