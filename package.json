@@ -15,10 +15,10 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "build:school": "vite build && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
     "preview": "vite preview --host",
-    "compress": "rm zsm-timetable.tar.gz -f && tar -czvf zsm-timetable.tar.gz dist/",
-    "update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest dropzone@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
-    "update:dev": "npm i @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
+    "update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
+    "update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
@@ -26,7 +26,6 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "chroma-js": "^2.4.2",
-    "dropzone": "^6.0.0-beta.2",
     "pinia": "^2.1.4",
     "string-to-color": "^2.2.2",
     "vue": "^3.3.4",

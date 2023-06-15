@@ -61,12 +61,11 @@ const isEmpty = computed(() => {
   if (
     'days' in plan.value &&
     plan.value.days.length == 5 &&
-    plan.value.days[0].length == 1 &&
-    plan.value.days[0][0].length == 0 &&
-    plan.value.days[1][0].length == 0 &&
-    plan.value.days[2][0].length == 0 &&
-    plan.value.days[3][0].length == 0 &&
-    plan.value.days[4][0].length == 0
+    plan.value.days[0].length == 0 &&
+    plan.value.days[1].length == 0 &&
+    plan.value.days[2].length == 0 &&
+    plan.value.days[3].length == 0 &&
+    plan.value.days[4].length == 0
   )
     return true;
   return false;
