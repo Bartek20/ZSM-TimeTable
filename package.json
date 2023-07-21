@@ -36,7 +36,7 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "sass": "^1.63.4",
-    "terser": "^5.18.0",
+    "terser": "^5.19.2",
     "unplugin-auto-import": "^0.16.4",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.3.9",
