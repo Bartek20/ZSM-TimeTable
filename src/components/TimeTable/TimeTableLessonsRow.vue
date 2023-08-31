@@ -35,7 +35,6 @@ const DAY = computed(() => {
 const TIME = useDateFormat(useNow({ interval: 1000 }), 'HH:mm', {
   locales: 'pl-PL',
 });
-const mode = useRouteParams('mode');
 const width = computed(() => (props.device == 'Printer' ? 'auto' : '200px'));
 const isActive = ref(checkBetween(props.hour.timeFrom, props.hour.timeTo));
 watch(TIME, () => {
@@ -59,12 +58,12 @@ window.addEventListener('resize', () => {
     </td>
     <td v-if="['PC', 'Printer'].includes(device)" v-for="(lesson, i) in lessons">
       <div class="cell m-n2 p-2" :class="{ current: isActive && DAY == i && lesson.length != 0 }">
-        <TimeTableCell :print="device == 'Printer'" :mode="mode" :data="lesson" />
+        <TimeTableCell :print="device == 'Printer'" :data="lesson" />
       </div>
     </td>
     <td v-else>
       <div class="cell m-n2 p-2" :class="{ current: isActive && DAY == selectedDay && lessons[selectedDay].length != 0 }">
-        <TimeTableCell :print="false" :mode="mode" :data="lessons[selectedDay]" />
+        <TimeTableCell :print="false" :data="lessons[selectedDay]" />
       </div>
     </td>
   </tr>

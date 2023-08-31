@@ -4,10 +4,6 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  mode: {
-    type: String,
-    required: true,
-  },
   data: {
     type: Array,
     required: true,
@@ -21,7 +17,6 @@ const groups = computed(() => props.data.length);
   <TimeTableLesson
     v-else
     v-for="i in groups"
-    :mode="mode"
     :print="print"
     :subject="data[i - 1].subject"
     :group="data[i - 1].groupName"
