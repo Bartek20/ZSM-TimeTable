@@ -14,16 +14,16 @@
 		await sleep(3000);
 		console.log('Fetching timetable updates...');
 		axios.get(`${import.meta.env.BASE_URL}school-data.json`);
-		const res = await axios.get('/plan_vulcan/lista.html');
+		const res = await axios.get('/plan_nauczyciele/lista.html');
 		const list = new TimeTableList(res.data).getList();
 		list.classes.forEach((obj) => {
-			axios.get(`/plan_vulcan/plany/o${obj.value}.html`);
+			axios.get(`/plan_nauczyciele/plany/o${obj.value}.html`);
 		});
 		list.teachers.forEach((obj) => {
-			axios.get(`/plan_vulcan/plany/n${obj.value}.html`);
+			axios.get(`/plan_nauczyciele/plany/n${obj.value}.html`);
 		});
 		list.rooms.forEach((obj) => {
-			axios.get(`/plan_vulcan/plany/s${obj.value}.html`);
+			axios.get(`/plan_nauczyciele/plany/s${obj.value}.html`);
 		});
 		window.localStorage.setItem('lastFetched', Date.now());
 	}
