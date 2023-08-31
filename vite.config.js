@@ -13,7 +13,7 @@ function getGlobs(pattern) {
   return glob.sync(pattern);
 }
 
-const root = process.env.ROOT_PATH || '/plan_lekcji/';
+const root = process.env.ROOT_PATH || '/plan/';
 
 const now = new Intl.DateTimeFormat('en-US', {
   timeZone: 'Europe/Warsaw',

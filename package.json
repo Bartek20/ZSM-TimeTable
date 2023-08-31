@@ -1,46 +1,46 @@
 {
-  "name": "zsm-timetable",
-  "version": "1.0.0",
-  "description": "App for more futuristic preview of timetables for Zesół Szkół Mechanicznych w Rzeszowie",
-  "homepage": "https://github.com/Bartek20/ZSM-TimeTable",
-  "author": {
-    "name": "Bartłomiej Radoń",
-    "url": "https://github.com/Bartek20"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Bartek20/ZSM-TimeTable.git"
-  },
-  "private": true,
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "build:school": "vite build && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
-    "preview": "vite preview --host",
-    "update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
-    "update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
-  },
-  "dependencies": {
-    "@vueuse/core": "^10.1.2",
-    "@vueuse/router": "^10.1.2",
-    "axios": "^1.4.0",
-    "bootstrap": "^5.3.0",
-    "chroma-js": "^2.4.2",
-    "pinia": "^2.1.4",
-    "string-to-color": "^2.2.2",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.2"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.24",
-    "sass": "^1.63.4",
-    "terser": "^5.18.0",
-    "unplugin-auto-import": "^0.16.4",
-    "unplugin-vue-components": "^0.25.1",
-    "vite": "^4.3.9",
-    "vite-plugin-banner": "^0.7.0",
-    "vite-plugin-pwa": "^0.16.4"
-  }
+	"name": "zsm-timetable",
+	"version": "1.0.0",
+	"description": "App for more futuristic preview of timetables for Zesół Szkół Mechanicznych w Rzeszowie",
+	"homepage": "https://github.com/Bartek20/ZSM-TimeTable",
+	"author": {
+		"name": "Bartłomiej Radoń",
+		"url": "https://github.com/Bartek20"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Bartek20/ZSM-TimeTable.git"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "vite --host",
+		"build": "vite build",
+		"build:school": "vite build && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
+		"preview": "vite preview --host",
+		"update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
+		"update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
+	},
+	"dependencies": {
+		"@vueuse/core": "^10.4.1",
+		"@vueuse/router": "^10.4.1",
+		"axios": "^1.5.0",
+		"bootstrap": "^5.3.1",
+		"chroma-js": "^2.4.2",
+		"pinia": "^2.1.6",
+		"string-to-color": "^2.2.2",
+		"vue": "^3.3.4",
+		"vue-router": "^4.2.4"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.3.4",
+		"autoprefixer": "^10.4.15",
+		"postcss": "^8.4.29",
+		"sass": "~1.64.2",
+		"terser": "^5.19.3",
+		"unplugin-auto-import": "^0.16.6",
+		"unplugin-vue-components": "^0.25.2",
+		"vite": "^4.4.9",
+		"vite-plugin-banner": "^0.7.0",
+		"vite-plugin-pwa": "^0.16.4"
+	}
 }

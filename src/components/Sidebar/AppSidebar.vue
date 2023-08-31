@@ -5,6 +5,8 @@ const list = useStorage('lists', {
   rooms: [],
 });
 
+const user = useRouteParams('user');
+
 const SB_ANIMATION_DURATION = 300;
 
 const slideUp = (target, duration = SB_ANIMATION_DURATION) => {
@@ -123,7 +125,7 @@ await loadList();
               :list="list.classes"
             />
             <SidebarMenu
-              v-if="list.teachers.length"
+              v-if="user == 'nauczyciel' && list.teachers.length"
               @selectList="selectList"
               id="n"
               symbol="zsm-teacher-icon"
