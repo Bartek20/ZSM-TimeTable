@@ -161,7 +161,7 @@
 			background-color: #0c1e35;
 		}
 		.sidebar-layout {
-			background-color: rgba(#0c1e35, 0.7);
+			background-color: rgba(#0c1e35, 0.8);
 			.sidebar-content {
 				&::-webkit-scrollbar-thumb {
 					border-radius: 4px;
