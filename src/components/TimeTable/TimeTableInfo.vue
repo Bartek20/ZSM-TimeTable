@@ -13,7 +13,7 @@
 		if (el) el.classList.toggle('toggled');
 	}
 	function timetablePrint() {
-		window.open(`${import.meta.env.BASE_URL}${user}/${mode.value}/${id.value}/print`, '_blank');
+		window.open(`${import.meta.env.BASE_URL}${user.value}/${mode.value}/${id.value}/print`, '_blank');
 	}
 </script>
 
