@@ -19,10 +19,7 @@
 		},
 	});
 
-	const screenWidth = ref(window.innerWidth);
-	window.addEventListener('resize', () => {
-		screenWidth.value = window.innerWidth;
-	});
+	const { width } = useWindowSize();
 
 	if (props.print) {
 		const timer = window.setInterval(print, 1000);
@@ -36,7 +33,7 @@
 	}
 	const device = computed(() => {
 		if (props.print) return 'Printer';
-		if (screenWidth.value < 576) return 'Phone';
+		if (width.value < 576) return 'Phone';
 		return 'PC';
 	});
 	const DAY_NAME = useDateFormat(useNow({ interval: 3600000 }), 'dddd', {
