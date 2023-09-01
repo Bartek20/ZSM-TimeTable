@@ -12,9 +12,6 @@
 		const el = document.getElementById('info');
 		if (el) el.classList.toggle('toggled');
 	}
-	function timetablePrint() {
-		window.open(`${import.meta.env.BASE_URL}${user.value}/${mode.value}/${id.value}/print`, '_blank');
-	}
 </script>
 
 <template>
@@ -34,7 +31,7 @@
 				</div>
 				<div class="mt-3">
 					<h2>Opcje planu</h2>
-					<div class="row my-1" @click="timetablePrint">
+					<RouterLink class="row my-1 text-decoration-none text-body" target="_blank" :to="{ name: 'print', params: { user: user, mode: mode, id: id } }">
 						<div class="col-2">
 							<div class="fn-btn m-auto">
 								<div class="btn-info">
@@ -43,7 +40,8 @@
 							</div>
 						</div>
 						<div class="col ps-0 text-nowrap">Wydrukuj plan</div>
-					</div>
+					</RouterLink>
+
 					<a :href="'/plan_nauczyciele/plany/' + mode + id + '.html'" target="_blank" class="row my-1 text-decoration-none text-body">
 						<div class="col-2">
 							<div class="fn-btn m-auto">
