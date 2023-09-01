@@ -1,4 +1,5 @@
 <script setup>
+	const user = useRouteParams('user');
 	const mode = useRouteParams('mode');
 	const id = useRouteParams('id');
 	const props = defineProps({
@@ -12,7 +13,7 @@
 		if (el) el.classList.toggle('toggled');
 	}
 	function timetablePrint() {
-		window.open(`${import.meta.env.BASE_URL}${mode.value}/${id.value}/print`, '_blank');
+		window.open(`${import.meta.env.BASE_URL}${user}/${mode.value}/${id.value}/print`, '_blank');
 	}
 </script>
 

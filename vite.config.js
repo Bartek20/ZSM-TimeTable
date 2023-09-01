@@ -13,7 +13,7 @@ function getGlobs(pattern) {
 	return glob.sync(pattern);
 }
 
-const root = process.env.ROOT_PATH || '/plan/';
+const root = process.env.ROOT_PATH || '/';
 
 const now = new Intl.DateTimeFormat('en-US', {
 	timeZone: 'Europe/Warsaw',
@@ -71,9 +71,10 @@ export default defineConfig({
 				runtimeCaching: [
 					{
 						urlPattern: /plan_nauczyciele/,
-						handler: 'StaleWhileRevalidate',
+						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'timetables-data',
+							networkTimeoutSeconds: 3,
 							cacheableResponse: {
 								statuses: [200],
 							},
