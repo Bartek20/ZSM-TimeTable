@@ -13,6 +13,16 @@ const router = createRouter({
 			redirect: (to) => `/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${mode}/${id}`,
 		},
 		{
+			path: '/plany/:plan([ons]\\d+.html)',
+			name: 'redirector',
+			redirect: (to) => {
+				const plan = to.params.plan.replace('.html', '');
+				const mode = plan.charAt(0);
+				const id = plan.replace(mode, '');
+				return `/uczen/${mode}/${id}`;
+			},
+		},
+		{
 			path: '/:user(uczen|nauczyciel)/:mode([ons])/:id(\\d+)',
 			name: 'plan',
 			component: () => import('@/views/PlanView.vue'),
