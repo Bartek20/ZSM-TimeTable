@@ -44,7 +44,7 @@
 	const title = useTitle();
 	onMounted(() => {
 		if (props.isLoading) title.value = 'Wczytywanie | ZSM Plan Lekcji';
-		else if (props.isEmpty && !props.isError) title.value = MESSAGES.EMPTY[mode] + ' | ZSM Plan Lekcji';
+		else if (props.isEmpty && !props.isError) return;
 		else title.value = MESSAGES.ERR[props.status].msg + ' | ZSM Plan Lekcji';
 	});
 	const color = computed(() => (props.isEmpty && !props.isError ? '#cfe2ff' : undefined));

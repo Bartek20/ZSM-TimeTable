@@ -23,7 +23,7 @@
 		if (mode.value == 'o') {
 			if (!('classes' in schoolData.value)) return title;
 			const reg = title.match(/(\d\w+) (\d)([\w ]+)/);
-			if (!reg) return title
+			if (!reg) return title;
 			const data = {
 				class: reg[1],
 				specialities: reg[3].split(' '),
@@ -38,12 +38,12 @@
 				}
 			});
 			return out;
-		} else if (mode == 'n') {
+		} else if (mode.value == 'n') {
 			if (!('teachers' in schoolData.value)) return title;
 			if (schoolData.value.teachers[title] == undefined) {
 				const symbol = props.print ? ' - ' : ' | ';
 				reftitle.value = title + symbol + 'Plan Lekcji';
-				if (mode == 'n') console.warn('Nieznany nauczyciel:', title);
+				console.warn('Nieznany nauczyciel:', title);
 				return title;
 			}
 			title = schoolData.value.teachers[title];
@@ -56,6 +56,18 @@
 		}
 		return title;
 	});
+	const titleEl = ref(null);
+	const { width } = useWindowSize();
+	const marquee = computed(() => {
+		if (!width.value) return false;
+		if (!titleEl.value) return false;
+		console.log('=+=+=+=+=+=+=+=+=+=+=+=+=+=+=');
+		console.log('Element:', titleEl.value.classList.contains('marquee') ? titleEl.value.offsetWidth - 60 : titleEl.value.offsetWidth);
+		console.log('Parent:', titleEl.value.parentElement.offsetWidth);
+		if ((titleEl.value.classList.contains('marquee') ? titleEl.value.offsetWidth - 60 : titleEl.value.offsetWidth) > titleEl.value.parentElement.offsetWidth)
+			return true;
+		return false;
+	});
 	function sidebarToggle() {
 		const el = document.getElementById('sidebar');
 		if (el) el.classList.toggle('toggled');
@@ -64,10 +76,6 @@
 		const el = document.getElementById('info');
 		if (el) el.classList.toggle('toggled');
 	}
-	onMounted(() => {
-		const symbol = props.print ? ' - ' : ' | ';
-		reftitle.value = titleParser.value.replace(/ \(.*\)/g, '') + symbol + 'Plan Lekcji';
-	});
 </script>
 
 <template>
@@ -78,8 +86,9 @@
 				<i class="d-block zsm-menu-icon"></i>
 			</div>
 		</div>
-		<div class="text d-flex align-items-center justify-content-center">
-			<h3 class="m-0 text-nowrap overflow-hidden">{{ titleParser }}</h3>
+		<div class="text d-flex align-items-center overflow-hidden" :class="{ 'justify-content-center': !marquee }">
+			<h3 ref="titleEl" class="m-0 text-nowrap" :class="{ marquee: marquee }">{{ titleParser }}</h3>
+			<h3 v-show="marquee" class="m-0 text-nowrap" :class="{ marquee: marquee }">{{ titleParser }}</h3>
 		</div>
 		<div class="fn-btn m-auto px-2">
 			<div v-if="title != '' && !print && !isEmpty" class="btn-info" @click="infoOpen">
@@ -102,6 +111,11 @@
 		}
 		.text {
 			width: calc(100% - ($header-height * 2));
+			gap: 5rem;
+			.marquee {
+				padding-inline: 30px;
+				animation: marquee 10s linear infinite;
+			}
 		}
 	}
 	#sidebar + #sidebarOverlay + #timetable {
@@ -109,6 +123,14 @@
 			@media (max-width: 991.98px) {
 				display: flex !important;
 			}
+		}
+	}
+	@keyframes marquee {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(calc(-100% - 5rem));
 		}
 	}
 </style>

@@ -17,6 +17,7 @@ dist
 dist-ssr
 coverage
 *.local
+.htaccess
 
 /cypress/videos/
 /cypress/screenshots/
