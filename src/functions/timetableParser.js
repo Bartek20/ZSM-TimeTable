@@ -171,7 +171,7 @@ export class TimeTable {
           const match = regex.exec(e.innerText.trim());
           if (match === null) return '';
           const date = match[1].trim().split(' ');
-          return `${date[0]}/${MONTHS[date[1]].toString().padStart(2, '0')}/${date[2]}`;
+          return `${date[0].padStart(2, '0')}/${MONTHS[date[1]].toString().padStart(2, '0')}/${date[2]}`;
         })
         .filter((e) => e !== '')[0] || ''
     );
