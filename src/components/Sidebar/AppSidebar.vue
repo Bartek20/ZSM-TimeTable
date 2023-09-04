@@ -91,7 +91,7 @@
 	async function loadList() {
 		var res;
 		try {
-			res = await axios.get('/plan_nauczyciele/lista.html');
+			res = await axios.get('/plan_vulcan/lista.html');
 		} catch (err) {
 			console.error('Wystąpił błąd przy wczytywaniu listy:\n', err);
 			return;
