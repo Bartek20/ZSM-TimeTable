@@ -13,7 +13,7 @@ function getGlobs(pattern) {
 	return glob.sync(pattern);
 }
 
-const root = process.env.ROOT_PATH || '/';
+const root = process.env.ROOT_PATH || '/plan_lekcji/';
 
 const now = new Intl.DateTimeFormat('en-US', {
 	timeZone: 'Europe/Warsaw',
@@ -31,7 +31,7 @@ export default defineConfig({
 	server: {
 		base: '/',
 		proxy: {
-			plan_nauczyciele: {
+			plan_vulcan: {
 				target: 'https://zsm.resman.pl',
 				changeOrigin: true,
 			},
@@ -67,10 +67,10 @@ export default defineConfig({
 				globPatterns: ['**/*.{js,css,png,jpg,ico,ttf,woff,woff2}', 'index.html'],
 				navigateFallback: `${root}index.html`,
 				navigateFallbackAllowlist: [/uczen/, /nauczyciel/],
-				navigateFallbackDenylist: [/plan_nauczyciele/, /assets/],
+				navigateFallbackDenylist: [/plan_vulcan/, /assets/],
 				runtimeCaching: [
 					{
-						urlPattern: /plan_nauczyciele/,
+						urlPattern: /plan_vulcan/,
 						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'timetables-data',

@@ -9,11 +9,11 @@ async function cacheTimeTables() {
 	if (last != null && last + 86400000 > Date.now()) return;
 	console.info('Fetching timetable updates started.');
 	axios.get(`${import.meta.env.BASE_URL}school-data.json`);
-	const res = await axios.get('/plan_nauczyciele/lista.html');
+	const res = await axios.get('/plan_vulcan/lista.html');
 	const list = new TimeTableList(res.data).getList();
-	const classMap = list.classes.map((obj) => axios.get(`/plan_nauczyciele/plany/o${obj.value}.html`));
-	const teacherMap = list.teachers.map((obj) => axios.get(`/plan_nauczyciele/plany/n${obj.value}.html`));
-	const roomMap = list.rooms.map((obj) => axios.get(`/plan_nauczyciele/plany/s${obj.value}.html`));
+	const classMap = list.classes.map((obj) => axios.get(`/plan_vulcan/plany/o${obj.value}.html`));
+	const teacherMap = list.teachers.map((obj) => axios.get(`/plan_vulcan/plany/n${obj.value}.html`));
+	const roomMap = list.rooms.map((obj) => axios.get(`/plan_vulcan/plany/s${obj.value}.html`));
 	await Promise.all([classMap, teacherMap, roomMap]);
 	console.info('Fetching timetable updates finished.');
 	window.localStorage.setItem('lastFetched', Date.now());

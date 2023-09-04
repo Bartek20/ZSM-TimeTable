@@ -42,7 +42,7 @@
 						<div class="col ps-0 text-nowrap">Wydrukuj plan</div>
 					</RouterLink>
 
-					<a :href="'/plan_nauczyciele/plany/' + mode + id + '.html'" target="_blank" class="row my-1 text-decoration-none text-body">
+					<a :href="'/plan_vulcan/plany/' + mode + id + '.html'" target="_blank" class="row my-1 text-decoration-none text-body">
 						<div class="col-2">
 							<div class="fn-btn m-auto">
 								<div class="btn-info">

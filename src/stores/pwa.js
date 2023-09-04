@@ -35,10 +35,10 @@ export const usePWAStore = defineStore('pwa', {
       this.event.prompt();
       this.event.userChoice.then((res) => {
         if (res.outcome == 'accepted') {
-          console.log('Aplikacja zainstalowana pomyślnie.');
+          console.info('Aplikacja zainstalowana pomyślnie.');
           this.installed = true;
         } else {
-          console.log('Instalacja została anulowana.');
+          console.info('Instalacja została anulowana.');
         }
       });
     },

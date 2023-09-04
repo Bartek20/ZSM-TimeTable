@@ -61,9 +61,6 @@
 	const marquee = computed(() => {
 		if (!width.value) return false;
 		if (!titleEl.value) return false;
-		console.log('=+=+=+=+=+=+=+=+=+=+=+=+=+=+=');
-		console.log('Element:', titleEl.value.classList.contains('marquee') ? titleEl.value.offsetWidth - 60 : titleEl.value.offsetWidth);
-		console.log('Parent:', titleEl.value.parentElement.offsetWidth);
 		if ((titleEl.value.classList.contains('marquee') ? titleEl.value.offsetWidth - 60 : titleEl.value.offsetWidth) > titleEl.value.parentElement.offsetWidth)
 			return true;
 		return false;
@@ -76,6 +73,10 @@
 		const el = document.getElementById('info');
 		if (el) el.classList.toggle('toggled');
 	}
+	onMounted(() => {
+		const symbol = props.print ? ' - ' : ' | ';
+		reftitle.value = titleParser.value.replace(/ \(.*\)/g, '') + symbol + 'Plan Lekcji';
+	});
 </script>
 
 <template>

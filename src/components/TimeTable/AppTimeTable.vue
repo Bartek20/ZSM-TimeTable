@@ -81,7 +81,7 @@
 	async function loadPlan(mode, id) {
 		var res;
 		try {
-			res = await axios.get(`/plan_nauczyciele/plany/${mode}${id}.html`);
+			res = await axios.get(`/plan_vulcan/plany/${mode}${id}.html`);
 		} catch (err) {
 			console.error('Wystąpił błąd przy wczytywaniu planu:\n', err);
 			if (err.response && err.response.status == 404) {
