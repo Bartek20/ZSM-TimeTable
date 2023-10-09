@@ -27,15 +27,15 @@
 			required: false,
 		},
 	});
-	const schoolData = useStorage('schoolData', {});
+	const timetableData = useStorage('timetableData', {});
 	const subjectName = computed(() => {
-		if (!('subjects' in schoolData.value)) return props.subject;
-		if (props.subject.includes('ckz')) return schoolData.value.subjects['praktyki'];
-		if (schoolData.value.subjects[props.subject] == undefined) {
+		if (!('subjects' in timetableData.value)) return props.subject;
+		if (props.subject.includes('ckz')) return timetableData.value.subjects['praktyki'];
+		if (timetableData.value.subjects[props.subject] == undefined) {
 			console.warn('Nieznany przedmiot:', props.subject);
 			return props.subject;
 		}
-		return schoolData.value.subjects[props.subject];
+		return timetableData.value.subjects[props.subject];
 	});
 	const colorDark = computed(() => stc(subjectName.value.replace(/ \([UR]{1}\)/, '')));
 	const colorLight = computed(() => {

@@ -1,6 +1,8 @@
 import App from './App.vue';
 import router from './router';
 
+import schoolData from './assets/schoolData.json';
+
 import './assets/styles.scss';
 
 async function cacheTimeTables() {
@@ -9,11 +11,11 @@ async function cacheTimeTables() {
 	if (last != null && last + 86400000 > Date.now()) return;
 	console.info('Fetching timetable updates started.');
 	axios.get(`${import.meta.env.BASE_URL}school-data.json`);
-	const res = await axios.get('/plan_vulcan/lista.html');
+	const res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html`);
 	const list = new TimeTableList(res.data).getList();
-	const classMap = list.classes.map((obj) => axios.get(`/plan_vulcan/plany/o${obj.value}.html`));
-	const teacherMap = list.teachers.map((obj) => axios.get(`/plan_vulcan/plany/n${obj.value}.html`));
-	const roomMap = list.rooms.map((obj) => axios.get(`/plan_vulcan/plany/s${obj.value}.html`));
+	const classMap = list.classes.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/o${obj.value}.html`));
+	const teacherMap = list.teachers.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/n${obj.value}.html`));
+	const roomMap = list.rooms.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/s${obj.value}.html`));
 	await Promise.all([classMap, teacherMap, roomMap]);
 	console.info('Fetching timetable updates finished.');
 	window.localStorage.setItem('lastFetched', Date.now());
@@ -40,12 +42,12 @@ const updateSW = registerSW({
 	},
 });
 
-const schoolData = useStorage('schoolData', {});
+const timetableData = useStorage('timetableData', {});
 const DATA_URL = `${import.meta.env.BASE_URL}school-data.json`;
 axios
 	.get(DATA_URL)
 	.then((res) => {
-		schoolData.value = res.data;
+		timetableData.value = res.data;
 	})
 	.catch((err) => {
 		console.error('Wczytywanie danych szkoły nie powiodło się:', err);

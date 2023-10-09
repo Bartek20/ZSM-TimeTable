@@ -13,10 +13,10 @@
 			required: true,
 		},
 	});
-	const schoolData = useStorage('schoolData', {});
+	const timetableData = useStorage('timetableData', {});
 	const title = computed(() => {
 		if (props.mode == 'o') {
-			if (!('classes' in schoolData.value)) return props.name;
+			if (!('classes' in timetableData.value)) return props.name;
 			const reg = props.name.match(/(\d\w+) (\d)([\w ]+)/);
 			if (!reg) return props.name;
 			const data = {
@@ -25,7 +25,7 @@
 			};
 			var out = data.class;
 			data.specialities.forEach((speciality) => {
-				if (schoolData.value.classes[speciality] == undefined) {
+				if (timetableData.value.classes[speciality] == undefined) {
 					console.warn('Nieznany kierunek:', speciality);
 					out = out + ' ' + speciality;
 				} else {
@@ -34,12 +34,12 @@
 			});
 			return out;
 		} else if (props.mode == 'n') {
-			if (!('teachers' in schoolData.value)) return props.name;
-			if (schoolData.value.teachers[props.name] == undefined) {
+			if (!('teachers' in timetableData.value)) return props.name;
+			if (timetableData.value.teachers[props.name] == undefined) {
 				console.warn('Nieznany nauczyciel:', props.name);
 				return props.name;
 			}
-			const data = schoolData.value.teachers[props.name];
+			const data = timetableData.value.teachers[props.name];
 			var out = '';
 			switch (props.name) {
 				case 'c.Centrum Kształcenia Zawodowego (CK)':

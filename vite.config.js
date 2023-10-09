@@ -4,16 +4,47 @@ import autoprefixer from 'autoprefixer';
 import banner from 'vite-plugin-banner';
 import path from 'path';
 import glob from 'glob';
+import fs from 'fs';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
+import schoolData from './src/assets/schoolData.json';
 
 function getGlobs(pattern) {
 	return glob.sync(pattern);
 }
+function parseHTML(variables) {
+	return {
+		name: 'parseHTML',
+		transformIndexHtml(html) {
+			Object.keys(variables).forEach((key) => {
+				const regex = new RegExp(`%${key}%`, 'g');
+				html = html.replace(regex, variables[key]);
+			});
+			return html;
+		},
+	};
+}
+function generateBrowserConfigXML() {
+	return {
+		name: 'generateBrowserConfigXML',
+		async writeBundle(outputOptions, bundle) {
+			const xmlTemplate = `<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>`;
+			try {
+				fs.writeFileSync((outputOptions.dir || outputOptions.file) + '/browserconfig.xml', xmlTemplate, 'utf-8');
+			} catch (error) {
+				console.error('Błąd podczas generowania browserconfig.xml:', error);
+			}
+		},
+	};
+}
 
 const root = process.env.ROOT_PATH || '/plan_lekcji/';
+const htmlVariables = {
+	APP_ROOT: root,
+	schoolROOT: schoolData.schoolTimeTableRootURL,
+};
 
 const now = new Intl.DateTimeFormat('en-US', {
 	timeZone: 'Europe/Warsaw',
@@ -44,7 +75,7 @@ export default defineConfig({
 			extensions: ['vue'],
 		}),
 		AutoImport({
-			include: [/\.js$/, /\.vue$/, /\.vue\?vue/],
+			include: [/\.js$/, /\.vue$/, /\.vue\?vue/, /\.json$/],
 			imports: [
 				'vue',
 				'vue-router',
@@ -58,9 +89,11 @@ export default defineConfig({
 					'chroma-js': [['default', 'chroma']],
 				},
 			],
-			dirs: ['src/functions', 'src/stores'],
+			dirs: ['src/functions', 'src/stores', 'src/assets'],
 			vueTemplate: true,
 		}),
+		parseHTML(htmlVariables),
+		generateBrowserConfigXML(),
 		VitePWA({
 			registerType: 'autoUpdate',
 			workbox: {
@@ -85,9 +118,10 @@ export default defineConfig({
 			manifest: {
 				scope: root,
 				id: root,
-				name: 'ZSM Plan Lekcji',
-				short_name: 'ZSM Plan Lekcji',
-				description: 'Aplikacja do przeglądu planu lekcji w Zespole Szkół Mechanicznych w Rzeszowie',
+				start_url: root + '?PWA=true',
+				name: schoolData.pwaName,
+				short_name: schoolData.pwaShortName,
+				description: schoolData.pwaDescription,
 				theme_color: '#ffffff',
 				lang: 'pl-PL',
 				dir: 'ltr',
@@ -118,10 +152,10 @@ export default defineConfig({
 		}),
 		banner((fileName) => {
 			return `
-        File name: ${fileName.slice(0, fileName.lastIndexOf('-')) + fileName.slice(fileName.lastIndexOf('.'))}
-        Generated: ${now}
-        App name: ZSM TimeTable
-      `;
+		    File name: ${fileName.slice(0, fileName.lastIndexOf('-')) + fileName.slice(fileName.lastIndexOf('.'))}
+		    Generated: ${now}
+		    App name: ZSM TimeTable
+		  `;
 		}),
 	],
 	build: {
