@@ -16,12 +16,12 @@
 	});
 	const color = computed(() => ((props.print && !props.isEmpty) || props.title == '' ? undefined : '#cfe2ff'));
 	const reftitle = useTitle();
-	const schoolData = useStorage('schoolData', {});
+	const timetableData = useStorage('timetableData', {});
 	const titleParser = computed(() => {
 		var title = props.title;
 		if (title == '') return title;
 		if (mode.value == 'o') {
-			if (!('classes' in schoolData.value)) return title;
+			if (!('classes' in timetableData.value)) return title;
 			const reg = title.match(/(\d\w+) (\d)([\w ]+)/);
 			if (!reg) return title;
 			const data = {
@@ -30,7 +30,7 @@
 			};
 			var out = data.class;
 			data.specialities.forEach((speciality) => {
-				if (schoolData.value.classes[speciality] == undefined) {
+				if (timetableData.value.classes[speciality] == undefined) {
 					console.warn('Nieznany kierunek:', speciality);
 					out = out + ' ' + speciality;
 				} else {
@@ -39,14 +39,14 @@
 			});
 			return out;
 		} else if (mode.value == 'n') {
-			if (!('teachers' in schoolData.value)) return title;
-			if (schoolData.value.teachers[title] == undefined) {
+			if (!('teachers' in timetableData.value)) return title;
+			if (timetableData.value.teachers[title] == undefined) {
 				const symbol = props.print ? ' - ' : ' | ';
 				reftitle.value = title + symbol + 'Plan Lekcji';
 				console.warn('Nieznany nauczyciel:', title);
 				return title;
 			}
-			title = schoolData.value.teachers[title];
+			title = timetableData.value.teachers[title];
 			var out = title.name;
 			if (title.surname) out = out + ' ' + title.surname;
 			const symbol = props.print ? ' - ' : ' | ';

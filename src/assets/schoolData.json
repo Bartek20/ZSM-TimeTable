@@ -1,0 +1,8 @@
+{
+	"schoolHomeURL": "https://zsm.resman.pl",
+	"schoolTimeTableRootURL": "/plan_vulcan/",
+	"schoolLogoDescription": "Szkolne Logo Zespołu Szkół Mechanicznych w Rzeszowie",
+	"pwaName": "ZSM Plan Lekcji",
+	"pwaShortName": "ZSM Plan Lekcji",
+	"pwaDescription": "Aplikacja do przeglądu planu lekcji w Zespole Szkół Mechanicznych w Rzeszowie"
+}

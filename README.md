@@ -1,29 +1,32 @@
-# ZSM TimeTable
+# Projekt ZSM TimeTable
+Aplikacja została przygotowana w ramach dodania nowego planu lekcji do strony Zespołu Szkół Mechaniczny w Rzeszowie.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Zastosowanie w innej szkole
+Wykorzystanie aplikacji w innej szkole jest możliwe, jednak wymaga ręcznych zmian w kodzie aplikacji.
+Zabronione jest jednak usuwaine, jak i modyfikowanie informacji o autorze kodu (dopuszczalne jest dodanie informacji o osobie odpowiedzialnej za dostosowanie kodu dla szkoły).
 
-## Recommended IDE Setup
+## Kompilacja aplikacji
+Przed rozpoczęciem kompilacji należy dostosować aplikację poprzez:
+* Zmianę ścieżki, na której aplikacja będzie dostępna (zmienna "root" w pliku vite.config.js)
+* Dostosowanie danych szkoły (w pliku /src/assets/schoolData.json)
+* Zmienienie loga szkoły (plik /public/images/logo.png)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+Po dostosowaniu aplikacji do potrzeb szkoły mależy skompilować program:
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
 npm run build
 ```
+Następnie należy skopiować pliki z folderu *dist* na serwer szkolny, do ścieżki, która została wcześniej zadeklarowana w kodzie
+
+## Zastosowane technologie
+### W wydaniu produkcyjnym:
+* Vue.js 3 (Vue Router, Pinia, @VueUse)
+* Bootstrap
+* Axios.js
+* Chroma.js
+
+### Środowisko deweloperskie:
+* Node.js 20
+* Vite
+* Unplugin Auto Imports
+* Unplugin Vue Components
+* Vite PWA Plugin

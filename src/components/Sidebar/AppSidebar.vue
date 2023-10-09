@@ -1,4 +1,5 @@
 <script setup>
+	import schoolData from '../../assets/schoolData.json'
 	const list = useStorage('lists', {
 		classes: [],
 		teachers: [],
@@ -91,7 +92,7 @@
 	async function loadList() {
 		var res;
 		try {
-			res = await axios.get('/plan_vulcan/lista.html');
+			res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html`);
 		} catch (err) {
 			console.error('Wystąpił błąd przy wczytywaniu listy:\n', err);
 			return;
