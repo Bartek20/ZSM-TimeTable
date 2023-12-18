@@ -8,25 +8,25 @@ $enable-validation-icons: false;
 $enable-negative-margins: true;
 
 $theme-colors: (
-  'primary': #0d6efd,
-  'light': #f8f9fa,
+	'primary': #0d6efd,
+	'light': #f8f9fa,
 );
 
 $grid-breakpoints: (
-  xs: 0,
+	xs: 0,
 );
 
 $zindex-levels: (
-  n1: -1,
-  0: 0,
-  1: 1,
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 7,
-  999: 999,
+	n1: -1,
+	0: 0,
+	1: 1,
+	2: 2,
+	3: 3,
+	4: 4,
+	5: 5,
+	6: 6,
+	7: 7,
+	999: 999,
 );
 
 @import '@bootstrap/functions';
@@ -43,78 +43,95 @@ $zindex-levels: (
 
 @import 'ZSM-TimeTable/style';
 
+:root {
+	--bg-timetable: #cfe2ff;
+	--bg-sidebar: #fff;
+	--bg-sidebar-hover: #f7f4ff;
+	--tx-color: #707070;
+	--tt-primary-color: var(--bg-timetable);
+	--tt-secondary-color: #dadfed;
+}
+
+body.dark {
+	--bg-timetable: #181919;
+	--bg-sidebar: #242526;
+	--bg-sidebar-hover: #353637;
+	--tx-color: #ccc;
+	--tt-secondary-color: #222323;
+}
+
 .list-unstyled {
-  @include list-unstyled();
+	@include list-unstyled();
 }
 
 .minw-auto {
-  min-width: auto !important;
+	min-width: auto !important;
 }
 .minh-100 {
-  min-height: 100% !important;
+	min-height: 100% !important;
 }
 .translate-0-0 {
-  transform: translate(0, 0) !important;
+	transform: translate(0, 0) !important;
 }
 .inset-0 {
-  inset: 0 !important;
+	inset: 0 !important;
 }
 .object-position-center {
-  object-position: center !important;
+	object-position: center !important;
 }
 
 // Animations
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(1turn);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(1turn);
+	}
 }
 @keyframes blink {
-  0%,
-  100% {
-    background-color: rgba(13, 202, 240, 1);
-  }
-  50% {
-    background-color: transparent;
-  }
+	0%,
+	100% {
+		background-color: rgba(13, 202, 240, 1);
+	}
+	50% {
+		background-color: transparent;
+	}
 }
 @keyframes swing {
-  0%,
-  30%,
-  50%,
-  70%,
-  100% {
-    transform: rotate(0deg);
-  }
+	0%,
+	30%,
+	50%,
+	70%,
+	100% {
+		transform: rotate(0deg);
+	}
 
-  10% {
-    transform: rotate(10deg);
-  }
+	10% {
+		transform: rotate(10deg);
+	}
 
-  40% {
-    transform: rotate(-10deg);
-  }
+	40% {
+		transform: rotate(-10deg);
+	}
 
-  60% {
-    transform: rotate(5deg);
-  }
+	60% {
+		transform: rotate(5deg);
+	}
 
-  80% {
-    transform: rotate(-5deg);
-  }
+	80% {
+		transform: rotate(-5deg);
+	}
 }
 
 @media print {
-  body {
-    height: 100vh;
-    width: 100vw;
-  }
-  @page {
-    orientation: landscape !important;
-    size: landscape !important;
-    margin: 0.5cm;
-  }
+	body {
+		height: 100vh;
+		width: 100vw;
+	}
+	@page {
+		orientation: landscape !important;
+		size: landscape !important;
+		margin: 0.5cm;
+	}
 }

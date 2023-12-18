@@ -59,6 +59,9 @@ const now = new Intl.DateTimeFormat('en-US', {
 
 export default defineConfig({
 	base: root,
+	define: {
+    __APP_VERSION__: JSON.stringify('v1.0.0'),
+  },
 	server: {
 		base: '/',
 		proxy: {
@@ -107,7 +110,13 @@ export default defineConfig({
 						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'timetables-data',
-							networkTimeoutSeconds: 3,
+							networkTimeoutSeconds: 5,
+							backgroundSync: {
+								name: 'timetables-data-bs',
+								options: {
+									maxRetentionTime: 24 * 60,
+								},
+							},
 							cacheableResponse: {
 								statuses: [200],
 							},

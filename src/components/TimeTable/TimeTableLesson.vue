@@ -27,18 +27,30 @@
 			required: false,
 		},
 	});
+
+	const appConfigs = useStorage('appConfigs', {
+		version: __APP_VERSION__,
+		lastFetched: null,
+		currentTimeTable: undefined,
+		colorMode: 'light',
+		showColors: true,
+		showBreaks: true,
+		showCompressed: false,
+	});
+
 	const timetableData = useStorage('timetableData', {});
 	const subjectName = computed(() => {
 		if (!('subjects' in timetableData.value)) return props.subject;
-		if (props.subject.includes('ckz')) return timetableData.value.subjects['praktyki'];
+		if (props.subject.includes('ckz')) return timetableData.value.subjects['praktyki'].short;
 		if (timetableData.value.subjects[props.subject] == undefined) {
 			console.warn('Nieznany przedmiot:', props.subject);
 			return props.subject;
 		}
-		return timetableData.value.subjects[props.subject];
+		return timetableData.value.subjects[props.subject].short;
 	});
-	const colorDark = computed(() => stc(subjectName.value.replace(/ \([UR]{1}\)/, '')));
+	const colorDark = computed(() => (appConfigs.value.showColors ? stc(subjectName.value.replace(/ \([UR]{1}\)/, '')) : 'lightgray'));
 	const colorLight = computed(() => {
+		if (!appConfigs.value.showColors) return 'white';
 		const [r, g, b] = chroma.scale([colorDark.value, 'white'])(0.8)._rgb;
 		return `rgb(${r}, ${g}, ${b})`;
 	});

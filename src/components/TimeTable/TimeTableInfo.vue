@@ -43,7 +43,7 @@
 						<div class="col ps-0 text-nowrap">Wydrukuj plan</div>
 					</RouterLink>
 
-					<a :href="schoolData.schoolTimeTableRootURL + 'plany/' + mode + id + '.html'" target="_blank" class="row my-1 text-decoration-none text-body">
+					<a :href="schoolData.schoolTimeTableRootURL + 'plany/' + mode + id + '.html?app=original'" target="_blank" class="row my-1 text-decoration-none text-body">
 						<div class="col-2">
 							<div class="fn-btn m-auto">
 								<div class="btn-info">

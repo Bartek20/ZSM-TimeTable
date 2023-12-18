@@ -1,6 +1,6 @@
 {
 	"name": "zsm-timetable",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "App for more futuristic preview of timetables for Zesół Szkół Mechanicznych w Rzeszowie",
 	"homepage": "https://github.com/Bartek20/ZSM-TimeTable",
 	"author": {
@@ -15,32 +15,33 @@
 	"scripts": {
 		"dev": "vite --host",
 		"build": "vite build",
-		"build:school": "vite build && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
+		"build:cloud": "git clone https://github.com/Bartek20/ZSM-TimeTable-schoolData .temp && mv .temp/school-data.json public/school-data.json && vite build",
+		"build:school": "vite build && cp .temp/school-data.json dist/school-data.json && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
 		"preview": "vite preview --host",
 		"update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
 		"update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
 	},
 	"dependencies": {
-		"@vueuse/core": "^10.5.0",
-		"@vueuse/router": "^10.5.0",
-		"axios": "^1.5.1",
+		"@vueuse/core": "^10.7.0",
+		"@vueuse/router": "^10.7.0",
+		"axios": "^1.6.2",
 		"bootstrap": "^5.3.2",
 		"chroma-js": "^2.4.2",
-		"pinia": "^2.1.6",
+		"pinia": "^2.1.7",
 		"string-to-color": "^2.2.2",
-		"vue": "^3.3.4",
+		"vue": "^3.3.12",
 		"vue-router": "^4.2.5"
 	},
 	"devDependencies": {
-		"@vitejs/plugin-vue": "^4.4.0",
+		"@vitejs/plugin-vue": "^4.5.2",
 		"autoprefixer": "^10.4.16",
-		"postcss": "^8.4.31",
-		"sass": "^1.69.0",
-		"terser": "^5.21.0",
-		"unplugin-auto-import": "^0.16.6",
-		"unplugin-vue-components": "^0.25.2",
-		"vite": "^4.4.11",
+		"postcss": "^8.4.32",
+		"sass": "^1.69.5",
+		"terser": "^5.26.0",
+		"unplugin-auto-import": "^0.17.2",
+		"unplugin-vue-components": "^0.26.0",
+		"vite": "^5.0.10",
 		"vite-plugin-banner": "^0.7.1",
-		"vite-plugin-pwa": "^0.16.5"
+		"vite-plugin-pwa": "^0.17.4"
 	}
 }

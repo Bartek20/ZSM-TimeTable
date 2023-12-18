@@ -1,5 +1,16 @@
 <script setup>
 	import schoolData from '../../assets/schoolData.json';
+
+	const appConfigs = useStorage('appConfigs', {
+		version: __APP_VERSION__,
+		lastFetched: null,
+		currentTimeTable: undefined,
+		colorMode: 'light',
+		showColors: true,
+		showBreaks: true,
+		showCompressed: false,
+	});
+
 	const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
 	const DAYS_IDS = {
 		poniedziałek: 0,
@@ -82,7 +93,7 @@
 	async function loadPlan(mode, id) {
 		var res;
 		try {
-			res = await axios.get(`${schoolData.schoolTimeTableRootURL}plany/${mode}${id}.html`);
+			res = await axios.get(`${schoolData.schoolTimeTableRootURL}plany/${mode}${id}.html?app=timetable`);
 		} catch (err) {
 			console.error('Wystąpił błąd przy wczytywaniu planu:\n', err);
 			if (err.response && err.response.status == 404) {
@@ -181,7 +192,7 @@
 							:lessons="[plan.days[0][nr - 1], plan.days[1][nr - 1], plan.days[2][nr - 1], plan.days[3][nr - 1], plan.days[4][nr - 1]]"
 							:selectedDay="selectedDay" />
 						<TimeTableBreakRow
-							v-if="plan.hours[nr - 1] && plan.hours[nr]"
+							v-if="appConfigs.showBreaks && plan.hours[nr - 1] && plan.hours[nr]"
 							:breakFrom="plan.hours[nr - 1].timeTo"
 							:breakTo="plan.hours[nr].timeFrom"
 							:isShown="(device == 'Phone' && DAY == selectedDay) || device == 'PC'" />
