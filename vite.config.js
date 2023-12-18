@@ -40,6 +40,26 @@ function generateBrowserConfigXML() {
 	};
 }
 
+function loadSchoolData() {
+	return {
+		name: 'loadSchoolData',
+		async writeBundle(outputOptions, bundle) {
+			const schoolData = process.env.SCHOOL_DATA || glob.sync('./.temp/school-data.json');
+			if (typeof schoolData == 'object' && schoolData.length == 0) return;
+			const dest = (outputOptions.dir || outputOptions.file) + '/school-data.json';
+			if (typeof schoolData == 'object') {
+				fs.cp(schoolData[0], dest, (e) => {});
+				return;
+			}
+			try {
+				fs.writeFileSync(dest, schoolData, 'utf-8');
+			} catch (error) {
+				console.error('Błąd podczas wczytywania school-data.json:', error);
+			}
+		},
+	};
+}
+
 const root = process.env.ROOT_PATH || '/plan_lekcji/';
 const htmlVariables = {
 	APP_ROOT: root,
@@ -60,8 +80,8 @@ const now = new Intl.DateTimeFormat('en-US', {
 export default defineConfig({
 	base: root,
 	define: {
-    __APP_VERSION__: JSON.stringify('v1.0.0'),
-  },
+		__APP_VERSION__: JSON.stringify('v1.0.0'),
+	},
 	server: {
 		base: '/',
 		proxy: {
@@ -97,6 +117,7 @@ export default defineConfig({
 		}),
 		parseHTML(htmlVariables),
 		generateBrowserConfigXML(),
+		loadSchoolData(),
 		VitePWA({
 			registerType: 'autoUpdate',
 			workbox: {

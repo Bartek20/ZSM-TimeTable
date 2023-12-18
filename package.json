@@ -15,8 +15,7 @@
 	"scripts": {
 		"dev": "vite --host",
 		"build": "vite build",
-		"build:cloud": "git clone https://github.com/Bartek20/ZSM-TimeTable-schoolData .temp && mv .temp/school-data.json public/school-data.json && vite build",
-		"build:school": "vite build && cp .temp/school-data.json dist/school-data.json && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
+		"build:school": "vite build && rm zsm-timetable.tar.gz -f && tar --exclude='plan_vulcan' -czvf zsm-timetable.tar.gz dist/",
 		"preview": "vite preview --host",
 		"update": "npm i @vueuse/core@latest @vueuse/router@latest axios@latest bootstrap@latest chroma-js@latest pinia@latest string-to-color@latest vue@latest vue-router@latest",
 		"update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
