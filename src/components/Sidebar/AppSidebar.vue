@@ -92,7 +92,7 @@
 	async function loadList() {
 		var res;
 		try {
-			res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html`);
+			res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html?app=timetable`);
 		} catch (err) {
 			console.error('Wystąpił błąd przy wczytywaniu listy:\n', err);
 			return;

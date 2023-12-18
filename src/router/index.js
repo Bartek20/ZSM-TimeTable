@@ -1,6 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-var selected = window.localStorage.getItem('selectedTimeTable') ?? 'o1';
+const appConfigs = useStorage('appConfigs', {
+	version: __APP_VERSION__,
+	lastFetched: null,
+	currentTimeTable: undefined,
+	colorMode: 'light',
+	showColors: true,
+	showBreaks: true,
+	showCompressed: false,
+});
+
+var selected = appConfigs.value.currentTimeTable ?? 'o1';
 const mode = selected.charAt(0);
 const id = selected.replace(mode, '');
 
@@ -43,7 +53,7 @@ const router = createRouter({
 router.beforeEach((to) => {
 	if (to.params.user == 'uczen' && to.params.mode == 'n') return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } };
 	if (to.name != 'plan') return;
-	window.localStorage.setItem('selectedTimeTable', to.params.mode + to.params.id);
+	appConfigs.value.currentTimeTable = to.params.mode + to.params.id;
 });
 
 export default router;
