@@ -1,0 +1,25 @@
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(1turn);
+	}
+}
+@keyframes blink {
+	0%,
+	100% {
+		background-color: rgba(13, 202, 240, 1);
+	}
+	50% {
+		background-color: transparent;
+	}
+}
+@keyframes marquee {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(calc(-100% - 5rem));
+	}
+}

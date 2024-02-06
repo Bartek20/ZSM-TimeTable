@@ -1,0 +1,36 @@
+// Color modes
+@mixin light {
+	body.light {
+		@content;
+	}
+}
+@mixin dark {
+	body.dark {
+		@content;
+	}
+}
+
+// Screen sizes
+@mixin tablet {
+	@media screen and (max-width: 995px) {
+		@content;
+	}
+}
+
+@mixin tablet-only {
+	@media screen and (min-width: 576.00001px) and (max-width: 995px) {
+		@content;
+	}
+}
+
+@mixin phone {
+	@media screen and (max-width: 576px) {
+		@content;
+	}
+}
+
+@mixin printer {
+	@media print {
+		@content;
+	}
+}

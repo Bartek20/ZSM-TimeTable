@@ -1,0 +1,124 @@
+$icomoon-font-family: 'ZSM-TimeTable';
+$icomoon-font-path: '@/assets/fonts' !default;
+
+$zsm-menu-icon: '\e900';
+$zsm-close-icon: '\e901';
+$zsm-download-icon: '\e902';
+$zsm-chevron-icon: '\e903';
+$zsm-student-icon: '\e904';
+$zsm-teacher-icon: '\e905';
+$zsm-room-icon: '\e906';
+$zsm-info-icon: '\e907';
+$zsm-old-icon: '\e908';
+$zsm-print-icon: '\e909';
+$zsm-copyright-icon: '\e90a';
+$zsm-loading-icon: '\e90b';
+$zsm-empty-error-icon: '\e90c';
+$zsm-not-found-error-icon: '\e90d';
+$zsm-offline-error-icon: '\e90e';
+$zsm-unknown-error-icon: '\e90f';
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2') format('woff2'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.zsm-menu-icon {
+  &:before {
+    content: $zsm-menu-icon;
+  }
+}
+.zsm-close-icon {
+  &:before {
+    content: $zsm-close-icon;
+  }
+}
+.zsm-download-icon {
+  &:before {
+    content: $zsm-download-icon;
+  }
+}
+.zsm-chevron-icon {
+  &:before {
+    content: $zsm-chevron-icon;
+  }
+}
+.zsm-student-icon {
+  &:before {
+    content: $zsm-student-icon;
+  }
+}
+.zsm-teacher-icon {
+  &:before {
+    content: $zsm-teacher-icon;
+  }
+}
+.zsm-room-icon {
+  &:before {
+    content: $zsm-room-icon;
+  }
+}
+.zsm-info-icon {
+  &:before {
+    content: $zsm-info-icon;
+  }
+}
+.zsm-old-icon {
+  &:before {
+    content: $zsm-old-icon;
+  }
+}
+.zsm-print-icon {
+  &:before {
+    content: $zsm-print-icon;
+  }
+}
+.zsm-copyright-icon {
+  &:before {
+    content: $zsm-copyright-icon;
+  }
+}
+.zsm-loading-icon {
+  &:before {
+    content: $zsm-loading-icon;
+  }
+}
+.zsm-empty-error-icon {
+  &:before {
+    content: $zsm-empty-error-icon;
+  }
+}
+.zsm-not-found-error-icon {
+  &:before {
+    content: $zsm-not-found-error-icon;
+  }
+}
+.zsm-offline-error-icon {
+  &:before {
+    content: $zsm-offline-error-icon;
+  }
+}
+.zsm-unknown-error-icon {
+  &:before {
+    content: $zsm-unknown-error-icon;
+  }
+}

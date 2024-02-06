@@ -1,0 +1,19 @@
+$sidebar-width: 240px;
+$header-height: 48px;
+
+// Light
+$l-bg-timetable: #cfe2ff;
+$l-bg-sidebar: #fff;
+$l-bg-sidebar-hover: #f7f4ff;
+$l-sb-text: #707070;
+$l-tt-text: black;
+$l-tt-primary: $l-bg-timetable;
+$l-tt-secondary: darken($l-tt-primary, 2.5);
+// Dark
+$d-bg-timetable: #181919;
+$d-bg-sidebar: #242526;
+$d-bg-sidebar-hover: #353637;
+$d-sb-text: #ccc;
+$d-tt-text: #ccc;
+$d-tt-primary: $d-bg-timetable;
+$d-tt-secondary: lighten($d-tt-primary, 10);
