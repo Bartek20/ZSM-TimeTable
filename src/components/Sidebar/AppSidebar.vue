@@ -3,7 +3,7 @@
 	import schoolData from '../../../public/schoolData';
 	function getFooter() {
 		const date = new Date().getFullYear();
-		var result = '2023';
+		let result = '2023';
 		if (date != '2023') {
 			result = result + ' - ' + date;
 		}
@@ -49,18 +49,17 @@
 	aside {
 		display: grid;
 		width: $sidebar-width;
-		height: 100%;
-		max-height: 100%;
 		min-height: 100%;
+		max-height: 100%;
 		grid-template-rows: auto 1fr auto;
-		gap: 0.5rem;
+		gap: 0.25rem;
 		background-color: var(--bg-sidebar);
 		color: var(--sb-text);
 		transition: 0.4s ease-in-out left;
 		header {
 			text-align: center;
 			img {
-				padding: 24px;
+				padding: 6px 24px 0;
 			}
 		}
 		footer {

@@ -93,7 +93,7 @@ class TimeTableList {
 }
 
 export default async function loadList() {
-	var res;
+	let res;
 	try {
 		res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html`);
 	} catch (err) {

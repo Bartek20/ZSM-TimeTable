@@ -18,7 +18,7 @@ export const usePWAStore = defineStore('pwa', {
 		},
 		status() {
 			if (this.isiOS()) return 'iOS';
-			var standalone = false;
+			let standalone = false;
 			if (
 				navigator.standalone ||
 				window.matchMedia('(display-mode: standalone)').matches ||

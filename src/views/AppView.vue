@@ -4,7 +4,8 @@
 	function closeMenus() {
 		document.querySelector('aside.sidebar')?.classList.remove('open');
 		document.querySelector('aside.configs')?.classList.remove('open');
-		document.querySelector('.overlay')?.classList.remove('active');
+		document.querySelector('.overlay')?.classList.remove('activeSidebar');
+		document.querySelector('.overlay')?.classList.remove('activeConfigs');
 	}
 	onMounted(() => {
 		document.getElementById('loader-styles')?.remove();
@@ -27,8 +28,13 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0 0 0 / 0.4);
-		&.active {
+		&.activeConfigs {
 			z-index: 10;
+		}
+		@include tablet {
+			&.activeSidebar {
+			z-index: 10;
+		}
 		}
 	}
 </style>

@@ -88,46 +88,47 @@
 </script>
 
 <template>
-	<div>
-		<div class="searchbar">
-			<i></i>
-			<input @input="parseInput" placeholder="Wyszukaj..." type="text" />
-		</div>
-		<SidebarLinks :links="results" />
+	<div class="list">
+		<label for="search" class="searchbar">
+			<i class="zsm-search-icon"></i>
+			<input @input="parseInput" placeholder="Szukaj..." type="text" id="search" />
+		</label>
+		<SidebarLinks :links="results" :query="search" />
 	</div>
 </template>
 
 <style lang="scss" scoped>
-	.searchbar {
-		position: relative;
+	.list {
+		display: grid;
+		grid-template-rows: 50px minmax(0, 1fr);
+		gap: 0.75rem;
+		font-size: 20px;
+		min-height: 100%;
+	}
+	.searchbar { 
+		height: 50px;
 		margin-inline: 0.75rem;
+		background-color: var(--bg-sidebar-hover);
+		display: flex;
+		align-items: center;
+		padding-right: 10px;
+		border-radius: 6px;
 		i {
-			position: absolute;
-			top: 0;
-			left: 0;
-			background-color: red;
-			width: 20px;
-			height: 100%;
+			display: block;
+			font-size: 20px;
+			min-width: 40px;
+			cursor: text;
+			text-align: center;
 		}
 		input {
+			background-color: var(--bg-sidebar-hover);
+			color: var(--sb-text);
+			height: 100%;
 			width: 100%;
-			padding: 0.5rem 1rem;
-			margin: 0;
-		}
-	}
-	menu {
-		overflow: hidden auto;
-		scrollbar-gutter: stable;
-		$scroll-clr: #0c1e35;
-		&::-webkit-scrollbar-thumb {
-			border-radius: 4px;
-			&:hover {
-				background-color: lighten($scroll-clr, 15);
-			}
-		}
-		&::-webkit-scrollbar {
-			width: 6px;
-			background-color: $scroll-clr;
+			border-radius: 6px;
+			font-size: 1rem;
+			outline: none;
+			border: none;
 		}
 	}
 </style>

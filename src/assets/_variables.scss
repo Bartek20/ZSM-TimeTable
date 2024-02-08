@@ -2,13 +2,15 @@ $sidebar-width: 240px;
 $header-height: 48px;
 
 // Light
-$l-bg-timetable: #cfe2ff;
+$l-bg-timetable: #b9d8e6;
 $l-bg-sidebar: #fff;
-$l-bg-sidebar-hover: #f7f4ff;
-$l-sb-text: #707070;
-$l-tt-text: black;
+$l-bg-sidebar-hover: #eee;
+$l-sb-text: #5d5d5d;
+$l-tt-text: #000;
 $l-tt-primary: $l-bg-timetable;
 $l-tt-secondary: darken($l-tt-primary, 2.5);
+$l-bg-scrollbar: #B0BBBF;
+$l-scrollbar: darken($l-bg-scrollbar, 25);
 // Dark
 $d-bg-timetable: #181919;
 $d-bg-sidebar: #242526;
@@ -17,3 +19,5 @@ $d-sb-text: #ccc;
 $d-tt-text: #ccc;
 $d-tt-primary: $d-bg-timetable;
 $d-tt-secondary: lighten($d-tt-primary, 10);
+$d-bg-scrollbar: #B0BBBF;
+$d-scrollbar: darken($d-bg-scrollbar, 25);

@@ -14,6 +14,8 @@
 	--tt-text: #{$l-tt-text};
 	--tt-primary: #{$l-tt-primary};
 	--tt-secondary: #{$l-tt-secondary};
+	--bg-scrollbar: #{$l-bg-scrollbar};
+	--scrollbar: #{$l-scrollbar};
 }
 @include dark {
 	--bg-timetable: #{$d-bg-timetable};
@@ -23,6 +25,8 @@
 	--tt-text: #{$d-tt-text};
 	--tt-primary: #{$d-tt-primary};
 	--tt-secondary: #{$d-tt-secondary};
+	--bg-scrollbar: #{$d-bg-scrollbar};
+	--scrollbar: #{$d-scrollbar};
 }
 
 @include printer {
@@ -34,5 +38,29 @@
 		orientation: landscape !important;
 		size: landscape !important;
 		margin: 0.5cm;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 0.75rem;
+	height: 0.75rem;
+}
+::-webkit-scrollbar-track {
+	background-color: var(--bg-scrollbar);
+	margin: 0 0 0 0.25em;
+	border-radius: 100vw;
+}
+::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 100vw;
+	background-color: var(--scrollbar);
+	border: 0.2em solid var(--bg-scrollbar);
+}
+@supports (scrollbar-color: red red) {
+	* {
+		scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
+		scrollbar-width: thin;
 	}
 }

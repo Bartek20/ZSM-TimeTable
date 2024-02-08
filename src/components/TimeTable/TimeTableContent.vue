@@ -26,7 +26,7 @@
 
 	const data = computed(() => {
 		const src = appData.value.timetable;
-		var out = [];
+		let out = [];
 		const rows = src.hours?.length || 0;
 		for (let i = 0; i < rows; i++) {
 			out.push({
@@ -85,6 +85,16 @@
 </template>
 
 <style lang="scss" scoped>
+.timetable {
+			height: 100%;
+			max-height: 100%;
+			min-height: 100%;
+			position: relative;
+			overflow: auto;
+			@include printer {
+				overflow: visible;
+			}
+		}
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -129,12 +139,6 @@
 			}
 			tr:nth-child(odd) > * {
 				background-color: var(--tt-secondary);
-			}
-			td:not(:first-of-type) {
-				min-width: 200px;
-				@include printer {
-					min-width: auto;
-				}
 			}
 			th,
 			td:nth-child(2) {

@@ -2,7 +2,7 @@ import appConfigs from '@/stores/configs';
 
 export default function colorHandler() {
 	const colorScheme = useMediaQuery('(prefers-color-scheme: dark)');
-	var stopwatch;
+	let stopwatch;
 	function updateColorMode() {
 		if (appConfigs.value.colorMode == 'system') {
 			window.document.body.classList.replace(colorScheme.value ? 'light' : 'dark', colorScheme.value ? 'dark' : 'light');

@@ -10,13 +10,13 @@ const LEVELS = {
 const DATA = appData.value.school;
 
 function parseClass(name) {
-	var title, heading, sidebar, search;
+	let title, heading, sidebar, search;
 	if ('classes' in DATA) {
-		const regexData = name.match(/(\d\w+) (\d)([\w ]+)/);
+		const regexData = name.match(/(\d\w+) \d([\w ]+)/);
 		if (regexData) {
 			const classData = {
 				class: regexData[1],
-				specialities: regexData[3].split(' '),
+				specialities: regexData[2].split(' '),
 			};
 			title = classData.class;
 			heading = classData.class;
@@ -45,9 +45,9 @@ function parseClass(name) {
 	};
 }
 function parseTeacher(name) {
-	var title, heading, sidebar, search;
+	let title, heading, sidebar, search;
 	if ('teachers' in DATA) {
-		var teacherData = DATA.teachers[name];
+		let teacherData = DATA.teachers[name];
 		if (teacherData == undefined) {
 			log('warn', 'Nieznany nauczyciel:', name);
 			const regexData = name.match(/(.*\.)(.*) \((.*)\)/);
@@ -94,7 +94,7 @@ function parseTeacher(name) {
 	};
 }
 function parseClassroom(name) {
-	var title, heading, sidebar, search;
+	let title, heading, sidebar, search;
 	if ('rooms' in DATA) {
 		const roomData = DATA.rooms[name];
 		if (roomData == undefined) {

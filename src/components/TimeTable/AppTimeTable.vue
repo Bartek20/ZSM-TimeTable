@@ -5,17 +5,17 @@
 		switch (appData.value.timetable.status) {
 			case 404:
 				return {
-					icon: 'zsm-not-found-error-icon',
+					icon: 'zsm-not-found-icon',
 					msg: 'Wybrany plan nie został odnaleziony',
 				};
 			case 500:
 				return {
-					icon: 'zsm-unknown-error-icon',
+					icon: 'zsm-error-icon',
 					msg: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.',
 				};
 			case 900:
 				return {
-					icon: 'zsm-offline-error-icon',
+					icon: 'zsm-offline-icon',
 					msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
 				};
 			case 200:
@@ -26,7 +26,7 @@
 						s: 'W wybranej sali nie ma żadnych lekcji',
 					};
 					return {
-						icon: 'zsm-empty-error-icon',
+						icon: 'zsm-empty-icon',
 						msg: MESSAGES[appConfigs.value.currentTimeTable.mode],
 					};
 				}
@@ -78,16 +78,6 @@
 			}
 		}
 		background-color: var(--bg-timetable);
-		.timetable {
-			height: 100%;
-			max-height: 100%;
-			min-height: 100%;
-			overflow: auto;
-			@include printer {
-				overflow: visible;
-			}
-			position: relative;
-		}
 		.controls {
 			display: none;
 			align-items: center;

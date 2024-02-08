@@ -163,7 +163,7 @@ export default async function loadTimeTable(mode, id) {
 	appData.value.timetable = {
 		status: 0,
 	};
-	var res;
+	let res;
 	try {
 		res = await axios.get(`${schoolData.schoolTimeTableRootURL}plany/${mode}${id}.html`);
 	} catch (err) {

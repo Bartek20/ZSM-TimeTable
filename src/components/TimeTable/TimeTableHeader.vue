@@ -5,10 +5,10 @@
 	import appConfigs from '@/stores/configs';
 	function openSidebar() {
 		document.querySelector('aside.sidebar')?.classList.add('open');
-		document.querySelector('.overlay')?.classList.add('active');
+		document.querySelector('.overlay')?.classList.add('activeSidebar');
 	}
 	function openConfigs() {
-		document.querySelector('.overlay')?.classList.add('active');
+		document.querySelector('.overlay')?.classList.add('activeConfigs');
 	}
 	const title = computed(() => {
 		const MODES = {
@@ -34,7 +34,7 @@
 					return;
 			}
 		}
-		var resp = appData.value.parsed[MODES[mode]][name] ?? parseName(mode, name);
+		let resp = appData.value.parsed[MODES[mode]][name] ?? parseName(mode, name);
 		setTitle(resp?.title ?? name);
 		return resp?.heading ?? name;
 	});
@@ -63,7 +63,7 @@
 		</div>
 		<div class="btn-config">
 			<div class="btn-info" @click="openConfigs">
-				<i class="d-block zsm-info-icon"></i>
+				<i class="d-block zsm-settings-icon"></i>
 			</div>
 		</div>
 	</div>
