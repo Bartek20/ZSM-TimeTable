@@ -84,6 +84,7 @@
 			justify-items: center;
 			font-size: 1.4rem;
 			white-space: nowrap;
+			color: var(--tt-text);
 			@include phone {
 				display: grid;
 				grid-template-columns: 1fr 1fr;

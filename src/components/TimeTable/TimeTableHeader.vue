@@ -8,6 +8,7 @@
 		document.querySelector('.overlay')?.classList.add('activeSidebar');
 	}
 	function openConfigs() {
+		document.querySelector('aside.configs')?.classList.add('open');
 		document.querySelector('.overlay')?.classList.add('activeConfigs');
 	}
 	const title = computed(() => {
@@ -118,9 +119,18 @@
 			h3 {
 				margin: 0;
 				white-space: nowrap;
+				@include printer {
+					text-align: center;
+				}
 			}
 			.marquee {
 				animation: marquee 10s linear infinite;
+				@include printer {
+					animation: none;
+					&:last-of-type {
+						display: none;
+					}
+				}
 			}
 			&.noscroll {
 				justify-content: center;

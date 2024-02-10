@@ -130,7 +130,7 @@
 		}
 		ul li {
 			&:not(:last-of-type) {
-				margin-bottom: .125rem;
+				margin-bottom: 0.125rem;
 			}
 			a {
 				height: 50px;

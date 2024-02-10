@@ -17,6 +17,7 @@
 <template>
 	<AppSidebar />
 	<AppTimeTable :key="appConfigs.currentTimeTable.mode + appConfigs.currentTimeTable.id" />
+	<AppSettings />
 	<div class="overlay" @click="closeMenus"></div>
 	<RouterLink v-if="user == 'uczen'" :to="{ name: 'plan', params: { user: 'nauczyciel' } }" style="display: none" id="teleporter" />
 </template>
@@ -33,8 +34,11 @@
 		}
 		@include tablet {
 			&.activeSidebar {
-			z-index: 10;
+				z-index: 10;
+			}
 		}
+		@include printer {
+			display: none;
 		}
 	}
 </style>

@@ -25,6 +25,7 @@
 		align-content: center;
 		justify-items: center;
 		height: 100%;
+		color: var(--tt-text);
 		.loading {
 			animation: spin 2s linear infinite;
 		}

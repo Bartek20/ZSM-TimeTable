@@ -1,5 +1,5 @@
 import appData from '@/stores/data';
-import log from '@/functions/console';
+import log from '@/functions/logger';
 
 export default async function loadSchoolData() {
 	if (window.schoolData == 'loaded') return;

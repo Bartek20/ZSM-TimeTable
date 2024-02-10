@@ -1,9 +1,9 @@
 import appConfigs from '@/stores/configs';
-import log from '@/functions/console';
+import log from '@/functions/logger';
 
 // Returns true if older, false if newer or equal
 function cmpVersion(version) {
-	current_version = (appConfigs.value.version ?? 'v0.0.0').replace('v', '').split('.');
+	let current_version = (appConfigs.value.version ?? 'v0.0.0').replace('v', '').split('.');
 	version = version.replace('v', '').split('.');
 	if (current_version[0] < version[0]) return true;
 	if (current_version[1] < version[1]) return true;

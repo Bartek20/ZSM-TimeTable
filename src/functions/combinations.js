@@ -1,4 +1,4 @@
-import log from '@/functions/console';
+import log from '@/functions/logger';
 
 function permute(values) {
 	const result = [values.slice().join(' ')];

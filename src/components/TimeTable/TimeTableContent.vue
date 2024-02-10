@@ -75,7 +75,7 @@
 							<TimeTableLesson v-for="lesson in day" :data="lesson" />
 						</td>
 					</tr>
-					<tr v-if="row.break != 0">
+					<tr v-if="appConfigs.showBreaks && row.break != 0">
 						<td colspan="7">{{ `Przerwa ${row.break}-minutowa` }}</td>
 					</tr>
 				</template>
@@ -85,16 +85,16 @@
 </template>
 
 <style lang="scss" scoped>
-.timetable {
-			height: 100%;
-			max-height: 100%;
-			min-height: 100%;
-			position: relative;
-			overflow: auto;
-			@include printer {
-				overflow: visible;
-			}
+	.timetable {
+		height: 100%;
+		max-height: 100%;
+		min-height: 100%;
+		position: relative;
+		overflow: auto;
+		@include printer {
+			overflow: visible;
 		}
+	}
 	table {
 		width: 100%;
 		border-collapse: collapse;

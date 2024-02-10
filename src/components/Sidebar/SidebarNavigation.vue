@@ -1,7 +1,7 @@
 <script setup>
 	import fetchList from '@/functions/fetchList';
 	import getCombinations from '@/functions/combinations';
-	import log from '@/functions/console';
+	import log from '@/functions/logger';
 	import appData from '@/stores/data';
 	import loadSchoolData from '@/functions/loadSchoolData';
 
@@ -105,7 +105,7 @@
 		font-size: 20px;
 		min-height: 100%;
 	}
-	.searchbar { 
+	.searchbar {
 		height: 50px;
 		margin-inline: 0.75rem;
 		background-color: var(--bg-sidebar-hover);

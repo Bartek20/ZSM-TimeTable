@@ -10,7 +10,7 @@ import schoolData from '../public/schoolData';
 
 import appConfigs from '@/stores/configs';
 import loadSchoolData from '@/functions/loadSchoolData';
-import log from '@/functions/console';
+import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 

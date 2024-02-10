@@ -1,6 +1,7 @@
 <script setup>
 	import appData from '@/stores/data';
 	import appConfigs from '@/stores/configs';
+	import parseColor from '@/functions/parseColor';
 
 	const user = useRouteParams('user');
 
@@ -59,12 +60,13 @@
 			name: props.data.teacher,
 		};
 	});
-
-	const colorDark = computed(() => (appConfigs.value.showColors ? stc(subject.value.replace(/ \([UR]{1}\)/, '')) : 'lightgray'));
-	const colorLight = computed(() => {
-		if (!appConfigs.value.showColors) return 'white';
-		const [r, g, b] = chroma.scale([colorDark.value, 'white'])(0.8)._rgb;
-		return `rgb(${r}, ${g}, ${b})`;
+	const colors = computed(() => {
+		if (!appConfigs.value.showColors)
+			return {
+				light: 'white',
+				dark: 'lightgray',
+			};
+		return parseColor(subject.value);
 	});
 
 	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
@@ -105,13 +107,14 @@
 
 <style lang="scss" scoped>
 	.lesson {
-		background-color: v-bind(colorLight);
-		box-shadow: inset 0 0 0 9999px v-bind(colorLight);
+		background-color: v-bind('colors.light');
+		box-shadow: inset 0 0 0 9999px v-bind('colors.light');
 		border-bottom: 5px solid;
-		border-color: v-bind(colorDark);
+		border-color: v-bind('colors.dark');
 		white-space: nowrap;
 		padding: 0.25rem 0.5rem;
 		border-radius: 6px;
+		min-width: 150px;
 		&:not(:last-child) {
 			margin-bottom: 5px;
 		}

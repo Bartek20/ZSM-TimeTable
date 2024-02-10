@@ -1,5 +1,5 @@
 import appData from '@/stores/data';
-import log from '@/functions/console';
+import log from '@/functions/logger';
 
 const LEVELS = {
 	'-1': 'Piwnica',
@@ -27,7 +27,7 @@ function parseClass(name) {
 			classData.specialities.forEach((speciality) => {
 				const specialityData = DATA.classes[speciality];
 				sidebar = `${sidebar} ${speciality}`;
-				search[speciality] = speciality
+				search[speciality] = speciality;
 				if (specialityData == undefined) {
 					log('warn', 'Nieznany kierunek:', speciality);
 					heading = `${heading} ${speciality}`;

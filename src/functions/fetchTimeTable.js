@@ -1,5 +1,5 @@
 import appData from '@/stores/data';
-import log from '@/functions/console';
+import log from '@/functions/logger';
 import schoolData from '../../public/schoolData';
 
 function qs(dom, selector) {

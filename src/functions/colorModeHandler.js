@@ -1,7 +1,7 @@
 import appConfigs from '@/stores/configs';
 
 export default function colorHandler() {
-	const colorScheme = useMediaQuery('(prefers-color-scheme: dark)');
+	const colorScheme = usePreferredDark();
 	let stopwatch;
 	function updateColorMode() {
 		if (appConfigs.value.colorMode == 'system') {
@@ -11,11 +11,19 @@ export default function colorHandler() {
 					updateColorMode();
 				});
 		} else {
-			if (stopwatch) stopwatch();
+			if (stopwatch) {
+				stopwatch();
+				stopwatch = undefined;
+			}
 			const color = appConfigs.value.colorMode == 'light' ? ['dark', 'light'] : ['light', 'dark'];
 			window.document.body.classList.replace(color[0], color[1]);
 		}
 	}
-	updateColorMode();
-	watch(appConfigs, (n) => updateColorMode());
+	watch(
+		() => appConfigs.value.colorMode,
+		(n) => {
+			updateColorMode();
+		},
+		{ immediate: true }
+	);
 }
