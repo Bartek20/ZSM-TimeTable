@@ -2,6 +2,9 @@
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
 	import schoolData from '../../../public/schoolData';
+	function printTimeTable() {
+		window.print();
+	}
 </script>
 
 <template>

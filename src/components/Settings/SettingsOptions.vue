@@ -9,19 +9,23 @@
 </script>
 
 <template>
-	<div class="options">
-		<template v-for="option in options">
-			<input type="radio" name="colorMode" :value="option.value" v-model="color" :id="option.value" />
-			<label :for="option.value">
-				<i :class="option.class"></i>
-				<span>{{ option.name }}</span>
-			</label>
-		</template>
+	<div>
+		<span>Motyw aplikacji</span>
+		<div class="options">
+			<template v-for="option in options">
+				<input type="radio" name="colorMode" :value="option.value" v-model="color" :id="option.value" />
+				<label :for="option.value">
+					<i :class="option.class"></i>
+					<span>{{ option.name }}</span>
+				</label>
+			</template>
+		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 	.options {
+    margin-top: .25rem;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 5px;
@@ -34,6 +38,7 @@
 			}
 		}
 		label {
+			transition: 0.4s;
 			display: flex;
 			flex-direction: column;
 			text-align: center;

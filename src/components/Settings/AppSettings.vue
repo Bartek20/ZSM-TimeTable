@@ -1,9 +1,6 @@
 <script setup>
 	const PWAStore = usePWAStore();
 	const appStatus = computed(() => PWAStore.status());
-	function printTimeTable() {
-		window.print();
-	}
 </script>
 
 <template>
@@ -11,7 +8,7 @@
 		<MenuSettings />
 		<MenuOptions />
 		<div class="install">
-			<div @click="PWAStore.install" v-if="appStatus != 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div>
+			<div @click="PWAStore.install" v-if="appStatus == 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div>
 		</div>
 	</aside>
 </template>

@@ -3,11 +3,7 @@
 	import schoolData from '../../../public/schoolData';
 	function getFooter() {
 		const date = new Date().getFullYear();
-		let result = '2023';
-		if (date != '2023') {
-			result = result + ' - ' + date;
-		}
-		return result;
+		return date == '2023' ? '2023' : `2023 - ${date}`;
 	}
 	const dates = computed(() => {
 		const obj = appData.value.timetable;
@@ -60,6 +56,7 @@
 			text-align: center;
 			img {
 				padding: 6px 24px 0;
+				width: 175px;
 			}
 		}
 		footer {
