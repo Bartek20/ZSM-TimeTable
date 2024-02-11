@@ -10,7 +10,7 @@ function qsa(dom, selector) {
 	return [...dom.querySelectorAll(selector)];
 }
 
-class TimeTableList {
+export class TimeTableList {
 	constructor(html) {
 		this.$ = document.createElement('vdom');
 		this.$.innerHTML = html.slice(html.indexOf('<body>'), html.indexOf('</body>')).replaceAll('src=', 'url=');
