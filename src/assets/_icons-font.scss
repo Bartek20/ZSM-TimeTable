@@ -1,23 +1,29 @@
 $icomoon-font-family: 'ZSM-TimeTable';
 $icomoon-font-path: '@/assets/fonts' !default;
 
-$zsm-menu-icon: \e900;
-$zsm-settings-icon: \e901;
-$zsm-close-icon: \e902;
-$zsm-search-icon: \e903;
-$zsm-student-icon: \e904;
-$zsm-teacher-icon: \e905;
-$zsm-room-icon: \e906;
-$zsm-arrow-icon: \e907;
-$zsm-copyright-icon: \e908;
-$zsm-loading-icon: \e909;
-$zsm-empty-icon: \e90a;
-$zsm-not-found-icon: \e90b;
-$zsm-offline-icon: \e90c;
-$zsm-error-icon: \e90d;
-$zsm-old-timetable-icon: \e90e;
-$zsm-print-timetable-icon: \e90f;
-$zsm-download-app-icon: \e910;
+$zsm-menu-icon: '\e900';
+$zsm-settings-icon: '\e901';
+$zsm-close-icon: '\e902';
+$zsm-search-icon: '\e903';
+$zsm-student-icon: '\e904';
+$zsm-teacher-icon: '\e905';
+$zsm-room-icon: '\e906';
+$zsm-arrow-icon: '\e907';
+$zsm-copyright-icon: '\e908';
+$zsm-loading-icon: '\e909';
+$zsm-empty-icon: '\e90a';
+$zsm-not-found-icon: '\e90b';
+$zsm-offline-icon: '\e90c';
+$zsm-error-icon: '\e90d';
+$zsm-system-mode-icon: '\e90e';
+$zsm-light-mode-icon: '\e90f';
+$zsm-dark-mode-icon: '\e910';
+$zsm-forceDesktop-icon: '\e911';
+$zsm-showBreaks-icon: '\e912';
+$zsm-showColors-icon: '\e913';
+$zsm-old-timetable-icon: '\e914';
+$zsm-print-timetable-icon: '\e915';
+$zsm-download-app-icon: '\e916';
 
 @font-face {
 	font-family: '#{$icomoon-font-family}';
@@ -45,86 +51,116 @@ i {
 
 .zsm-menu-icon {
 	&:before {
-		content: unquote('"#{ $zsm-menu-icon }"');
+		content: $zsm-menu-icon;
 	}
 }
 .zsm-settings-icon {
 	&:before {
-		content: unquote('"#{ $zsm-settings-icon }"');
+		content: $zsm-settings-icon;
 	}
 }
 .zsm-close-icon {
 	&:before {
-		content: unquote('"#{ $zsm-close-icon }"');
+		content: $zsm-close-icon;
 	}
 }
 .zsm-search-icon {
 	&:before {
-		content: unquote('"#{ $zsm-search-icon }"');
+		content: $zsm-search-icon;
 	}
 }
 .zsm-student-icon {
 	&:before {
-		content: unquote('"#{ $zsm-student-icon }"');
+		content: $zsm-student-icon;
 	}
 }
 .zsm-teacher-icon {
 	&:before {
-		content: unquote('"#{ $zsm-teacher-icon }"');
+		content: $zsm-teacher-icon;
 	}
 }
 .zsm-room-icon {
 	&:before {
-		content: unquote('"#{ $zsm-room-icon }"');
+		content: $zsm-room-icon;
 	}
 }
 .zsm-arrow-icon {
 	&:before {
-		content: unquote('"#{ $zsm-arrow-icon }"');
+		content: $zsm-arrow-icon;
 	}
 }
 .zsm-copyright-icon {
 	&:before {
-		content: unquote('"#{ $zsm-copyright-icon }"');
+		content: $zsm-copyright-icon;
 	}
 }
 .zsm-loading-icon {
 	&:before {
-		content: unquote('"#{ $zsm-loading-icon }"');
+		content: $zsm-loading-icon;
 	}
 }
 .zsm-empty-icon {
 	&:before {
-		content: unquote('"#{ $zsm-empty-icon }"');
+		content: $zsm-empty-icon;
 	}
 }
 .zsm-not-found-icon {
 	&:before {
-		content: unquote('"#{ $zsm-not-found-icon }"');
+		content: $zsm-not-found-icon;
 	}
 }
 .zsm-offline-icon {
 	&:before {
-		content: unquote('"#{ $zsm-offline-icon }"');
+		content: $zsm-offline-icon;
 	}
 }
 .zsm-error-icon {
 	&:before {
-		content: unquote('"#{ $zsm-error-icon }"');
+		content: $zsm-error-icon;
+	}
+}
+.zsm-system-mode-icon {
+	&:before {
+		content: $zsm-system-mode-icon;
+	}
+}
+.zsm-light-mode-icon {
+	&:before {
+		content: $zsm-light-mode-icon;
+	}
+}
+.zsm-dark-mode-icon {
+	&:before {
+		content: $zsm-dark-mode-icon;
+	}
+}
+.zsm-forceDesktop-icon {
+	&:before {
+		content: $zsm-forceDesktop-icon;
+	}
+}
+.zsm-showBreaks-icon {
+	&:before {
+		content: $zsm-showBreaks-icon;
+	}
+}
+.zsm-showColors-icon {
+	&:before {
+		content: $zsm-showColors-icon;
 	}
 }
 .zsm-old-timetable-icon {
 	&:before {
-		content: unquote('"#{ $zsm-old-timetable-icon }"');
+		content: $zsm-old-timetable-icon;
 	}
 }
 .zsm-print-timetable-icon {
 	&:before {
-		content: unquote('"#{ $zsm-print-timetable-icon }"');
+		content: $zsm-print-timetable-icon;
 	}
 }
 .zsm-download-app-icon {
 	&:before {
-		content: unquote('"#{ $zsm-download-app-icon }"');
+		content: $zsm-download-app-icon;
 	}
 }
