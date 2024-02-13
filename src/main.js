@@ -26,7 +26,6 @@ async function cacheTimeTables() {
 	const last = appConfigs.value.lastFetched;
 	if (last != null && last + 86400000 > Date.now()) return;
 	console.info('Fetching timetable updates started.');
-	axios.get(`${import.meta.env.BASE_URL}school-data.json`);
 	const res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html?app=timetable`);
 	const list = new TimeTableList(res.data).getList();
 	const classMap = list.classes.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/o${obj.value}.html?app=timetable`));

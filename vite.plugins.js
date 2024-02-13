@@ -1,7 +1,8 @@
 import fs from 'fs';
 import schoolData from './public/schoolData';
 // App Data
-const root = process.env.ROOT_PATH || '/plan_lekcji/';
+const args = process.argv.slice(2)
+const root = (args[0] == '--path') ? args[1] : '/plan_lekcji/';
 const htmlVariables = {
 	APP_ROOT: root,
 	schoolROOT: schoolData.schoolTimeTableRootURL,

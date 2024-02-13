@@ -41,6 +41,12 @@
 	}
 }
 
+@supports (scrollbar-color: red red) {
+	* {
+		scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
+		scrollbar-width: thin;
+	}
+}
 ::-webkit-scrollbar {
 	width: 0.75rem;
 	height: 0.75rem;
@@ -57,10 +63,4 @@
 	border-radius: 100vw;
 	background-color: var(--scrollbar);
 	border: 0.2em solid var(--bg-scrollbar);
-}
-@supports (scrollbar-color: red red) {
-	* {
-		scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
-		scrollbar-width: thin;
-	}
 }

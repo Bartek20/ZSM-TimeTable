@@ -46,17 +46,17 @@
 			}
 		}
 		&:not(:hover) nav {
+			@supports (scrollbar-color: red red) {
+				scrollbar-color: transparent transparent;
+			}
 			&::-webkit-scrollbar-track,
 			&::-webkit-scrollbar-thumb {
 				border: 0;
 				background-color: transparent;
 			}
-			@supports (scrollbar-color: red red) {
-				scrollbar-color: transparent transparent;
-			}
 		}
 		nav {
-			overflow: hidden auto;
+			overflow-x: auto;
 			height: 100%;
 			scrollbar-gutter: stable;
 			margin-left: 0.75rem;

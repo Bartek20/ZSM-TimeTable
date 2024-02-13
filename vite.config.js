@@ -17,7 +17,8 @@ import pwaConfig from './vite.pwa';
 // Auto Imports
 import { components, imports } from './vite.components';
 
-const root = process.env.ROOT_PATH || '/plan_lekcji/';
+const args = process.argv.slice(2)
+const root = (args[0] == '--path') ? args[1] : '/plan_lekcji/';
 const now = getNow();
 
 export default defineConfig({
