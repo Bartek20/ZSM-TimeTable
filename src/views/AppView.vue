@@ -28,12 +28,14 @@
 		z-index: -1;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0 0 0 / 0.4);
+		transition: 0.4s background-color;
 		&.activeConfigs {
+			background-color: rgba(0 0 0 / 0.4);
 			z-index: 10;
 		}
 		@include tablet {
 			&.activeSidebar {
+				background-color: rgba(0 0 0 / 0.4);
 				z-index: 10;
 			}
 		}

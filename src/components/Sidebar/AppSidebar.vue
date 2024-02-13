@@ -13,10 +13,15 @@
 			apply: obj.apply_date,
 		};
 	});
+	function closeMenu() {
+		document.querySelector('aside.sidebar')?.classList.remove('open');
+		document.querySelector('.overlay')?.classList.remove('activeSidebar');
+	}
 </script>
 
 <template>
 	<aside class="sidebar">
+		<div class="closeBtn" @click="closeMenu"><i class="zsm-close-icon"></i></div>
 		<header>
 			<a :href="schoolData.schoolHomeURL" target="_blank" rel="noopener noreferrer">
 				<img class="p-4" src="/assets/images/logo.png" :alt="schoolData.schoolLogoDescription || 'Logo Szkoły'" />
@@ -52,6 +57,21 @@
 		background-color: var(--bg-sidebar);
 		color: var(--sb-text);
 		transition: 0.4s ease-in-out left;
+		.closeBtn {
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: none;
+			cursor: pointer;
+			font-size: 2.3rem;
+			width: 48px;
+			height: 48px;
+			justify-content: center;
+			align-items: center;
+			@include tablet {
+				display: flex;
+			}
+		}
 		header {
 			text-align: center;
 			img {

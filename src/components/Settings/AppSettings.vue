@@ -1,10 +1,15 @@
 <script setup>
 	const PWAStore = usePWAStore();
 	const appStatus = computed(() => PWAStore.status());
+	function closeMenu() {
+		document.querySelector('aside.configs')?.classList.remove('open');
+		document.querySelector('.overlay')?.classList.remove('activeConfigs');
+	}
 </script>
 
 <template>
 	<aside class="configs">
+		<div class="closeBtn" @click="closeMenu"><i class="zsm-close-icon"></i></div>
 		<MenuSettings />
 		<MenuOptions />
 		<div class="install">
@@ -29,6 +34,18 @@
 		position: fixed;
 		top: 0;
 		right: -#{$sidebar-width};
+		.closeBtn {
+			position: absolute;
+			right: 0;
+			top: 0;
+			cursor: pointer;
+			font-size: 2.3rem;
+			width: 48px;
+			height: 48px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		&.open {
 			right: 0;
 		}
