@@ -10,8 +10,9 @@ const BASE_URL = args[0] == '--base' ? args[1] : '/';
 
 export default {
 	registerType: 'autoUpdate',
+	includeManifestIcons: false,
 	workbox: {
-		globPatterns: ['**/*.{js,css}', 'index.html'],
+		globPatterns: ['**/*.{js,css,png,svg,ico}', 'index.html'],
 		globIgnores: ['schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
 		navigateFallback: `${BASE_URL}index.html`,
 		navigateFallbackAllowlist: [/uczen/, /nauczyciel/],

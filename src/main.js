@@ -26,12 +26,12 @@ async function cacheTimeTables() {
 	const last = appConfigs.value.lastFetched;
 	if (last != null && last + 86400000 > Date.now()) return;
 	console.info('Fetching timetable updates started.');
-	const res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html?app=timetable`);
+	const res = await axios.get(`${schoolData.schoolTimeTableRootURL}lista.html`);
 	const list = new TimeTableList(res.data).getList();
-	const classMap = list.classes.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/o${obj.value}.html?app=timetable`));
-	const teacherMap = list.teachers.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/n${obj.value}.html?app=timetable`));
-	const roomMap = list.rooms.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/s${obj.value}.html?app=timetable`));
-	await Promise.all([classMap, teacherMap, roomMap]);
+	const classMap = list.classes.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/o${obj.value}.html`));
+	const teacherMap = list.teachers.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/n${obj.value}.html`));
+	const roomMap = list.rooms.map((obj) => axios.get(`${schoolData.schoolTimeTableRootURL}plany/s${obj.value}.html`));
+	await Promise.all([...classMap, ...teacherMap, ...roomMap]);
 	console.info('Fetching timetable updates finished.');
 	appConfigs.value.lastFetched = Date.now();
 }

@@ -6,5 +6,5 @@ async function getFile(url) {
 }
 
 export async function onRequest(context) {
-	return await getFile(`https://zsm.resman.pl/plan_vulcan/${context.params.path.join('/')}?app=timatable`);
+	return await getFile(`https://zsm.resman.pl/plan_vulcan/${context.params.path.join('/')}`);
 }
