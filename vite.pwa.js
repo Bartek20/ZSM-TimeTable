@@ -1,19 +1,19 @@
 import schoolData from './public/schoolData';
 
-const args = process.argv.slice(2);
-const root = args[0] == '--appPath' ? args[1] : '/plan_lekcji/';
-
 const timetableRoot = (() => {
 	const path = schoolData.schoolTimeTableRootURL.match(/\/(.*)\//);
 	return new RegExp(path ? path[1] : schoolData.schoolTimeTableRootURL);
 })();
 
+const args = process.argv.slice(3);
+const BASE_URL = args[0] == '--base' ? args[1] : '/';
+
 export default {
 	registerType: 'autoUpdate',
 	workbox: {
-		globPatterns: ['**/*.{js,css,png,ico,xml}', 'index.html'],
+		globPatterns: ['**/*.{js,css}', 'index.html'],
 		globIgnores: ['schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
-		navigateFallback: `${root}index.html`,
+		navigateFallback: `${BASE_URL}index.html`,
 		navigateFallbackAllowlist: [/uczen/, /nauczyciel/],
 		navigateFallbackDenylist: [timetableRoot, /assets/],
 		runtimeCaching: [
@@ -65,9 +65,7 @@ export default {
 		],
 	},
 	manifest: {
-		scope: root,
-		id: root,
-		start_url: root + '?PWA=true',
+		start_url: '?PWA=true',
 		name: schoolData.pwaName,
 		short_name: schoolData.pwaShortName,
 		description: schoolData.pwaDescription,
@@ -77,22 +75,22 @@ export default {
 		orientation: 'portrait',
 		icons: [
 			{
-				src: `${root}assets/images/android-chrome-192x192.png`,
+				src: 'assets/images/android-chrome-192x192.png',
 				sizes: '192x192',
 				type: 'image/png',
 			},
 			{
-				src: `${root}assets/images/android-chrome-256x256.png`,
+				src: 'assets/images/android-chrome-256x256.png',
 				sizes: '256x256',
 				type: 'image/png',
 			},
 			{
-				src: `${root}assets/images/android-chrome-512x512.png`,
+				src: 'assets/images/android-chrome-512x512.png',
 				sizes: '512x512',
 				type: 'image/png',
 			},
 			{
-				src: `${root}assets/images/safari-pinned-tab.svg`,
+				src: 'assets/images/safari-pinned-tab.svg',
 				type: 'image/svg',
 				purpose: 'maskable',
 			},

@@ -1,13 +1,8 @@
 import fs from 'fs';
 import schoolData from './public/schoolData';
 // App Data
-const args = process.argv.slice(2);
-const root = args[0] == '--appPath' ? args[1] : '/plan_lekcji/';
-const htmlVariables = {
-	APP_ROOT: root,
-	schoolROOT: schoolData.schoolTimeTableRootURL,
-};
-const xmlTemplate = `<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>`;
+const xmlTemplate =
+	'<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>';
 
 // Utils
 export function getNow() {
@@ -37,6 +32,9 @@ export function parseHTML() {
 	return {
 		name: 'parseHTML',
 		transformIndexHtml(html) {
+			const htmlVariables = {
+				schoolROOT: schoolData.schoolTimeTableRootURL,
+			};
 			Object.keys(htmlVariables).forEach((key) => {
 				const regex = new RegExp(`%${key}%`, 'g');
 				html = html.replace(regex, htmlVariables[key]);
@@ -46,11 +44,16 @@ export function parseHTML() {
 	};
 }
 export function generateBrowserConfigXML() {
+	let base;
 	return {
 		name: 'generateBrowserConfigXML',
-		async writeBundle(outputOptions, _) {
+		config(config) {
+			base = config.base;
+		},
+		async writeBundle(outputOptions, e) {
+			const data = xmlTemplate.replace(/\$\{root\}/g, base);
 			try {
-				fs.writeFileSync((outputOptions.dir || outputOptions.file) + '/browserconfig.xml', xmlTemplate, 'utf-8');
+				fs.writeFileSync((outputOptions.dir || outputOptions.file) + '/browserconfig.xml', data, 'utf-8');
 			} catch (error) {
 				console.error('Błąd podczas generowania browserconfig.xml:', error);
 			}

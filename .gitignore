@@ -28,6 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+*.bak
 
 # Private school data
 #schoolData.js

@@ -14,59 +14,61 @@ import { getNow, getBanner, parseHTML, generateBrowserConfigXML } from './vite.p
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
 import pwaConfig from './vite.pwa';
+
 // Auto Imports
 import { components, imports } from './vite.components';
 
-const args = process.argv.slice(2);
-const root = args[0] == '--appPath' ? args[1] : '/plan_lekcji/';
 const now = getNow();
 
-export default defineConfig({
-	base: root,
-	define: {
-		__APP_VERSION__: JSON.stringify('v2.0.0'),
-	},
-	server,
-	preview: {
-		port: 5173,
-	},
-	plugins: [
-		vue(),
-		Components(components),
-		AutoImport(imports),
-		parseHTML(),
-		generateBrowserConfigXML(),
-		VitePWA(pwaConfig),
-		banner((fileName) => getBanner(now, fileName)),
-	],
-	build: {
-		minify: 'terser',
-		assetsInlineLimit: 10240,
-		cssCodeSplit: false,
-		rollupOptions: {
-			output: {
-				// manualChunks: {
-				// 	vue: ['vue', 'vue-router', 'pinia'],
-				// 	functions: getGlobs('./src/{views,functions,stores,router}/**/*'),
-				// 	components: getGlobs('./src/components/{Sidebar,TimeTable,Settings}/**/*'),
-				// },
+export default defineConfig(() => {
+	const plugins = [];
+	plugins.push(vue());
+	plugins.push(Components(components));
+	plugins.push(AutoImport(imports));
+	plugins.push(parseHTML());
+	plugins.push(generateBrowserConfigXML());
+	plugins.push(VitePWA(pwaConfig));
+	plugins.push(banner((fileName) => getBanner(now, fileName)));
+	console.log(import.meta.env);
+	return {
+		define: {
+			__APP_VERSION__: JSON.stringify('v2.0.0'),
+			__TEST: JSON.stringify('/test/'),
+		},
+		server,
+		preview: {
+			port: 5173,
+		},
+		plugins,
+		build: {
+			minify: 'terser',
+			assetsInlineLimit: 10240,
+			cssCodeSplit: false,
+			rollupOptions: {
+				output: {
+					// manualChunks: {
+					// 	vue: ['vue', 'vue-router', 'pinia'],
+					// 	functions: getGlobs('./src/{views,functions,stores,router}/**/*'),
+					// 	components: getGlobs('./src/components/{Sidebar,TimeTable,Settings}/**/*'),
+					// },
+				},
 			},
 		},
-	},
-	css: {
-		preprocessorOptions: {
-			scss: {
-				additionalData: '@import "@/assets/media";@import "@/assets/variables";',
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: '@import "@/assets/media";@import "@/assets/variables";',
+				},
+			},
+			postcss: {
+				plugins: [autoprefixer({})],
 			},
 		},
-		postcss: {
-			plugins: [autoprefixer({})],
+		resolve: {
+			alias: {
+				'@': path.resolve(__dirname, 'src'),
+				'@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
+			},
 		},
-	},
-	resolve: {
-		alias: {
-			'@': path.resolve(__dirname, 'src'),
-			'@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
-		},
-	},
+	};
 });
