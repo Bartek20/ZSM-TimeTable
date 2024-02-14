@@ -47,10 +47,10 @@ export function generateBrowserConfigXML() {
 	let base;
 	return {
 		name: 'generateBrowserConfigXML',
-		config(config) {
+		configResolved(config) {
 			base = config.base;
 		},
-		async writeBundle(outputOptions, e) {
+		async writeBundle(outputOptions, _) {
 			const data = xmlTemplate.replace(/\$\{root\}/g, base);
 			try {
 				fs.writeFileSync((outputOptions.dir || outputOptions.file) + '/browserconfig.xml', data, 'utf-8');
