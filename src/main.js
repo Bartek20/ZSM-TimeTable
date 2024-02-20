@@ -13,7 +13,7 @@ import colorHandler from '@/functions/colorModeHandler';
 
 (async () => {
 	try {
-		const schoolData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${new Date()}`);
+		const schoolData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
 		appConfigs.value.school.shortName = schoolData.default.schoolShortName || '';
 		appConfigs.value.school.homeURL = schoolData.default.schoolHomeURL || '/';
 		appConfigs.value.school.timetableURL = schoolData.default.schoolTimeTableRootURL;
@@ -22,7 +22,7 @@ import colorHandler from '@/functions/colorModeHandler';
 		log('error', 'Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
 	}
 	try {
-		const timetableData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${new Date()}`);
+		const timetableData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
 		appConfigs.value.timetable.shortLessons = timetableData.default.shortLessons || [];
 		appConfigs.value.timetable.levels = timetableData.default.levels || {};
 		appConfigs.value.timetable.classes = timetableData.default.classes || {};
