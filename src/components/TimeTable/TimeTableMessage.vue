@@ -14,7 +14,7 @@
 <template>
 	<div class="message">
 		<i :class="icon"></i>
-		<h5>{{ text }}</h5>
+		<b>{{ text }}</b>
 	</div>
 </template>
 
@@ -33,7 +33,7 @@
 			font-size: 4rem;
 			margin-bottom: 0.5rem;
 		}
-		h5 {
+		b {
 			font-size: 1.5rem;
 			max-width: 90%;
 		}

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import schoolData from './public/schoolData';
+import schoolData from '../public/schoolData';
 // App Data
 const xmlTemplate =
 	'<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>';

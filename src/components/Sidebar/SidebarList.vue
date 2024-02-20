@@ -12,6 +12,10 @@
 			type: String,
 			required: true,
 		},
+		mode: {
+			type: String,
+			required: true,
+		},
 		list: {
 			type: Array,
 			required: true,
@@ -38,7 +42,7 @@
 		<div>
 			<ul>
 				<li v-for="item in list">
-					<RouterLink :to="{ name: 'plan', params: { mode: 'o', id: item.id } }">
+					<RouterLink :to="{ name: 'plan', params: { mode: mode, id: item.id } }">
 						<span>{{ item.name }}</span>
 					</RouterLink>
 				</li>

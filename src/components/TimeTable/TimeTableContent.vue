@@ -26,16 +26,20 @@
 
 	const data = computed(() => {
 		const src = appData.value.timetable;
+		const shortHours = appData.value.timetable.hours?.map((hour) => {
+			return appConfigs.value.timetable.shortLessons[hour.number];
+		}) || [];
+		const hours = appConfigs.value.shortLessons && src.hours.length == shortHours.length ? shortHours : src.hours;
 		let out = [];
-		const rows = src.hours?.length || 0;
+		const rows = hours?.length || 0;
 		for (let i = 0; i < rows; i++) {
 			out.push({
-				nr: src.hours[i].number,
+				nr: hours[i].number,
 				hours: {
-					from: src.hours[i].timeFrom,
-					to: src.hours[i].timeTo,
+					from: hours[i].timeFrom,
+					to: hours[i].timeTo,
 				},
-				break: calcBreak(src.hours[i]?.timeTo, src.hours[i + 1]?.timeFrom),
+				break: calcBreak(hours[i]?.timeTo, hours[i + 1]?.timeFrom),
 				lessons: {
 					0: src.days[0][i],
 					1: src.days[1][i],

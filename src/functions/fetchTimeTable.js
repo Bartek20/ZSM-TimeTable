@@ -1,6 +1,6 @@
+import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
 import log from '@/functions/logger';
-import schoolData from '../../public/schoolData';
 
 function qs(dom, selector) {
 	return dom.querySelector(selector);
@@ -163,9 +163,41 @@ export default async function loadTimeTable(mode, id) {
 	appData.value.timetable = {
 		status: 0,
 	};
-	let res;
 	try {
-		res = await axios.get(`${schoolData.schoolTimeTableRootURL}plany/${mode}${id}.html`);
+		const res = await axios.get(`${appConfigs.value.school.timetableURL}plany/${mode}${id}.html`);
+		if (res == undefined) {
+			appData.value.timetable = {
+				status: 500,
+			};
+			return;
+		}
+		const TT = new TimeTable(res.data);
+		const result = {
+			title: TT.getTitle(),
+			hours: TT.getHours(),
+			days: TT.getDays(),
+			gen_date: TT.getGeneratedDate(),
+			apply_date: TT.getVersionInfo(),
+			status: 200,
+		};
+		const lessonsNr = result.days[0].length;
+		for (let i = 0; i < lessonsNr; i++) {
+			if (
+				result.days[0][0].length == 0 &&
+				result.days[1][0].length == 0 &&
+				result.days[2][0].length == 0 &&
+				result.days[3][0].length == 0 &&
+				result.days[4][0].length == 0
+			) {
+				result.days[0].shift();
+				result.days[1].shift();
+				result.days[2].shift();
+				result.days[3].shift();
+				result.days[4].shift();
+				result.hours.shift();
+			} else break;
+		}
+		appData.value.timetable = result;
 	} catch (err) {
 		log('error', 'Wystąpił błąd przy wczytywaniu planu:\n', err);
 		if (err.response && err.response.status == 404) {
@@ -182,37 +214,4 @@ export default async function loadTimeTable(mode, id) {
 			};
 		return;
 	}
-	if (res == undefined) {
-		appData.value.timetable = {
-			status: 500,
-		};
-		return;
-	}
-	const TT = new TimeTable(res.data);
-	const result = {
-		title: TT.getTitle(),
-		hours: TT.getHours(),
-		days: TT.getDays(),
-		gen_date: TT.getGeneratedDate(),
-		apply_date: TT.getVersionInfo(),
-		status: 200,
-	};
-	const lessonsNr = result.days[0].length;
-	for (let i = 0; i < lessonsNr; i++) {
-		if (
-			result.days[0][0].length == 0 &&
-			result.days[1][0].length == 0 &&
-			result.days[2][0].length == 0 &&
-			result.days[3][0].length == 0 &&
-			result.days[4][0].length == 0
-		) {
-			result.days[0].shift();
-			result.days[1].shift();
-			result.days[2].shift();
-			result.days[3].shift();
-			result.days[4].shift();
-			result.hours.shift();
-		} else break;
-	}
-	appData.value.timetable = result;
 }

@@ -1,6 +1,6 @@
 <script setup>
-	import appData from '@/stores/data';
 	import appConfigs from '@/stores/configs';
+	import appData from '@/stores/data';
 	const message = computed(() => {
 		switch (appData.value.timetable.status) {
 			case 404:
@@ -31,13 +31,18 @@
 					};
 				}
 				return undefined;
+			default:
+				return {
+					icon: 'zsm-error-icon',
+					msg: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.',
+				};
 		}
 	});
 
 	const DAY = useDateFormat(useNow({ interval: 3600000 }), 'd', {
 		locales: 'pl-PL',
 	});
-	const activeDay = ref(DAY.value > 4 ? 0 : parseInt(DAY.value));
+	const activeDay = ref(DAY.value == 6 || DAY.value == 0 ? 0 : parseInt(DAY.value) - 1);
 	function changeDay(dir) {
 		if (dir) activeDay.value == 4 ? (activeDay.value = 0) : (activeDay.value += 1);
 		else activeDay.value == 0 ? (activeDay.value = 4) : (activeDay.value -= 1);

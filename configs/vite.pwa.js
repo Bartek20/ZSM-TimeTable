@@ -1,12 +1,33 @@
-import schoolData from './public/schoolData';
+import appConfigs from '../appConfigs';
 
-const timetableRoot = (() => {
-	const path = schoolData.schoolTimeTableRootURL.match(/\/(.*)\//);
-	return new RegExp(path ? path[1] : schoolData.schoolTimeTableRootURL);
-})();
+const timetableParts = [
+	// CSS
+	'css/lista.css',
+	'css/plan.css',
+	// Images
+	'images/logo_min.JPG',
+	'images/minus.gif',
+	'images/plan_logo.gif',
+	'images/plus.gif',
+	'images/pusty.gif',
+	// Scripts
+	'scripts/plan.js',
+	'scripts/powrot.js',
+	// Index
+	'index.html',
+	// Lista
+	'lista.html',
+	// Plany
+	'plany/[ons]{1}\\d+.html',
+];
+const timetableRegExp = new RegExp(timetableParts.join('|'));
 
-const args = process.argv.slice(3);
-const BASE_URL = args[0] == '--base' ? args[1] : '/';
+const argvs = process.argv;
+const args = [];
+argvs.forEach((arg) => args.push(...arg.split('=')));
+const baseIndex = args.indexOf('--base');
+const base = baseIndex != -1 ? args[baseIndex + 1] : '/';
+const BASE_URL = base ? base : '/';
 
 export default {
 	registerType: 'autoUpdate',
@@ -16,7 +37,7 @@ export default {
 		globIgnores: ['schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
 		navigateFallback: `${BASE_URL}index.html`,
 		navigateFallbackAllowlist: [/uczen/, /nauczyciel/],
-		navigateFallbackDenylist: [timetableRoot, /assets/],
+		navigateFallbackDenylist: [timetableRegExp, /assets/],
 		runtimeCaching: [
 			{
 				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -47,7 +68,7 @@ export default {
 				},
 			},
 			{
-				urlPattern: timetableRoot,
+				urlPattern: timetableRegExp,
 				handler: 'NetworkFirst',
 				options: {
 					cacheName: 'timetables-data',
@@ -67,9 +88,9 @@ export default {
 	},
 	manifest: {
 		start_url: '?PWA=true',
-		name: schoolData.pwaName,
-		short_name: schoolData.pwaShortName,
-		description: schoolData.pwaDescription,
+		name: appConfigs.pwaName,
+		short_name: appConfigs.pwaShortName,
+		description: appConfigs.pwaDescription,
 		theme_color: '#ffffff',
 		lang: 'pl-PL',
 		dir: 'ltr',

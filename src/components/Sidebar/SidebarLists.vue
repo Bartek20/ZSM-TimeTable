@@ -9,22 +9,14 @@
 			required: true,
 		},
 	});
-	function changeMenu(e) {
-		e.preventDefault();
-		let element = e.target;
-		if (element.tagName != 'LABEL') element = element.parentElement;
-		if (element.tagName != 'LABEL') element = element.parentElement;
-		element = element.control;
-		element.checked = !element.checked;
-	}
 </script>
 
 <template>
 	<menu>
 		<nav>
-			<SidebarList id="menuClasses" icon="zsm-student-icon" name="Klasy" :list="links.classes" />
-			<SidebarList id="menuTeachers" icon="zsm-teacher-icon" name="Nauczyciele" :list="links.teachers" />
-			<SidebarList id="menuRooms" icon="zsm-room-icon" name="Sale" :list="links.rooms" />
+			<SidebarList id="menuClasses" icon="zsm-student-icon" name="Klasy" mode="o" :list="links.classes" />
+			<SidebarList id="menuTeachers" icon="zsm-teacher-icon" name="Nauczyciele" mode="n" :list="links.teachers" />
+			<SidebarList id="menuRooms" icon="zsm-room-icon" name="Sale" mode="s" :list="links.rooms" />
 			<div class="empty" v-if="links.classes.length == 0 && links.teachers.length == 0 && links.rooms.length == 0">
 				<span>Brak wyników dla:</span>
 				<br />

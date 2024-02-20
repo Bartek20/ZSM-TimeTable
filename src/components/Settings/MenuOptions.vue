@@ -1,7 +1,6 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
-	import schoolData from '../../../public/schoolData';
 	function printTimeTable() {
 		window.print();
 	}
@@ -12,7 +11,7 @@
 		<span><b>Opcje</b></span>
 		<a
 			class="option"
-			:href="`${schoolData.schoolTimeTableRootURL}plany/${appConfigs.currentTimeTable.mode}${appConfigs.currentTimeTable.id}.html`"
+			:href="`${appConfigs.school.timetableURL}plany/${appConfigs.currentTimeTable.mode}${appConfigs.currentTimeTable.id}.html`"
 			target="_blank">
 			<i class="zsm-old-timetable-icon"></i>
 			<span>Otwórz oryginalny plan</span>

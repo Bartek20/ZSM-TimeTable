@@ -1,5 +1,4 @@
 <script setup>
-	import appData from '@/stores/data';
 	import appConfigs from '@/stores/configs';
 	import parseColor from '@/functions/parseColor';
 
@@ -13,15 +12,14 @@
 	});
 
 	const subject = computed(() => {
-		const data = appData.value.school;
 		const subject = props.data.subject;
-		if (!('subjects' in data)) return subject;
-		if (subject.includes('ckz')) return data.subjects['praktyki'].short;
-		if (data.subjects[subject] == undefined) {
-			console.warn('Nieznany przedmiot:', subject);
+		let subjectData = appConfigs.value.timetable.subjects[subject];
+		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects['praktyki'];
+		if (subjectData == undefined) {
+			addUnknowns('subjects', subject)
 			return subject;
 		}
-		return data.subjects[subject].short;
+		return subjectData.short;
 	});
 
 	const col1 = computed(() => {

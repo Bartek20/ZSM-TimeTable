@@ -1,29 +1,30 @@
 $icomoon-font-family: 'ZSM-TimeTable';
 $icomoon-font-path: '@/assets/fonts' !default;
 
-$zsm-menu-icon: '\e900';
-$zsm-settings-icon: '\e901';
-$zsm-close-icon: '\e902';
-$zsm-search-icon: '\e903';
-$zsm-student-icon: '\e904';
-$zsm-teacher-icon: '\e905';
-$zsm-room-icon: '\e906';
-$zsm-arrow-icon: '\e907';
-$zsm-copyright-icon: '\e908';
-$zsm-loading-icon: '\e909';
-$zsm-empty-icon: '\e90a';
-$zsm-not-found-icon: '\e90b';
-$zsm-offline-icon: '\e90c';
-$zsm-error-icon: '\e90d';
-$zsm-system-mode-icon: '\e90e';
-$zsm-light-mode-icon: '\e90f';
-$zsm-dark-mode-icon: '\e910';
-$zsm-forceDesktop-icon: '\e911';
-$zsm-showBreaks-icon: '\e912';
-$zsm-showColors-icon: '\e913';
-$zsm-old-timetable-icon: '\e914';
-$zsm-print-timetable-icon: '\e915';
-$zsm-download-app-icon: '\e916';
+$zsm-menu-icon: unquote('"\\e900"');
+$zsm-settings-icon: unquote('"\\e901"');
+$zsm-close-icon: unquote('"\\e902"');
+$zsm-search-icon: unquote('"\\e903"');
+$zsm-student-icon: unquote('"\\e904"');
+$zsm-teacher-icon: unquote('"\\e905"');
+$zsm-room-icon: unquote('"\\e906"');
+$zsm-arrow-icon: unquote('"\\e907"');
+$zsm-copyright-icon: unquote('"\\e908"');
+$zsm-loading-icon: unquote('"\\e909"');
+$zsm-empty-icon: unquote('"\\e90a"');
+$zsm-not-found-icon: unquote('"\\e90b"');
+$zsm-offline-icon: unquote('"\\e90c"');
+$zsm-error-icon: unquote('"\\e90d"');
+$zsm-system-mode-icon: unquote('"\\e90e"');
+$zsm-light-mode-icon: unquote('"\\e90f"');
+$zsm-dark-mode-icon: unquote('"\\e910"');
+$zsm-forceDesktop-icon: unquote('"\\e911"');
+$zsm-shortLessons-icon: unquote('"\\e912"');
+$zsm-showBreaks-icon: unquote('"\\e913"');
+$zsm-showColors-icon: unquote('"\\e914"');
+$zsm-old-timetable-icon: unquote('"\\e915"');
+$zsm-print-timetable-icon: unquote('"\\e916"');
+$zsm-download-app-icon: unquote('"\\e917"');
 
 @font-face {
 	font-family: '#{$icomoon-font-family}';
@@ -43,6 +44,9 @@ i {
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
@@ -50,117 +54,122 @@ i {
 }
 
 .zsm-menu-icon {
-	&:before {
-		content: $zsm-menu-icon;
-	}
+  &:before {
+    content: $zsm-menu-icon; 
+  }
 }
 .zsm-settings-icon {
-	&:before {
-		content: $zsm-settings-icon;
-	}
+  &:before {
+    content: $zsm-settings-icon; 
+  }
 }
 .zsm-close-icon {
-	&:before {
-		content: $zsm-close-icon;
-	}
+  &:before {
+    content: $zsm-close-icon; 
+  }
 }
 .zsm-search-icon {
-	&:before {
-		content: $zsm-search-icon;
-	}
+  &:before {
+    content: $zsm-search-icon; 
+  }
 }
 .zsm-student-icon {
-	&:before {
-		content: $zsm-student-icon;
-	}
+  &:before {
+    content: $zsm-student-icon; 
+  }
 }
 .zsm-teacher-icon {
-	&:before {
-		content: $zsm-teacher-icon;
-	}
+  &:before {
+    content: $zsm-teacher-icon; 
+  }
 }
 .zsm-room-icon {
-	&:before {
-		content: $zsm-room-icon;
-	}
+  &:before {
+    content: $zsm-room-icon; 
+  }
 }
 .zsm-arrow-icon {
-	&:before {
-		content: $zsm-arrow-icon;
-	}
+  &:before {
+    content: $zsm-arrow-icon; 
+  }
 }
 .zsm-copyright-icon {
-	&:before {
-		content: $zsm-copyright-icon;
-	}
+  &:before {
+    content: $zsm-copyright-icon; 
+  }
 }
 .zsm-loading-icon {
-	&:before {
-		content: $zsm-loading-icon;
-	}
+  &:before {
+    content: $zsm-loading-icon; 
+  }
 }
 .zsm-empty-icon {
-	&:before {
-		content: $zsm-empty-icon;
-	}
+  &:before {
+    content: $zsm-empty-icon; 
+  }
 }
 .zsm-not-found-icon {
-	&:before {
-		content: $zsm-not-found-icon;
-	}
+  &:before {
+    content: $zsm-not-found-icon; 
+  }
 }
 .zsm-offline-icon {
-	&:before {
-		content: $zsm-offline-icon;
-	}
+  &:before {
+    content: $zsm-offline-icon; 
+  }
 }
 .zsm-error-icon {
-	&:before {
-		content: $zsm-error-icon;
-	}
+  &:before {
+    content: $zsm-error-icon; 
+  }
 }
 .zsm-system-mode-icon {
-	&:before {
-		content: $zsm-system-mode-icon;
-	}
+  &:before {
+    content: $zsm-system-mode-icon; 
+  }
 }
 .zsm-light-mode-icon {
-	&:before {
-		content: $zsm-light-mode-icon;
-	}
+  &:before {
+    content: $zsm-light-mode-icon; 
+  }
 }
 .zsm-dark-mode-icon {
-	&:before {
-		content: $zsm-dark-mode-icon;
-	}
+  &:before {
+    content: $zsm-dark-mode-icon; 
+  }
 }
 .zsm-forceDesktop-icon {
-	&:before {
-		content: $zsm-forceDesktop-icon;
-	}
+  &:before {
+    content: $zsm-forceDesktop-icon; 
+  }
+}
+.zsm-shortLessons-icon {
+  &:before {
+    content: $zsm-shortLessons-icon; 
+  }
 }
 .zsm-showBreaks-icon {
-	&:before {
-		content: $zsm-showBreaks-icon;
-	}
+  &:before {
+    content: $zsm-showBreaks-icon; 
+  }
 }
 .zsm-showColors-icon {
-	&:before {
-		content: $zsm-showColors-icon;
-	}
+  &:before {
+    content: $zsm-showColors-icon; 
+  }
 }
 .zsm-old-timetable-icon {
-	&:before {
-		content: $zsm-old-timetable-icon;
-	}
+  &:before {
+    content: $zsm-old-timetable-icon; 
+  }
 }
 .zsm-print-timetable-icon {
-	&:before {
-		content: $zsm-print-timetable-icon;
-	}
+  &:before {
+    content: $zsm-print-timetable-icon; 
+  }
 }
 .zsm-download-app-icon {
-	&:before {
-		content: $zsm-download-app-icon;
-	}
+  &:before {
+    content: $zsm-download-app-icon; 
+  }
 }

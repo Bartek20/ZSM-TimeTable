@@ -1,6 +1,6 @@
 <script setup>
+	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
-	import schoolData from '../../../public/schoolData';
 	function getFooter() {
 		const date = new Date().getFullYear();
 		return date == '2023' ? '2023' : `2023 - ${date}`;
@@ -23,8 +23,8 @@
 	<aside class="sidebar">
 		<div class="closeBtn" @click="closeMenu"><i class="zsm-close-icon"></i></div>
 		<header>
-			<a :href="schoolData.schoolHomeURL" target="_blank" rel="noopener noreferrer">
-				<img class="p-4" src="/assets/images/logo.png" :alt="schoolData.schoolLogoDescription || 'Logo Szkoły'" />
+			<a :href="appConfigs.school.homeURL" target="_blank" rel="noopener noreferrer">
+				<img class="p-4" src="/assets/images/logo.png" :alt="appConfigs.school.logoDescription || 'Logo Szkoły'" />
 			</a>
 		</header>
 		<Suspense>

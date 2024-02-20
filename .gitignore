@@ -31,5 +31,5 @@ coverage
 *.bak
 
 # Private school data
-#schoolData.js
-#timetableData.js
+schoolData.js
+timetableData.js

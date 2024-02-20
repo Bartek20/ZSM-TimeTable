@@ -3,9 +3,7 @@
 	import getCombinations from '@/functions/combinations';
 	import log from '@/functions/logger';
 	import appData from '@/stores/data';
-	import loadSchoolData from '@/functions/loadSchoolData';
 
-	await loadSchoolData();
 	await fetchList();
 	const user = useRouteParams('user');
 

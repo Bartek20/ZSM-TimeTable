@@ -8,15 +8,15 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 // Vite Configs
-import server from './vite.server';
+import server from './configs/vite.server';
 // Vite Transform plugins
-import { getNow, getBanner, parseHTML, generateBrowserConfigXML } from './vite.plugins';
+import { getNow, getBanner, parseHTML, generateBrowserConfigXML } from './configs/vite.plugins';
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
-import pwaConfig from './vite.pwa';
+import pwaConfig from './configs/vite.pwa';
 
 // Auto Imports
-import { components, imports } from './vite.components';
+import { components, imports } from './configs/vite.components';
 
 const now = getNow();
 
@@ -42,13 +42,6 @@ export default defineConfig({
 		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
 		rollupOptions: {
-			output: {
-				// manualChunks: {
-				// 	vue: ['vue', 'vue-router', 'pinia'],
-				// 	functions: getGlobs('./src/{views,functions,stores,router}/**/*'),
-				// 	components: getGlobs('./src/components/{Sidebar,TimeTable,Settings}/**/*'),
-				// },
-			},
 		},
 	},
 	css: {

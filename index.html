@@ -7,8 +7,8 @@
 		<meta name="msapplication-TileColor" content="#da532c" />
 		<meta name="msapplication-TileImage" content="%BASE_URL%assets/images/mstile.png" />
 		<meta name="msapplication-config" content="%BASE_URL%browserconfig.xml" />
-		<title>ZSM | Plan Lekcji</title>
-		<meta name="description" content="ZSM TimeTable App" />
+		<title>Plan Lekcji</title>
+		<meta name="description" content="TimeTable App" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="theme-color" content="#ffffff" />
@@ -58,6 +58,39 @@
 		<div id="app"></div>
 		<script id="loader-script">
 			document.getElementById('loader').classList.remove('hidden');
+		</script>
+		<script>
+			const unknownData = {
+				subjects: new Set(),
+				classes: new Set(),
+				teachers: new Set(),
+				rooms: new Set(),
+			};
+			function addUnknowns(target, unknown) {
+				unknownData[target].add(unknown);
+			}
+			function getUnknowns(target) {
+				switch (target) {
+					case 'subjects':
+						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
+						break;
+					case 'classes':
+						console.warn('Nieznane kierunki:\n', unknownData.classes);
+						break;
+					case 'teachers':
+						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
+						break;
+					case 'rooms':
+						console.warn('Nieznane sale:\n', unknownData.rooms);
+						break;
+					case 'all':
+						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
+						console.warn('Nieznane kierunki:\n', unknownData.classes);
+						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
+						console.warn('Nieznane sale:\n', unknownData.rooms);
+						break;
+				}
+			}
 		</script>
 		<noscript>
 			<div class="loading">
