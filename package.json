@@ -21,7 +21,7 @@
 		"update:dev": "npm i -D @vitejs/plugin-vue@latest autoprefixer@latest postcss@latest sass@latest terser@latest unplugin-auto-import@latest unplugin-vue-components@latest vite@latest vite-plugin-banner@latest vite-plugin-pwa@latest"
 	},
 	"dependencies": {
-		"@vueuse/core": "^10.7.0",
+		"@vueuse/core": "^10.8.0",
 		"@vueuse/router": "^10.7.0",
 		"axios": "^1.6.2",
 		"bootstrap": "^5.3.2",
