@@ -8,7 +8,7 @@ Zabronione jest jednak usuwanie, jak i modyfikowanie informacji o autorze kodu (
 
 ## Kompilacja aplikacji
 ### 1) Przed rozpoczęciem kompilacji należy dostosować aplikację poprzez:
-* Dostosowanie danych aplikacji (w pliku /appConfigs.js)
+* Dostosowanie danych aplikacji (w pliku /appConfigs.js zgodnie z plikiem /appConfigs.template.js)
 * Zmienienie loga szkoły (plik /public/images/logo.png)
 
 ### 2) Po dostosowaniu aplikacji do potrzeb szkoły mależy skompilować program:

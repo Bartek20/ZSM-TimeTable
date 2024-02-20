@@ -1,8 +1,16 @@
 export default {
-	// Kierunki w szkole (niewymagane)
-	classes: {
-		BCH: 'Biol-chem',
-		SKR: 'Technik Skrótów',
+	// Godziny skrócone obowiązujące w szkole
+	shortLessons: [
+		{
+			number: 0, // Identyfikator lekcji (nr)
+			timeFrom: '9:40', // Czas rozpoczęcia lekcji
+			timeTo: '10:05', // Czas zakończenia lekcji
+		}
+	],
+	// Nazwy poziomów stosowanych w części rooms
+	levels: {
+		'-1': 'Piwnica',
+		0: 'Parter'
 	},
 	// Układ pomieszczeń na planie (nie wymagane)
 	// level - poziom (-1,0,1,2)
@@ -36,6 +44,11 @@ export default {
 		CKP: {
 			name: 'Centrum Kształcenia Praktycznego',
 		},
+	},
+	// Kierunki w szkole (niewymagane)
+	classes: {
+		BCH: 'Biol-chem',
+		SKR: 'Technik Skrótów',
 	},
 	// Pełne dane nauczycieli (nie wymagane)
 	// name - imię
