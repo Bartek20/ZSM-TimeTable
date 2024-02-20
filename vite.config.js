@@ -10,7 +10,7 @@ import vue from '@vitejs/plugin-vue';
 // Vite Configs
 import server from './configs/vite.server';
 // Vite Transform plugins
-import { getNow, getBanner, parseHTML, generateBrowserConfigXML } from './configs/vite.plugins';
+import { getNow, getBanner, parseHTML, generateBrowserConfigXML, generateHTACCESS } from './configs/vite.plugins';
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
 import pwaConfig from './configs/vite.pwa';
@@ -34,6 +34,7 @@ export default defineConfig({
 		AutoImport(imports),
 		parseHTML(),
 		generateBrowserConfigXML(),
+		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
 	],
@@ -41,8 +42,7 @@ export default defineConfig({
 		minify: 'terser',
 		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
-		rollupOptions: {
-		},
+		rollupOptions: {},
 	},
 	css: {
 		preprocessorOptions: {
