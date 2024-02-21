@@ -26,9 +26,10 @@
 
 	const data = computed(() => {
 		const src = appData.value.timetable;
-		const shortHours = appData.value.timetable.hours?.map((hour) => {
-			return appConfigs.value.timetable.shortLessons[hour.number];
-		}) || [];
+		const shortHours =
+			appData.value.timetable.hours?.map((hour) => {
+				return appConfigs.value.timetable.shortLessons[hour.number];
+			}) || [];
 		const hours = appConfigs.value.shortLessons && src.hours.length == shortHours.length ? shortHours : src.hours;
 		let out = [];
 		const rows = hours?.length || 0;
@@ -51,6 +52,30 @@
 		}
 		return out;
 	});
+	const TIME = useDateFormat(useNow({ interval: 100 }), 'd;HH:mm', {
+		locales: 'pl-PL',
+	});
+	const currentDay = ref(-1);
+	const currentLesson = ref(-1);
+	watch(
+		[TIME, data],
+		() => {
+			const timeData = TIME.value.split(';');
+			currentDay.value = parseInt(timeData[0]) - 1;
+			currentLesson.value = -1;
+			data.value.forEach((row) => {
+				const start_time = new Date();
+				const end_time = new Date();
+				const start_el = row.hours.from.split(':');
+				const end_el = row.hours.to.split(':');
+				start_time.setHours(start_el[0], start_el[1], 0, 0);
+				end_time.setHours(end_el[0], end_el[1] - 1, 59, 999);
+				const current = new Date();
+				if (current >= start_time && current <= end_time) currentLesson.value = row.nr;
+			});
+		},
+		{ immediate: true }
+	);
 	await loadTimeTable(appConfigs.value.currentTimeTable.mode, appConfigs.value.currentTimeTable.id);
 </script>
 
@@ -76,7 +101,9 @@
 						<th>{{ row.nr }}</th>
 						<td>{{ row.hours.from }}<br />-<br />{{ row.hours.to }}</td>
 						<td :class="{ active: appConfigs.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons">
-							<TimeTableLesson v-for="lesson in day" :data="lesson" />
+							<div :class="{ current: appConfigs.showCurrent && currentLesson == row.nr && currentDay == i }">
+								<TimeTableLesson v-for="lesson in day" :data="lesson" />
+							</div>
 						</td>
 					</tr>
 					<tr v-if="appConfigs.showBreaks && row.break != 0">
@@ -138,6 +165,9 @@
 				left: 0;
 				z-index: 1;
 			}
+			tr {
+				break-inside: avoid;
+			}
 			tr:nth-child(even) > * {
 				background-color: var(--tt-primary);
 			}
@@ -148,6 +178,19 @@
 			td:nth-child(2) {
 				max-width: fit-content;
 				text-align: center;
+			}
+			td:first-child:last-child.current {
+				animation: blink 2s linear infinite;
+				background-color: rgba(13, 202, 240, 1);
+			}
+			td > div {
+				margin: -0.5rem;
+				padding: 0.5rem;
+				&.current {
+					border-radius: 0.5rem;
+					animation: blink 2s linear infinite;
+					background-color: rgba(13, 202, 240, 1);
+				}
 			}
 		}
 	}

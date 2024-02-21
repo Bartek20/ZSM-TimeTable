@@ -6,8 +6,7 @@ const appConfigs = useStorage(
 		lastFetched: null,
 		// School Data configured in schoolData.js
 		school: {
-			shortName: undefined,
-			homeURL: '/',
+			homeURL: undefined,
 			timetableURL: undefined,
 			logoDescription: 'Logo Szkoły',
 		},
@@ -27,11 +26,12 @@ const appConfigs = useStorage(
 		},
 		// Settings
 		colorMode: 'light',
+		forceTablet: false,
+		shortLessons: false,
+		showCurrent: true,
 		showColors: true,
 		showBreaks: true,
-		shortLessons: false,
 		showCompressed: false, // Doesn't do anything rn
-		forceTablet: false,
 	},
 	localStorage,
 	{ mergeDefaults: true }

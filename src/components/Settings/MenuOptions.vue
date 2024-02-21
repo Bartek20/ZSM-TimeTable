@@ -2,7 +2,39 @@
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
 	function printTimeTable() {
-		window.print();
+		// Open printed page
+		const page = window.open(
+			`${appConfigs.value.school.timetableURL}plany/${appConfigs.value.currentTimeTable.mode}${appConfigs.value.currentTimeTable.id}.html`,
+			'_print'
+		);
+		if (!page) return;
+		// Hide unnecessary items and open print dialog
+		page.onload = () => {
+			// Template
+			const template = '<tr><td align="left">{gen}</td><td align="right">{apply}</td></tr>';
+			// Variables
+			const genDateValue = /(.*)<br>/
+				.exec(
+					page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(3) > td.op > table > tbody > tr > td:nth-child(1)').innerHTML
+				)[1]
+				.trim();
+			const genDate = genDateValue.charAt(0).toUpperCase() + genDateValue.slice(1);
+			const appDate = page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2) > td').innerHTML.trim();
+			// Hide unnecessary parts
+			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(3)').style.display = 'none';
+			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(4)').style.display = 'none';
+			// Change footer
+			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2)').innerHTML = template
+				.replace('{gen}', genDate)
+				.replace('{apply}', appDate);
+
+			// Print page
+			page.print();
+		};
+		// Close page after print
+		page.onafterprint = () => {
+			page.close();
+		};
 	}
 </script>
 

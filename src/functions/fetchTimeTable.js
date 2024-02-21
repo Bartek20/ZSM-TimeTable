@@ -15,7 +15,7 @@ export class TimeTable {
 		this.$.innerHTML = html.slice(html.indexOf('<body>'), html.indexOf('</body>')).replaceAll('src=', 'url=');
 	}
 	getTitle() {
-		return qs(this.$, '.tytulnapis').innerText;
+		return qs(this.$, '.tytulnapis')?.innerText;
 	}
 	getDayNames() {
 		return qsa(this.$, '.tabela tr:first-of-type th')
@@ -163,6 +163,12 @@ export default async function loadTimeTable(mode, id) {
 	appData.value.timetable = {
 		status: 0,
 	};
+	if (!appConfigs.value.school.timetableURL) {
+		appData.value.timetable = {
+			status: 500,
+		};
+		return
+	}
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}plany/${mode}${id}.html`);
 		if (res == undefined) {

@@ -14,6 +14,7 @@
 			v-model="appConfigs.colorMode" />
 		<SettingsOption icon="zsm-forceDesktop-icon" name="Wymuś tryb komputerowy" v-model="appConfigs.forceTablet" />
 		<SettingsOption v-if="appConfigs.timetable.shortLessons.length > 0" icon="zsm-shortLessons-icon" name="Skrócone lekcje" v-model="appConfigs.shortLessons" />
+		<SettingsOption icon="zsm-showCurrent-icon" name="Pokazuj aktualną lekcję / przerwę" v-model="appConfigs.showCurrent" />
 		<SettingsOption icon="zsm-showBreaks-icon" name="Pokazuj przerwy" v-model="appConfigs.showBreaks" />
 		<SettingsOption icon="zsm-showColors-icon" name="Pokazuj kolory lekcji" v-model="appConfigs.showColors" />
 	</div>

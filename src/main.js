@@ -12,15 +12,16 @@ import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 
 (async () => {
+	// Fetch School Data
 	try {
 		const schoolData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
-		appConfigs.value.school.shortName = schoolData.default.schoolShortName || '';
-		appConfigs.value.school.homeURL = schoolData.default.schoolHomeURL || '/';
+		appConfigs.value.school.homeURL = schoolData.default.schoolHomeURL;
 		appConfigs.value.school.timetableURL = schoolData.default.schoolTimeTableRootURL;
 		appConfigs.value.school.logoDescription = schoolData.default.schoolLogoDescription || 'Logo Szkoły';
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
 	}
+	// Fetch TimeTable Data
 	try {
 		const timetableData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
 		appConfigs.value.timetable.shortLessons = timetableData.default.shortLessons || [];
@@ -32,12 +33,20 @@ import colorHandler from '@/functions/colorModeHandler';
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
 	}
+	// Prevent app from running without required data
 	if (!appConfigs.value.school.timetableURL) {
 		const loader = document.body.querySelector('#loader');
 		loader.querySelector('h1').innerText = 'Wystąpił błąd przy wczytywaniu aplikacji';
 		loader.querySelector('p').innerText = 'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.';
 		return;
 	}
+	// Try to lock screen orientation
+	try {
+		await screen.orientation.lock('portrait');
+	} catch (e) {
+		log('warn', 'Nie udało się zablokować orientacji ekranu:\n', e);
+	}
+	// Render application
 	const app = createApp(App);
 	app.use(createPinia());
 	app.use(router);

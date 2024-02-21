@@ -16,7 +16,7 @@
 		let subjectData = appConfigs.value.timetable.subjects[subject];
 		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects['praktyki'];
 		if (subjectData == undefined) {
-			addUnknowns('subjects', subject)
+			addUnknowns('subjects', subject);
 			return subject;
 		}
 		return subjectData.short;
@@ -111,7 +111,7 @@
 		border-color: v-bind('colors.dark');
 		white-space: nowrap;
 		padding: 0.25rem 0.5rem;
-		border-radius: 6px;
+		border-radius: 0.25rem;
 		min-width: 150px;
 		&:not(:last-child) {
 			margin-bottom: 5px;
