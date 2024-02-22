@@ -23,6 +23,26 @@
 		end_time.setHours(end_el[0], end_el[1], 0, 0);
 		return (end_time - start_time) / 1000 / 60;
 	}
+	function addTime(clock, time) {
+		const padClock = (part) => (part < 10 ? '0' + part : part);
+		if (!clock || !time) return undefined;
+		const [hour, minute] = clock.split(':');
+		const date = new Date();
+		date.setHours(hour, minute, 0, 0);
+		date.setTime(date.getTime() + time * 60000);
+		return padClock(date.getHours()) + ':' + padClock(date.getMinutes());
+	}
+	function checkBetween(from, to) {
+		if (!from || !to) return false;
+		const current = new Date();
+		const sTime = new Date();
+		const eTime = new Date();
+		const startTime = from.split(':');
+		const endTime = to.split(':');
+		sTime.setHours(startTime[0], startTime[1], 0, 0);
+		eTime.setHours(endTime[0], endTime[1] - 1, 59, 999);
+		return current >= sTime && current <= eTime;
+	}
 
 	const data = computed(() => {
 		const src = appData.value.timetable;
@@ -64,14 +84,14 @@
 			currentDay.value = parseInt(timeData[0]) - 1;
 			currentLesson.value = -1;
 			data.value.forEach((row) => {
-				const start_time = new Date();
-				const end_time = new Date();
-				const start_el = row.hours.from.split(':');
-				const end_el = row.hours.to.split(':');
-				start_time.setHours(start_el[0], start_el[1], 0, 0);
-				end_time.setHours(end_el[0], end_el[1] - 1, 59, 999);
-				const current = new Date();
-				if (current >= start_time && current <= end_time) currentLesson.value = row.nr;
+				if (checkBetween(row.hours.from, row.hours.to)) {
+					currentLesson.value = row.nr;
+					return;
+				}
+				if (checkBetween(row.hours.to, addTime(row.hours.to, row.break))) {
+					currentLesson.value = row.nr + 'break';
+					return;
+				}
 			});
 		},
 		{ immediate: true }
@@ -85,12 +105,9 @@
 		<table v-else>
 			<thead>
 				<tr>
-					<th class="z-2 position-sticky top-0 start-0">#</th>
-					<th class="z-1 position-sticky top-0">Czas</th>
-					<th
-						class="z-1 position-sticky top-0"
-						:class="{ active: appConfigs.forceTablet || activeDay == i }"
-						v-for="(day, i) in ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek']">
+					<th>#</th>
+					<th>Czas</th>
+					<th :class="{ active: appConfigs.forceTablet || activeDay == i }" v-for="(day, i) in ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek']">
 						{{ day }}
 					</th>
 				</tr>
@@ -107,7 +124,11 @@
 						</td>
 					</tr>
 					<tr v-if="appConfigs.showBreaks && row.break != 0">
-						<td colspan="7">{{ `Przerwa ${row.break}-minutowa` }}</td>
+						<td
+							colspan="7"
+							:class="{ active: appConfigs.forceTablet || activeDay == currentDay, current: appConfigs.showCurrent && currentLesson == row.nr + 'break' }">
+							{{ `Przerwa ${row.break}-minutowa` }}
+						</td>
 					</tr>
 				</template>
 			</tbody>
@@ -179,9 +200,17 @@
 				max-width: fit-content;
 				text-align: center;
 			}
-			td:first-child:last-child.current {
-				animation: blink 2s linear infinite;
-				background-color: rgba(13, 202, 240, 1);
+			td:first-child:last-child {
+				&.current {
+					animation: blink 2s linear infinite;
+					background-color: rgba(13, 202, 240, 1);
+				}
+				@include phone {
+					&:not(.active) {
+						animation: none;
+						background-color: inherit;
+					}
+				}
 			}
 			td > div {
 				margin: -0.5rem;
