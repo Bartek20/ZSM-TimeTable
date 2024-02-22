@@ -61,13 +61,13 @@
 		input[type='checkbox'] {
 			display: none;
 			&:checked + .slider {
-				background-color: #2196f3;
+				background-color: $accent-color;
 				&:before {
 					transform: translateX(17px);
 				}
 			}
 			&:focus + .slider {
-				box-shadow: 0 0 1px #2196f3;
+				box-shadow: 0 0 1px $accent-color;
 			}
 		}
 		.slider {

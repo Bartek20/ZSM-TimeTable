@@ -25,7 +25,7 @@
 
 <style lang="scss" scoped>
 	.options {
-    margin-top: .25rem;
+		margin-top: 0.25rem;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 5px;
@@ -33,7 +33,7 @@
 		input[type='radio'] {
 			display: none;
 			&:checked + label {
-				background-color: #2196f3;
+				background-color: $accent-color;
 				color: white;
 			}
 		}

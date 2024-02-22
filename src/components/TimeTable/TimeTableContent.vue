@@ -203,12 +203,10 @@
 			td:first-child:last-child {
 				&.current {
 					animation: blink 2s linear infinite;
-					background-color: rgba(13, 202, 240, 1);
 				}
 				@include phone {
 					&:not(.active) {
 						animation: none;
-						background-color: inherit;
 					}
 				}
 			}
@@ -218,7 +216,6 @@
 				&.current {
 					border-radius: 0.5rem;
 					animation: blink 2s linear infinite;
-					background-color: rgba(13, 202, 240, 1);
 				}
 			}
 		}

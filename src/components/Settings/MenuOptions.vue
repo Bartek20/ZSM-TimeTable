@@ -10,6 +10,27 @@
 		if (!page) return;
 		// Hide unnecessary items and open print dialog
 		page.onload = () => {
+			const style = page.document.createElement('style');
+			style.textContent = `body > div:nth-child(2) > table > tbody > tr:nth-child(3),
+				body > div:nth-child(2) > table > tbody > tr:nth-child(4) {
+					display: none
+				}
+				.tabtytul {
+					display:table;
+					color:black
+				}
+				@media print {
+					body {
+						height:100vh;
+						width:100vw;
+					}
+					@page {
+						orientation:landscape !important;
+						size:A4 landscape !important;
+						margin: 0.5cm;
+					}
+				}`;
+			page.document.head.appendChild(style);
 			// Template
 			const template = '<tr><td align="left">{gen}</td><td align="right">{apply}</td></tr>';
 			// Variables
@@ -20,9 +41,6 @@
 				.trim();
 			const genDate = genDateValue.charAt(0).toUpperCase() + genDateValue.slice(1);
 			const appDate = page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2) > td').innerHTML.trim();
-			// Hide unnecessary parts
-			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(3)').style.display = 'none';
-			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(4)').style.display = 'none';
 			// Change footer
 			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2)').innerHTML = template
 				.replace('{gen}', genDate)
