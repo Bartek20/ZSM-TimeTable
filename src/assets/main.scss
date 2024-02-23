@@ -64,3 +64,10 @@
 	background-color: var(--scrollbar);
 	border: 0.2em solid var(--bg-scrollbar);
 }
+
+.v-popper__popper {
+	z-index: 1;
+	.v-popper__inner {
+		max-width: 230px;
+	}
+}

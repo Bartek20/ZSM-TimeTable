@@ -102,7 +102,7 @@
 <template>
 	<div class="timetable">
 		<TimeTableMessage v-if="message" :icon="message.icon" :text="message.msg" />
-		<table v-else>
+		<table class="timetableTable" v-else>
 			<thead>
 				<tr>
 					<th>#</th>
@@ -169,11 +169,11 @@
 				background-color: var(--tt-primary);
 				position: sticky;
 				top: 0;
-				z-index: 1;
+				z-index: 2;
 			}
 			th:nth-child(1) {
 				left: 0;
-				z-index: 2;
+				z-index: 3;
 			}
 			th:nth-child(1),
 			th:nth-child(2) {
@@ -184,7 +184,7 @@
 			th {
 				position: sticky;
 				left: 0;
-				z-index: 1;
+				z-index: 2;
 			}
 			tr {
 				break-inside: avoid;

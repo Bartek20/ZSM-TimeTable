@@ -69,6 +69,7 @@
 			}
 			i:last-of-type {
 				transition: rotate 0.2s ease-in-out;
+				min-width: 24px;
 			}
 		}
 		div {
@@ -97,6 +98,10 @@
 							background-color: var(--bg-sidebar-hover);
 							color: var(--tt-text);
 							border-radius: 6px;
+						}
+						span {
+							white-space: nowrap;
+							overflow: hidden;
 						}
 					}
 				}

@@ -11,7 +11,11 @@
 		// Hide unnecessary items and open print dialog
 		page.onload = () => {
 			const style = page.document.createElement('style');
-			style.textContent = `body > div:nth-child(2) > table > tbody > tr:nth-child(3),
+			style.textContent = `a {
+				text-decoration: none;
+				color: inherit;
+			}
+				body > div:nth-child(2) > table > tbody > tr:nth-child(3),
 				body > div:nth-child(2) > table > tbody > tr:nth-child(4) {
 					display: none
 				}

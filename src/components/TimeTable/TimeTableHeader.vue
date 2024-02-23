@@ -53,7 +53,7 @@
 
 <template>
 	<div class="head">
-		<div class="btn-list" @click="openSidebar">
+		<div class="btn-list" @click="openSidebar" v-tooltip.right="{ content: 'Lista', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
 			<div>
 				<i class="zsm-menu-icon"></i>
 			</div>
@@ -63,7 +63,7 @@
 			<h3 v-show="marquee" :class="{ marquee: marquee }">{{ title }}</h3>
 		</div>
 		<div class="btn-config">
-			<div class="btn-info" @click="openConfigs">
+			<div class="btn-info" @click="openConfigs" v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
 				<i class="d-block zsm-settings-icon"></i>
 			</div>
 		</div>

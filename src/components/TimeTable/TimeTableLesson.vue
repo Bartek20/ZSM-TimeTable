@@ -17,9 +17,9 @@
 		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects['praktyki'];
 		if (subjectData == undefined) {
 			addUnknowns('subjects', subject);
-			return subject;
+			return { short: subject };
 		}
-		return subjectData.short;
+		return subjectData;
 	});
 
 	const col1 = computed(() => {
@@ -64,18 +64,30 @@
 				light: 'white',
 				dark: 'lightgray',
 			};
-		return parseColor(subject.value);
+		return parseColor(subject.value.short);
 	});
 
 	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 </script>
 
 <template>
-	<div class="lesson">
+	<div
+		class="lesson"
+		v-tooltip.right="{
+			content: `<b>${subject.full ? subject.full : subject.short}</b>`,
+			html: true,
+			distance: 12,
+			overflowPadding: 8,
+			shift: false,
+			delay: { show: 500, hide: 0 },
+			disposeTimeout: 0,
+			triggers: ['hover', 'touch'],
+			container: '.timetableTable',
+		}">
 		<div class="row">
 			<!-- Subject -->
 			<div>
-				<b>{{ subject }}</b>
+				<b>{{ subject.short }}</b>
 			</div>
 			<!-- Group -->
 			<div v-if="data.groupName">
