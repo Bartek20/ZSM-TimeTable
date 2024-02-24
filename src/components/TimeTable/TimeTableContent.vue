@@ -124,8 +124,9 @@
 						</td>
 					</tr>
 					<tr v-if="appConfigs.showBreaks && row.break != 0">
+						<th></th>
 						<td
-							colspan="7"
+							colspan="6"
 							:class="{ active: appConfigs.forceTablet || activeDay == currentDay, current: appConfigs.showCurrent && currentLesson == row.nr + 'break' }">
 							{{ `Przerwa ${row.break}-minutowa` }}
 						</td>

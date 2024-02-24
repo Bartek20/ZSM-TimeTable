@@ -9,11 +9,16 @@
 			required: true,
 		},
 	});
+	const navBar = ref();
+	const scrollbarWidth = computed(() => {
+		const scrollbarWidth = navBar.value.offsetWidth - navBar.value.clientWidth;
+		return scrollbarWidth + 'px';
+	});
 </script>
 
 <template>
 	<menu>
-		<nav>
+		<nav ref="navBar">
 			<SidebarList id="menuClasses" icon="zsm-student-icon" name="Klasy" mode="o" :list="links.classes" />
 			<SidebarList id="menuTeachers" icon="zsm-teacher-icon" name="Nauczyciele" mode="n" :list="links.teachers" />
 			<SidebarList id="menuRooms" icon="zsm-room-icon" name="Sale" mode="s" :list="links.rooms" />
@@ -53,7 +58,7 @@
 			scrollbar-gutter: stable;
 			margin-left: 0.75rem;
 			margin-right: 3px;
-			padding-right: 3px;
+			padding-right: calc(0.75rem - 3px - v-bind(scrollbarWidth));
 		}
 	}
 </style>

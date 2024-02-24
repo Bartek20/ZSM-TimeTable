@@ -62,9 +62,9 @@
 			<h3 ref="titleEl" :class="{ marquee: marquee }">{{ title }}</h3>
 			<h3 v-show="marquee" :class="{ marquee: marquee }">{{ title }}</h3>
 		</div>
-		<div class="btn-config">
-			<div class="btn-info" @click="openConfigs" v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
-				<i class="d-block zsm-settings-icon"></i>
+		<div class="btn-config" @click="openConfigs" v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
+			<div>
+				<i class="zsm-settings-icon"></i>
 			</div>
 		</div>
 	</div>

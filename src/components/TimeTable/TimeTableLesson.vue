@@ -73,7 +73,7 @@
 <template>
 	<div
 		class="lesson"
-		v-tooltip.right="{
+		v-tooltip.bottom="{
 			content: `<b>${subject.full ? subject.full : subject.short}</b>`,
 			html: true,
 			distance: 12,
@@ -82,7 +82,7 @@
 			delay: { show: 500, hide: 0 },
 			disposeTimeout: 0,
 			triggers: ['hover', 'touch'],
-			container: '.timetableTable',
+			container: '.timetable',
 		}">
 		<div class="row">
 			<!-- Subject -->
