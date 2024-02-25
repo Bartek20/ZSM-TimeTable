@@ -18,7 +18,7 @@
 				marginRight: '0',
 				padding: '0',
 			};
-		if (width.value > 9)
+		if (width.value > 10)
 			return {
 				marginRight: '0',
 				padding: `calc(0.75rem - ${width.value}px)`,
