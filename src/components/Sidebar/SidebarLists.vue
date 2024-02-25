@@ -24,8 +24,8 @@
 				padding: `calc(0.75rem - ${width.value}px)`,
 			};
 		return {
-			marginRight: '3px',
-			padding: `calc(0.75rem - 3px - ${width.value}px)`,
+			marginRight: '2px',
+			padding: `calc(0.75rem - 2px - ${width.value}px)`,
 		};
 	});
 </script>
