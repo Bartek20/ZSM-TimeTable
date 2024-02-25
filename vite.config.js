@@ -9,14 +9,13 @@ import vue from '@vitejs/plugin-vue';
 
 // Vite Configs
 import server from './configs/vite.server';
+// Auto Imports
+import { components, imports } from './configs/vite.components';
 // Vite Transform plugins
 import { getNow, getBanner, parseHTML, generateBrowserConfigXML, generateHTACCESS } from './configs/vite.plugins';
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
 import pwaConfig from './configs/vite.pwa';
-
-// Auto Imports
-import { components, imports } from './configs/vite.components';
 
 const now = getNow();
 
@@ -57,7 +56,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
-			'@bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
 		},
 	},
 });

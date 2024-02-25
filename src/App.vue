@@ -1,9 +1,7 @@
 <script setup></script>
 
 <template>
-	<Suspense>
-		<RouterView />
-	</Suspense>
+	<RouterView />
 </template>
 
 <style lang="scss">

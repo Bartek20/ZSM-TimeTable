@@ -13,6 +13,45 @@ import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 
+function checkScrollStyllability() {
+	const style = document.createElement('style');
+	style.textContent = `
+	.scrolltest {
+		position: fixed;
+		visibility: hidden;
+		z-index: -1000;
+		overflow: scroll;
+		width: 100px;
+		background: transparent;
+		height: 100px;
+		top: 0;
+		left: 0;
+	}
+	.scrolltest::-webkit-scrollbar {
+		width: 3px
+	}
+	.scrolltest::-webkit-scrollbar-track {
+		background: red;
+	}
+	.scrolltest::-webkit-scrollbar-thumb {
+		background: green;
+	}`;
+	const test = document.createElement('div');
+	test.classList.add('scrolltest');
+	document.head.appendChild(style);
+	document.body.appendChild(test);
+	if (test.clientWidth != 97) document.body.classList.add('notstyllablescroll');
+	if (test.clientWidth != 97 && test.clientWidth != 100) document.body.classList.add('thinscroll');
+	log(
+		'info',
+		'Scroll test finished with following result:\nCustom scrollbar:',
+		test.clientWidth != 97 ? (test.clientWidth != 100 ? 'Not supported (thin scrollbar applied)' : 'Not supported (normal scrollbar applied)') : 'Supported'
+	);
+	style.remove();
+	test.remove();
+}
+checkScrollStyllability();
+
 (async () => {
 	// Fetch School Data
 	try {

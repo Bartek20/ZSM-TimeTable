@@ -81,7 +81,8 @@
 
 <template>
 	<div class="list">
-		<MenuSearchBar v-model="search" />
+		<MenuSearchBar v-if="searchData.classes.length > 0 || searchData.teachers.length > 0 || searchData.rooms.length > 0" v-model="search" />
+		<div v-else></div>
 		<SidebarLists :links="results" :query="search.text" />
 	</div>
 </template>

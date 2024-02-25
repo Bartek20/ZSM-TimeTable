@@ -1,4 +1,5 @@
 <script setup>
+	import { useElementScrollbarSize } from '@/functions/useScrollbarSize';
 	const props = defineProps({
 		links: {
 			type: Object,
@@ -10,9 +11,22 @@
 		},
 	});
 	const navBar = ref();
-	const scrollbarWidth = computed(() => {
-		const scrollbarWidth = navBar.value.offsetWidth - navBar.value.clientWidth;
-		return scrollbarWidth + 'px';
+	const { width } = useElementScrollbarSize(navBar);
+	const listPaddings = computed(() => {
+		if (width.value > 12)
+			return {
+				marginRight: '0',
+				padding: '0',
+			};
+		if (width.value > 9)
+			return {
+				marginRight: '0',
+				padding: `calc(0.75rem - ${width.value}px)`,
+			};
+		return {
+			marginRight: '3px',
+			padding: `calc(0.75rem - 3px - ${width.value}px)`,
+		};
 	});
 </script>
 
@@ -22,11 +36,10 @@
 			<SidebarList id="menuClasses" icon="zsm-student-icon" name="Klasy" mode="o" :list="links.classes" />
 			<SidebarList id="menuTeachers" icon="zsm-teacher-icon" name="Nauczyciele" mode="n" :list="links.teachers" />
 			<SidebarList id="menuRooms" icon="zsm-room-icon" name="Sale" mode="s" :list="links.rooms" />
-			<div class="empty" v-if="links.classes.length == 0 && links.teachers.length == 0 && links.rooms.length == 0">
+			<div class="empty" v-if="query.length > 0 && links.classes.length == 0 && links.teachers.length == 0 && links.rooms.length == 0">
 				<span>Brak wyników dla:</span>
 				<br />
-				"<b>{{ query }}</b
-				>"
+				"<b> {{ query }} </b>"
 			</div>
 		</nav>
 	</menu>
@@ -43,22 +56,16 @@
 			}
 		}
 		&:not(:hover) nav {
-			@supports (scrollbar-color: red red) {
-				scrollbar-color: transparent transparent;
-			}
-			&::-webkit-scrollbar-track,
-			&::-webkit-scrollbar-thumb {
-				border: 0;
-				background-color: transparent;
-			}
+			--scrollbar: transparent;
+			--bg-scrollbar: transparent;
 		}
 		nav {
 			overflow-x: auto;
 			height: 100%;
 			scrollbar-gutter: stable;
 			margin-left: 0.75rem;
-			margin-right: 3px;
-			padding-right: calc(0.75rem - 3px - v-bind(scrollbarWidth));
+			margin-right: v-bind('listPaddings.marginRight');
+			padding-right: v-bind('listPaddings.padding');
 		}
 	}
 </style>

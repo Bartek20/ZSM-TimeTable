@@ -42,9 +42,17 @@
 }
 
 @supports (scrollbar-color: red red) {
-	* {
-		scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
-		scrollbar-width: thin;
+	body.notstyllablescroll {
+		&,
+		* {
+			scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
+		}
+	}
+	body.thinscroll {
+		&,
+		* {
+			scrollbar-width: thin;
+		}
 	}
 }
 ::-webkit-scrollbar {
