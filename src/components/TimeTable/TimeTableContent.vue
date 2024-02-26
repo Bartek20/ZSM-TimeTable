@@ -118,7 +118,7 @@
 						<th>{{ row.nr }}</th>
 						<td>{{ row.hours.from }}<br />-<br />{{ row.hours.to }}</td>
 						<td :class="{ active: appConfigs.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons">
-							<div :class="{ current: appConfigs.showCurrent && currentLesson == row.nr && currentDay == i }">
+							<div :class="{ current: appConfigs.showCurrent && day.length > 0 && currentLesson == row.nr && currentDay == i }">
 								<TimeTableLesson v-for="lesson in day" :data="lesson" />
 							</div>
 						</td>
