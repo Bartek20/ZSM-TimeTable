@@ -201,7 +201,7 @@
 				max-width: fit-content;
 				text-align: center;
 			}
-			td:first-child:last-child {
+			td:first-of-type:last-of-type {
 				&.current {
 					animation: blink 2s linear infinite;
 				}
