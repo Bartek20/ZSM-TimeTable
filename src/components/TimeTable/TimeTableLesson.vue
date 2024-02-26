@@ -73,7 +73,7 @@
 <template>
 	<div
 		class="lesson"
-		v-tooltip.bottom="{
+		v-tooltip.top="{
 			content: `<b>${subject.full ? subject.full : subject.short}</b>`,
 			html: true,
 			distance: 12,
