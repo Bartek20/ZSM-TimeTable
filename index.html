@@ -60,10 +60,11 @@
 			document.getElementById('loader').classList.remove('hidden');
 		</script>
 		<script>
-			window.installhandler = function(e) {
+			window.installhandler = function (e) {
+				console.log('Install event catched before initialization');
 				e.preventDefault();
 				window.installevent = e;
-			}
+			};
 			window.addEventListener('beforeinstallprompt', installhandler);
 		</script>
 		<script>
