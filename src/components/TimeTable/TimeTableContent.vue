@@ -202,11 +202,11 @@
 				text-align: center;
 			}
 			tr {
-				&.current {
+				&.current > * {
 					animation: blink 2s linear infinite;
 				}
 				@include phone {
-					&:not(.active) {
+					&:not(.active) > * {
 						animation: none;
 					}
 				}
