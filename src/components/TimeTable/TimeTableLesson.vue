@@ -77,7 +77,7 @@
 			content: `<b>${subject.full ? subject.full : subject.short}</b>`,
 			html: true,
 			distance: 12,
-			overflowPadding: 8,
+			overflowPadding: 40,
 			shift: false,
 			delay: { show: 500, hide: 0 },
 			disposeTimeout: 0,
