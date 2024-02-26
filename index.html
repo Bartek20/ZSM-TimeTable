@@ -60,6 +60,13 @@
 			document.getElementById('loader').classList.remove('hidden');
 		</script>
 		<script>
+			window.installhandler = function(e) {
+				e.preventDefault();
+				window.installevent = e;
+			}
+			window.addEventListener('beforeinstallprompt', installhandler);
+		</script>
+		<script>
 			const unknownData = {
 				subjects: new Set(),
 				classes: new Set(),
