@@ -34,7 +34,7 @@ export default {
 	includeManifestIcons: false,
 	workbox: {
 		globPatterns: ['**/*.{js,css,png,svg,ico}', 'index.html'],
-		globIgnores: ['schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
+		globIgnores: ['cf-ins.js', 'schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
 		navigateFallback: `${BASE_URL}index.html`,
 		navigateFallbackAllowlist: [/uczen/, /nauczyciel/],
 		navigateFallbackDenylist: [timetableRegExp, /assets/],

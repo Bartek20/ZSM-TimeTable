@@ -86,6 +86,7 @@ export function generateHTACCESS() {
 }
 
 export function getCloudflareBeacon(TOKEN) {
+	const file = 'cf-ins.js';
 	let base, outDir;
 	let beaconContent;
 	return {
@@ -109,10 +110,9 @@ export function getCloudflareBeacon(TOKEN) {
 			try {
 				if (beaconContent) {
 					console.log('Saving beacon file...');
-					fs.writeFileSync(outDir + (outDir.endsWith('/') ? 'beacon.js' : '/beacon.js'), beaconContent, 'utf-8');
-					console.log(outDir + (outDir.endsWith('/') ? 'beacon.js' : '/beacon.js'));
+					fs.writeFileSync(outDir + (outDir.endsWith('/') ? file : '/' + file), beaconContent, 'utf-8');
 					const scriptTag = `<!-- Cloudflare Web Analytics --><script defer src='${
-						base + (base.endsWith('/') ? 'beacon.js' : '/beacon.js')
+						base + (base.endsWith('/') ? file : '/' + file)
 					}' data-cf-beacon='{"token": "${TOKEN}"}'></script><!-- End Cloudflare Web Analytics -->`;
 					html = html.replace('</body>', `${scriptTag}\n</body>`);
 					return html;
