@@ -87,7 +87,7 @@ export default {
 		],
 	},
 	manifest: {
-		start_url: '?PWA=true',
+		start_url: `${BASE_URL}?PWA=true`,
 		name: appConfigs.pwaName,
 		short_name: appConfigs.pwaShortName,
 		description: appConfigs.pwaDescription,
