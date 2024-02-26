@@ -50,7 +50,7 @@
 			appData.value.timetable.hours?.map((hour) => {
 				return appConfigs.value.timetable.shortLessons[hour.number];
 			}) || [];
-		const hours = appConfigs.value.shortLessons && src.hours.length == shortHours.length ? shortHours : src.hours;
+		const hours = appConfigs.value.shortLessons && src.hours?.length == shortHours.length ? shortHours : src.hours;
 		let out = [];
 		const rows = hours?.length || 0;
 		for (let i = 0; i < rows; i++) {

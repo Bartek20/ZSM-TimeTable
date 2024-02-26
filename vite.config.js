@@ -12,7 +12,7 @@ import server from './configs/vite.server';
 // Auto Imports
 import { components, imports } from './configs/vite.components';
 // Vite Transform plugins
-import { getNow, getBanner, parseHTML, generateBrowserConfigXML, generateHTACCESS } from './configs/vite.plugins';
+import { getNow, getBanner, parseHTML, generateBrowserConfigXML, generateHTACCESS, getCloudflareBeacon } from './configs/vite.plugins';
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
 import pwaConfig from './configs/vite.pwa';
@@ -22,6 +22,7 @@ const now = getNow();
 export default defineConfig({
 	define: {
 		__APP_VERSION__: JSON.stringify('v2.0.0'),
+		__VUE_PROD_DEVTOOLS__: true,
 	},
 	server,
 	preview: {
@@ -31,6 +32,7 @@ export default defineConfig({
 		vue(),
 		Components(components),
 		AutoImport(imports),
+		getCloudflareBeacon(process.env.CF_BEACON_TOKEN),
 		parseHTML(),
 		generateBrowserConfigXML(),
 		generateHTACCESS(),
