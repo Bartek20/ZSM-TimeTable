@@ -123,11 +123,11 @@
 							</div>
 						</td>
 					</tr>
-					<tr v-if="appConfigs.showBreaks && row.break != 0">
+					<tr
+						v-if="appConfigs.showBreaks && row.break != 0"
+						:class="{ active: appConfigs.forceTablet || activeDay == currentDay, current: appConfigs.showCurrent && currentLesson == row.nr + 'break' }">
 						<th></th>
-						<td
-							colspan="6"
-							:class="{ active: appConfigs.forceTablet || activeDay == currentDay, current: appConfigs.showCurrent && currentLesson == row.nr + 'break' }">
+						<td colspan="6">
 							{{ `Przerwa ${row.break}-minutowa` }}
 						</td>
 					</tr>
@@ -201,7 +201,7 @@
 				max-width: fit-content;
 				text-align: center;
 			}
-			td:first-of-type:last-of-type {
+			tr {
 				&.current {
 					animation: blink 2s linear infinite;
 				}
