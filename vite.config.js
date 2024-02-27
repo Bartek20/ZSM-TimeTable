@@ -39,16 +39,29 @@ export default defineConfig({
 		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
-		sentryVitePlugin({
-			org: 'home-vnd',
-			project: 'zsm-timetable',
-		}),
+		process.env.CF_PAGES
+			? sentryVitePlugin({
+					org: 'home-vnd',
+					project: 'zsm-timetable',
+			  })
+			: undefined,
 	],
 	build: {
 		minify: 'terser',
 		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
-		rollupOptions: {},
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					vueuse: ['@vueuse/core', '@vueuse/router'],
+					axios: ['axios'],
+					color: ['chroma-js', 'string-to-color'],
+					vue: ['vue', 'vue-router', 'pinia', 'floating-vue'],
+					sentry: ['@sentry/vue', '@sentry/vite-plugin'],
+					// components: [].concat(getGlobs('./src/{views,functions,stores,router}/**/*')).concat(getGlobs('./src/components/{Sidebar,TimeTable}/**/*')),
+				},
+			},
+		},
 		sourcemap: true,
 	},
 	css: {

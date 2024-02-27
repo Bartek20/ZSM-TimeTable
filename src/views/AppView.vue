@@ -1,4 +1,7 @@
 <script setup>
+	const AppSidebar = defineAsyncComponent(() => import('@/components/Sidebar/AppSidebar.vue'));
+	const AppTimeTable = defineAsyncComponent(() => import('@/components/TimeTable/AppTimeTable.vue'));
+	const AppSettings = defineAsyncComponent(() => import('@/components/Settings/AppSettings.vue'));
 	import appConfigs from '@/stores/configs';
 	const user = useRouteParams('user');
 	function closeMenus() {
