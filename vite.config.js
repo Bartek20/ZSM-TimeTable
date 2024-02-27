@@ -1,12 +1,13 @@
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import autoprefixer from 'autoprefixer';
 import banner from 'vite-plugin-banner';
-import path from 'path';
 
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import path from 'path';
 
 // Vite Configs
 import server from './configs/vite.server';
@@ -53,12 +54,15 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					vueuse: ['@vueuse/core', '@vueuse/router'],
+					'@vueuse': ['@vueuse/core', '@vueuse/router'],
 					axios: ['axios'],
-					color: ['chroma-js', 'string-to-color'],
-					vue: ['vue', 'vue-router', 'pinia', 'floating-vue'],
-					sentry: ['@sentry/vue', '@sentry/vite-plugin'],
-					// components: [].concat(getGlobs('./src/{views,functions,stores,router}/**/*')).concat(getGlobs('./src/components/{Sidebar,TimeTable}/**/*')),
+					'chroma-js': ['chroma-js'],
+					'string-to-color': ['string-to-color'],
+					vue: ['vue'],
+					'vue-router': ['vue-router'],
+					pinia: ['pinia'],
+					'floating-vue': ['floating-vue'],
+					sentry: ['@sentry/vue'],
 				},
 			},
 		},
