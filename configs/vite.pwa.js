@@ -88,9 +88,9 @@ export default {
 	},
 	manifest: {
 		start_url: `${BASE_URL}?PWA=true`,
-		name: appConfigs.pwaName,
-		short_name: appConfigs.pwaShortName,
-		description: appConfigs.pwaDescription,
+		name: 'Plan Lekcji',
+		short_name: 'Plan Lekcji',
+		description: 'Aplikacja do przegladu szkolnego planu lekcji',
 		theme_color: '#ffffff',
 		lang: 'pl-PL',
 		dir: 'ltr',
