@@ -97,7 +97,7 @@ export function getCloudflareBeacon(TOKEN) {
 			outDir = config.root + (config.build.outDir.startsWith('/') ? config.build.outDir : '/' + config.build.outDir);
 		},
 		async buildStart() {
-			if (TOKEN)
+			if (!process.env.CF_PAGES && TOKEN)
 				try {
 					console.log('Downloading cloudflare beacon script...');
 					const res = await axios.get('https://static.cloudflareinsights.com/beacon.min.js');
