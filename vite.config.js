@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import autoprefixer from 'autoprefixer';
@@ -38,12 +39,17 @@ export default defineConfig({
 		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
+		sentryVitePlugin({
+			org: 'home-vnd',
+			project: 'zsm-timetable',
+		}),
 	],
 	build: {
 		minify: 'terser',
 		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
 		rollupOptions: {},
+		sourcemap: true,
 	},
 	css: {
 		preprocessorOptions: {

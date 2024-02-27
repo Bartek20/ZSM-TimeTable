@@ -11,14 +11,16 @@
 	},
 	"dependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
-		"@vueuse/core": "^10.8.0",
-		"@vueuse/router": "^10.8.0",
+		"@sentry/vite-plugin": "^2.14.2",
+		"@sentry/vue": "^7.103.0",
+		"@vueuse/core": "^10.9.0",
+		"@vueuse/router": "^10.9.0",
 		"axios": "^1.6.7",
 		"chroma-js": "^2.4.2",
 		"floating-vue": "^5.2.2",
 		"pinia": "^2.1.7",
 		"string-to-color": "^2.2.2",
-		"vue": "^3.4.19",
+		"vue": "^3.4.20",
 		"vue-router": "^4.3.0"
 	},
 	"devDependencies": {
