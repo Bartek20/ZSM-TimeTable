@@ -1,5 +1,3 @@
-import appConfigs from '../appConfigs';
-
 const timetableParts = [
 	// CSS
 	'css/lista.css',
