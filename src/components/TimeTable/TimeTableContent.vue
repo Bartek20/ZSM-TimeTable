@@ -10,6 +10,7 @@
 			required: false,
 		},
 	});
+	import appConfigs from '@/stores/configs';
 	import loadTimeTable from '@/functions/fetchTimeTable';
 
 	await loadTimeTable(appConfigs.value.currentTimeTable.mode, appConfigs.value.currentTimeTable.id);
