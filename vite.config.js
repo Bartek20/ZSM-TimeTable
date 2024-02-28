@@ -40,7 +40,7 @@ export default defineConfig({
 		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
-		process.env.CF_PAGES
+		!process.env.CF_PAGES
 			? sentryVitePlugin({
 					org: 'home-vnd',
 					project: 'zsm-timetable',

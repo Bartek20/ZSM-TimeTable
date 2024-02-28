@@ -13,31 +13,31 @@ import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 
-import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
+// import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
 
 const app = createApp(App);
 
-// Sentry error reporting
-Sentry_init({
-	// Vue settings
-	app,
-	trackComponents: true,
-	// Sentry config
-	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.sentry.io/4506820647190528',
-	integrations: [
-		Sentry_browserTracingIntegration({ router }),
-		Sentry_replayIntegration({
-			maskAllText: false,
-			blockAllMedia: false,
-		}),
-	],
-	// Performance Monitoring
-	tracesSampleRate: 1.0,
-	tracePropagationTargets: [/.*/],
-	// Session Replay
-	replaysSessionSampleRate: 0.1,
-	replaysOnErrorSampleRate: 1.0,
-});
+// // Sentry error reporting
+// Sentry_init({
+// 	// Vue settings
+// 	app,
+// 	trackComponents: true,
+// 	// Sentry config
+// 	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.sentry.io/4506820647190528',
+// 	integrations: [
+// 		Sentry_browserTracingIntegration({ router }),
+// 		Sentry_replayIntegration({
+// 			maskAllText: false,
+// 			blockAllMedia: false,
+// 		}),
+// 	],
+// 	// Performance Monitoring
+// 	tracesSampleRate: 1.0,
+// 	tracePropagationTargets: [/.*/],
+// 	// Session Replay
+// 	replaysSessionSampleRate: 0.1,
+// 	replaysOnErrorSampleRate: 1.0,
+// });
 
 function checkScrollStyllability() {
 	const style = document.createElement('style');
