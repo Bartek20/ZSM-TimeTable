@@ -1,7 +1,19 @@
 <script setup>
-	const AppSidebar = defineAsyncComponent(() => import('@/components/Sidebar/AppSidebar.vue'));
-	const AppTimeTable = defineAsyncComponent(() => import('@/components/TimeTable/AppTimeTable.vue'));
-	const AppSettings = defineAsyncComponent(() => import('@/components/Settings/AppSettings.vue'));
+	const AppSidebar = defineAsyncComponent({
+		loader: () => import('@/components/Sidebar/AppSidebar.vue'),
+		loadingComponent: '<div></div>',
+		delay: 0
+	});
+	const AppTimeTable = defineAsyncComponent({
+		loader: () => import('@/components/TimeTable/AppTimeTable.vue'),
+		loadingComponent: '<div></div>',
+		delay: 0
+	});
+	const AppSettings = defineAsyncComponent({
+		loader: () => import('@/components/Settings/AppSettings.vue'),
+		loadingComponent: '<div></div>',
+		delay: 0
+	});
 	import appConfigs from '@/stores/configs';
 	const user = useRouteParams('user');
 	function closeMenus() {
