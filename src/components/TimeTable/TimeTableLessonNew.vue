@@ -1,5 +1,6 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
+	import appData from '@/stores/data';
 	import parseColor from '@/functions/parseColor';
 
 	const user = useRouteParams('user');
@@ -64,7 +65,9 @@
 				light: 'white',
 				dark: 'lightgray',
 			};
-		return parseColor(subject.value.short);
+		const name = subject.value.short.replace(/ \([UR]{1}\)/, '');
+		if (!appData.value.database.subjects[name]) parseColor(name);
+		return appData.value.database.subjects[name];
 	});
 
 	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));

@@ -11,6 +11,7 @@ import App from './App.vue';
 import router from './router';
 
 import appConfigs from '@/stores/configs';
+import appData from '@/stores/data';
 import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
@@ -54,6 +55,158 @@ function checkScrollStyllability() {
 }
 checkScrollStyllability();
 
+function parseData(obj, data) {
+	switch (obj) {
+		case 'shortLessons':
+			if (appConfigs.value.timetable.shortLessons.length === 0) {
+				appConfigs.value.timetable.shortLessons = data;
+			} else if (appConfigs.value.timetable.shortLessons.length != data.length) {
+				log('warn', 'Zmodyfikowano godziny trwania skróconych lekcji');
+				appConfigs.value.timetable.shortLessons = data;
+			}
+			break;
+		case 'levels':
+			if (Object.keys(appConfigs.value.timetable.levels).length === 0) {
+				appConfigs.value.timetable.levels = data;
+			} else {
+				const diff = [];
+				const newData = Object.keys(data);
+				newData.forEach((key) => {
+					if (data[key] != appConfigs.value.timetable.levels[key]) {
+						diff.push({
+							idx: key,
+							src: appConfigs.value.timetable.levels[key],
+							dest: data[key],
+						});
+						appConfigs.value.timetable.levels[key] = data[key];
+					}
+				});
+				if (diff.length) {
+					let msg = 'Zmodyfikowno nazwy poziomów:';
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
+					log('warn', msg);
+					appData.value.database.rooms = {};
+				}
+			}
+			break;
+		case 'classes':
+			if (Object.keys(appConfigs.value.timetable.classes).length === 0) {
+				appConfigs.value.timetable.classes = data;
+			} else {
+				const diff = [];
+				const newData = Object.keys(data);
+				newData.forEach((key) => {
+					if (data[key] != appConfigs.value.timetable.classes[key]) {
+						diff.push({
+							idx: key,
+							src: appConfigs.value.timetable.classes[key],
+							dest: data[key],
+						});
+						appConfigs.value.timetable.classes[key] = data[key];
+					}
+				});
+				if (diff.length) {
+					let msg = 'Zmodyfikowno nazwy kierunków:';
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
+					log('warn', msg);
+					appData.value.database.classes = {};
+				}
+			}
+			break;
+		case 'teachers':
+			if (Object.keys(appConfigs.value.timetable.teachers).length === 0) {
+				appConfigs.value.timetable.teachers = data;
+			} else {
+				const diff = [];
+				const newData = Object.keys(data);
+				newData.forEach((key) => {
+					if (
+						!appConfigs.value.timetable.teachers[key] ||
+						data[key].name != appConfigs.value.timetable.teachers[key].name ||
+						data[key].surname != appConfigs.value.timetable.teachers[key].surname ||
+						data[key].code != appConfigs.value.timetable.teachers[key].code
+					) {
+						diff.push({
+							idx: key,
+							src: appConfigs.value.timetable.teachers[key],
+							dest: data[key],
+						});
+						appConfigs.value.timetable.teachers[key] = data[key];
+						delete appData.value.database.teachers[key];
+					}
+				});
+				if (diff.length) {
+					let msg = 'Zmodyfikowno dane nauczycieli:';
+					diff.forEach(
+						(d) =>
+							(msg += `\n${d.idx}: ${d.src.name} ${d.src.surname} (${d.src.code}) -> ${d.dest.name} ${d.dest.surname} (${d.dest.code})`.replace(
+								/ [(]?undefined[)]?/g,
+								''
+							))
+					);
+					log('warn', msg);
+				}
+			}
+			break;
+		case 'rooms':
+			if (Object.keys(appConfigs.value.timetable.rooms).length === 0) {
+				appConfigs.value.timetable.rooms = data;
+			} else {
+				const diff = [];
+				const newData = Object.keys(data);
+				newData.forEach((key) => {
+					if (
+						!appConfigs.value.timetable.rooms[key] ||
+						data[key].level != appConfigs.value.timetable.rooms[key].level ||
+						data[key].name != appConfigs.value.timetable.rooms[key].name
+					) {
+						diff.push({
+							idx: key,
+							src: appConfigs.value.timetable.rooms[key],
+							dest: data[key],
+						});
+						appConfigs.value.timetable.rooms[key] = data[key];
+						delete appData.value.database.rooms[key];
+					}
+				});
+				if (diff.length) {
+					let msg = 'Zmodyfikowno dane sali:';
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.name} (${d.src.level}) -> ${d.dest.name} (${d.dest.level})`.replace(/ [(]?undefined[)]?/g, '')));
+					log('warn', msg);
+				}
+			}
+			break;
+		case 'subjects':
+			if (Object.keys(appConfigs.value.timetable.subjects).length === 0) {
+				appConfigs.value.timetable.subjects = data;
+			} else {
+				const diff = [];
+				const newData = Object.keys(data);
+				newData.forEach((key) => {
+					if (
+						!appConfigs.value.timetable.subjects[key] ||
+						data[key].short != appConfigs.value.timetable.subjects[key].short ||
+						data[key].full != appConfigs.value.timetable.subjects[key].full
+					) {
+						diff.push({
+							idx: key,
+							src: appConfigs.value.timetable.subjects[key],
+							dest: data[key],
+						});
+						appConfigs.value.timetable.subjects[key] = data[key];
+						delete appData.value.database.subjects[data[key].short.replace(/ \([UR]{1}\)/, '')];
+					}
+				});
+				if (diff.length) {
+					let msg = 'Zmodyfikowno dane przedmiotów:';
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.short} (${d.src.full}) -> ${d.dest.short} (${d.dest.full})`.replace(/ [(]?undefined[)]?/g, '')));
+					log('warn', msg);
+				}
+			}
+			break;
+	}
+}
+
 (async () => {
 	// Fetch School Data
 	try {
@@ -67,12 +220,12 @@ checkScrollStyllability();
 	// Fetch TimeTable Data
 	try {
 		const { default: timetableData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
-		appConfigs.value.timetable.shortLessons = timetableData.shortLessons || [];
-		appConfigs.value.timetable.levels = timetableData.levels || {};
-		appConfigs.value.timetable.classes = timetableData.classes || {};
-		appConfigs.value.timetable.teachers = timetableData.teachers || {};
-		appConfigs.value.timetable.rooms = timetableData.rooms || {};
-		appConfigs.value.timetable.subjects = timetableData.subjects || {};
+		parseData('shortLessons', timetableData.shortLessons || []);
+		parseData('levels', timetableData.levels || {});
+		parseData('classes', timetableData.classes || {});
+		parseData('teachers', timetableData.teachers || {});
+		parseData('rooms', timetableData.rooms || {});
+		parseData('subjects', timetableData.subjects || {});
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
 	}

@@ -10,7 +10,7 @@ Zabronione jest jednak usuwanie, jak i modyfikowanie informacji o autorze kodu (
 ### 1) Przed rozpoczęciem kompilacji należy dostosować aplikację poprzez:
 * Zmienienie loga szkoły (plik /public/images/logo.png)
 
-### 2) Po dostosowaniu aplikacji do potrzeb szkoły mależy skompilować program:
+### 2) Po dostosowaniu aplikacji do potrzeb szkoły należy skompilować program:
 #### 2a) Dla domyślnej ścieżki (https://example.com)
 ```bash
 npm run build
@@ -21,9 +21,9 @@ npm run build -- --base "/ściezka/"
 ```
 ### 3) Następnie należy skopiować pliki z folderu *dist* na serwer szkolny, do ścieżki, która została wcześniej zadeklarowana.
 ### 4) Po skopiowaniu plików należy:
-* **[OBOWIĄZKOWO]** Wybrać prawidłowy dla domeny plik ***.htaccess*** (www lub non-www) i zmienić jego nazwę na *.htaccess* (drugi plik należy usunąć)
-* **[OBOWIĄZKOWO]** Dostosować dane szkoły zgodnie z plikiem ***schoolData.template.js*** (zmienić nazwę na *schoolData.js* i dostosować zawartość)
-* **[OPCJONALNIE]** Dostosować dane planu lekcji zgodnie z plikiem ***timetableData.template.js*** (zmienić nazwę na *timetableData.js* i dostosować zawartość)
+* **[OBOWIĄZKOWO]** <br />Wybrać prawidłowy dla domeny plik ***.htaccess*** (www lub non-www) i zmienić jego nazwę na *.htaccess* (drugi plik należy usunąć)
+* **[OBOWIĄZKOWO]** <br />Dostosować dane szkoły zgodnie z plikiem ***schoolData.template.js*** (zmienić nazwę na *schoolData.js* i dostosować zawartość)
+* **[OPCJONALNIE]** <br />Dostosować dane planu lekcji zgodnie z plikiem ***timetableData.template.js*** (zmienić nazwę na *timetableData.js* i dostosować zawartość)
 
 ## Zastosowane technologie
 ### W wydaniu produkcyjnym:

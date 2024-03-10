@@ -17,23 +17,23 @@
 		if (Object.keys(appData.value.list).length > 0) {
 			appData.value.list.classes.forEach((item) => {
 				const out = {};
-				out.name = appData.value.parsed.classes[item.name].sidebar;
+				out.name = appData.value.database.classes[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.parsed.classes[item.name].search;
+				out.keys = appData.value.database.classes[item.name].search;
 				classes.push(out);
 			});
 			appData.value.list.teachers.forEach((item) => {
 				const out = {};
-				out.name = appData.value.parsed.teachers[item.name].sidebar;
+				out.name = appData.value.database.teachers[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.parsed.teachers[item.name].search;
+				out.keys = appData.value.database.teachers[item.name].search;
 				teachers.push(out);
 			});
 			appData.value.list.rooms.forEach((item) => {
 				const out = {};
-				out.name = appData.value.parsed.rooms[item.name].sidebar;
+				out.name = appData.value.database.rooms[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.parsed.rooms[item.name].search;
+				out.keys = appData.value.database.rooms[item.name].search;
 				rooms.push(out);
 			});
 		}

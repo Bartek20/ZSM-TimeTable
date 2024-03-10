@@ -50,6 +50,7 @@
 			cursor: pointer;
 			padding: 0.5rem;
 			border-radius: 0.25rem;
+			min-width: 100%;
 			&:hover {
 				background-color: var(--bg-sidebar-hover);
 			}

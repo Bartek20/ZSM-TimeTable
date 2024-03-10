@@ -87,7 +87,7 @@
 				margin-top: 0.25rem;
 			}
 		}
-		> *:not(span):not(:last-child) {
+		> *:not(span):not(label):not(:last-child) {
 			margin-bottom: 0.25rem;
 		}
 		&__option {

@@ -35,7 +35,7 @@
 					return;
 			}
 		}
-		let resp = appData.value.parsed[MODES[mode]][name] ?? parseName(mode, name);
+		let resp = appData.value.database[MODES[mode]][name] ?? parseName(mode, name);
 		setTitle(resp?.title ?? name);
 		return resp?.heading ?? name;
 	});

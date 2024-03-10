@@ -1,8 +1,9 @@
 import appConfigs from '@/stores/configs';
+import appData from '@/stores/data';
 import log from '@/functions/logger';
 
 // Returns true if older, false if newer or equal
-function cmpVersion(version) {
+function cmpVersion(version = __APP_VERSION__) {
 	let current_version = (appConfigs.value.version ?? 'v0.0.0').replace('v', '').split('.');
 	version = version.replace('v', '').split('.');
 	if (current_version[0] < version[0]) return true;
@@ -26,6 +27,10 @@ export default async function validateApp() {
 			window.localStorage.removeItem('timetableData');
 			await window.caches.delete('timetables-data');
 			appConfigs.value.lastFetched = null;
+		}
+		// Updating from v2.0.0 to v3.0.0
+		if (cmpVersion('v3.0.0')) {
+			delete appData.value.parsed;
 		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;

@@ -60,9 +60,9 @@
 </script>
 
 <template>
-	<span>
-		<span v-if="data.groupName">{{ subject.short }} ({{ data.groupName }})</span>
-		<span v-else>{{ subject.short }}</span>
+	<span class="lessonOldData">
+		<span class="subject" v-if="data.groupName">{{ subject.short }} ({{ data.groupName }})</span>
+		<span class="subject" v-else>{{ subject.short }}</span>
 		&nbsp;
 		<!-- Column #1 -->
 		<RouterLink v-if="col1.id" :to="{ name: 'plan', params: { user: user, mode: col1.mode, id: col1.id } }">{{ col1.name }}</RouterLink>
@@ -79,4 +79,15 @@
 	</span>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+	.lessonOldData {
+		white-space: nowrap;
+		.subject {
+			color: #000000;
+			font-weight: bold;
+		}
+		a {
+			color: #2e448f;
+		}
+	}
+</style>

@@ -98,13 +98,13 @@ export default async function loadList() {
 		if (res == undefined) return;
 		appData.value.list = new TimeTableList(res.data).getList();
 		appData.value.list.classes.forEach((el) => {
-			appData.value.parsed.classes[el.name] = parseName('o', el.name);
+			appData.value.database.classes[el.name] = parseName('o', el.name);
 		});
 		appData.value.list.teachers.forEach((el) => {
-			appData.value.parsed.teachers[el.name] = parseName('n', el.name);
+			appData.value.database.teachers[el.name] = parseName('n', el.name);
 		});
 		appData.value.list.rooms.forEach((el) => {
-			appData.value.parsed.rooms[el.name] = parseName('s', el.name);
+			appData.value.database.rooms[el.name] = parseName('s', el.name);
 		});
 	} catch (err) {
 		log('error', 'Wystąpił błąd przy wczytywaniu listy:\n', err);

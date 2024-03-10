@@ -3,7 +3,7 @@ const appData = useStorage(
 	{
 		list: {},
 		timetable: {},
-		parsed: {
+		database: {
 			rooms: {},
 			teachers: {},
 			classes: {},

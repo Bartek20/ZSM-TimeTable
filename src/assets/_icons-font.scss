@@ -15,14 +15,16 @@ $zsm-error-icon: unquote('"\\e90d"');
 $zsm-system-mode-icon: unquote('"\\e90e"');
 $zsm-light-mode-icon: unquote('"\\e90f"');
 $zsm-dark-mode-icon: unquote('"\\e910"');
-$zsm-forceDesktop-icon: unquote('"\\e911"');
-$zsm-shortLessons-icon: unquote('"\\e912"');
-$zsm-showCurrent-icon: unquote('"\\e913"');
-$zsm-showBreaks-icon: unquote('"\\e914"');
-$zsm-showColors-icon: unquote('"\\e915"');
-$zsm-old-timetable-icon: unquote('"\\e916"');
-$zsm-print-timetable-icon: unquote('"\\e917"');
-$zsm-download-app-icon: unquote('"\\e918"');
+$zsm-old-mode-icon: unquote('"\\e911"');
+$zsm-new-mode-icon: unquote('"\\e912"');
+$zsm-forceDesktop-icon: unquote('"\\e913"');
+$zsm-shortLessons-icon: unquote('"\\e914"');
+$zsm-showCurrent-icon: unquote('"\\e915"');
+$zsm-showBreaks-icon: unquote('"\\e916"');
+$zsm-showColors-icon: unquote('"\\e917"');
+$zsm-old-timetable-icon: unquote('"\\e918"');
+$zsm-print-timetable-icon: unquote('"\\e919"');
+$zsm-download-app-icon: unquote('"\\e91a"');
 
 @font-face {
 	font-family: 'ZSM-TimeTable';
@@ -133,6 +135,16 @@ i {
 .zsm-dark-mode-icon {
 	&:before {
 		content: $zsm-dark-mode-icon;
+	}
+}
+.zsm-old-mode-icon {
+	&:before {
+		content: $zsm-old-mode-icon;
+	}
+}
+.zsm-new-mode-icon {
+	&:before {
+		content: $zsm-new-mode-icon;
 	}
 }
 .zsm-forceDesktop-icon {
