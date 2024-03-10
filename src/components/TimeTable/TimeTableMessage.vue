@@ -12,14 +12,14 @@
 </script>
 
 <template>
-	<div class="message">
-		<i :class="icon"></i>
-		<b>{{ text }}</b>
+	<div class="timetable__message">
+		<i class="timetable__message__icon" :class="icon"></i>
+		<b class="timetable__message__text">{{ text }}</b>
 	</div>
 </template>
 
-<style lang="scss" scoped>
-	.message {
+<style lang="scss">
+	.timetable__message {
 		text-align: center;
 		display: grid;
 		align-content: center;
@@ -29,11 +29,11 @@
 		.loading {
 			animation: spin 2s linear infinite;
 		}
-		i {
+		&__icon {
 			font-size: 4rem;
 			margin-bottom: 0.5rem;
 		}
-		b {
+		&__text {
 			font-size: 1.5rem;
 			max-width: 90%;
 		}

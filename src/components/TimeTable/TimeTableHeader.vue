@@ -5,11 +5,11 @@
 	import appConfigs from '@/stores/configs';
 	function openSidebar() {
 		document.querySelector('aside.sidebar')?.classList.add('open');
-		document.querySelector('.overlay')?.classList.add('activeSidebar');
+		document.querySelector('.overlay')?.classList.add('overlay--sidebar');
 	}
 	function openConfigs() {
 		document.querySelector('aside.configs')?.classList.add('open');
-		document.querySelector('.overlay')?.classList.add('activeConfigs');
+		document.querySelector('.overlay')?.classList.add('overlay--configs');
 	}
 	const title = computed(() => {
 		const MODES = {
@@ -52,27 +52,33 @@
 </script>
 
 <template>
-	<div class="head">
-		<div class="btn-list" @click="openSidebar" v-tooltip.right="{ content: 'Lista', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
+	<div class="timetable__header">
+		<div
+			class="timetable__header__button timetable__header__button--list"
+			@click="openSidebar"
+			v-tooltip.right="{ content: 'Lista', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
 			<div>
-				<i class="zsm-menu-icon"></i>
+				<i class="timetable__header__button__icon zsm-menu-icon"></i>
 			</div>
 		</div>
-		<div ref="headEl" class="title" :class="{ noscroll: !marquee }">
+		<div ref="headEl" class="timetable__header__title" :class="{ noscroll: !marquee }">
 			<h3 ref="titleEl" :class="{ marquee: marquee }">{{ title }}</h3>
 			<h3 v-show="marquee" :class="{ marquee: marquee }">{{ title }}</h3>
 		</div>
-		<div class="btn-config" @click="openConfigs" v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
+		<div
+			class="timetable__header__button timetable__header__button--config"
+			@click="openConfigs"
+			v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
 			<div>
-				<i class="zsm-settings-icon"></i>
+				<i class="timetable__header__button__icon zsm-settings-icon"></i>
 			</div>
 		</div>
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	$icon: 48px;
-	.head {
+	.timetable__header {
 		--padding: 1rem;
 		display: grid;
 		grid-template-columns: 1fr $icon;
@@ -84,8 +90,7 @@
 		}
 		gap: var(--padding);
 		color: var(--tt-text);
-		.btn-list,
-		.btn-config {
+		&__button {
 			display: flex;
 			cursor: pointer;
 			@include printer {
@@ -93,17 +98,17 @@
 			}
 			align-items: center;
 			justify-content: center;
-		}
-		.btn-list {
-			display: none;
-			@include tablet {
-				display: flex;
+			&--list {
+				display: none;
+				@include tablet {
+					display: flex;
+				}
+			}
+			&__icon {
+				font-size: 2.3rem;
 			}
 		}
-		i {
-			font-size: 2.3rem;
-		}
-		.title {
+		&__title {
 			font-size: 1.5rem;
 			display: flex;
 			align-items: center;

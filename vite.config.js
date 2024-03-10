@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import autoprefixer from 'autoprefixer';
@@ -40,16 +39,10 @@ export default defineConfig({
 		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
-		!process.env.CF_PAGES
-			? sentryVitePlugin({
-					org: 'home-vnd',
-					project: 'zsm-timetable',
-			  })
-			: undefined,
 	],
 	build: {
 		minify: 'terser',
-		assetsInlineLimit: 10240,
+		// assetsInlineLimit: 10240,
 		cssCodeSplit: false,
 		rollupOptions: {
 			output: {
@@ -62,7 +55,6 @@ export default defineConfig({
 					'vue-router': ['vue-router'],
 					pinia: ['pinia'],
 					'floating-vue': ['floating-vue'],
-					sentry: ['@sentry/vue'],
 				},
 			},
 		},

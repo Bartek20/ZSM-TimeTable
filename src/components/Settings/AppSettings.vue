@@ -1,25 +1,25 @@
 <script setup>
-	const PWAStore = usePWAStore();
-	const appStatus = computed(() => PWAStore.status());
+	// const PWAStore = usePWAStore();
+	// const appStatus = computed(() => PWAStore.status());
 	function closeMenu() {
 		document.querySelector('aside.configs')?.classList.remove('open');
-		document.querySelector('.overlay')?.classList.remove('activeConfigs');
+		document.querySelector('.overlay')?.classList.remove('overlay--configs');
 	}
 </script>
 
 <template>
 	<aside class="configs">
-		<div class="closeBtn" @click="closeMenu"><i class="zsm-close-icon"></i></div>
+		<div class="configs__close" @click="closeMenu"><i class="zsm-close-icon"></i></div>
 		<MenuSettings />
 		<MenuOptions />
-		<div class="install">
-			<div @click="PWAStore.install" v-if="appStatus == 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div>
+		<div class="configs__install">
+			<!-- <div @click="PWAStore.install" v-if="appStatus == 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div> -->
 		</div>
 	</aside>
 </template>
 
-<style lang="scss" scoped>
-	aside {
+<style lang="scss">
+	.configs {
 		display: grid;
 		width: $sidebar-width;
 		min-height: 100%;
@@ -34,7 +34,10 @@
 		position: fixed;
 		top: 0;
 		right: -#{$sidebar-width};
-		.closeBtn {
+		@include printer {
+			display: none;
+		}
+		&__close {
 			position: absolute;
 			right: 0;
 			top: 0;
@@ -49,7 +52,7 @@
 		&.open {
 			right: 0;
 		}
-		.install {
+		&__install {
 			text-align: center;
 			color: white;
 			cursor: pointer;
@@ -62,11 +65,6 @@
 				}
 				padding: 12px 24px;
 			}
-		}
-	}
-	@include printer {
-		aside {
-			display: none;
 		}
 	}
 </style>

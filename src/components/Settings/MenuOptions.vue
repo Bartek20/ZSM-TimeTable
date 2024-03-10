@@ -61,27 +61,27 @@
 </script>
 
 <template>
-	<div class="options" v-if="appData.timetable.status == 200">
-		<span><b>Opcje</b></span>
+	<div class="configs__options" v-if="appData.timetable.status == 200">
+		<span class="configs__options__title"><b>Opcje</b></span>
 		<a
-			class="option"
+			class="configs__options__option"
 			:href="`${appConfigs.school.timetableURL}plany/${appConfigs.currentTimeTable.mode}${appConfigs.currentTimeTable.id}.html`"
 			target="_blank">
-			<i class="zsm-old-timetable-icon"></i>
-			<span>Otwórz oryginalny plan</span>
+			<i class="configs__options__option__icon zsm-old-timetable-icon"></i>
+			<span class="configs__options__option__name">Otwórz oryginalny plan</span>
 		</a>
-		<div class="option" @click="printTimeTable">
-			<i class="zsm-print-timetable-icon"></i>
-			<span>Wydrukuj plan</span>
+		<div class="configs__options__option" @click="printTimeTable">
+			<i class="configs__options__option__icon zsm-print-timetable-icon"></i>
+			<span class="configs__options__option__name">Wydrukuj plan</span>
 		</div>
 	</div>
 	<div v-else></div>
 </template>
 
-<style lang="scss" scoped>
-	.options {
+<style lang="scss">
+	.configs__options {
 		margin-inline: 0.75rem;
-		> span {
+		&__title {
 			font-size: 1.1rem;
 			+ * {
 				margin-top: 0.25rem;
@@ -90,7 +90,7 @@
 		> *:not(span):not(:last-child) {
 			margin-bottom: 0.25rem;
 		}
-		.option {
+		&__option {
 			padding: 0.25rem 0.75rem 0.25rem 0;
 			text-decoration: none;
 			color: var(--sb-text);
@@ -98,13 +98,13 @@
 			display: flex;
 			align-items: center;
 			cursor: pointer;
-			i {
+			&__icon {
 				display: block;
 				font-size: 20px;
 				min-width: 40px;
 				text-align: center;
 			}
-			span {
+			&__name {
 				width: 100%;
 			}
 			&:hover {

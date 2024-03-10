@@ -7,9 +7,11 @@ const appData = useStorage(
 			rooms: {},
 			teachers: {},
 			classes: {},
+			subjects: {},
 		},
 	},
 	localStorage,
 	{ mergeDefaults: true }
 );
+
 export default appData;

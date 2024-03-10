@@ -31,8 +31,8 @@
 </script>
 
 <template>
-	<menu>
-		<nav ref="navBar">
+	<menu class="sidebar__navigation">
+		<nav class="sidebar__navigation__nav" ref="navBar">
 			<SidebarList id="menuClasses" icon="zsm-student-icon" name="Klasy" mode="o" :list="links.classes" />
 			<SidebarList id="menuTeachers" icon="zsm-teacher-icon" name="Nauczyciele" mode="n" :list="links.teachers" />
 			<SidebarList id="menuRooms" icon="zsm-room-icon" name="Sale" mode="s" :list="links.rooms" />
@@ -45,27 +45,25 @@
 	</menu>
 </template>
 
-<style lang="scss" scoped>
-	menu {
-		nav {
-			&::-webkit-scrollbar {
-				width: 0.5rem;
-			}
-			&::-webkit-scrollbar-thumb {
-				border: 0.1em solid var(--bg-scrollbar);
-			}
-		}
-		&:not(:hover) nav {
+<style lang="scss">
+	.sidebar__navigation {
+		&:not(:hover) &__nav {
 			--scrollbar: transparent;
 			--bg-scrollbar: transparent;
 		}
-		nav {
+		&__nav {
 			overflow-x: auto;
 			height: 100%;
 			scrollbar-gutter: stable;
 			margin-left: 0.75rem;
 			margin-right: v-bind('listPaddings.marginRight');
 			padding-right: v-bind('listPaddings.padding');
+			&::-webkit-scrollbar {
+				width: 0.5rem;
+			}
+			&::-webkit-scrollbar-thumb {
+				border: 0.1em solid var(--bg-scrollbar);
+			}
 		}
 	}
 </style>

@@ -41,6 +41,8 @@ const router = createRouter({
 
 router.beforeEach((to) => {
 	if (to.name != 'plan') return;
+	// Prevent students from using old view
+	if (to.params.user == 'uczen') appConfigs.value.viewMode = 'new';
 	// Prevent students from accessing teacher's timetables.
 	if (to.params.user == 'uczen' && to.params.mode == 'n') return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } };
 	// Set current timetable

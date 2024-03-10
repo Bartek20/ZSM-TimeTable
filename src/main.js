@@ -1,4 +1,6 @@
+// Floating tooltip css
 import 'floating-vue/dist/style.css';
+// App css
 import './assets/main.scss';
 
 import { createApp } from 'vue';
@@ -12,32 +14,6 @@ import appConfigs from '@/stores/configs';
 import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
-
-// import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
-
-const app = createApp(App);
-
-// // Sentry error reporting
-// Sentry_init({
-// 	// Vue settings
-// 	app,
-// 	trackComponents: true,
-// 	// Sentry config
-// 	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.sentry.io/4506820647190528',
-// 	integrations: [
-// 		Sentry_browserTracingIntegration({ router }),
-// 		Sentry_replayIntegration({
-// 			maskAllText: false,
-// 			blockAllMedia: false,
-// 		}),
-// 	],
-// 	// Performance Monitoring
-// 	tracesSampleRate: 1.0,
-// 	tracePropagationTargets: [/.*/],
-// 	// Session Replay
-// 	replaysSessionSampleRate: 0.1,
-// 	replaysOnErrorSampleRate: 1.0,
-// });
 
 function checkScrollStyllability() {
 	const style = document.createElement('style');
@@ -81,22 +57,22 @@ checkScrollStyllability();
 (async () => {
 	// Fetch School Data
 	try {
-		const schoolData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
-		appConfigs.value.school.homeURL = schoolData.default.schoolHomeURL;
-		appConfigs.value.school.timetableURL = schoolData.default.schoolTimeTableRootURL;
-		appConfigs.value.school.logoDescription = schoolData.default.schoolLogoDescription || 'Logo Szkoły';
+		const { default: schoolData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
+		appConfigs.value.school.homeURL = schoolData.schoolHomeURL;
+		appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL;
+		appConfigs.value.school.logoDescription = schoolData.schoolLogoDescription || 'Logo Szkoły';
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
 	}
 	// Fetch TimeTable Data
 	try {
-		const timetableData = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
-		appConfigs.value.timetable.shortLessons = timetableData.default.shortLessons || [];
-		appConfigs.value.timetable.levels = timetableData.default.levels || {};
-		appConfigs.value.timetable.classes = timetableData.default.classes || {};
-		appConfigs.value.timetable.teachers = timetableData.default.teachers || {};
-		appConfigs.value.timetable.rooms = timetableData.default.rooms || {};
-		appConfigs.value.timetable.subjects = timetableData.default.subjects || {};
+		const { default: timetableData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
+		appConfigs.value.timetable.shortLessons = timetableData.shortLessons || [];
+		appConfigs.value.timetable.levels = timetableData.levels || {};
+		appConfigs.value.timetable.classes = timetableData.classes || {};
+		appConfigs.value.timetable.teachers = timetableData.teachers || {};
+		appConfigs.value.timetable.rooms = timetableData.rooms || {};
+		appConfigs.value.timetable.subjects = timetableData.subjects || {};
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
 	}
@@ -113,7 +89,10 @@ checkScrollStyllability();
 	} catch (e) {
 		log('warn', 'Nie udało się zablokować orientacji ekranu:\n', e);
 	}
+	// Reset session configs
+	appConfigs.value.shortLessons = false;
 	// Render application
+	const app = createApp(App);
 	app.use(createPinia());
 	app.use(router);
 	app.directive('tooltip', vTooltip);

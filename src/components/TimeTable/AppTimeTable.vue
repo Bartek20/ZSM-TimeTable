@@ -3,6 +3,11 @@
 	import appData from '@/stores/data';
 	const message = computed(() => {
 		switch (appData.value.timetable.status) {
+			case 0:
+				return {
+					icon: 'zsm-loading-icon loading',
+					msg: 'Trwa wczytywanie planu lekcji',
+				};
 			case 404:
 				return {
 					icon: 'zsm-not-found-icon',
@@ -54,7 +59,7 @@
 </script>
 
 <template>
-	<main :class="{ forced: appConfigs.forceTablet }">
+	<main class="timetable" :class="{ 'timetable--forced': appConfigs.forceTablet }">
 		<TimeTableHeader />
 		<Suspense :timeout="0">
 			<TimeTableContent :activeDay="activeDay" :message="message" />
@@ -62,15 +67,15 @@
 				<TimeTableMessage icon="zsm-loading-icon loading" text="Trwa wczytywanie planu lekcji" />
 			</template>
 		</Suspense>
-		<div class="controls" v-if="!appConfigs.forceTablet && !message">
-			<div @click="changeDay(0)">&lt; Poprzedni</div>
-			<div @click="changeDay(1)">Następny &gt;</div>
+		<div class="timetable__controls" v-if="!appConfigs.forceTablet && !message">
+			<div class="timetable__controls__button" @click="changeDay(0)">&lt; Poprzedni</div>
+			<div class="timetable__controls__button" @click="changeDay(1)">Następny &gt;</div>
 		</div>
 	</main>
 </template>
 
-<style lang="scss" scoped>
-	main {
+<style lang="scss">
+	.timetable {
 		font-family: 'Roboto', sans-serif;
 		display: grid;
 		height: 100%;
@@ -78,12 +83,12 @@
 		min-height: 100%;
 		grid-template-rows: $header-height 1fr;
 		@include phone {
-			&:not(.forced) {
+			&:not(&--forced) {
 				grid-template-rows: $header-height 1fr 48px;
 			}
 		}
 		background-color: var(--bg-timetable);
-		.controls {
+		&__controls {
 			display: none;
 			align-items: center;
 			justify-items: center;
@@ -95,7 +100,7 @@
 				grid-template-columns: 1fr 1fr;
 				gap: 10px;
 			}
-			div {
+			&__button {
 				width: 100%;
 				height: 100%;
 				display: flex;

@@ -1,15 +1,15 @@
 <script setup>
-	const PWAStore = usePWAStore();
-	if (window.installevent) {
-		PWAStore.event = window.installevent;
-		PWAStore.installed = false;
-		window.installevent = undefined;
-	}
-	window.addEventListener('beforeinstallprompt', (e) => {
-		e.preventDefault();
-		PWAStore.event = e;
-		PWAStore.installed = false;
-	});
+	// const PWAStore = usePWAStore();
+	// if (window.installevent) {
+	// 	PWAStore.event = window.installevent;
+	// 	PWAStore.installed = false;
+	// 	window.installevent = undefined;
+	// }
+	// window.addEventListener('beforeinstallprompt', (e) => {
+	// 	e.preventDefault();
+	// 	PWAStore.event = e;
+	// 	PWAStore.installed = false;
+	// });
 	window.removeEventListener('beforeinstallprompt', window.installhandler);
 </script>
 

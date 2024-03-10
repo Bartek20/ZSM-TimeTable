@@ -20,7 +20,7 @@
 	</label>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.searchbar {
 		height: 40px;
 		margin-inline: 0.75rem;

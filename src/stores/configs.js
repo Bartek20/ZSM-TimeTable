@@ -26,12 +26,12 @@ const appConfigs = useStorage(
 		},
 		// Settings
 		colorMode: 'light',
+		viewMode: 'new',
 		forceTablet: false,
 		shortLessons: false,
 		showCurrent: true,
 		showColors: true,
 		showBreaks: true,
-		showCompressed: false, // Doesn't do anything rn
 	},
 	localStorage,
 	{ mergeDefaults: true }

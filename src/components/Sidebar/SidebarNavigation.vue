@@ -82,7 +82,7 @@
 </script>
 
 <template>
-	<div class="list">
+	<div class="sidebar__list">
 		<MenuSearchBar v-if="searchData.classes.length > 0 || searchData.teachers.length > 0 || searchData.rooms.length > 0" v-model="search" />
 		<div v-else></div>
 		<SidebarLists v-if="searchData.classes.length > 0 || searchData.teachers.length > 0 || searchData.rooms.length > 0" :links="results" :query="search.text" />
@@ -90,8 +90,8 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
-	.list {
+<style lang="scss">
+	.sidebar__list {
 		display: grid;
 		grid-template-rows: auto minmax(0, 1fr);
 		gap: 0.5rem;

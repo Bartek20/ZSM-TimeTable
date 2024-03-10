@@ -82,7 +82,7 @@
 			delay: { show: 500, hide: 0 },
 			disposeTimeout: 0,
 			triggers: ['hover', 'touch'],
-			container: '.timetable',
+			container: '.timetable__container',
 		}">
 		<div class="row">
 			<!-- Subject -->
@@ -115,7 +115,7 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.lesson {
 		background-color: v-bind('colors.light');
 		box-shadow: inset 0 0 0 9999px v-bind('colors.light');

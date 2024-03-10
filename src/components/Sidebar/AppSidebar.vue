@@ -15,16 +15,16 @@
 	});
 	function closeMenu() {
 		document.querySelector('aside.sidebar')?.classList.remove('open');
-		document.querySelector('.overlay')?.classList.remove('activeSidebar');
+		document.querySelector('.overlay')?.classList.remove('overlay--sidebar');
 	}
 </script>
 
 <template>
 	<aside class="sidebar">
-		<div class="closeBtn" @click="closeMenu"><i class="zsm-close-icon"></i></div>
-		<header>
+		<div class="sidebar__close" @click="closeMenu"><i class="zsm-close-icon"></i></div>
+		<header class="sidebar__home">
 			<a :href="appConfigs.school.homeURL" target="_blank" rel="noopener noreferrer">
-				<img class="p-4" src="/assets/images/logo.png" :alt="appConfigs.school.logoDescription || 'Logo Szkoły'" />
+				<img class="sidebar__home__logo" src="/assets/images/logo.png" :alt="appConfigs.school.logoDescription || 'Logo Szkoły'" />
 			</a>
 		</header>
 		<Suspense>
@@ -33,12 +33,12 @@
 				<div></div>
 			</template>
 		</Suspense>
-		<footer>
-			<div class="dates" v-if="dates">
+		<footer class="sidebar__footer">
+			<div class="sidebar__footer--dates" v-if="dates">
 				<p><b>Wygenerowano: </b>{{ dates.gen }}</p>
 				<p><b>Obowiązuje od: </b>{{ dates.apply }}</p>
 			</div>
-			<div class="copyright">
+			<div class="sidebar__footer--copyright">
 				<p><i class="zsm-copyright-icon"></i>{{ getFooter() }}</p>
 				<p><strong>Bartłomiej Radoń</strong></p>
 			</div>
@@ -46,8 +46,8 @@
 	</aside>
 </template>
 
-<style lang="scss" scoped>
-	aside {
+<style lang="scss">
+	.sidebar {
 		display: grid;
 		width: $sidebar-width;
 		min-height: 100%;
@@ -57,7 +57,19 @@
 		background-color: var(--bg-sidebar);
 		color: var(--sb-text);
 		transition: 0.4s ease-in-out left;
-		.closeBtn {
+		@include tablet {
+			z-index: 11;
+			position: fixed;
+			top: 0;
+			left: -#{$sidebar-width};
+			&.open {
+				left: 0;
+			}
+		}
+		@include printer {
+			display: none;
+		}
+		&__close {
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -72,53 +84,38 @@
 				display: flex;
 			}
 		}
-		header {
+		&__home {
 			text-align: center;
-			img {
+			&__logo {
 				padding: 6px 24px 0;
 				width: 175px;
 			}
 		}
-		footer {
+		&__footer {
 			text-align: center;
 			color: white;
-			div {
-				&.dates {
-					background-color: darkslategray;
-					p {
-						display: grid;
-						grid-template-columns: auto auto;
-						justify-content: space-between;
-						&:first-child {
-							margin-bottom: 3px;
-						}
-					}
-				}
-				&.copyright {
-					background-color: teal;
-					i {
-						font-size: 0.9rem;
-						padding-right: 0.25rem;
-					}
-				}
+			&--dates,
+			&--copyright {
 				padding: 12px 24px;
 			}
-		}
-	}
-	@include tablet {
-		aside {
-			z-index: 11;
-			position: fixed;
-			top: 0;
-			left: -#{$sidebar-width};
-			&.open {
-				left: 0;
+			&--dates {
+				background-color: darkslategray;
+				p {
+					display: grid;
+					grid-template-columns: auto auto;
+					justify-content: space-between;
+					&:first-child {
+						margin-bottom: 3px;
+					}
+				}
 			}
-		}
-	}
-	@include printer {
-		aside {
-			display: none;
+			&--copyright {
+				background-color: teal;
+				i {
+					font-size: 0.9rem;
+					padding-right: 0.25rem;
+				}
+			}
 		}
 	}
 </style>

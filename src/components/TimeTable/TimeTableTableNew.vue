@@ -1,17 +1,16 @@
 <script setup>
-	import appData from '@/stores/data';
 	import appConfigs from '@/stores/configs';
+	const props = defineProps({
+		data: {
+			type: Array,
+			required: true,
+		},
+		activeDay: {
+			type: Number,
+			required: true,
+		},
+	});
 
-	function calcBreak(from, to) {
-		if (!from || !to) return 0;
-		const start_el = from.split(':');
-		const start_time = new Date();
-		start_time.setHours(start_el[0], start_el[1], 0, 0);
-		const end_el = to.split(':');
-		const end_time = new Date();
-		end_time.setHours(end_el[0], end_el[1], 0, 0);
-		return (end_time - start_time) / 1000 / 60;
-	}
 	function addTime(clock, time) {
 		const padClock = (part) => (part < 10 ? '0' + part : part);
 		if (!clock || !time) return undefined;
@@ -33,46 +32,18 @@
 		return current >= sTime && current <= eTime;
 	}
 
-	const data = computed(() => {
-		const src = appData.value.timetable;
-		const shortHours =
-			appData.value.timetable.hours?.map((hour) => {
-				return appConfigs.value.timetable.shortLessons[hour.number];
-			}) || [];
-		const hours = appConfigs.value.shortLessons && src.hours?.length == shortHours.length ? shortHours : src.hours;
-		let out = [];
-		const rows = hours?.length || 0;
-		for (let i = 0; i < rows; i++) {
-			out.push({
-				nr: hours[i].number,
-				hours: {
-					from: hours[i].timeFrom,
-					to: hours[i].timeTo,
-				},
-				break: calcBreak(hours[i]?.timeTo, hours[i + 1]?.timeFrom),
-				lessons: {
-					0: src.days[0][i],
-					1: src.days[1][i],
-					2: src.days[2][i],
-					3: src.days[3][i],
-					4: src.days[4][i],
-				},
-			});
-		}
-		return out;
-	});
 	const TIME = useDateFormat(useNow({ interval: 100 }), 'd;HH:mm', {
 		locales: 'pl-PL',
 	});
 	const currentDay = ref(-1);
 	const currentLesson = ref(-1);
 	watch(
-		[TIME, data],
+		[TIME, () => props.data],
 		() => {
 			const timeData = TIME.value.split(';');
 			currentDay.value = parseInt(timeData[0]) - 1;
 			currentLesson.value = -1;
-			data.value.forEach((row) => {
+			props.data.forEach((row) => {
 				if (checkBetween(row.hours.from, row.hours.to)) {
 					currentLesson.value = row.nr;
 					return;
@@ -88,9 +59,9 @@
 </script>
 
 <template>
-	<table class="timetableTable">
-		<thead>
-			<tr>
+	<table class="timetable__table">
+		<thead class="timetable__table__head">
+			<tr class="timetable__table__head__row timetable__table__row--headings">
 				<th>#</th>
 				<th>Czas</th>
 				<th :class="{ active: appConfigs.forceTablet || activeDay == i }" v-for="(day, i) in ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek']">
@@ -98,18 +69,19 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="timetable__table__body">
 			<template v-for="row in data">
-				<tr>
+				<tr class="timetable__table__body__row timetable__table__body__row--lessons">
 					<th>{{ row.nr }}</th>
 					<td>{{ row.hours.from }}<br />-<br />{{ row.hours.to }}</td>
 					<td :class="{ active: appConfigs.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons">
 						<div :class="{ current: appConfigs.showCurrent && day.length > 0 && currentLesson == row.nr && currentDay == i }">
-							<TimeTableLesson v-for="lesson in day" :data="lesson" />
+							<TimeTableLessonNew v-for="lesson in day" :data="lesson" />
 						</div>
 					</td>
 				</tr>
 				<tr
+					class="timetable__table__body__row timetable__table__body__row--break"
 					v-if="appConfigs.showBreaks && row.break != 0"
 					:class="{ active: appConfigs.forceTablet || activeDay == currentDay, current: appConfigs.showCurrent && currentLesson == row.nr + 'break' }">
 					<th></th>
@@ -122,8 +94,8 @@
 	</table>
 </template>
 
-<style lang="scss" scoped>
-	.timetableTable {
+<style lang="scss">
+	.timetable__table {
 		width: 100%;
 		border-collapse: collapse;
 		color: var(--tt-text);
@@ -138,9 +110,8 @@
 				display: none;
 			}
 		}
-		thead {
+		&__head {
 			position: relative;
-			text-align: center;
 			th {
 				background-color: var(--tt-primary);
 				position: sticky;
@@ -150,48 +121,58 @@
 			th:nth-child(1) {
 				left: 0;
 				z-index: 3;
+				min-width: 35px;
+				width: 35px;
 			}
-			th:nth-child(1),
 			th:nth-child(2) {
-				max-width: min-content;
+				left: 35px;
+				z-index: 3;
+				width: 60px;
 			}
 		}
-		tbody {
-			th {
-				position: sticky;
-				left: 0;
-				z-index: 2;
-			}
-			tr {
+		&__body {
+			&__row {
 				break-inside: avoid;
-			}
-			tr:nth-child(even) > * {
-				background-color: var(--tt-primary);
-			}
-			tr:nth-child(odd) > * {
-				background-color: var(--tt-secondary);
-			}
-			th,
-			td:nth-child(2) {
-				max-width: fit-content;
-				text-align: center;
-			}
-			tr {
-				&.current > * {
-					animation: blink 2s linear infinite;
+				&:nth-child(even) > * {
+					background-color: var(--tt-primary);
 				}
-				@include phone {
-					&:not(.active) > * {
-						animation: none;
+				&:nth-child(odd) > * {
+					background-color: var(--tt-secondary);
+				}
+				th {
+					position: sticky;
+					left: 0;
+					z-index: 1;
+				}
+				&--lessons {
+					td:nth-child(2) {
+						position: sticky;
+						left: 35px;
+						z-index: 1;
+					}
+					td > div {
+						margin: -0.5rem;
+						padding: 0.5rem;
+						&.current {
+							border-radius: 0.5rem;
+							animation: blink 2s linear infinite;
+						}
 					}
 				}
-			}
-			td > div {
-				margin: -0.5rem;
-				padding: 0.5rem;
-				&.current {
-					border-radius: 0.5rem;
-					animation: blink 2s linear infinite;
+				&--break {
+					td:nth-child(2) {
+						position: sticky;
+						left: 0;
+						right: 0;
+					}
+					&.current > * {
+						animation: blink 2s linear infinite;
+					}
+					@include phone {
+						&:not(.active) > * {
+							animation: none;
+						}
+					}
 				}
 			}
 		}

@@ -91,6 +91,7 @@ export function getCloudflareBeacon(TOKEN) {
 	let beaconContent;
 	return {
 		name: 'getCloudflareBeacon',
+		apply: 'build',
 		enforce: 'pre',
 		configResolved(config) {
 			base = config.base;
@@ -119,26 +120,6 @@ export function getCloudflareBeacon(TOKEN) {
 				}
 			} catch (error) {
 				console.error('Failed to save beacon file:', error);
-			}
-		},
-	};
-}
-
-export function VitePluginDownloadFile(url, outputDir, htmlPath, token) {
-	return {
-		name: 'vite-plugin-download-file',
-		enforce: 'pre',
-		async buildStart() {
-			console.log(`Downloading file from ${url}...`);
-			try {
-				await downloadFile(url, outputDir);
-				console.log(`File downloaded successfully and saved to ${outputDir}`);
-
-				// Inject script into HTML
-				injectScriptIntoHtml(htmlPath, path.basename(url), token);
-				console.log(`Script injected into ${htmlPath}`);
-			} catch (error) {
-				console.error(`Error downloading file: ${error.message}`);
 			}
 		},
 	};
