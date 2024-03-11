@@ -1,4 +1,4 @@
-<script setup lang="js">
+<script setup>
 	import appConfigs from '@/stores/configs';
 	 const props = defineProps({
 		data: {
@@ -45,6 +45,7 @@
 	.timetable__old {
 		margin-inline: auto;
 		padding-inline: 10px;
+		padding-bottom: 10px;
 		border-color: #c0c0c0;
 		border-width: 0;
 		th {
@@ -57,7 +58,7 @@
 				font-weight: bold;
 				text-align: center;
 				vertical-align: middle;
-				padding: 3px;
+				padding: 5px;
 			}
 		}
 		td {
@@ -69,13 +70,13 @@
 				vertical-align: middle;
 				text-align: center;
 				white-space: nowrap;
-				padding: 3px;
+				padding: 5px;
 			}
 			&.lessonOld {
 				background-color: #ffffff;
 				color: #000000;
 				vertical-align: top;
-				padding: 3px;
+				padding: 5px;
 			}
 		}
 		&__break {
