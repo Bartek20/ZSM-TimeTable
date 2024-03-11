@@ -6,7 +6,6 @@
 		document.querySelector('.overlay')?.classList.remove('overlay--configs');
 	}
 	const appStatus = computed(() => appPWAState.status.value);
-	console.log(appPWAState.install);
 </script>
 
 <template>
