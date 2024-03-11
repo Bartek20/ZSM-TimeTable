@@ -57,16 +57,16 @@ function checkScrollStyllability() {
 checkScrollStyllability();
 
 // Set PWA eventlistener
-// debugger;
+const appPWAState = appPWA();
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
-	appPWA.event.value = e;
-	appPWA.installed.value = false;
+	appPWAState.event.value = e;
+	appPWAState.installed.value = false;
 });
 window.removeEventListener('beforeinstallprompt', window.installhandler);
 if (window.installevent) {
-	appPWA.event.value = window.installevent;
-	appPWA.installed.value = false;
+	appPWAState.event.value = window.installevent;
+	appPWAState.installed.value = false;
 	window.installhandler = undefined;
 	window.installevent = undefined;
 }
