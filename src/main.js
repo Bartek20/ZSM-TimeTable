@@ -58,17 +58,19 @@ function checkScrollStyllability() {
 checkScrollStyllability();
 
 // Set PWA eventlistener
-if (window.installevent) {
-	appPWA.event.value = window.installevent;
-	appPWA.installed.value = false;
-	window.installevent = undefined;
-}
+const appPWAState = appPWA();
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
-	appPWA.event.value = e;
-	appPWA.installed.value = false;
+	appPWAState.event.value = e;
+	appPWAState.installed.value = false;
 });
 window.removeEventListener('beforeinstallprompt', window.installhandler);
+if (window.installevent) {
+	appPWAState.event.value = window.installevent;
+	appPWAState.installed.value = false;
+	window.installhandler = undefined;
+	window.installevent = undefined;
+}
 
 // Parse config data from timetableData.js and check for updates
 function parseData(obj, data) {

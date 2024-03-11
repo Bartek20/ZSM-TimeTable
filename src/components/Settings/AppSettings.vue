@@ -1,9 +1,12 @@
 <script setup>
 	import appPWA from '@/stores/pwa';
+	const appPWAState = appPWA();
 	function closeMenu() {
 		document.querySelector('aside.configs')?.classList.remove('open');
 		document.querySelector('.overlay')?.classList.remove('overlay--configs');
 	}
+	const appStatus = computed(() => appPWAState.status.value);
+	console.log(appPWAState.install);
 </script>
 
 <template>
@@ -12,7 +15,7 @@
 		<MenuSettings />
 		<MenuOptions />
 		<div class="configs__install">
-			<div @click="appPWA.install" v-if="appPWA.status == 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div>
+			<div @click="appPWAState.install" v-if="appStatus == 'installable'"><i class="zsm-download-app-icon"></i><b>Zainstaluj Aplikację</b></div>
 		</div>
 	</aside>
 </template>
