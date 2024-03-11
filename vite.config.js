@@ -39,6 +39,10 @@ export default defineConfig({
 		generateHTACCESS(),
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
+		sentryVitePlugin({
+			org: 'home-vnd',
+			project: 'zsm-timetable',
+		}),
 	],
 	build: {
 		minify: 'terser',
@@ -54,6 +58,7 @@ export default defineConfig({
 					vue: ['vue'],
 					'vue-router': ['vue-router'],
 					'floating-vue': ['floating-vue'],
+					sentry: ['@sentry/vue', '@sentry/vite-plugin'],
 				},
 			},
 		},

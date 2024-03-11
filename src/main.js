@@ -16,6 +16,32 @@ import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 
+import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
+
+const app = createApp(App);
+
+// Sentry Error Reporting
+Sentry_init({
+	// Vue settings
+	app,
+	trackComponents: true,
+	// Sentry config
+	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.sentry.io/4506820647190528',
+	integrations: [
+		Sentry_browserTracingIntegration({ router }),
+		Sentry_replayIntegration({
+			maskAllText: false,
+			blockAllMedia: false,
+		}),
+	],
+	// Performance Monitoring
+	tracesSampleRate: 1.0,
+	tracePropagationTargets: [/.*/],
+	// Session Replay
+	replaysSessionSampleRate: 0.1,
+	replaysOnErrorSampleRate: 1.0,
+});
+
 // Check custom css scrollbar support
 function checkScrollStyllability() {
 	const style = document.createElement('style');
@@ -261,8 +287,9 @@ function parseData(obj, data) {
 	}
 	// Reset session configs
 	appConfigs.value.shortLessons = false;
+	appData.value.list = {}
+	appData.value.timetable = {}
 	// Render application
-	const app = createApp(App);
 	app.use(router);
 	app.directive('tooltip', vTooltip);
 	app.mount('#app');
