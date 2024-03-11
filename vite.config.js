@@ -17,6 +17,8 @@ import { getNow, getBanner, parseHTML, generateBrowserConfigXML, generateHTACCES
 // PWA Config
 import { VitePWA } from 'vite-plugin-pwa';
 import pwaConfig from './configs/vite.pwa';
+// Sentry setup
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 const now = getNow();
 
@@ -40,13 +42,14 @@ export default defineConfig({
 		VitePWA(pwaConfig),
 		banner((fileName) => getBanner(now, fileName)),
 		sentryVitePlugin({
+			authToken: process.env.SENTRY_AUTH_TOKEN,
 			org: 'home-vnd',
 			project: 'zsm-timetable',
 		}),
 	],
 	build: {
 		minify: 'terser',
-		// assetsInlineLimit: 10240,
+		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
 		rollupOptions: {
 			output: {
