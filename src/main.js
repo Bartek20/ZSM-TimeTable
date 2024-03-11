@@ -26,7 +26,7 @@ Sentry_init({
 	app,
 	trackComponents: true,
 	// Sentry config
-	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.sentry.io/4506820647190528',
+	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.us.sentry.io/4506820647190528',
 	integrations: [
 		Sentry_browserTracingIntegration({ router }),
 		Sentry_replayIntegration({
@@ -287,8 +287,8 @@ function parseData(obj, data) {
 	}
 	// Reset session configs
 	appConfigs.value.shortLessons = false;
-	appData.value.list = {}
-	appData.value.timetable = {}
+	appData.value.list = {};
+	appData.value.timetable = {};
 	// Render application
 	app.use(router);
 	app.directive('tooltip', vTooltip);
