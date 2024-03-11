@@ -43,7 +43,7 @@ export default defineConfig({
 		banner((fileName) => getBanner(now, fileName)),
 		sentryVitePlugin({
 			authToken: process.env.SENTRY_AUTH_TOKEN,
-			org: 'home-vnd',
+			org: 'tata2676',
 			project: 'zsm-timetable',
 		}),
 	],
