@@ -53,7 +53,6 @@ export default defineConfig({
 					'string-to-color': ['string-to-color'],
 					vue: ['vue'],
 					'vue-router': ['vue-router'],
-					pinia: ['pinia'],
 					'floating-vue': ['floating-vue'],
 				},
 			},

@@ -7,7 +7,6 @@ const imports = {
 	imports: [
 		'vue',
 		'vue-router',
-		'pinia',
 		'@vueuse/core',
 		{
 			'@vueuse/router': ['useRouteParams'],
