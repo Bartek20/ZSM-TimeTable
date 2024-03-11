@@ -4,6 +4,7 @@
 	import fetchList from '@/functions/fetchList';
 	import getCombinations from '@/functions/combinations';
 	import log from '@/functions/logger';
+	import parseName from '@/functions/parseName';
 	import appData from '@/stores/data';
 
 	await fetchList();
@@ -17,6 +18,7 @@
 		if (Object.keys(appData.value.list).length > 0) {
 			appData.value.list.classes.forEach((item) => {
 				const out = {};
+				if (!appData.value.database.classes[item.name]) parseName('o', item.name);
 				out.name = appData.value.database.classes[item.name].sidebar;
 				out.id = item.value;
 				out.keys = appData.value.database.classes[item.name].search;
@@ -24,6 +26,7 @@
 			});
 			appData.value.list.teachers.forEach((item) => {
 				const out = {};
+				if (!appData.value.database.teachers[item.name]) parseName('n', item.name);
 				out.name = appData.value.database.teachers[item.name].sidebar;
 				out.id = item.value;
 				out.keys = appData.value.database.teachers[item.name].search;
@@ -31,6 +34,7 @@
 			});
 			appData.value.list.rooms.forEach((item) => {
 				const out = {};
+				if (!appData.value.database.rooms[item.name]) parseName('s', item.name);
 				out.name = appData.value.database.rooms[item.name].sidebar;
 				out.id = item.value;
 				out.keys = appData.value.database.rooms[item.name].search;

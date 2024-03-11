@@ -12,10 +12,12 @@ import router from './router';
 
 import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
+import appPWA from '@/stores/pwa';
 import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
 
+// Check custom css scrollbar support
 function checkScrollStyllability() {
 	const style = document.createElement('style');
 	style.textContent = `
@@ -55,6 +57,20 @@ function checkScrollStyllability() {
 }
 checkScrollStyllability();
 
+// Set PWA eventlistener
+if (window.installevent) {
+	appPWA.event.value = window.installevent;
+	appPWA.installed.value = false;
+	window.installevent = undefined;
+}
+window.addEventListener('beforeinstallprompt', (e) => {
+	e.preventDefault();
+	appPWA.event.value = e;
+	appPWA.installed.value = false;
+});
+window.removeEventListener('beforeinstallprompt', window.installhandler);
+
+// Parse config data from timetableData.js and check for updates
 function parseData(obj, data) {
 	switch (obj) {
 		case 'shortLessons':

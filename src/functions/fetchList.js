@@ -1,7 +1,6 @@
 import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
 import log from '@/functions/logger';
-import parseName from '@/functions/parseName';
 
 function qs(dom, selector) {
 	return dom.querySelector(selector);
@@ -97,15 +96,6 @@ export default async function loadList() {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
 		if (res == undefined) return;
 		appData.value.list = new TimeTableList(res.data).getList();
-		appData.value.list.classes.forEach((el) => {
-			appData.value.database.classes[el.name] = parseName('o', el.name);
-		});
-		appData.value.list.teachers.forEach((el) => {
-			appData.value.database.teachers[el.name] = parseName('n', el.name);
-		});
-		appData.value.list.rooms.forEach((el) => {
-			appData.value.database.rooms[el.name] = parseName('s', el.name);
-		});
 	} catch (err) {
 		log('error', 'Wystąpił błąd przy wczytywaniu listy:\n', err);
 		return;

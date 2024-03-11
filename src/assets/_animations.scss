@@ -9,10 +9,10 @@
 @keyframes blink {
 	0%,
 	100% {
-		background-color: rgba($accent-color, 0.75);
+		box-shadow: inset 0 0 0 9999px rgba($accent-color, 0.75);
 	}
 	50% {
-		background-color: transparent;
+		box-shadow: inset 0 0 0 9999px transparent;
 	}
 }
 @keyframes marquee {
