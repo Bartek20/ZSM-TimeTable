@@ -30,14 +30,16 @@ export default async function validateApp() {
 		}
 		// Updating from v2.0.0 to v3.0.0
 		if (cmpVersion('v3.0.0')) {
-			appData.value.parsed = undefined;
+			if (appData.value) appData.value.parsed = undefined;
 		}
+		// Updating from v3.0.0 to v3.0.1
 		if (cmpVersion('v3.0.1')) {
 			window.localStorage.removeItem('lists');
 			window.localStorage.removeItem('plan');
 		}
+		// Updating from v3.0.1 to v3.1.0
 		if (cmpVersion('v3.1.0')) {
-			window.localStorage.removeItem('appData')
+			window.localStorage.removeItem('appData');
 		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;
