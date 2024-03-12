@@ -36,8 +36,8 @@
 			}
 		}
 		if (!appData.value.database[MODES[mode]][name]) parseName(mode, name)
-		setTitle(appData.value.database[MODES[mode]][name]?.title ?? name);
-		return appData.value.database[MODES[mode]][name]?.heading ?? name;
+		setTitle(appData.value.database[MODES[mode]]?.[name]?.title ?? name);
+		return appData.value.database[MODES[mode]]?.[name]?.heading ?? name;
 	});
 	const headEl = ref(null);
 	const { width: headElSize } = useElementSize(headEl);
