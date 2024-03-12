@@ -160,7 +160,8 @@
 					}
 				}
 				&--break {
-					td:nth-child(2) {
+					td{
+						z-index: 1;
 						position: sticky;
 						left: 0;
 						right: 0;
