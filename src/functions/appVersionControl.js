@@ -32,6 +32,10 @@ export default async function validateApp() {
 		if (cmpVersion('v3.0.0')) {
 			delete appData.value.parsed;
 		}
+		if (cmpVersion('v3.0.1')) {
+			window.localStorage.removeItem('lists');
+			window.localStorage.removeItem('plan');
+		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;
 	}

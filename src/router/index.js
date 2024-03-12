@@ -2,11 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
+import log from '@/functions/logger';
 
-const selected = appConfigs.value.currentTimeTable ?? {
-	mode: 'o',
-	id: 1,
-};
+let selected = appConfigs.value.currentTimeTable;
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +12,10 @@ const router = createRouter({
 		{
 			path: '/:user?',
 			name: 'home',
-			redirect: (to) => `/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${selected.mode}/${selected.id}`,
+			redirect: (to) =>
+				`/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${['o', 'n', 's'].includes(selected?.mode) ? selected.mode : 'o'}/${
+					typeof selected?.id == 'number' ? selected.id : 1
+				}`,
 		},
 		{
 			path: '/plany/:plan([ons]\\d+.html)',
@@ -40,6 +41,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
+	if (to.name == '404' || to.name == 'home' || to.name == 'redirector') {
+		if (to.redirectedFrom.name == '404' || to.redirectedFrom.name == 'home' || to.redirectedFrom == 'redirector') {
+			log('warn', 'Doszło do pętli przekierowań:', to);
+			return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } };
+		}
+		return;
+	}
 	if (to.name != 'plan') return;
 	// Prevent students from using old view
 	if (to.params.user == 'uczen') appConfigs.value.viewMode = 'new';
@@ -51,6 +59,9 @@ router.beforeEach((to) => {
 		id: to.params.id,
 	};
 	appData.value.timetable = { status: 0 };
+});
+router.afterEach((_to, _from, failure) => {
+	if (failure) log('error', 'Wystąpił błąd przy przekierowaniu:', failure);
 });
 
 export default router;
