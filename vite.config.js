@@ -35,7 +35,7 @@ export default defineConfig({
 		vue(),
 		Components(components),
 		AutoImport(imports),
-		getCloudflareBeacon(process.env.CF_BEACON_TOKEN),
+		getCloudflareBeacon(),
 		parseHTML(),
 		generateBrowserConfigXML(),
 		generateHTACCESS(),

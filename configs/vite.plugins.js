@@ -1,6 +1,4 @@
 import fs from 'fs';
-import path from 'path';
-import axios from 'axios';
 import schoolData from '../public/schoolData';
 
 // Utils
@@ -30,6 +28,7 @@ export function getBanner(now, file) {
 export function parseHTML() {
 	return {
 		name: 'parseHTML',
+		enforce: 'pre',
 		transformIndexHtml(html) {
 			const htmlVariables = {
 				schoolROOT: schoolData.schoolTimeTableRootURL,
@@ -48,6 +47,7 @@ export function generateBrowserConfigXML() {
 	let base;
 	return {
 		name: 'generateBrowserConfigXML',
+		enforce: 'pre',
 		configResolved(config) {
 			base = config.base;
 		},
@@ -66,6 +66,8 @@ export function generateHTACCESS() {
 		'<IfModule mod_rewrite.c>\n\tRewriteEngine On\n\n{rule}\n\n\tRewriteCond %{SERVER_PORT} 80\n\tRewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\n\n\tRewriteCond %{REQUEST_FILENAME} !-f\n\tRewriteCond %{REQUEST_FILENAME} !-d\n\tRewriteRule ^(.*)$ index.html [QSA,L]\n</IfModule>';
 	return {
 		name: 'generateHTACCESS',
+		apply: 'build',
+		enforce: 'pre',
 		async writeBundle(outputOptions, _) {
 			try {
 				fs.writeFileSync(
@@ -85,42 +87,16 @@ export function generateHTACCESS() {
 	};
 }
 
-export function getCloudflareBeacon(TOKEN) {
-	const file = 'cf-ins.js';
-	let base, outDir;
-	let beaconContent;
+export function getCloudflareBeacon() {
 	return {
 		name: 'getCloudflareBeacon',
 		apply: 'build',
 		enforce: 'pre',
-		configResolved(config) {
-			base = config.base;
-			outDir = config.root + (config.build.outDir.startsWith('/') ? config.build.outDir : '/' + config.build.outDir);
-		},
-		async buildStart() {
-			if (!process.env.CF_PAGES && TOKEN)
-				try {
-					console.log('Downloading cloudflare beacon script...');
-					const res = await axios.get('https://static.cloudflareinsights.com/beacon.min.js');
-					beaconContent = res.data;
-				} catch (error) {
-					console.log('Failed to download cloudflare beacon script:', error);
-				}
-		},
 		transformIndexHtml(html) {
-			try {
-				if (beaconContent) {
-					console.log('Saving beacon file...');
-					fs.writeFileSync(outDir + (outDir.endsWith('/') ? file : '/' + file), beaconContent, 'utf-8');
-					const scriptTag = `<!-- Cloudflare Web Analytics --><script defer src='${
-						base + (base.endsWith('/') ? file : '/' + file)
-					}' data-cf-beacon='{"token": "${TOKEN}"}'></script><!-- End Cloudflare Web Analytics -->`;
-					html = html.replace('</body>', `${scriptTag}\n</body>`);
-					return html;
-				}
-			} catch (error) {
-				console.error('Failed to save beacon file:', error);
-			}
+			if (!process.env.CF_BEACON_TOKEN) return html;
+			const scriptTag = `<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "${process.env.CF_BEACON_TOKEN}"}'></script><!-- End Cloudflare Web Analytics -->`;
+			html = html.replace('</body>', `${scriptTag}\n</body>`);
+			return html;
 		},
 	};
 }

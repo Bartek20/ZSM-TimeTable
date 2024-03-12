@@ -35,10 +35,10 @@ Sentry_init({
 		}),
 	],
 	// Performance Monitoring
-	tracesSampleRate: 1.0,
+	tracesSampleRate: 0.1,
 	tracePropagationTargets: [/.*/],
 	// Session Replay
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0,
 	replaysOnErrorSampleRate: 1.0,
 });
 
