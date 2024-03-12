@@ -1,6 +1,6 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
-	 const props = defineProps({
+	const props = defineProps({
 		data: {
 			type: Array,
 			required: true,
@@ -75,7 +75,7 @@
 			&.lessonOld {
 				background-color: #ffffff;
 				color: #000000;
-				vertical-align: top;
+				vertical-align: middle;
 				padding: 5px;
 			}
 		}
