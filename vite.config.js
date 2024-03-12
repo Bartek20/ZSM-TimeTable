@@ -24,7 +24,7 @@ const now = getNow();
 
 export default defineConfig({
 	define: {
-		__APP_VERSION__: JSON.stringify('v3.0.1'),
+		__APP_VERSION__: JSON.stringify('v3.1.0'),
 		__VUE_PROD_DEVTOOLS__: true,
 	},
 	server,

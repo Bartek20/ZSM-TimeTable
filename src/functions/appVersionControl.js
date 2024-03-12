@@ -7,8 +7,8 @@ function cmpVersion(version = __APP_VERSION__) {
 	let current_version = (appConfigs.value.version ?? 'v0.0.0').replace('v', '').split('.');
 	version = version.replace('v', '').split('.');
 	if (current_version[0] < version[0]) return true;
-	if (current_version[1] < version[1]) return true;
-	if (current_version[2] < version[2]) return true;
+	if (current_version[0] == version[0] && current_version[1] < version[1]) return true;
+	if (current_version[0] == version[0] && current_version[1] == version[1] && current_version[2] < version[2]) return true;
 	return false;
 }
 
