@@ -35,7 +35,7 @@ Sentry_init({
 	],
 	// Performance Monitoring
 	tracesSampleRate: 0.1,
-	tracePropagationTargets: [/.*/],
+	tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
 	// Session Replay
 	replaysSessionSampleRate: 0,
 	replaysOnErrorSampleRate: 1.0,
