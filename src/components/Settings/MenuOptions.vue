@@ -1,14 +1,11 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
-	const mode = useRouteParams('mode')
-	const id = useRouteParams('id')
+	const mode = useRouteParams('mode');
+	const id = useRouteParams('id');
 	function printTimeTable() {
 		// Open printed page
-		const page = window.open(
-			`${appConfigs.value.school.timetableURL}plany/${mode.value}${id.value}.html`,
-			'_print'
-		);
+		const page = window.open(`${appConfigs.value.school.timetableURL}plany/${mode.value}${id.value}.html`, '_print');
 		if (!page) return;
 		// Hide unnecessary items and open print dialog
 		page.onload = () => {
@@ -60,15 +57,13 @@
 			page.close();
 		};
 	}
+	const status = computed(() => appData.timetable.value.status);
 </script>
 
 <template>
-	<div class="configs__options" v-if="appData.timetable.status == 200">
+	<div class="configs__options" v-if="status == 200">
 		<span class="configs__options__title"><b>Opcje</b></span>
-		<a
-			class="configs__options__option"
-			:href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`"
-			target="_blank">
+		<a class="configs__options__option" :href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`" target="_blank">
 			<i class="configs__options__option__icon zsm-old-timetable-icon"></i>
 			<span class="configs__options__option__name">Otwórz oryginalny plan</span>
 		</a>
