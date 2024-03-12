@@ -1,8 +1,8 @@
 <script setup>
 	import parseName from '@/functions/parseName';
 	import setTitle from '@/functions/setTitle';
-	import appData from '@/stores/data';
 	import appConfigs from '@/stores/configs';
+	import appData from '@/stores/data';
 	function openSidebar() {
 		document.querySelector('aside.sidebar')?.classList.add('open');
 		document.querySelector('.overlay')?.classList.add('overlay--sidebar');
@@ -11,16 +11,18 @@
 		document.querySelector('aside.configs')?.classList.add('open');
 		document.querySelector('.overlay')?.classList.add('overlay--configs');
 	}
+
+	const mode = useRouteParams('mode');
+
 	const title = computed(() => {
 		const MODES = {
 			o: 'classes',
 			n: 'teachers',
 			s: 'rooms',
 		};
-		const mode = appConfigs.value.currentTimeTable.mode;
-		const name = appData.value.timetable.title;
+		const name = appData.timetable.value.title;
 		if (!name) {
-			switch (appData.value.timetable.status) {
+			switch (appData.timetable.value.status) {
 				case 0:
 					setTitle('Wczytywanie planu lekcji.');
 					return;
@@ -35,9 +37,9 @@
 					return;
 			}
 		}
-		if (!appData.value.database[MODES[mode]][name]) parseName(mode, name)
-		setTitle(appData.value.database[MODES[mode]]?.[name]?.title ?? name);
-		return appData.value.database[MODES[mode]]?.[name]?.heading ?? name;
+		if (!appConfigs.value.database[MODES[mode.value]][name]) parseName(mode.value, name);
+		setTitle(appConfigs.value.database[MODES[mode.value]]?.[name]?.title ?? name);
+		return appConfigs.value.database[MODES[mode.value]]?.[name]?.heading ?? name;
 	});
 	const headEl = ref(null);
 	const { width: headElSize } = useElementSize(headEl);

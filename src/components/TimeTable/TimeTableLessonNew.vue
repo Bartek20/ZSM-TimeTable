@@ -1,9 +1,9 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
-	import appData from '@/stores/data';
 	import parseColor from '@/functions/parseColor';
 
 	const user = useRouteParams('user');
+	const mode = useRouteParams('mode');
 
 	const props = defineProps({
 		data: {
@@ -28,7 +28,7 @@
 			return {
 				name: '@',
 			};
-		const ver = ['n', 's'].includes(appConfigs.value.currentTimeTable.mode);
+		const ver = ['n', 's'].includes(mode.value);
 		if (ver)
 			return {
 				mode: 'o',
@@ -46,7 +46,7 @@
 			return {
 				name: 'CKZ',
 			};
-		const ver = ['o', 'n'].includes(appConfigs.value.currentTimeTable.mode);
+		const ver = ['o', 'n'].includes(mode.value);
 		if (ver)
 			return {
 				mode: 's',
@@ -66,8 +66,8 @@
 				dark: 'lightgray',
 			};
 		const name = subject.value.short.replace(/ \([UR]{1}\)/, '');
-		if (!appData.value.database.subjects[name]) parseColor(name);
-		return appData.value.database.subjects[name];
+		if (!appConfigs.value.database.subjects[name]) parseColor(name);
+		return appConfigs.value.database.subjects[name];
 	});
 
 	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));

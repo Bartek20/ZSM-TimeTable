@@ -14,8 +14,9 @@
 		loadingComponent: '<div></div>',
 		delay: 0,
 	});
-	import appConfigs from '@/stores/configs';
 	const user = useRouteParams('user');
+	const mode = useRouteParams('mode')
+	const id = useRouteParams('id')
 	function closeMenus() {
 		document.querySelector('aside.sidebar')?.classList.remove('open');
 		document.querySelector('aside.configs')?.classList.remove('open');
@@ -31,7 +32,7 @@
 
 <template>
 	<AppSidebar />
-	<AppTimeTable :key="user + appConfigs.currentTimeTable.mode + appConfigs.currentTimeTable.id" />
+	<AppTimeTable :key="user + mode + id" />
 	<AppSettings />
 	<div class="overlay" @click="closeMenus"></div>
 	<RouterLink v-if="user == 'uczen'" :to="{ name: 'plan', params: { user: 'nauczyciel' } }" style="display: none" id="teleporter" />

@@ -10,7 +10,6 @@ import App from './App.vue';
 import router from './router';
 
 import appConfigs from '@/stores/configs';
-import appData from '@/stores/data';
 import appPWA from '@/stores/pwa';
 import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
@@ -128,7 +127,7 @@ function parseData(obj, data) {
 					let msg = 'Zmodyfikowno nazwy poziomów:';
 					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
 					log('warn', msg);
-					appData.value.database.rooms = {};
+					appConfigs.value.database.rooms = {};
 				}
 			}
 			break;
@@ -152,7 +151,7 @@ function parseData(obj, data) {
 					let msg = 'Zmodyfikowno nazwy kierunków:';
 					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
 					log('warn', msg);
-					appData.value.database.classes = {};
+					appConfigs.value.database.classes = {};
 				}
 			}
 			break;
@@ -175,7 +174,7 @@ function parseData(obj, data) {
 							dest: data[key],
 						});
 						appConfigs.value.timetable.teachers[key] = data[key];
-						delete appData.value.database.teachers[key];
+						appConfigs.value.database.teachers[key] = undefined;
 					}
 				});
 				if (diff.length) {
@@ -209,7 +208,7 @@ function parseData(obj, data) {
 							dest: data[key],
 						});
 						appConfigs.value.timetable.rooms[key] = data[key];
-						delete appData.value.database.rooms[key];
+						appConfigs.value.database.rooms[key] = undefined;
 					}
 				});
 				if (diff.length) {
@@ -237,7 +236,7 @@ function parseData(obj, data) {
 							dest: data[key],
 						});
 						appConfigs.value.timetable.subjects[key] = data[key];
-						delete appData.value.database.subjects[data[key].short.replace(/ \([UR]{1}\)/, '')];
+						appConfigs.value.database.subjects[data[key].short.replace(/ \([UR]{1}\)/, '')] = undefined;
 					}
 				});
 				if (diff.length) {
@@ -287,8 +286,6 @@ function parseData(obj, data) {
 	}
 	// Reset session configs
 	appConfigs.value.shortLessons = false;
-	appData.value.list = {};
-	appData.value.timetable = {};
 	// Render application
 	app.use(router);
 	app.directive('tooltip', vTooltip);

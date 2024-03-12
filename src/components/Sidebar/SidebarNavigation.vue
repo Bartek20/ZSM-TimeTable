@@ -5,6 +5,7 @@
 	import getCombinations from '@/functions/combinations';
 	import log from '@/functions/logger';
 	import parseName from '@/functions/parseName';
+	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
 
 	await fetchList();
@@ -15,29 +16,29 @@
 		const teachers = [];
 		const rooms = [];
 
-		if (Object.keys(appData.value.list).length > 0) {
-			appData.value.list.classes.forEach((item) => {
+		if (Object.keys(appData.list.value).length > 0) {
+			appData.list.value.classes.forEach((item) => {
 				const out = {};
-				if (!appData.value.database.classes[item.name]) parseName('o', item.name);
-				out.name = appData.value.database.classes[item.name].sidebar;
+				if (!appConfigs.value.database.classes[item.name]) parseName('o', item.name);
+				out.name = appConfigs.value.database.classes[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.database.classes[item.name].search;
+				out.keys = appConfigs.value.database.classes[item.name].search;
 				classes.push(out);
 			});
-			appData.value.list.teachers.forEach((item) => {
+			appData.list.value.teachers.forEach((item) => {
 				const out = {};
-				if (!appData.value.database.teachers[item.name]) parseName('n', item.name);
-				out.name = appData.value.database.teachers[item.name].sidebar;
+				if (!appConfigs.value.database.teachers[item.name]) parseName('n', item.name);
+				out.name = appConfigs.value.database.teachers[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.database.teachers[item.name].search;
+				out.keys = appConfigs.value.database.teachers[item.name].search;
 				teachers.push(out);
 			});
-			appData.value.list.rooms.forEach((item) => {
+			appData.list.value.rooms.forEach((item) => {
 				const out = {};
-				if (!appData.value.database.rooms[item.name]) parseName('s', item.name);
-				out.name = appData.value.database.rooms[item.name].sidebar;
+				if (!appConfigs.value.database.rooms[item.name]) parseName('s', item.name);
+				out.name = appConfigs.value.database.rooms[item.name].sidebar;
 				out.id = item.value;
-				out.keys = appData.value.database.rooms[item.name].search;
+				out.keys = appConfigs.value.database.rooms[item.name].search;
 				rooms.push(out);
 			});
 		}

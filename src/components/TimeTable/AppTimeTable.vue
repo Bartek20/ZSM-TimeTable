@@ -1,8 +1,9 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
+	const mode = useRouteParams('mode');
 	const message = computed(() => {
-		switch (appData.value.timetable.status) {
+		switch (appData.timetable.value.status) {
 			case 0:
 				return {
 					icon: 'zsm-loading-icon loading',
@@ -24,7 +25,7 @@
 					msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
 				};
 			case 200:
-				if (appData.value.timetable.hours.length == 0) {
+				if (appData.timetable.value.hours.length == 0) {
 					const MESSAGES = {
 						o: 'Wybrana klasa nie ma w planie żadnych zajęć',
 						n: 'Wybrany nauczyciel nie ma w planie żadnych lekcji',
@@ -32,7 +33,7 @@
 					};
 					return {
 						icon: 'zsm-empty-icon',
-						msg: MESSAGES[appConfigs.value.currentTimeTable.mode],
+						msg: MESSAGES[mode.value],
 					};
 				}
 				return undefined;

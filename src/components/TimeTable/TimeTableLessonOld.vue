@@ -2,6 +2,7 @@
 	import appConfigs from '@/stores/configs';
 
 	const user = useRouteParams('user');
+	const mode = useRouteParams('mode')
 
 	const props = defineProps({
 		data: {
@@ -26,7 +27,7 @@
 			return {
 				name: '@',
 			};
-		const ver = ['n', 's'].includes(appConfigs.value.currentTimeTable.mode);
+		const ver = ['n', 's'].includes(mode.value);
 		if (ver)
 			return {
 				mode: 'o',
@@ -44,7 +45,7 @@
 			return {
 				name: 'CKZ',
 			};
-		const ver = ['o', 'n'].includes(appConfigs.value.currentTimeTable.mode);
+		const ver = ['o', 'n'].includes(mode.value);
 		if (ver)
 			return {
 				mode: 's',

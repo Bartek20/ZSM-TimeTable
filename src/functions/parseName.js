@@ -1,5 +1,4 @@
 import appConfigs from '@/stores/configs';
-import appData from '@/stores/data';
 
 function parseClass(name) {
 	let title, heading, sidebar, search;
@@ -113,13 +112,13 @@ function parseClassroom(name) {
 export default function parseName(mode, name) {
 	switch (mode) {
 		case 'o':
-			appData.value.database.classes[name] = parseClass(name || '');
+			appConfigs.value.database.classes[name] = parseClass(name || '');
 			break;
 		case 'n':
-			appData.value.database.teachers[name] = parseTeacher(name || '');
+			appConfigs.value.database.teachers[name] = parseTeacher(name || '');
 			break;
 		case 's':
-			appData.value.database.rooms[name] = parseClassroom(name || '');
+			appConfigs.value.database.rooms[name] = parseClassroom(name || '');
 			break;
 	}
 }

@@ -95,7 +95,7 @@ export default async function loadList() {
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
 		if (res == undefined) return;
-		appData.value.list = new TimeTableList(res.data).getList();
+		appData.list.value = new TimeTableList(res.data).getList();
 	} catch (err) {
 		log('error', 'Wystąpił błąd przy wczytywaniu listy:\n', err);
 		return;

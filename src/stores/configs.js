@@ -19,6 +19,12 @@ const appConfigs = useStorage(
 			rooms: {},
 			subjects: {},
 		},
+		database: {
+			rooms: {},
+			teachers: {},
+			classes: {},
+			subjects: {},
+		},
 		// Router - Saving last route
 		currentTimeTable: {
 			mode: 'o',

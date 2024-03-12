@@ -15,7 +15,10 @@
 	import appData from '@/stores/data';
 	import loadTimeTable from '@/functions/fetchTimeTable';
 
-	await loadTimeTable(appConfigs.value.currentTimeTable.mode, appConfigs.value.currentTimeTable.id);
+	const mode = useRouteParams('mode');
+	const id = useRouteParams('id');
+
+	await loadTimeTable(mode.value, id.value);
 	function calcBreak(from, to) {
 		if (!from || !to) return 0;
 		const start_el = from.split(':');
@@ -27,9 +30,9 @@
 		return (end_time - start_time) / 1000 / 60;
 	}
 	const data = computed(() => {
-		const src = appData.value.timetable;
+		const src = appData.timetable.value;
 		const shortHours =
-			appData.value.timetable.hours?.map((hour) => {
+			appData.timetable.value.hours?.map((hour) => {
 				return appConfigs.value.timetable.shortLessons[hour.number];
 			}) || [];
 		const hours = appConfigs.value.shortLessons && src.hours?.length == shortHours.length ? shortHours : src.hours;

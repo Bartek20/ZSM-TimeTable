@@ -1,10 +1,12 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
+	const mode = useRouteParams('mode')
+	const id = useRouteParams('id')
 	function printTimeTable() {
 		// Open printed page
 		const page = window.open(
-			`${appConfigs.value.school.timetableURL}plany/${appConfigs.value.currentTimeTable.mode}${appConfigs.value.currentTimeTable.id}.html`,
+			`${appConfigs.value.school.timetableURL}plany/${mode.value}${id.value}.html`,
 			'_print'
 		);
 		if (!page) return;
@@ -65,7 +67,7 @@
 		<span class="configs__options__title"><b>Opcje</b></span>
 		<a
 			class="configs__options__option"
-			:href="`${appConfigs.school.timetableURL}plany/${appConfigs.currentTimeTable.mode}${appConfigs.currentTimeTable.id}.html`"
+			:href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`"
 			target="_blank">
 			<i class="configs__options__option__icon zsm-old-timetable-icon"></i>
 			<span class="configs__options__option__name">Otwórz oryginalny plan</span>

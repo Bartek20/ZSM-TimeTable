@@ -58,7 +58,7 @@ router.beforeEach((to) => {
 		mode: to.params.mode,
 		id: to.params.id,
 	};
-	appData.value.timetable = { status: 0 };
+	appData.timetable.value = { status: 0 };
 });
 router.afterEach((_to, _from, failure) => {
 	if (failure) log('error', 'Wystąpił błąd przy przekierowaniu:', failure);
