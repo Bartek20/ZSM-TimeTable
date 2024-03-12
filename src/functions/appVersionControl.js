@@ -40,6 +40,8 @@ export default async function validateApp() {
 		// Updating from v3.0.1 to v3.1.0
 		if (cmpVersion('v3.1.0')) {
 			window.localStorage.removeItem('appData');
+			await window.caches.delete('google-fonts-cache');
+			await window.caches.delete('gstatic-fonts-cache');
 		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;

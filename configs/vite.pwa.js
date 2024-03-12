@@ -38,30 +38,16 @@ export default {
 		navigateFallbackDenylist: [timetableRegExp, /assets/],
 		runtimeCaching: [
 			{
-				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+				urlPattern: /^https:\/\/fonts\.(gstatic|googleapis)\.com\/.*/i,
 				handler: 'CacheFirst',
 				options: {
-					cacheName: 'google-fonts-cache',
+					cacheName: 'fonts-data',
 					expiration: {
-						maxEntries: 10,
+						maxEntries: 25,
 						maxAgeSeconds: 60 * 60 * 24 * 365,
 					},
 					cacheableResponse: {
-						statuses: [0, 200],
-					},
-				},
-			},
-			{
-				urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-				handler: 'CacheFirst',
-				options: {
-					cacheName: 'gstatic-fonts-cache',
-					expiration: {
-						maxEntries: 10,
-						maxAgeSeconds: 60 * 60 * 24 * 365,
-					},
-					cacheableResponse: {
-						statuses: [0, 200],
+						statuses: [200],
 					},
 				},
 			},
