@@ -24,7 +24,6 @@
 		if (!name) {
 			switch (appData.timetable.value.status) {
 				case 0:
-					setTitle('Wczytywanie planu lekcji.');
 					return;
 				case 404:
 					setTitle('Wybrany plan nie został odnaleziony.');

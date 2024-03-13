@@ -1,19 +1,4 @@
 <script setup>
-	const AppSidebar = defineAsyncComponent({
-		loader: () => import('@/components/Sidebar/AppSidebar.vue'),
-		loadingComponent: '<div></div>',
-		delay: 0,
-	});
-	const AppTimeTable = defineAsyncComponent({
-		loader: () => import('@/components/TimeTable/AppTimeTable.vue'),
-		loadingComponent: '<div></div>',
-		delay: 0,
-	});
-	const AppSettings = defineAsyncComponent({
-		loader: () => import('@/components/Settings/AppSettings.vue'),
-		loadingComponent: '<div></div>',
-		delay: 0,
-	});
 	const user = useRouteParams('user');
 	const mode = useRouteParams('mode')
 	const id = useRouteParams('id')

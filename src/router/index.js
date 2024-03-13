@@ -3,6 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
 import log from '@/functions/logger';
+import setTitle from '@/functions/setTitle';
+
+import AppView from '@/views/AppView.vue';
 
 let selected = appConfigs.value.currentTimeTable;
 
@@ -30,7 +33,7 @@ const router = createRouter({
 		{
 			path: '/:user(uczen|nauczyciel)/:mode([ons])/:id(\\d+)',
 			name: 'plan',
-			component: () => import('@/views/AppView.vue'),
+			component: AppView,
 		},
 		{
 			path: '/:catchAll(.*)',
@@ -60,8 +63,13 @@ router.beforeEach((to) => {
 	};
 	appData.timetable.value = { status: 0 };
 });
-router.afterEach((_to, _from, failure) => {
-	if (failure) log('error', 'Wystąpił błąd przy przekierowaniu:', failure);
+router.afterEach((to, _from, failure) => {
+	if (failure) {
+		log('error', 'Wystąpił błąd przy przekierowaniu:', failure);
+		return;
+	}
+	if (to.name == 'plan') setTitle('Wczytywanie planu lekcji.');
 });
+router.onError((e) => log('error', 'Wystąpił błąd przy przekierowaniu:', e));
 
 export default router;

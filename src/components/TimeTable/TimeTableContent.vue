@@ -1,6 +1,4 @@
 <script setup>
-	const TimeTableTableOld = defineAsyncComponent(() => import('@/components/TimeTable/TimeTableTableOld.vue'));
-	const TimeTableTableNew = defineAsyncComponent(() => import('@/components/TimeTable/TimeTableTableNew.vue'));
 	const props = defineProps({
 		activeDay: {
 			type: Number,

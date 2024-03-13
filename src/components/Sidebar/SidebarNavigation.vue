@@ -1,6 +1,4 @@
 <script setup>
-	const MenuSearchBar = defineAsyncComponent(() => import('@/components/Sidebar/MenuSearchBar.vue'));
-	const SidebarLists = defineAsyncComponent(() => import('@/components/Sidebar/SidebarLists.vue'));
 	import fetchList from '@/functions/fetchList';
 	import getCombinations from '@/functions/combinations';
 	import log from '@/functions/logger';
