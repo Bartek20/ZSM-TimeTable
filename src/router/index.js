@@ -13,14 +13,6 @@ const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
-			path: '/:user?',
-			name: 'home',
-			redirect: (to) =>
-				`/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${['o', 'n', 's'].includes(selected?.mode) ? selected.mode : 'o'}/${
-					typeof selected?.id == 'number' ? selected.id : 1
-				}`,
-		},
-		{
 			path: '/plany/:plan([ons]\\d+.html)',
 			name: 'redirector',
 			redirect: (to) => {
@@ -36,6 +28,14 @@ const router = createRouter({
 			component: AppView,
 		},
 		{
+			path: '/:user?',
+			name: 'home',
+			redirect: (to) =>
+				`/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${['o', 'n', 's'].includes(selected?.mode) ? selected.mode : 'o'}/${
+					typeof selected?.id == 'string' && !isNaN(selected?.id) ? selected.id : 1
+				}`,
+		},
+		{
 			path: '/:catchAll(.*)',
 			name: '404',
 			redirect: '/',
@@ -43,7 +43,8 @@ const router = createRouter({
 	],
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
+	log('info', '[ROUTER]', from.fullPath, '->', to.fullPath);
 	if (to.name == '404' || to.name == 'home' || to.name == 'redirector') {
 		if (to.redirectedFrom.name == '404' || to.redirectedFrom.name == 'home' || to.redirectedFrom == 'redirector') {
 			log('warn', 'Doszło do pętli przekierowań:', to);

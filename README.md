@@ -44,6 +44,7 @@ npm run build -- --base "/ściezka/"
 - Axios.js - Pobieranie planów lekcji
 - Chroma.js - Generowanie kolorów lekcji
 - @nozbe/microfuzz - Wyszukiwarka
+- Sentry Vue app monitoring (tylko gdy skonfigurowany)
 
 ### Środowisko deweloperskie:
 

@@ -36,3 +36,6 @@ timetableData.js
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Compressed app data
+app.tar.gz

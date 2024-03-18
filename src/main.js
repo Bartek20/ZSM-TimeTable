@@ -25,7 +25,7 @@ Sentry_init({
 	app,
 	trackComponents: true,
 	// Sentry config
-	dsn: 'https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.us.sentry.io/4506820647190528',
+	dsn: __SENTRY_DSN__,
 	integrations: [
 		Sentry_browserTracingIntegration({ router }),
 		Sentry_replayIntegration({
@@ -73,13 +73,12 @@ function checkScrollStyllability() {
 	if (test.clientWidth != 97 && test.clientWidth != 100) document.body.classList.add('thinscroll');
 	log(
 		'info',
-		'Scroll test finished with following result:\nCustom scrollbar:',
-		test.clientWidth != 97 ? (test.clientWidth != 100 ? 'Not supported (thin scrollbar applied)' : 'Not supported (normal scrollbar applied)') : 'Supported'
+		'Test zakończony z wynikiem:\nCustomowy scrollbar: ',
+		test.clientWidth != 97 ? (test.clientWidth != 100 ? 'Nie wspierany (Aktywny cienki scrollbar)' : 'Nie wspierany (Aktywny normalny scrollbar)') : 'Wspierany'
 	);
 	style.remove();
 	test.remove();
 }
-checkScrollStyllability();
 
 // Set PWA eventlistener
 const appPWAState = appPWA();
@@ -250,6 +249,12 @@ function parseData(obj, data) {
 }
 
 (async () => {
+	// Console log app version
+	log('info', 'Wczytywanie aplikacji w wersji:', __APP_VERSION__);
+
+	// Setup functions
+	checkScrollStyllability();
+
 	// Fetch School Data
 	try {
 		const { default: schoolData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
@@ -271,6 +276,7 @@ function parseData(obj, data) {
 	} catch (e) {
 		log('error', 'Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
 	}
+
 	// Prevent app from running without required data
 	if (!appConfigs.value.school.timetableURL) {
 		const loader = document.body.querySelector('#loader');
@@ -278,14 +284,17 @@ function parseData(obj, data) {
 		loader.querySelector('p').innerText = 'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.';
 		return;
 	}
+
 	// Try to lock screen orientation
 	try {
 		await screen.orientation.lock('portrait');
 	} catch (e) {
 		log('warn', 'Nie udało się zablokować orientacji ekranu:\n', e);
 	}
+
 	// Reset session configs
 	appConfigs.value.shortLessons = false;
+
 	// Render application
 	app.use(router);
 	app.directive('tooltip', vTooltip);
@@ -297,15 +306,19 @@ async function cacheTimeTables() {
 	if (import.meta.env.MODE == 'development') return;
 	const last = appConfigs.value.lastFetched;
 	if (last != null && last + 86400000 > Date.now()) return;
-	console.info('Fetching timetable updates started.');
-	const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
-	const list = new TimeTableList(res.data).getList();
-	const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`));
-	const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`));
-	const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`));
-	await Promise.all([...classMap, ...teacherMap, ...roomMap]);
-	console.info('Fetching timetable updates finished.');
-	appConfigs.value.lastFetched = Date.now();
+	log('info', 'Rozpoczęto pobieranie planów do pamięci cache.');
+	try {
+		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
+		const list = new TimeTableList(res.data).getList();
+		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => {}));
+		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => {}));
+		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => {}));
+		await Promise.all([...classMap, ...teacherMap, ...roomMap]);
+		log('info', 'Zakończono pobieranie planów do pamięci cache.');
+		appConfigs.value.lastFetched = Date.now();
+	} catch (e) {
+		log('error', 'Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
+	}
 }
 
 const updateSW = registerSW({
