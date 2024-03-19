@@ -12,7 +12,10 @@ Zabronione jest jednak usuwanie, jak i modyfikowanie informacji o autorze kodu (
 
 ### 1) Przed rozpoczęciem kompilacji należy dostosować aplikację poprzez:
 
+\* Opcjonalnie - Wymagane założenie konta i znajomość obsługi panelu
 - Zmienienie loga szkoły (plik /public/images/logo.png)
+- \* Wprowadzenie zmiennej środowiskowej ***CF_BEACON_TOKEN*** (Do śledzenia statystyk poprzez Cloudflare Insights)
+- \* Wprowadzenie zmiennej środowiskowej ***SENTRY_DSN_URL*** (Do automatycznego zgłaszania błędów poprzez Sentry)
 
 ### 2) Po dostosowaniu aplikacji do potrzeb szkoły należy skompilować program:
 
@@ -32,7 +35,7 @@ npm run build -- --base "/ściezka/"
 
 ### 4) Po skopiowaniu plików należy:
 
-- **[OBOWIĄZKOWO]** <br />Wybrać prawidłowy dla domeny plik **_.htaccess_** (www lub non-www) i zmienić jego nazwę na _.htaccess_ (drugi plik należy usunąć)
+- **[OBOWIĄZKOWO]** *Dotyczy serwera Apache (w innej sytuacji należy ręcznie dostosować serwer)* <br />Wybrać prawidłowy dla domeny plik **_.htaccess_** (www lub non-www) i zmienić jego nazwę na _.htaccess_ (drugi plik należy usunąć)
 - **[OBOWIĄZKOWO]** <br />Dostosować dane szkoły zgodnie z plikiem **_schoolData.template.js_** (zmienić nazwę na _schoolData.js_ i dostosować zawartość)
 - **[OPCJONALNIE]** <br />Dostosować dane planu lekcji zgodnie z plikiem **_timetableData.template.js_** (zmienić nazwę na _timetableData.js_ i dostosować zawartość)
 
@@ -40,11 +43,15 @@ npm run build -- --base "/ściezka/"
 
 ### W wydaniu produkcyjnym:
 
-- Vue.js 3 (Vue Router, @VueUse)
+- Vue.js 3 (Vue Router, @VueUse, Floating Vue)
 - Axios.js - Pobieranie planów lekcji
 - Chroma.js - Generowanie kolorów lekcji
 - @nozbe/microfuzz - Wyszukiwarka
-- Sentry Vue app monitoring (tylko gdy skonfigurowany)
+
+#### Do monitorowania błędów i wydajności
+
+- Cloudflare Insights
+- Sentry Vue App Monitoring
 
 ### Środowisko deweloperskie:
 

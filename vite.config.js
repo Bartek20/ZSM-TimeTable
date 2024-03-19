@@ -25,7 +25,7 @@ const now = getNow();
 export default defineConfig({
 	define: {
 		__APP_VERSION__: JSON.stringify('v3.1.1'),
-		__SENTRY_DSN__: JSON.stringify('https://8ef437ed0e23a12d1519678510d08a0c@o4506820645158912.ingest.us.sentry.io/4506820647190528'),
+		__SENTRY_DSN__: JSON.stringify(process.env.SENTRY_DSN_URL ?? ''),
 		__VUE_PROD_DEVTOOLS__: true,
 	},
 	server,

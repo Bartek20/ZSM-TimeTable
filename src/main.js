@@ -21,7 +21,7 @@ import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracing
 const app = createApp(App);
 
 // Sentry Error Reporting
-Sentry_init({
+if (__SENTRY_DSN__) Sentry_init({
 	// Sentry config
 	dsn: __SENTRY_DSN__,
 	integrations: [
@@ -46,6 +46,10 @@ Sentry_init({
 		scope.setTag('appVersion', __APP_VERSION__);
 		scope.setContext('appConfigs', data);
 		return scope;
+	},
+	beforeSend: (event, hint) => {
+		hint.attachments = [{ filename: 'appConfigs.json', data: () => localStorage.getItem('appConfigs') }];
+		return event;
 	},
 });
 
