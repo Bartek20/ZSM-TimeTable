@@ -15,7 +15,7 @@ function cmpVersion(version = __APP_VERSION__) {
 export default async function validateApp() {
 	const version = appConfigs.value.version;
 	if (version != __APP_VERSION__) {
-		log('info', version == undefined ? 'Installing app' : 'Updating app');
+		log('info', '[App]', version == undefined ? 'Instalowanie aplikacji' : 'Aktualizacja aplikacji');
 		// Updating from legacy NO-VERSION app to v1.0.0
 		if (cmpVersion('v1.0.0')) {
 			window.localStorage.removeItem('selectedTimeTable');
@@ -42,6 +42,9 @@ export default async function validateApp() {
 			window.localStorage.removeItem('appData');
 			await window.caches.delete('google-fonts-cache');
 			await window.caches.delete('gstatic-fonts-cache');
+		}
+		if (cmpVersion('v3.1.1')) {
+			appConfigs.value.currentTimeTable = undefined;
 		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;

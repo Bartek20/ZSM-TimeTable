@@ -19,17 +19,15 @@ const appConfigs = useStorage(
 			rooms: {},
 			subjects: {},
 		},
+		// Parsed data store
 		database: {
 			rooms: {},
 			teachers: {},
 			classes: {},
 			subjects: {},
 		},
-		// Router - Saving last route
-		currentTimeTable: {
-			mode: 'o',
-			id: 1,
-		},
+		// History
+		history: [],
 		// Settings
 		colorMode: 'light',
 		viewMode: 'new',

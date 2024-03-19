@@ -14,6 +14,7 @@ import appPWA from '@/stores/pwa';
 import log from '@/functions/logger';
 import validateApp from '@/functions/appVersionControl';
 import colorHandler from '@/functions/colorModeHandler';
+import parseData from '@/functions/timetableDataHandler';
 
 import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
 
@@ -21,9 +22,6 @@ const app = createApp(App);
 
 // Sentry Error Reporting
 Sentry_init({
-	// Vue settings
-	app,
-	trackComponents: true,
 	// Sentry config
 	dsn: __SENTRY_DSN__,
 	integrations: [
@@ -39,6 +37,15 @@ Sentry_init({
 	// Session Replay
 	replaysSessionSampleRate: 0,
 	replaysOnErrorSampleRate: 1.0,
+	// Vue settings
+	app,
+	trackComponents: true,
+	// App settings
+	initialScope: (scope) => {
+		const data = JSON.parse(localStorage.getItem('appConfigs'));
+		scope.setContext('appConfigs', data);
+		return scope;
+	},
 });
 
 // Check custom css scrollbar support
@@ -73,7 +80,7 @@ function checkScrollStyllability() {
 	if (test.clientWidth != 97 && test.clientWidth != 100) document.body.classList.add('thinscroll');
 	log(
 		'info',
-		'Test zakończony z wynikiem:\nCustomowy scrollbar: ',
+		'[App] Test zakończony z wynikiem:\nCustomowy scrollbar: ',
 		test.clientWidth != 97 ? (test.clientWidth != 100 ? 'Nie wspierany (Aktywny cienki scrollbar)' : 'Nie wspierany (Aktywny normalny scrollbar)') : 'Wspierany'
 	);
 	style.remove();
@@ -95,165 +102,26 @@ if (window.installevent) {
 	window.installevent = undefined;
 }
 
-// Parse config data from timetableData.js and check for updates
-function parseData(obj, data) {
-	switch (obj) {
-		case 'shortLessons':
-			if (appConfigs.value.timetable.shortLessons.length === 0) {
-				appConfigs.value.timetable.shortLessons = data;
-			} else if (appConfigs.value.timetable.shortLessons.length != data.length) {
-				log('warn', 'Zmodyfikowano godziny trwania skróconych lekcji');
-				appConfigs.value.timetable.shortLessons = data;
-			}
-			break;
-		case 'levels':
-			if (Object.keys(appConfigs.value.timetable.levels).length === 0) {
-				appConfigs.value.timetable.levels = data;
-			} else {
-				const diff = [];
-				const newData = Object.keys(data);
-				newData.forEach((key) => {
-					if (data[key] != appConfigs.value.timetable.levels[key]) {
-						diff.push({
-							idx: key,
-							src: appConfigs.value.timetable.levels[key],
-							dest: data[key],
-						});
-						appConfigs.value.timetable.levels[key] = data[key];
-					}
-				});
-				if (diff.length) {
-					let msg = 'Zmodyfikowno nazwy poziomów:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
-					log('warn', msg);
-					appConfigs.value.database.rooms = {};
-				}
-			}
-			break;
-		case 'classes':
-			if (Object.keys(appConfigs.value.timetable.classes).length === 0) {
-				appConfigs.value.timetable.classes = data;
-			} else {
-				const diff = [];
-				const newData = Object.keys(data);
-				newData.forEach((key) => {
-					if (data[key] != appConfigs.value.timetable.classes[key]) {
-						diff.push({
-							idx: key,
-							src: appConfigs.value.timetable.classes[key],
-							dest: data[key],
-						});
-						appConfigs.value.timetable.classes[key] = data[key];
-					}
-				});
-				if (diff.length) {
-					let msg = 'Zmodyfikowno nazwy kierunków:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
-					log('warn', msg);
-					appConfigs.value.database.classes = {};
-				}
-			}
-			break;
-		case 'teachers':
-			if (Object.keys(appConfigs.value.timetable.teachers).length === 0) {
-				appConfigs.value.timetable.teachers = data;
-			} else {
-				const diff = [];
-				const newData = Object.keys(data);
-				newData.forEach((key) => {
-					if (
-						!appConfigs.value.timetable.teachers[key] ||
-						data[key].name != appConfigs.value.timetable.teachers[key].name ||
-						data[key].surname != appConfigs.value.timetable.teachers[key].surname ||
-						data[key].code != appConfigs.value.timetable.teachers[key].code
-					) {
-						diff.push({
-							idx: key,
-							src: appConfigs.value.timetable.teachers[key],
-							dest: data[key],
-						});
-						appConfigs.value.timetable.teachers[key] = data[key];
-						appConfigs.value.database.teachers[key] = undefined;
-					}
-				});
-				if (diff.length) {
-					let msg = 'Zmodyfikowno dane nauczycieli:';
-					diff.forEach(
-						(d) =>
-							(msg += `\n${d.idx}: ${d.src.name} ${d.src.surname} (${d.src.code}) -> ${d.dest.name} ${d.dest.surname} (${d.dest.code})`.replace(
-								/ [(]?undefined[)]?/g,
-								''
-							))
-					);
-					log('warn', msg);
-				}
-			}
-			break;
-		case 'rooms':
-			if (Object.keys(appConfigs.value.timetable.rooms).length === 0) {
-				appConfigs.value.timetable.rooms = data;
-			} else {
-				const diff = [];
-				const newData = Object.keys(data);
-				newData.forEach((key) => {
-					if (
-						!appConfigs.value.timetable.rooms[key] ||
-						data[key].level != appConfigs.value.timetable.rooms[key].level ||
-						data[key].name != appConfigs.value.timetable.rooms[key].name
-					) {
-						diff.push({
-							idx: key,
-							src: appConfigs.value.timetable.rooms[key],
-							dest: data[key],
-						});
-						appConfigs.value.timetable.rooms[key] = data[key];
-						appConfigs.value.database.rooms[key] = undefined;
-					}
-				});
-				if (diff.length) {
-					let msg = 'Zmodyfikowno dane sali:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.name} (${d.src.level}) -> ${d.dest.name} (${d.dest.level})`.replace(/ [(]?undefined[)]?/g, '')));
-					log('warn', msg);
-				}
-			}
-			break;
-		case 'subjects':
-			if (Object.keys(appConfigs.value.timetable.subjects).length === 0) {
-				appConfigs.value.timetable.subjects = data;
-			} else {
-				const diff = [];
-				const newData = Object.keys(data);
-				newData.forEach((key) => {
-					if (
-						!appConfigs.value.timetable.subjects[key] ||
-						data[key].short != appConfigs.value.timetable.subjects[key].short ||
-						data[key].full != appConfigs.value.timetable.subjects[key].full
-					) {
-						diff.push({
-							idx: key,
-							src: appConfigs.value.timetable.subjects[key],
-							dest: data[key],
-						});
-						appConfigs.value.timetable.subjects[key] = data[key];
-						appConfigs.value.database.subjects[data[key].short.replace(/ \([UR]{1}\)/, '')] = undefined;
-					}
-				});
-				if (diff.length) {
-					let msg = 'Zmodyfikowno dane przedmiotów:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.short} (${d.src.full}) -> ${d.dest.short} (${d.dest.full})`.replace(/ [(]?undefined[)]?/g, '')));
-					log('warn', msg);
-				}
-			}
-			break;
-	}
-}
-
+// Main app functions
 (async () => {
 	// Console log app version
-	log('info', 'Wczytywanie aplikacji w wersji:', __APP_VERSION__);
+	log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__);
+	// Console log user notification
+	if (import.meta.env.MODE != 'development') {
+		log(
+			'info',
+			'[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
+		);
+		log('warn', '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.');
+	}
 
-	// Setup functions
+	// App setup
+	// Check supported scrollbars
 	checkScrollStyllability();
+	// Setup cache headers
+	axios.defaults.headers.get['Cache-Control'] = 'no-cache';
+	// Setup color mode handler
+	colorHandler();
 
 	// Fetch School Data
 	try {
@@ -262,7 +130,7 @@ function parseData(obj, data) {
 		appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL;
 		appConfigs.value.school.logoDescription = schoolData.schoolLogoDescription || 'Logo Szkoły';
 	} catch (e) {
-		log('error', 'Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
+		log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
 	}
 	// Fetch TimeTable Data
 	try {
@@ -274,7 +142,7 @@ function parseData(obj, data) {
 		parseData('rooms', timetableData.rooms || {});
 		parseData('subjects', timetableData.subjects || {});
 	} catch (e) {
-		log('error', 'Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
+		log('error', '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
 	}
 
 	// Prevent app from running without required data
@@ -289,7 +157,7 @@ function parseData(obj, data) {
 	try {
 		await screen.orientation.lock('portrait');
 	} catch (e) {
-		log('warn', 'Nie udało się zablokować orientacji ekranu:\n', e);
+		log('warn', '[App] Nie udało się zablokować orientacji ekranu:\n', e);
 	}
 
 	// Reset session configs
@@ -306,7 +174,7 @@ async function cacheTimeTables() {
 	if (import.meta.env.MODE == 'development') return;
 	const last = appConfigs.value.lastFetched;
 	if (last != null && last + 86400000 > Date.now()) return;
-	log('info', 'Rozpoczęto pobieranie planów do pamięci cache.');
+	log('info', '[Service Worker] Rozpoczęto pobieranie planów do pamięci cache.');
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
 		const list = new TimeTableList(res.data).getList();
@@ -314,16 +182,23 @@ async function cacheTimeTables() {
 		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => {}));
 		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => {}));
 		await Promise.all([...classMap, ...teacherMap, ...roomMap]);
-		log('info', 'Zakończono pobieranie planów do pamięci cache.');
+		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
 		appConfigs.value.lastFetched = Date.now();
 	} catch (e) {
-		log('error', 'Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
+		log('error', '[Service Worker] Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
 	}
 }
 
 const updateSW = registerSW({
 	immediate: true,
+	onNeedRefresh() {
+		log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.');
+	},
+	onOfflineReady() {
+		log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.');
+	},
 	async onRegisteredSW(_, SW) {
+		log('info', '[Service Worker] Zainstalowano Service Workera.');
 		// Waiting for Service Worker to install
 		await new Promise((resolve) => {
 			const checkStatus = () => {
@@ -333,22 +208,14 @@ const updateSW = registerSW({
 			checkStatus();
 		});
 		// Service Worker Installed working
+		log('info', '[Service Worker] Service Worker został aktywowany.');
 		await validateApp();
 		cacheTimeTables();
 		setInterval(() => {
 			SW.update();
 		}, 3600000);
 	},
+	onRegisterError(err) {
+		log('error', '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n', err);
+	},
 });
-
-axios.defaults.headers.get['Cache-Control'] = 'no-cache';
-
-colorHandler();
-
-if (import.meta.env.MODE != 'development') {
-	log(
-		'info',
-		'Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
-	);
-	log('warn', 'Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.');
-}

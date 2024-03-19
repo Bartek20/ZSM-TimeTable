@@ -97,7 +97,7 @@ export default async function loadList() {
 		if (res == undefined) return;
 		appData.list.value = new TimeTableList(res.data).getList();
 	} catch (err) {
-		log('error', 'Wystąpił błąd przy wczytywaniu listy:\n', err);
+		log('error', '[App] Wystąpił błąd przy wczytywaniu listy:\n', err);
 		return;
 	}
 }

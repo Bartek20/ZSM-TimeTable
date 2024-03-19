@@ -18,7 +18,7 @@ function permute(values) {
 			i = 1;
 			result.push(values.slice().join(' '));
 			if (result.length >= 100000) {
-				log('warn', 'Przekroczono limit permutacji (100 000). Zatrzymywanie generowania.');
+				log('warn', '[App] Przekroczono limit permutacji (100 000). Zatrzymywanie generowania.');
 				break;
 			}
 		} else {
@@ -36,7 +36,7 @@ function getCombinations(data) {
 		for (let i = 0; i < data.length; i++) {
 			results.push(...getCombinations(data.filter((_, index) => !(index === i))));
 			if (results.length >= 100000) {
-				log('warn', 'Przekroczono limit permutacji (100 000). Zatrzymywanie generowania.');
+				log('warn', '[App] Przekroczono limit permutacji (100 000). Zatrzymywanie generowania.');
 				break;
 			}
 		}

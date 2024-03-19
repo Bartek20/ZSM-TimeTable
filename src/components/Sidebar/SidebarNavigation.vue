@@ -74,7 +74,7 @@
 				rooms: searchData.value.rooms,
 			};
 
-		log('info', 'Searching for:', search.value.query);
+		log('info', '[App] Wyszukiwanie:', search.value.query);
 		const out = {
 			classes: classSearcher.value(search.value.query).map((item) => ({ ...item.item })),
 			teachers: user.value == 'uczen' ? [] : teacherSearcher.value(search.value.query).map((item) => ({ ...item.item })),

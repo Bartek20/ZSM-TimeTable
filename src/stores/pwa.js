@@ -1,3 +1,5 @@
+import log from '@/functions/logger';
+
 const appPWA = createGlobalState(() => {
 	const event = ref(undefined);
 	const installed = ref(true);
@@ -33,10 +35,10 @@ const appPWA = createGlobalState(() => {
 		event.value.prompt();
 		event.value.userChoice.then((res) => {
 			if (res.outcome == 'accepted') {
-				console.info('Aplikacja zainstalowana pomyślnie.');
+				log('info', '[PWA] Aplikacja zainstalowana pomyślnie.');
 				installed.value = true;
 			} else {
-				console.info('Instalacja została anulowana.');
+				log('info', '[PWA] Instalacja została anulowana.');
 			}
 		});
 	}

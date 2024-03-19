@@ -205,7 +205,7 @@ export default async function loadTimeTable(mode, id) {
 		}
 		appData.timetable.value = result;
 	} catch (err) {
-		log('error', 'Wystąpił błąd przy wczytywaniu planu:\n', err);
+		log('error', '[App] Wystąpił błąd przy wczytywaniu planu:\n', err);
 		if (err.response && err.response.status == 404) {
 			appData.timetable.value = {
 				status: 404,

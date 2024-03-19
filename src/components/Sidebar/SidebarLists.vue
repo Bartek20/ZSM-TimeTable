@@ -60,9 +60,10 @@
 			padding-right: v-bind('listPaddings.padding');
 			&::-webkit-scrollbar {
 				width: 0.5rem;
+				height: 0.5rem;
 			}
 			&::-webkit-scrollbar-thumb {
-				border: 0.1em solid var(--bg-scrollbar);
+				border: 0.1rem solid var(--bg-scrollbar);
 			}
 		}
 	}

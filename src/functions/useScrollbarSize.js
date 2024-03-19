@@ -8,10 +8,6 @@ export function useElementScrollbarSize(target) {
 	const height = ref(0);
 
 	const { stop } = useResizeObserver(target, ([entry]) => {
-		// const borderBox = entry.borderBoxSize[0];
-		// const contentBox = entry.contentBoxSize[0];
-		// width.value = borderBox.inlineSize - contentBox.inlineSize;
-		// height.value = borderBox.blockSize - contentBox.blockSize;
 		const target = entry.target;
 		width.value = target.offsetWidth - target.clientWidth;
 		height.value = target.offsetHeight - target.clientHeight;

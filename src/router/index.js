@@ -7,7 +7,19 @@ import setTitle from '@/functions/setTitle';
 
 import AppView from '@/views/AppView.vue';
 
-let selected = appConfigs.value.currentTimeTable;
+function addHistory(mode, id) {
+	let historyRecords = appConfigs.value.history;
+	// Filter added path
+	historyRecords = historyRecords.filter((record) => !(record.mode == mode && record.id == id));
+	// Change history size to 24 records
+	historyRecords = historyRecords.filter((_, idx) => idx < 23);
+	// Add newest record
+	historyRecords = [{ mode, id }, ...historyRecords];
+	// Save history
+	appConfigs.value.history = historyRecords;
+}
+
+let selected = appConfigs.value.history?.[0];
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,33 +56,35 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-	log('info', '[ROUTER]', from.fullPath, '->', to.fullPath);
+	log('info', '[Vue Router]', from.fullPath, '->', to.fullPath);
+
+	// Prevent redirection loop
 	if (to.name == '404' || to.name == 'home' || to.name == 'redirector') {
 		if (to.redirectedFrom.name == '404' || to.redirectedFrom.name == 'home' || to.redirectedFrom == 'redirector') {
-			log('warn', 'Doszło do pętli przekierowań:', to);
+			log('warn', '[Vue Router] Doszło do pętli przekierowań:', to);
 			return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } };
 		}
 		return;
 	}
+
 	if (to.name != 'plan') return;
 	// Prevent students from using old view
 	if (to.params.user == 'uczen') appConfigs.value.viewMode = 'new';
 	// Prevent students from accessing teacher's timetables.
 	if (to.params.user == 'uczen' && to.params.mode == 'n') return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } };
-	// Set current timetable
-	appConfigs.value.currentTimeTable = {
-		mode: to.params.mode,
-		id: to.params.id,
-	};
+
+	// Add current timetable to history
+	addHistory(to.params.mode, to.params.id);
+	// Force loading status
 	appData.timetable.value = { status: 0 };
 });
 router.afterEach((to, _from, failure) => {
 	if (failure) {
-		log('error', 'Wystąpił błąd przy przekierowaniu:', failure);
+		log('error', '[Vue Router] Wystąpił błąd przy przekierowaniu:', failure);
 		return;
 	}
 	if (to.name == 'plan') setTitle('Wczytywanie planu lekcji.');
 });
-router.onError((e) => log('error', 'Wystąpił błąd przy przekierowaniu:', e));
+router.onError((e) => log('error', '[Vue Router] Wystąpił błąd przy przekierowaniu:', e));
 
 export default router;
