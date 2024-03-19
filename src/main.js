@@ -35,7 +35,7 @@ Sentry_init({
 	tracesSampleRate: 0.1,
 	tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
 	// Session Replay
-	replaysSessionSampleRate: 0,
+	replaysSessionSampleRate: 1,
 	replaysOnErrorSampleRate: 1.0,
 	// Vue settings
 	app,
@@ -43,6 +43,7 @@ Sentry_init({
 	// App settings
 	initialScope: (scope) => {
 		const data = JSON.parse(localStorage.getItem('appConfigs'));
+		scope.setTag('appVersion', __APP_VERSION__);
 		scope.setContext('appConfigs', data);
 		return scope;
 	},

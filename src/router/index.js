@@ -12,7 +12,7 @@ function addHistory(mode, id) {
 	// Filter added path
 	historyRecords = historyRecords.filter((record) => !(record.mode == mode && record.id == id));
 	// Change history size to 24 records
-	historyRecords = historyRecords.filter((_, idx) => idx < 23);
+	historyRecords = historyRecords.filter((_, idx) => idx < 24);
 	// Add newest record
 	historyRecords = [{ mode, id }, ...historyRecords];
 	// Save history
