@@ -35,7 +35,7 @@ Sentry_init({
 	tracesSampleRate: 0.1,
 	tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
 	// Session Replay
-	replaysSessionSampleRate: 1,
+	replaysSessionSampleRate: 0.0,
 	replaysOnErrorSampleRate: 1.0,
 	// Vue settings
 	app,
