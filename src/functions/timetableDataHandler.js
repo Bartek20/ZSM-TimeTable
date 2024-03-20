@@ -1,4 +1,5 @@
 import appConfigs from '@/stores/configs';
+import log from '@/functions/logger';
 
 export default function parseData(obj, data) {
 	switch (obj) {
