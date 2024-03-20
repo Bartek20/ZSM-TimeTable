@@ -29,7 +29,7 @@ export default function parseData(obj, data) {
 				});
 				if (diff.length) {
 					let msg = 'Zmodyfikowno nazwy poziomów:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`));
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`.replace(/ [(]?undefined[)]?/g, '').replace(': ->', ': Nieznany ->')));
 					log('warn', '[App]', msg);
 					appConfigs.value.database.rooms = {};
 				}
@@ -53,7 +53,7 @@ export default function parseData(obj, data) {
 				});
 				if (diff.length) {
 					let msg = 'Zmodyfikowno nazwy kierunków:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`.replace(/ [(]?undefined[)]?/g, '').replace(':  ->', ': Nieznany ->')));
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`.replace(/ [(]?undefined[)]?/g, '').replace(': ->', ': Nieznany ->')));
 					log('warn', '[App]', msg);
 					appConfigs.value.database.classes = {};
 				}
@@ -87,7 +87,7 @@ export default function parseData(obj, data) {
 						(d) =>
 							(msg += `\n${d.idx}: ${d.src?.name} ${d.src?.surname} (${d.src?.code}) -> ${d.dest.name} ${d.dest.surname} (${d.dest.code})`
 								.replace(/ [(]?undefined[)]?/g, '')
-								.replace(':  ->', ': Nieznany ->'))
+								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
 				}
@@ -120,7 +120,7 @@ export default function parseData(obj, data) {
 						(d) =>
 							(msg += `\n${d.idx}: ${d.src?.name} (${d.src?.level}) -> ${d.dest.name} (${d.dest.level})`
 								.replace(/ [(]?undefined[)]?/g, '')
-								.replace(':  ->', ': Nieznany ->'))
+								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
 				}
@@ -153,7 +153,7 @@ export default function parseData(obj, data) {
 						(d) =>
 							(msg += `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest.short} (${d.dest.full})`
 								.replace(/ [(]?undefined[)]?/g, '')
-								.replace(':  ->', ': Nieznany ->'))
+								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
 				}
