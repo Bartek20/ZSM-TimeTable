@@ -1,4 +1,4 @@
-import appConfigs from '@/stores/configs'
+import appConfigs from '@/stores/configs';
 
 export default function parseData(obj, data) {
 	switch (obj) {
@@ -84,7 +84,7 @@ export default function parseData(obj, data) {
 					let msg = 'Zmodyfikowno dane nauczycieli:';
 					diff.forEach(
 						(d) =>
-							(msg += `\n${d.idx}: ${d.src.name} ${d.src.surname} (${d.src.code}) -> ${d.dest.name} ${d.dest.surname} (${d.dest.code})`.replace(
+							(msg += `\n${d.idx}: ${d.src?.name} ${d.src?.surname} (${d.src?.code}) -> ${d.dest.name} ${d.dest.surname} (${d.dest.code})`.replace(
 								/ [(]?undefined[)]?/g,
 								''
 							))
@@ -116,7 +116,7 @@ export default function parseData(obj, data) {
 				});
 				if (diff.length) {
 					let msg = 'Zmodyfikowno dane sali:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.name} (${d.src.level}) -> ${d.dest.name} (${d.dest.level})`.replace(/ [(]?undefined[)]?/g, '')));
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src?.name} (${d.src?.level}) -> ${d.dest.name} (${d.dest.level})`.replace(/ [(]?undefined[)]?/g, '')));
 					log('warn', '[App]', msg);
 				}
 			}
@@ -144,7 +144,7 @@ export default function parseData(obj, data) {
 				});
 				if (diff.length) {
 					let msg = 'Zmodyfikowno dane przedmiotów:';
-					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src.short} (${d.src.full}) -> ${d.dest.short} (${d.dest.full})`.replace(/ [(]?undefined[)]?/g, '')));
+					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest.short} (${d.dest.full})`.replace(/ [(]?undefined[)]?/g, '')));
 					log('warn', '[App]', msg);
 				}
 			}
