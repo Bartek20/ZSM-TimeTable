@@ -4,6 +4,7 @@ const appConfigs = useStorage(
 		// PWA Configs
 		version: undefined,
 		lastFetched: null,
+		isTeacher: false,
 		// School Data configured in schoolData.js
 		school: {
 			homeURL: undefined,

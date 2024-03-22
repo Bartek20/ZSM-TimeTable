@@ -8,7 +8,7 @@
 		<link rel="canonical" id="canonical-link" />
 		<script id="setup">
 			document.querySelector('#canonical-link').setAttribute('href', `https://${location.host}%BASE_URL%`);
-			document.querySelector('#setup').remove();
+			document.querySelector('#setup').remove()
 		</script>
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
@@ -56,6 +56,11 @@
 		</style>
 	</head>
 	<body class="light">
+		<script>
+			if (location.search.includes('PWA=true')) {
+				window.isPWA = true
+			}
+		</script>
 		<div id="loader" class="loading hidden">
 			<h1>Trwa wczytywanie aplikacji</h1>
 			<p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>

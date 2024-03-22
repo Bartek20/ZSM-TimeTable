@@ -60,14 +60,7 @@ function parseTeacher(name) {
 			name.includes('vacat')
 			? `VACAT (${teacherData.code})`
 			: // Nazwa specjalna
-			[
-					'A.Aeroklub Rzeszowski (AA)',
-					'E.Emeaero (EE)',
-					'H.Heli One (HO)',
-					'L.LineTech (LL)',
-					'P.Pratt Whitney AeroPower (PT)',
-					'S.Salony fryzjerskie (FR)',
-			  ].includes(name)
+			!teacherData.surname
 			? `${teacherData.name} (${teacherData.code})`
 			: // Zwykłe przypadki
 			  [`${teacherData.name.charAt(0)}.`, teacherData.surname, `(${teacherData.code})`].filter((e) => e).join(' ');

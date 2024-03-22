@@ -46,6 +46,9 @@ export default async function validateApp() {
 		if (cmpVersion('v3.1.1')) {
 			appConfigs.value.currentTimeTable = undefined;
 		}
+		if (cmpVersion('v3.1.2')) {
+			appConfigs.value.database.teachers = {}
+		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;
 	}

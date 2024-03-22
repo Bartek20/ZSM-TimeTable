@@ -1,4 +1,5 @@
 <script setup>
+	import appConfigs from '@/stores/configs'
 	const search = defineModel({ required: true });
 	function parseInput(e) {
 		const query = e.target.value.replace(/[^a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ -]/g, '');
@@ -9,7 +10,10 @@
 		};
 		search.value = outcome;
 		e.target.value = searchQuery == 'nauczyciel' ? '' : query;
-		if (searchQuery == 'nauczyciel') document.getElementById('teleporter')?.click();
+		if (searchQuery == 'nauczyciel') {
+			appConfigs.value.isTeacher = true
+			document.getElementById('teleporter')?.click();
+		}
 	}
 </script>
 

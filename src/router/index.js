@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import appConfigs from '@/stores/configs';
 import appData from '@/stores/data';
+import appPWA from '@/stores/pwa'
 import log from '@/functions/logger';
 import setTitle from '@/functions/setTitle';
 
@@ -68,6 +69,8 @@ router.beforeEach((to, from) => {
 	}
 
 	if (to.name != 'plan') return;
+	if (appPWA.status.value != 'standalone') appConfigs.value.isTeacher = to.params.user == 'nauczyciel'
+	if (appPWA.status.value == 'standalone' && appConfigs.value.isTeacher && to.params.user == 'uczen') return { name: 'plan', params: { user: 'nauczyciel', mode: to.params.mode, id: to.params.id } };
 	// Prevent students from using old view
 	if (to.params.user == 'uczen') appConfigs.value.viewMode = 'new';
 	// Prevent students from accessing teacher's timetables.
