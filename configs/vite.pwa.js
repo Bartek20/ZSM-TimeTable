@@ -79,6 +79,10 @@ export default {
 		lang: 'pl-PL',
 		dir: 'ltr',
 		orientation: 'portrait',
+		capture_links: 'existing-client-navigate',
+		launch_handler: {
+			'client_mode': 'navigate-existing'
+		},
 		icons: [
 			{
 				src: 'assets/images/android-chrome-192x192.png',
