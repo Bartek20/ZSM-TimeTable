@@ -39,6 +39,32 @@ npm run build -- --base "/ściezka/"
 - **[OBOWIĄZKOWO]** <br />Dostosować dane szkoły zgodnie z plikiem **_schoolData.template.js_** (zmienić nazwę na _schoolData.js_ i dostosować zawartość)
 - **[OPCJONALNIE]** <br />Dostosować dane planu lekcji zgodnie z plikiem **_timetableData.template.js_** (zmienić nazwę na _timetableData.js_ i dostosować zawartość)
 
+### 5) Dostosowanie planu Vulcan (*Dotyczy serwera Apache - w innej sytuacji należy ręcznie dostosować serwer*):
+- Do pliku *.htaccess* w głównej ścieżce domeny, w której znajdują się **pliki planu lekcji firmy Vulcan** dodać podany kod:
+
+```.htaccess
+# BEGIN Konfiguracja do obsługi planu lekcji
+<If "%{REQUEST_URI} =~ m#^/plan#">
+    <IfModule mod_headers.c>
+        # Blokowanie indexowania
+        Header set X-Robots-Tag "noindex, nofollow, noarchive"
+        # Dostęp CORS do planów
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Headers "*"
+        # Wyłączenie pamięci Cache przeglądarek
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+        Header unset ETag
+        Header unset Last-Modified
+    </IfModule>
+</If>
+# END Konfiguracja do obsługi planu lekcji
+```
+\* Należy dostosować ścieżkę do planu zastępując "/plan" ścieżką do planu (musi zaczynać się od "/") np.:
+- "https://example.com/plan" -> "/plan"
+- "https://example.com/dokumenty/plan_lekcji" -> "/dokumenty/plan_lekcji"
+
 ## Zastosowane technologie
 
 ### W wydaniu produkcyjnym:

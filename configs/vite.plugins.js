@@ -63,7 +63,7 @@ export function generateBrowserConfigXML() {
 }
 export function generateHTACCESS() {
 	const htaccessTemplate =
-		'<IfModule mod_headers.c>\n\tHeader set Access-Control-Allow-Origin "*"\n\tHeader set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"\n\tHeader set Pragma "no-cache"\n\tHeader set Expires "0"\n</IfModule>\n\n<IfModule mod_rewrite.c>\n\tRewriteEngine On\n\n{rule}\n\n\tRewriteCond %{SERVER_PORT} 80\n\tRewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\n\n\tRewriteCond %{REQUEST_FILENAME} !-f\n\tRewriteCond %{REQUEST_FILENAME} !-d\n\tRewriteRule ^(.*)$ index.html [QSA,L]\n</IfModule>';
+		'AddDefaultCharset utf-8\nAddCharset utf-8 .css .js .map .json .xml .webmanifest .txt\n\n<IfModule mod_headers.c>\n\tHeader set Access-Control-Allow-Origin "*"\n\tHeader set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"\n\tHeader set Pragma "no-cache"\n\tHeader set Expires "0"\n</IfModule>\n\n<IfModule mod_rewrite.c>\n\tRewriteEngine On\n\n{rule}\n\n\tRewriteCond %{SERVER_PORT} 80\n\tRewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\n\n\tRewriteCond %{REQUEST_FILENAME} !-f\n\tRewriteCond %{REQUEST_FILENAME} !-d\n\tRewriteRule ^(.*)$ index.html [QSA,L]\n</IfModule>';
 	return {
 		name: 'generateHTACCESS',
 		apply: 'build',

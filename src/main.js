@@ -98,6 +98,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
 	appPWA.event.value = e;
 	appPWA.installed.value = false;
 });
+window.addEventListener('appinstalled', (e) => {
+	appPWA.installed.value = true;
+})
 window.removeEventListener('beforeinstallprompt', window.installhandler);
 if (window.installevent) {
 	appPWA.event.value = window.installevent;
