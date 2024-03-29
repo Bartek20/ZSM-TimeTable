@@ -27,6 +27,27 @@ const baseIndex = args.indexOf('--base');
 const base = baseIndex != -1 ? args[ baseIndex + 1 ] : '/';
 const BASE_URL = base ? base : '/';
 
+
+function cmpResponse(oldResponse, newResponse) {
+	if (!(oldResponse instanceof Response && newResponse instanceof Response)) return true
+	return
+	oldResponse.headers.has('etag') === newResponse.headers.has('etag') &&
+		oldResponse.headers.get('etag') === newResponse.headers.get('etag')
+}
+const updateBroadcaster = {
+	cacheDidUpdate: async ({
+		cacheName,
+		request,
+		oldResponse,
+		newResponse,
+		event,
+		state,
+	}) => {
+		if (!oldResponse) return
+		if (!cmpResponse(oldResponse, newResponse)) window.postMessage('Timetable Update Available')
+	}
+}
+
 export default {
 	registerType: 'autoUpdate',
 	includeManifestIcons: false,
@@ -57,10 +78,9 @@ export default {
 				options: {
 					cacheName: 'timetables-data',
 					networkTimeoutSeconds: 5,
-					broadcastUpdate: {
-						channelName: 'timetables-data',
-						options: {}
-					},
+					plugins: [
+						new updateBroadcaster()
+					],
 					backgroundSync: {
 						name: 'timetables-data-bs',
 						options: {

@@ -166,9 +166,7 @@ const updateSW = registerSW({
 });
 window.addEventListener('message', async event => {
 	if (fetching) return
-	if (event.data.meta !== 'workbox-broadcast-update') return
-	const { cacheName } = event.data.payload;
-	if (cacheName !== 'timetables-data') return
+	if (event.data !== 'Timetable Update Available') return
 	log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
 	appConfigs.value.lastFetched = null
 	cacheTimeTables()
