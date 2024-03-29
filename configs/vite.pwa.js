@@ -20,18 +20,6 @@ const timetableParts = [
 ];
 const timetableRegExp = new RegExp(timetableParts.join('|'));
 
-// Plugin
-const updateReporter = {
-	cacheDidUpdate: async ({
-		cacheName,
-		request,
-		oldResponse,
-		newResponse,
-		event,
-		state,
-	}) => { },
-};
-
 const argvs = process.argv;
 const args = [];
 argvs.forEach((arg) => args.push(...arg.split('=')));

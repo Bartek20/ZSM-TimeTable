@@ -220,6 +220,7 @@ const updateSW = registerSW({
 			checkStatus();
 		});
 		SW.active.addEventListener('message', async event => {
+			console.log('Message caught')
 			if (fetching) return
 			if (event.data.meta !== 'workbox-broadcast-update') return
 			const { cacheName } = event.data.payload;
