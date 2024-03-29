@@ -33,7 +33,7 @@ if (__SENTRY_DSN__) Sentry_init({
 	],
 	// Performance Monitoring
 	tracesSampleRate: 0.1,
-	tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+	tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
 	// Session Replay
 	replaysSessionSampleRate: 0.0,
 	replaysOnErrorSampleRate: 1.0,
@@ -48,7 +48,7 @@ if (__SENTRY_DSN__) Sentry_init({
 		return scope;
 	},
 	beforeSend: (event, hint) => {
-		hint.attachments = [{ filename: 'appConfigs.json', data: () => localStorage.getItem('appConfigs') }];
+		hint.attachments = [ { filename: 'appConfigs.json', data: () => localStorage.getItem('appConfigs') } ];
 		return event;
 	},
 });
@@ -126,7 +126,7 @@ if (window.installevent) {
 	// Check supported scrollbars
 	checkScrollStyllability();
 	// Setup cache headers
-	axios.defaults.headers.get['Cache-Control'] = 'no-cache';
+	axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache';
 	// Setup color mode handler
 	colorHandler();
 
@@ -185,10 +185,10 @@ async function cacheTimeTables() {
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
 		const list = new TimeTableList(res.data).getList();
-		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => {}));
-		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => {}));
-		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => {}));
-		await Promise.all([...classMap, ...teacherMap, ...roomMap]);
+		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => { }));
+		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => { }));
+		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => { }));
+		await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
 		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
 		appConfigs.value.lastFetched = Date.now();
 	} catch (e) {
@@ -205,6 +205,7 @@ const updateSW = registerSW({
 		log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.');
 	},
 	async onRegisteredSW(_, SW) {
+		console.log(SW)
 		log('info', '[Service Worker] Zainstalowano Service Workera.');
 		// Waiting for Service Worker to install
 		await new Promise((resolve) => {
@@ -214,6 +215,7 @@ const updateSW = registerSW({
 			};
 			checkStatus();
 		});
+		debugger
 		// Service Worker Installed working
 		log('info', '[Service Worker] Service Worker został aktywowany.');
 		await validateApp();
