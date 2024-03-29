@@ -176,9 +176,12 @@ if (window.installevent) {
 	app.mount('#app');
 })();
 
+let fetching = false
 async function cacheTimeTables() {
 	if (!appConfigs.value.school.timetableURL) return;
 	if (import.meta.env.MODE == 'development') return;
+	if (fetching) return
+	fetching = true
 	const last = appConfigs.value.lastFetched;
 	if (last != null && last + 86400000 > Date.now()) return;
 	log('info', '[Service Worker] Rozpoczęto pobieranie planów do pamięci cache.');
@@ -191,8 +194,10 @@ async function cacheTimeTables() {
 		await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
 		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
 		appConfigs.value.lastFetched = Date.now();
+		fetching = false
 	} catch (e) {
 		log('error', '[Service Worker] Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
+		fetching = false
 	}
 }
 
@@ -205,7 +210,6 @@ const updateSW = registerSW({
 		log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.');
 	},
 	async onRegisteredSW(_, SW) {
-		console.log(SW)
 		log('info', '[Service Worker] Zainstalowano Service Workera.');
 		// Waiting for Service Worker to install
 		await new Promise((resolve) => {
@@ -215,7 +219,14 @@ const updateSW = registerSW({
 			};
 			checkStatus();
 		});
-		debugger
+		SW.active.addEventListener('message', async event => {
+			if (event.data.meta !== 'workbox-broadcast-update') return
+			const { cacheName } = event.data.payload;
+			if (cacheName !== 'timetables-data') return
+			log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
+			appConfigs.value.lastFetched = null
+			cacheTimeTables()
+		})
 		// Service Worker Installed working
 		log('info', '[Service Worker] Service Worker został aktywowany.');
 		await validateApp();

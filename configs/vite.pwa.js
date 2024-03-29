@@ -1,3 +1,5 @@
+import { BroadcastUpdatePlugin } from 'workbox-broadcast-update';
+
 const timetableParts = [
 	// CSS
 	'css/lista.css',
@@ -22,14 +24,14 @@ const timetableRegExp = new RegExp(timetableParts.join('|'));
 
 // Plugin
 const updateReporter = {
-  cacheDidUpdate: async ({
-    cacheName,
-    request,
-    oldResponse,
-    newResponse,
-    event,
-    state,
-  }) => {},
+	cacheDidUpdate: async ({
+		cacheName,
+		request,
+		oldResponse,
+		newResponse,
+		event,
+		state,
+	}) => { },
 };
 
 const argvs = process.argv;
@@ -68,6 +70,9 @@ export default {
 				handler: 'NetworkFirst',
 				options: {
 					cacheName: 'timetables-data',
+					plugins: [
+						new BroadcastUpdatePlugin()
+					],
 					networkTimeoutSeconds: 5,
 					backgroundSync: {
 						name: 'timetables-data-bs',
