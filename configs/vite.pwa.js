@@ -27,13 +27,6 @@ const baseIndex = args.indexOf('--base');
 const base = baseIndex != -1 ? args[ baseIndex + 1 ] : '/';
 const BASE_URL = base ? base : '/';
 
-
-function cmpResponse(oldResponse, newResponse) {
-	if (!(oldResponse instanceof Response && newResponse instanceof Response)) return true
-	return
-	oldResponse.headers.has('etag') === newResponse.headers.has('etag') &&
-		oldResponse.headers.get('etag') === newResponse.headers.get('etag')
-}
 const updateBroadcaster = {
 	cacheDidUpdate: async ({
 		cacheName,
@@ -44,7 +37,8 @@ const updateBroadcaster = {
 		state,
 	}) => {
 		if (!oldResponse) return
-		if (!cmpResponse(oldResponse, newResponse)) window.postMessage('Timetable Update Available')
+		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
+		if (!(oldResponse.headers.has('etag') === newResponse.headers.has('etag') && oldResponse.headers.get('etag') === newResponse.headers.get('etag'))) window.postMessage('Timetable Update Available')
 	}
 }
 
