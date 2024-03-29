@@ -70,7 +70,8 @@ export default {
 					cacheName: 'timetables-data',
 					networkTimeoutSeconds: 5,
 					broadcastUpdate: {
-						channelName: 'timetables-data'
+						channelName: 'timetables-data',
+						options: {}
 					},
 					backgroundSync: {
 						name: 'timetables-data-bs',
