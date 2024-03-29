@@ -20,8 +20,7 @@
 		"floating-vue": "^5.2.2",
 		"string-to-color": "^2.2.2",
 		"vue": "^3.4.21",
-		"vue-router": "^4.3.0",
-		"workbox-broadcast-update": "^7.0.0"
+		"vue-router": "^4.3.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-terser": "^0.4.4",

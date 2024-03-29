@@ -1,5 +1,3 @@
-import { BroadcastUpdatePlugin } from 'workbox-broadcast-update';
-
 const timetableParts = [
 	// CSS
 	'css/lista.css',
@@ -70,10 +68,10 @@ export default {
 				handler: 'NetworkFirst',
 				options: {
 					cacheName: 'timetables-data',
-					plugins: [
-						new BroadcastUpdatePlugin()
-					],
 					networkTimeoutSeconds: 5,
+					broadcastUpdate: {
+						channelName: 'timetables-data'
+					},
 					backgroundSync: {
 						name: 'timetables-data-bs',
 						options: {
