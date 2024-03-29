@@ -79,7 +79,7 @@ export default {
 					cacheName: 'timetables-data',
 					networkTimeoutSeconds: 5,
 					plugins: [
-						new updateBroadcaster()
+						updateBroadcaster
 					],
 					backgroundSync: {
 						name: 'timetables-data-bs',
