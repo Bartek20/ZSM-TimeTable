@@ -109,6 +109,71 @@ if (window.installevent) {
 	window.installevent = undefined;
 }
 
+// Service Worker, Timetable caching
+let fetching = false
+async function cacheTimeTables() {
+	if (!appConfigs.value.school.timetableURL) return;
+	if (import.meta.env.MODE == 'development') return;
+	if (fetching) return
+	fetching = true
+	const last = appConfigs.value.lastFetched;
+	if (last != null && last + 86400000 > Date.now()) return;
+	log('info', '[Service Worker] Rozpoczęto pobieranie planów do pamięci cache.');
+	try {
+		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
+		const list = new TimeTableList(res.data).getList();
+		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => { }));
+		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => { }));
+		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => { }));
+		await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
+		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
+		appConfigs.value.lastFetched = Date.now();
+		fetching = false
+	} catch (e) {
+		log('error', '[Service Worker] Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
+		fetching = false
+	}
+}
+const updateSW = registerSW({
+	immediate: true,
+	onNeedRefresh() {
+		log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.');
+	},
+	onOfflineReady() {
+		log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.');
+	},
+	async onRegisteredSW(_, SW) {
+		log('info', '[Service Worker] Zainstalowano Service Workera.');
+		// Waiting for Service Worker to install
+		await new Promise((resolve) => {
+			const checkStatus = () => {
+				if (SW.active) resolve();
+				else setTimeout(checkStatus, 100);
+			};
+			checkStatus();
+		});
+		// Service Worker Installed working
+		log('info', '[Service Worker] Service Worker został aktywowany.');
+		await validateApp();
+		cacheTimeTables();
+		setInterval(() => {
+			SW.update();
+		}, 3600000);
+	},
+	onRegisterError(err) {
+		log('error', '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n', err);
+	},
+});
+window.addEventListener('message', async event => {
+	if (fetching) return
+	if (event.data.meta !== 'workbox-broadcast-update') return
+	const { cacheName } = event.data.payload;
+	if (cacheName !== 'timetables-data') return
+	log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
+	appConfigs.value.lastFetched = null
+	cacheTimeTables()
+});
+
 // Main app functions
 (async () => {
 	// Console log app version
@@ -175,69 +240,3 @@ if (window.installevent) {
 	app.directive('tooltip', vTooltip);
 	app.mount('#app');
 })();
-
-let fetching = false
-async function cacheTimeTables() {
-	if (!appConfigs.value.school.timetableURL) return;
-	if (import.meta.env.MODE == 'development') return;
-	if (fetching) return
-	fetching = true
-	const last = appConfigs.value.lastFetched;
-	if (last != null && last + 86400000 > Date.now()) return;
-	log('info', '[Service Worker] Rozpoczęto pobieranie planów do pamięci cache.');
-	try {
-		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
-		const list = new TimeTableList(res.data).getList();
-		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => { }));
-		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => { }));
-		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => { }));
-		await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
-		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
-		appConfigs.value.lastFetched = Date.now();
-		fetching = false
-	} catch (e) {
-		log('error', '[Service Worker] Wystąpił błąd przy zapisywaniu planów do pamięci cache:\n', e);
-		fetching = false
-	}
-}
-
-const updateSW = registerSW({
-	immediate: true,
-	onNeedRefresh() {
-		log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.');
-	},
-	onOfflineReady() {
-		log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.');
-	},
-	async onRegisteredSW(_, SW) {
-		log('info', '[Service Worker] Zainstalowano Service Workera.');
-		// Waiting for Service Worker to install
-		await new Promise((resolve) => {
-			const checkStatus = () => {
-				if (SW.active) resolve();
-				else setTimeout(checkStatus, 100);
-			};
-			checkStatus();
-		});
-		SW.active.addEventListener('message', async event => {
-			console.log('Message caught')
-			if (fetching) return
-			if (event.data.meta !== 'workbox-broadcast-update') return
-			const { cacheName } = event.data.payload;
-			if (cacheName !== 'timetables-data') return
-			log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
-			appConfigs.value.lastFetched = null
-			cacheTimeTables()
-		})
-		// Service Worker Installed working
-		log('info', '[Service Worker] Service Worker został aktywowany.');
-		await validateApp();
-		cacheTimeTables();
-		setInterval(() => {
-			SW.update();
-		}, 3600000);
-	},
-	onRegisterError(err) {
-		log('error', '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n', err);
-	},
-});
