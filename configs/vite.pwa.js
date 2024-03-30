@@ -42,15 +42,16 @@ const updateBroadcaster = {
 		let updated = false
 		const oldText = oldResponse.text()
 		const newText = newResponse.text()
+		console.log(oldText, newText)
 		if (file == 'lista.html') {
 			if (oldText != newText) updated = true
 		} else if (file.match(/[ons]{1}\d+\.html/)) {
-			const genOld = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(oldText)
-			const genNew = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(newText)
+			const genOld = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/gmi.exec(oldText)
+			const genNew = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/gmi.exec(newText)
 			console.log(genOld, genNew)
 			if (genOld?.[1] != genNew?.[1]) updated = true
-			const applyOld = /^Obowiązuje od: (.+)$/.exec(oldText)
-			const applyNew = /^Obowiązuje od: (.+)$/.exec(newText)
+			const applyOld = /Obowiązuje od: (.*)/gmi.exec(oldText)
+			const applyNew = /Obowiązuje od: (.*)/gmi.exec(newText)
 			console.log(applyOld, applyNew)
 			if (applyOld?.[1] != applyNew?.[1]) updated = true
 		}
