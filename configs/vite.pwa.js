@@ -38,8 +38,7 @@ const updateBroadcaster = {
 	}) => {
 		if (!oldResponse) return
 		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
-		console.log(await oldResponse.text() == await newResponse.text())
-		if (!(oldResponse.headers.has('etag') === newResponse.headers.has('etag') && oldResponse.headers.get('etag') === newResponse.headers.get('etag'))) window.postMessage('Timetable Update Available')
+		if (await oldResponse.text() != await newResponse.text()) window.postMessage('Timetable Update Available')
 	}
 }
 
