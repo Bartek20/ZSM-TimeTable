@@ -40,9 +40,12 @@ const updateBroadcaster = {
 		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
 		if (await oldResponse.text() == await newResponse.text()) return
 		if (!(event instanceof FetchEvent)) return
-		const client = await self.clients.get(event.clientId);
-		client?.postMessage('Timetable Update Available')
-		console.log('[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
+		const windows = await self.clients.matchAll({ type: 'window' });
+		for (const win of windows) {
+			win.postMessage('Timetable Update Available');
+		}
+		// const client = await self.clients.get(event.clientId);
+		// client?.postMessage()
 	}
 }
 
