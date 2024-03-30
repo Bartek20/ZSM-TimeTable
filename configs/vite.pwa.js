@@ -38,8 +38,10 @@ const updateBroadcaster = {
 	}) => {
 		if (!oldResponse) return
 		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
-		console.log(self, event)
-		if (await oldResponse.text() != await newResponse.text()) window.postMessage('Timetable Update Available')
+		if (await oldResponse.text() == await newResponse.text()) return
+		if (!(options.event instanceof FetchEvent)) return
+		const client = await self.clients.get(options.event.clientId);
+		client?.postMessage('Timetable Update Available')
 	}
 }
 
