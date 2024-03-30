@@ -41,6 +41,7 @@ const updateBroadcaster = {
 		if (await oldResponse.text() == await newResponse.text()) return
 		if (!(event instanceof FetchEvent)) return
 		const client = await self.clients.get(event.clientId);
+		log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
 		client?.postMessage('Timetable Update Available')
 	}
 }

@@ -152,6 +152,13 @@ const updateSW = registerSW({
 			};
 			checkStatus();
 		});
+		SW.active.addEventListener('message', async event => {
+			if (fetching) return
+			if (event.data !== 'Timetable Update Available') return
+			log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
+			appConfigs.value.lastFetched = null
+			cacheTimeTables()
+		});
 		// Service Worker Installed working
 		log('info', '[Service Worker] Service Worker został aktywowany.');
 		await validateApp();
@@ -163,13 +170,6 @@ const updateSW = registerSW({
 	onRegisterError(err) {
 		log('error', '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n', err);
 	},
-});
-window.addEventListener('message', async event => {
-	if (fetching) return
-	if (event.data !== 'Timetable Update Available') return
-	log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')
-	appConfigs.value.lastFetched = null
-	cacheTimeTables()
 });
 
 // Main app functions
