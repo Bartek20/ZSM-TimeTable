@@ -38,18 +38,21 @@ const updateBroadcaster = {
 	}) => {
 		if (!oldResponse) return
 		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
-		const file = request.url.match(/[^/]+$/)[ 0 ]
+		const file = request.url.match(/[^/]+$/)[0]
 		let updated = false
 		const oldText = oldResponse.text()
 		const newText = newResponse.text()
 		if (file == 'lista.html') {
 			if (oldText != newText) updated = true
 		} else if (file.match(/[ons]{1}\d+\.html/)) {
+			console.log('Checking', file)
 			const genOld = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(oldResponse)
 			const genNew = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(newResponse)
+			console.log(genOld, genNew)
 			if (genOld?.[1] != genNew?.[1]) updated = true
 			const applyOld = /^Obowiązuje od: (.+)$/.exec(oldResponse)
 			const applyNew = /^Obowiązuje od: (.+)$/.exec(newResponse)
+			console.log(applyOld, applyNew)
 			if (applyOld?.[1] != applyNew?.[1]) updated = true
 		}
 		if (!updated) return
