@@ -42,6 +42,7 @@ const updateBroadcaster = {
 		if (!(event instanceof FetchEvent)) return
 		const client = await self.clients.get(event.clientId);
 		client?.postMessage('Timetable Update Available')
+		console.log(request)
 	}
 }
 
