@@ -37,7 +37,6 @@ export default defineConfig({
 		Components(components),
 		AutoImport(imports),
 		getCloudflareBeacon(),
-		parseHTML(),
 		generateBrowserConfigXML(),
 		generateHTACCESS(),
 		VitePWA(pwaConfig),

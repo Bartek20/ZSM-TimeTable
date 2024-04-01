@@ -24,26 +24,6 @@ export function getBanner(now, file) {
 }
 
 // Plugins
-export function parseHTML() {
-	return {
-		name: 'parseHTML',
-		enforce: 'pre',
-		async transformIndexHtml(html) {
-			let schoolData
-			try {
-				schoolData = await import('../public/schoolData').default;
-			} catch (error) { }
-			const htmlVariables = {
-				schoolROOT: schoolData?.schoolTimeTableRootURL || '',
-			};
-			Object.keys(htmlVariables).forEach((key) => {
-				const regex = new RegExp(`%${key}%`, 'g');
-				html = html.replace(regex, htmlVariables[ key ]);
-			});
-			return html;
-		},
-	};
-}
 export function generateBrowserConfigXML() {
 	const xmlTemplate =
 		'<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>';

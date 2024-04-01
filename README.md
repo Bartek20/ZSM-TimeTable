@@ -38,6 +38,7 @@ npm run build -- --base "/ściezka/"
 - **[OBOWIĄZKOWO]** *Dotyczy serwera Apache (w innej sytuacji należy ręcznie dostosować serwer)* <br />Wybrać prawidłowy dla domeny plik **_.htaccess_** (www lub non-www) i zmienić jego nazwę na _.htaccess_ (drugi plik należy usunąć)
 - **[OBOWIĄZKOWO]** <br />Dostosować dane szkoły zgodnie z plikiem **_schoolData.template.js_** (zmienić nazwę na _schoolData.js_ i dostosować zawartość)
 - **[OPCJONALNIE]** <br />Dostosować dane planu lekcji zgodnie z plikiem **_timetableData.template.js_** (zmienić nazwę na _timetableData.js_ i dostosować zawartość)
+- **[OPCJONALNIE]** <br />W pliku index.html edytuj podaną linię:<br />***"\<!-- \<a href="">Otwórz starszą wersję strony</a> -->"***<br />dodając adres planu lekcji firmy Vulkan i usuwając komentarz
 
 ### 5) Dostosowanie planu Vulcan (*Dotyczy serwera Apache - w innej sytuacji należy ręcznie dostosować serwer*):
 - Do pliku *.htaccess* w głównej ścieżce domeny, w której znajdują się **pliki planu lekcji firmy Vulcan** dodać podany kod:
