@@ -31,8 +31,8 @@ coverage
 *.bak
 
 # Private school data
-schoolData.js
-timetableData.js
+/public/schoolData.js
+/public/timetableData.js
 
 # Sentry Config File
 .env.sentry-build-plugin
