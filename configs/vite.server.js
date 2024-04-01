@@ -1,4 +1,3 @@
-import schoolData from '../public/schoolData';
 const proxyConfigure = (proxy, _options) => {
 	const headings = {
 		ERROR: '[PROXY] [ERROR]   ',
@@ -18,19 +17,23 @@ const proxyConfigure = (proxy, _options) => {
 	});
 };
 
-function getProxy() {
+async function getProxy() {
 	const proxy = {};
-	console.log('Setting up PROXY for:', schoolData.schoolTimeTableRootURL);
-	proxy[schoolData.schoolTimeTableRootURL] = {
-		target: schoolData.schoolHomeURL,
-		changeOrigin: true,
-		secure: false,
-		ws: true,
-		configure: proxyConfigure,
-	};
+	let schoolData
+	try {
+		schoolData = await import('../public/schoolData');
+		console.log('Setting up PROXY for:', schoolData.schoolTimeTableRootURL);
+		proxy[ schoolData.schoolTimeTableRootURL ] = {
+			target: schoolData.schoolHomeURL,
+			changeOrigin: true,
+			secure: false,
+			ws: true,
+			configure: proxyConfigure,
+		}
+	} catch (error) { }
 	return proxy;
 }
 
 export default {
-	proxy: getProxy(),
+	proxy: await getProxy(),
 };

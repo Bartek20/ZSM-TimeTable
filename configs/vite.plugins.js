@@ -1,5 +1,4 @@
 import fs from 'fs';
-import schoolData from '../public/schoolData';
 
 // Utils
 export function getNow() {
@@ -29,13 +28,17 @@ export function parseHTML() {
 	return {
 		name: 'parseHTML',
 		enforce: 'pre',
-		transformIndexHtml(html) {
+		async transformIndexHtml(html) {
+			let schoolData
+			try {
+				schoolData = await import('../public/schoolData');
+			} catch (error) { }
 			const htmlVariables = {
-				schoolROOT: schoolData.schoolTimeTableRootURL,
+				schoolROOT: schoolData?.schoolTimeTableRootURL || '',
 			};
 			Object.keys(htmlVariables).forEach((key) => {
 				const regex = new RegExp(`%${key}%`, 'g');
-				html = html.replace(regex, htmlVariables[key]);
+				html = html.replace(regex, htmlVariables[ key ]);
 			});
 			return html;
 		},
