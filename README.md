@@ -13,9 +13,10 @@ Zabronione jest jednak usuwanie, jak i modyfikowanie informacji o autorze kodu (
 ### 1) Przed rozpoczęciem kompilacji należy dostosować aplikację poprzez:
 
 \* Opcjonalnie - Wymagane założenie konta i znajomość obsługi panelu
+
 - Zmienienie loga szkoły (plik /public/images/logo.png)
-- \* Wprowadzenie zmiennej środowiskowej ***CF_BEACON_TOKEN*** (Do śledzenia statystyk poprzez Cloudflare Insights)
-- \* Wprowadzenie zmiennej środowiskowej ***SENTRY_DSN_URL*** (Do automatycznego zgłaszania błędów poprzez Sentry)
+- \* Wprowadzenie zmiennej środowiskowej **_CF_BEACON_TOKEN_** (Do śledzenia statystyk poprzez Cloudflare Insights)
+- \* Wprowadzenie zmiennej środowiskowej **_SENTRY_DSN_URL_** (Do automatycznego zgłaszania błędów poprzez Sentry)
 
 ### 2) Po dostosowaniu aplikacji do potrzeb szkoły należy skompilować program:
 
@@ -35,13 +36,14 @@ npm run build -- --base "/ściezka/"
 
 ### 4) Po skopiowaniu plików należy:
 
-- **[OBOWIĄZKOWO]** *Dotyczy serwera Apache (w innej sytuacji należy ręcznie dostosować serwer)* <br />Wybrać prawidłowy dla domeny plik **_.htaccess_** (www lub non-www) i zmienić jego nazwę na _.htaccess_ (drugi plik należy usunąć)
+- **[OBOWIĄZKOWO]** _Dotyczy serwera Apache (w innej sytuacji należy ręcznie dostosować serwer)_ <br />Wybrać prawidłowy dla domeny plik **_.htaccess_** (www lub non-www) i zmienić jego nazwę na _.htaccess_ (drugi plik należy usunąć)
 - **[OBOWIĄZKOWO]** <br />Dostosować dane szkoły zgodnie z plikiem **_schoolData.template.js_** (zmienić nazwę na _schoolData.js_ i dostosować zawartość)
 - **[OPCJONALNIE]** <br />Dostosować dane planu lekcji zgodnie z plikiem **_timetableData.template.js_** (zmienić nazwę na _timetableData.js_ i dostosować zawartość)
-- **[OPCJONALNIE]** <br />W pliku index.html edytuj podaną linię:<br />***"\<!-- \<a href="">Otwórz starszą wersję strony</a> -->"***<br />dodając adres planu lekcji firmy Vulkan i usuwając komentarz
+- **[OPCJONALNIE]** <br />W pliku index.html edytuj podaną linię:<br />**_"\<!-- \<a href="">Otwórz starszą wersję strony</a> -->"_**<br />dodając adres planu lekcji firmy Vulkan i usuwając komentarz
 
-### 5) Dostosowanie planu Vulcan (*Dotyczy serwera Apache - w innej sytuacji należy ręcznie dostosować serwer*):
-- Do pliku *.htaccess* w głównej ścieżce domeny, w której znajdują się **pliki planu lekcji firmy Vulcan** dodać podany kod:
+### 5) Dostosowanie planu Vulcan (_Dotyczy serwera Apache - w innej sytuacji należy ręcznie dostosować serwer_):
+
+- Do pliku _.htaccess_ w głównej ścieżce domeny, w której znajdują się **pliki planu lekcji firmy Vulcan** dodać podany kod:
 
 ```.htaccess
 # BEGIN Konfiguracja do obsługi planu lekcji
@@ -62,7 +64,9 @@ npm run build -- --base "/ściezka/"
 </If>
 # END Konfiguracja do obsługi planu lekcji
 ```
+
 \* Należy dostosować ścieżkę do planu zastępując "/plan" ścieżką do planu (musi zaczynać się od "/") np.:
+
 - "https://example.com/plan" -> "/plan"
 - "https://example.com/dokumenty/plan_lekcji" -> "/dokumenty/plan_lekcji"
 

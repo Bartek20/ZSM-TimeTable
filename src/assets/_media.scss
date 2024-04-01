@@ -1,36 +1,36 @@
 // Color modes
 @mixin light {
-	body.light {
-		@content;
-	}
+  body.light {
+    @content;
+  }
 }
 @mixin dark {
-	body.dark {
-		@content;
-	}
+  body.dark {
+    @content;
+  }
 }
 
 // Screen sizes
 @mixin tablet {
-	@media screen and (max-width: 995px) {
-		@content;
-	}
+  @media screen and (max-width: 995px) {
+    @content;
+  }
 }
 
 @mixin tablet-only {
-	@media screen and (min-width: 400.00001px) and (max-width: 995px) {
-		@content;
-	}
+  @media screen and (min-width: 400.00001px) and (max-width: 995px) {
+    @content;
+  }
 }
 
 @mixin phone {
-	@media screen and (max-width: 400px) {
-		@content;
-	}
+  @media screen and (max-width: 400px) {
+    @content;
+  }
 }
 
 @mixin printer {
-	@media print {
-		@content;
-	}
+  @media print {
+    @content;
+  }
 }

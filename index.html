@@ -1,122 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl-PL">
-	<head>
-		<title>Plan Lekcji</title>
-		<meta name="description" content="Aplikacja do przegladu szkolnego planu lekcji." />
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="canonical" id="canonical-link" />
-		<script id="setup">
-			document.querySelector('#canonical-link').setAttribute('href', `https://${location.host}%BASE_URL%`);
-			document.querySelector('#setup').remove()
-		</script>
-		<link rel="icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
-		<link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5" />
-		<meta name="msapplication-TileColor" content="#da532c" />
-		<meta name="msapplication-TileImage" content="%BASE_URL%assets/images/mstile.png" />
-		<meta name="msapplication-config" content="%BASE_URL%browserconfig.xml" />
-		<meta name="theme-color" content="#ffffff" />
-		<link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" crossorigin="anonymous" href="https://fonts.gstatic.com" />
-		<link
-			rel="stylesheet"
-			crossorigin="anonymous"
-			href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" />
-		<style>
-			body {
-				font-family: 'Roboto Condensed', sans-serif;
-			}
-		</style>
-		<style id="loader-styles">
-			html,
-			body,
-			.loading {
-				margin: 0;
-				height: 100%;
-				width: 100%;
-			}
-			.loading {
-				position: fixed;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
-			}
-			.loading > * {
-				text-decoration: none;
-				max-width: min(100% - 20px, 600px);
-				margin: 0;
-				margin-bottom: 10px;
-			}
-			.loading.hidden {
-				display: none;
-			}
-		</style>
-	</head>
-	<body class="light">
-		<script>
-			if (location.search.includes('PWA=true')) {
-				window.isPWA = true
-			}
-		</script>
-		<div id="loader" class="loading hidden">
-			<h1>Trwa wczytywanie aplikacji</h1>
-			<p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
-		</div>
-		<div id="app"></div>
-		<script id="loader-script">
-			document.getElementById('loader').classList.remove('hidden');
-		</script>
-		<script>
-			window.installhandler = function (e) {
-				console.log('[App] Install event catched before initialization');
-				e.preventDefault();
-				window.installevent = e;
-			};
-			window.addEventListener('beforeinstallprompt', installhandler);
-		</script>
-		<script>
-			const unknownData = {
-				subjects: new Set(),
-				classes: new Set(),
-				teachers: new Set(),
-				rooms: new Set(),
-			};
-			function addUnknowns(target, unknown) {
-				unknownData[target].add(unknown);
-			}
-			function getUnknowns(target = 'all') {
-				switch (target) {
-					case 'subjects':
-						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
-						break;
-					case 'classes':
-						console.warn('Nieznane kierunki:\n', unknownData.classes);
-						break;
-					case 'teachers':
-						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
-						break;
-					case 'rooms':
-						console.warn('Nieznane sale:\n', unknownData.rooms);
-						break;
-					case 'all':
-						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
-						console.warn('Nieznane kierunki:\n', unknownData.classes);
-						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
-						console.warn('Nieznane sale:\n', unknownData.rooms);
-						break;
-				}
-			}
-		</script>
-		<noscript>
-			<div class="loading">
-				<h1>Błąd</h1>
-				<p>Niestety twoja przeglądarka nie wspiera javascript, który jest wymagany przez tą stronę.</p>
-				<!-- <a href="">Otwórz starszą wersję strony</a> -->
-			</div>
-		</noscript>
-		<script type="module" src="/src/main.js"></script>
-	</body>
+  <head>
+    <title>Plan Lekcji</title>
+    <meta
+      name="description"
+      content="Aplikacja do przegladu szkolnego planu lekcji."
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" id="canonical-link" />
+    <script id="setup">
+      document
+        .querySelector("#canonical-link")
+        .setAttribute("href", `https://${location.host}%BASE_URL%`);
+      document.querySelector("#setup").remove();
+    </script>
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/images/apple-touch-icon.png"
+    />
+    <link
+      rel="mask-icon"
+      href="/assets/images/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta
+      name="msapplication-TileImage"
+      content="%BASE_URL%assets/images/mstile.png"
+    />
+    <meta name="msapplication-config" content="%BASE_URL%browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="preconnect"
+      crossorigin="anonymous"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      crossorigin="anonymous"
+      href="https://fonts.gstatic.com"
+    />
+    <link
+      rel="stylesheet"
+      crossorigin="anonymous"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Roboto Condensed", sans-serif;
+      }
+    </style>
+    <style id="loader-styles">
+      html,
+      body,
+      .loading {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      .loading {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .loading > * {
+        text-decoration: none;
+        max-width: min(100% - 20px, 600px);
+        margin: 0;
+        margin-bottom: 10px;
+      }
+      .loading.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="light">
+    <script>
+      if (location.search.includes("PWA=true")) {
+        window.isPWA = true;
+      }
+    </script>
+    <div id="loader" class="loading hidden">
+      <h1>Trwa wczytywanie aplikacji</h1>
+      <p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
+    </div>
+    <div id="app"></div>
+    <script id="loader-script">
+      document.getElementById("loader").classList.remove("hidden");
+    </script>
+    <script>
+      window.installhandler = function (e) {
+        console.log("[App] Install event catched before initialization");
+        e.preventDefault();
+        window.installevent = e;
+      };
+      window.addEventListener("beforeinstallprompt", installhandler);
+    </script>
+    <script>
+      const unknownData = {
+        subjects: new Set(),
+        classes: new Set(),
+        teachers: new Set(),
+        rooms: new Set(),
+      };
+      function addUnknowns(target, unknown) {
+        unknownData[target].add(unknown);
+      }
+      function getUnknowns(target = "all") {
+        switch (target) {
+          case "subjects":
+            console.warn("Nieznane przedmioty:\n", unknownData.subjects);
+            break;
+          case "classes":
+            console.warn("Nieznane kierunki:\n", unknownData.classes);
+            break;
+          case "teachers":
+            console.warn("Nieznani nauczyciele:\n", unknownData.teachers);
+            break;
+          case "rooms":
+            console.warn("Nieznane sale:\n", unknownData.rooms);
+            break;
+          case "all":
+            console.warn("Nieznane przedmioty:\n", unknownData.subjects);
+            console.warn("Nieznane kierunki:\n", unknownData.classes);
+            console.warn("Nieznani nauczyciele:\n", unknownData.teachers);
+            console.warn("Nieznane sale:\n", unknownData.rooms);
+            break;
+        }
+      }
+    </script>
+    <noscript>
+      <div class="loading">
+        <h1>Błąd</h1>
+        <p>
+          Niestety twoja przeglądarka nie wspiera javascript, który jest
+          wymagany przez tą stronę.
+        </p>
+        <!-- <a href="">Otwórz starszą wersję strony</a> -->
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>

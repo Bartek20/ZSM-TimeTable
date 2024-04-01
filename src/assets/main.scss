@@ -1,84 +1,84 @@
-@import 'reset';
-@import 'media';
-@import 'variables';
+@import "reset";
+@import "media";
+@import "variables";
 
-@import 'icons-font';
+@import "icons-font";
 
-@import 'animations';
+@import "animations";
 
 @include light {
-	--bg-timetable: #{$l-bg-timetable};
-	--bg-sidebar: #{$l-bg-sidebar};
-	--bg-sidebar-hover: #{$l-bg-sidebar-hover};
-	--sb-text: #{$l-sb-text};
-	--tt-text: #{$l-tt-text};
-	--tt-primary: #{$l-tt-primary};
-	--tt-secondary: #{$l-tt-secondary};
-	--bg-scrollbar: #{$l-bg-scrollbar};
-	--scrollbar: #{$l-scrollbar};
+  --bg-timetable: #{$l-bg-timetable};
+  --bg-sidebar: #{$l-bg-sidebar};
+  --bg-sidebar-hover: #{$l-bg-sidebar-hover};
+  --sb-text: #{$l-sb-text};
+  --tt-text: #{$l-tt-text};
+  --tt-primary: #{$l-tt-primary};
+  --tt-secondary: #{$l-tt-secondary};
+  --bg-scrollbar: #{$l-bg-scrollbar};
+  --scrollbar: #{$l-scrollbar};
 }
 @include dark {
-	--bg-timetable: #{$d-bg-timetable};
-	--bg-sidebar: #{$d-bg-sidebar};
-	--bg-sidebar-hover: #{$d-bg-sidebar-hover};
-	--sb-text: #{$d-sb-text};
-	--tt-text: #{$d-tt-text};
-	--tt-primary: #{$d-tt-primary};
-	--tt-secondary: #{$d-tt-secondary};
-	--bg-scrollbar: #{$d-bg-scrollbar};
-	--scrollbar: #{$d-scrollbar};
+  --bg-timetable: #{$d-bg-timetable};
+  --bg-sidebar: #{$d-bg-sidebar};
+  --bg-sidebar-hover: #{$d-bg-sidebar-hover};
+  --sb-text: #{$d-sb-text};
+  --tt-text: #{$d-tt-text};
+  --tt-primary: #{$d-tt-primary};
+  --tt-secondary: #{$d-tt-secondary};
+  --bg-scrollbar: #{$d-bg-scrollbar};
+  --scrollbar: #{$d-scrollbar};
 }
 
 @include printer {
-	body {
-		height: 100vh;
-		width: 100vw;
-	}
-	@page {
-		orientation: landscape !important;
-		size: A4 landscape !important;
-		margin: 0.5cm;
-	}
+  body {
+    height: 100vh;
+    width: 100vw;
+  }
+  @page {
+    orientation: landscape !important;
+    size: A4 landscape !important;
+    margin: 0.5cm;
+  }
 }
 
 @supports (scrollbar-color: red red) {
-	body.notstyllablescroll {
-		&,
-		* {
-			scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
-		}
-	}
-	body.thinscroll {
-		&,
-		* {
-			scrollbar-width: thin;
-		}
-	}
+  body.notstyllablescroll {
+    &,
+    * {
+      scrollbar-color: var(--scrollbar) var(--bg-scrollbar);
+    }
+  }
+  body.thinscroll {
+    &,
+    * {
+      scrollbar-width: thin;
+    }
+  }
 }
 ::-webkit-scrollbar {
-	width: 0.75rem;
-	height: 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
 }
 ::-webkit-scrollbar-track {
-	background-color: var(--bg-scrollbar);
-	margin: 0 0 0 0.25rem;
-	@include tablet {
-		margin: 0;
-	}
-	border-radius: 100vw;
+  background-color: var(--bg-scrollbar);
+  margin: 0 0 0 0.25rem;
+  @include tablet {
+    margin: 0;
+  }
+  border-radius: 100vw;
 }
 ::-webkit-scrollbar-corner {
-	background-color: transparent;
+  background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-	border-radius: 100vw;
-	background-color: var(--scrollbar);
-	border: 0.2rem solid var(--bg-scrollbar);
+  border-radius: 100vw;
+  background-color: var(--scrollbar);
+  border: 0.2rem solid var(--bg-scrollbar);
 }
 
 .v-popper__popper {
-	z-index: 1;
-	.v-popper__inner {
-		max-width: 230px;
-	}
+  z-index: 1;
+  .v-popper__inner {
+    max-width: 230px;
+  }
 }
