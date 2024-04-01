@@ -21,7 +21,7 @@ async function getProxy() {
 	const proxy = {};
 	let schoolData
 	try {
-		schoolData = await import('../public/schoolData');
+		schoolData = await import('../public/schoolData').default;
 		console.log('Setting up PROXY for:', schoolData.schoolTimeTableRootURL);
 		proxy[ schoolData.schoolTimeTableRootURL ] = {
 			target: schoolData.schoolHomeURL,

@@ -31,7 +31,7 @@ export function parseHTML() {
 		async transformIndexHtml(html) {
 			let schoolData
 			try {
-				schoolData = await import('../public/schoolData');
+				schoolData = await import('../public/schoolData').default;
 			} catch (error) { }
 			const htmlVariables = {
 				schoolROOT: schoolData?.schoolTimeTableRootURL || '',
