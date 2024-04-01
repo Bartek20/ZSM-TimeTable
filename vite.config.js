@@ -9,7 +9,6 @@ import banner from 'vite-plugin-banner';
 import path from 'path';
 
 // Vite Configs
-import server from './configs/vite.server';
 // Auto Imports
 import { components, imports } from './configs/vite.components';
 // Vite Transform plugins
@@ -22,14 +21,14 @@ import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 const now = getNow();
 
-export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
+export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => {
 	return {
 		define: {
 			__APP_VERSION__: JSON.stringify('v3.1.2'),
 			__SENTRY_DSN__: JSON.stringify(process.env.SENTRY_DSN_URL ?? ''),
 			__VUE_PROD_DEVTOOLS__: true,
 		},
-		server: command === 'build' ? {} : server,
+		server: command === 'build' ? {} : await import('./configs/vite.server').default,
 		preview: {
 			port: 5173,
 		},
