@@ -50,7 +50,6 @@
 				}
 				if (checkBetween(row.hours.to, addTime(row.hours.to, row.break))) {
 					currentLesson.value = row.nr + 'break';
-					return;
 				}
 			});
 		},

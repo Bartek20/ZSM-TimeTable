@@ -14,8 +14,8 @@
 	const subject = computed(() => {
 		const subject = props.data.subject;
 		let subjectData = appConfigs.value.timetable.subjects[subject];
-		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects['praktyki'];
-		if (subjectData == undefined) {
+		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects.praktyki;
+		if (subjectData === undefined) {
 			addUnknowns('subjects', subject);
 			return { short: subject };
 		}
@@ -36,7 +36,7 @@
 			};
 		return {
 			mode: 'n',
-			id: user.value == 'nauczyciel' ? props.data.teacherId : undefined,
+			id: user.value === 'nauczyciel' ? props.data.teacherId : undefined,
 			name: props.data.teacher,
 		};
 	});
@@ -54,7 +54,7 @@
 			};
 		return {
 			mode: 'n',
-			id: user.value == 'nauczyciel' ? props.data.teacherId : undefined,
+			id: user.value === 'nauczyciel' ? props.data.teacherId : undefined,
 			name: props.data.teacher,
 		};
 	});

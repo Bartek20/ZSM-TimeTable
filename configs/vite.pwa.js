@@ -24,17 +24,15 @@ const argvs = process.argv;
 const args = [];
 argvs.forEach((arg) => args.push(...arg.split('=')));
 const baseIndex = args.indexOf('--base');
-const base = baseIndex != -1 ? args[ baseIndex + 1 ] : '/';
+const base = baseIndex !== -1 ? args[ baseIndex + 1 ] : '/';
 const BASE_URL = base ? base : '/';
 
 const updateBroadcaster = {
 	cacheDidUpdate: async ({
-		cacheName,
 		request,
 		oldResponse,
 		newResponse,
 		event,
-		state,
 	}) => {
 		if (!oldResponse) return
 		if (!(oldResponse instanceof Response && newResponse instanceof Response)) return
@@ -42,15 +40,15 @@ const updateBroadcaster = {
 		let updated = false
 		const oldText = await oldResponse.text()
 		const newText = await newResponse.text()
-		if (file == 'lista.html') {
-			if (oldText != newText) updated = true
-		} else if (file.match(/[ons]{1}\d+\.html/)) {
+		if (file === 'lista.html') {
+			if (oldText !== newText) updated = true
+		} else if (/[ons]{1}\d+\.html/.test(file)) {
 			const genOld = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(oldText)
 			const genNew = /wygenerowano (\d{1,4}[./-]\d{1,2}[./-]\d{1,4})/.exec(newText)
-			if (genOld?.[1] != genNew?.[1]) updated = true
+			if (genOld?.[1] !== genNew?.[1]) updated = true
 			const applyOld = /Obowiązuje od: (.*)/.exec(oldText)
 			const applyNew = /Obowiązuje od: (.*)/.exec(newText)
-			if (applyOld?.[1] != applyNew?.[1]) updated = true
+			if (applyOld?.[1] !== applyNew?.[1]) updated = true
 		}
 		if (!updated) return
 		if (!(event instanceof FetchEvent)) return

@@ -6,7 +6,7 @@ export default function parseData(obj, data) {
 		case 'shortLessons':
 			if (appConfigs.value.timetable.shortLessons.length === 0) {
 				appConfigs.value.timetable.shortLessons = data;
-			} else if (appConfigs.value.timetable.shortLessons.length != data.length) {
+			} else if (appConfigs.value.timetable.shortLessons.length !== data.length) {
 				log('warn', '[App] Zmodyfikowano godziny trwania skróconych lekcji');
 				appConfigs.value.timetable.shortLessons = data;
 			}
@@ -18,7 +18,7 @@ export default function parseData(obj, data) {
 				const diff = [];
 				const newData = Object.keys(data);
 				newData.forEach((key) => {
-					if (data[key] != appConfigs.value.timetable.levels[key]) {
+					if (data[key] !== appConfigs.value.timetable.levels[key]) {
 						diff.push({
 							idx: key,
 							src: appConfigs.value.timetable.levels[key],
@@ -42,7 +42,7 @@ export default function parseData(obj, data) {
 				const diff = [];
 				const newData = Object.keys(data);
 				newData.forEach((key) => {
-					if (data[key] != appConfigs.value.timetable.classes[key]) {
+					if (data[key] !== appConfigs.value.timetable.classes[key]) {
 						diff.push({
 							idx: key,
 							src: appConfigs.value.timetable.classes[key],
@@ -68,9 +68,9 @@ export default function parseData(obj, data) {
 				newData.forEach((key) => {
 					if (
 						!appConfigs.value.timetable.teachers[key] ||
-						data[key].name != appConfigs.value.timetable.teachers[key].name ||
-						data[key].surname != appConfigs.value.timetable.teachers[key].surname ||
-						data[key].code != appConfigs.value.timetable.teachers[key].code
+						data[key].name !== appConfigs.value.timetable.teachers[key].name ||
+						data[key].surname !== appConfigs.value.timetable.teachers[key].surname ||
+						data[key].code !== appConfigs.value.timetable.teachers[key].code
 					) {
 						diff.push({
 							idx: key,
@@ -102,8 +102,8 @@ export default function parseData(obj, data) {
 				newData.forEach((key) => {
 					if (
 						!appConfigs.value.timetable.rooms[key] ||
-						data[key].level != appConfigs.value.timetable.rooms[key].level ||
-						data[key].name != appConfigs.value.timetable.rooms[key].name
+						data[key].level !== appConfigs.value.timetable.rooms[key].level ||
+						data[key].name !== appConfigs.value.timetable.rooms[key].name
 					) {
 						diff.push({
 							idx: key,
@@ -135,8 +135,8 @@ export default function parseData(obj, data) {
 				newData.forEach((key) => {
 					if (
 						!appConfigs.value.timetable.subjects[key] ||
-						data[key].short != appConfigs.value.timetable.subjects[key].short ||
-						data[key].full != appConfigs.value.timetable.subjects[key].full
+						data[key].short !== appConfigs.value.timetable.subjects[key].short ||
+						data[key].full !== appConfigs.value.timetable.subjects[key].full
 					) {
 						diff.push({
 							idx: key,

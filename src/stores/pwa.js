@@ -1,12 +1,12 @@
 import log from '@/functions/logger';
 
 const appPWAState = createGlobalState(() => {
-	const event = ref(undefined);
+	const event = ref();
 	const installed = ref(true);
 
 	const status = computed(() => {
 		if (!('onbeforeinstallprompt' in window)) return 'unsupported';
-		if (event.value != undefined && !installed.value) return 'installable';
+		if (event.value !== undefined && !installed.value) return 'installable';
 		if (
 			navigator.standalone ||
 			window.matchMedia('(display-mode: standalone)').matches ||
@@ -19,10 +19,10 @@ const appPWAState = createGlobalState(() => {
 	});
 
 	function install() {
-		if (event.value == undefined) return;
+		if (event.value === undefined) return;
 		event.value.prompt();
 		event.value.userChoice.then((res) => {
-			if (res.outcome == 'accepted') {
+			if (res.outcome === 'accepted') {
 				log('info', '[PWA] Instalacja została zaakceptowana.');
 				installed.value = true;
 			} else {

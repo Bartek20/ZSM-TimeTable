@@ -81,12 +81,12 @@ function checkScrollStyllability() {
 	test.classList.add('scrolltest');
 	document.head.appendChild(style);
 	document.body.appendChild(test);
-	if (test.clientWidth != 97) document.body.classList.add('notstyllablescroll');
-	if (test.clientWidth != 97 && test.clientWidth != 100) document.body.classList.add('thinscroll');
+	if (test.clientWidth !== 97) document.body.classList.add('notstyllablescroll');
+	if (test.clientWidth !== 97 && test.clientWidth !== 100) document.body.classList.add('thinscroll');
 	log(
 		'info',
 		'[App] Test zakończony z wynikiem:\nCustomowy scrollbar: ',
-		test.clientWidth != 97 ? (test.clientWidth != 100 ? 'Nie wspierany (Aktywny cienki scrollbar)' : 'Nie wspierany (Aktywny normalny scrollbar)') : 'Wspierany'
+		test.clientWidth !== 97 ? (test.clientWidth !== 100 ? 'Nie wspierany (Aktywny cienki scrollbar)' : 'Nie wspierany (Aktywny normalny scrollbar)') : 'Wspierany'
 	);
 	style.remove();
 	test.remove();
@@ -98,7 +98,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
 	appPWA.event.value = e;
 	appPWA.installed.value = false;
 });
-window.addEventListener('appinstalled', (e) => {
+window.addEventListener('appinstalled', () => {
+	appPWA.event.value = undefined;
 	appPWA.installed.value = true;
 })
 window.removeEventListener('beforeinstallprompt', window.installhandler);
@@ -113,7 +114,7 @@ if (window.installevent) {
 let fetching = false
 async function cacheTimeTables() {
 	if (!appConfigs.value.school.timetableURL) return;
-	if (import.meta.env.MODE == 'development') return;
+	if (import.meta.env.MODE === 'development') return;
 	if (fetching) return
 	fetching = true
 	const last = appConfigs.value.lastFetched;
@@ -134,7 +135,7 @@ async function cacheTimeTables() {
 		fetching = false
 	}
 }
-const updateSW = registerSW({
+registerSW({
 	immediate: true,
 	onNeedRefresh() {
 		log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.');
@@ -177,7 +178,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 	// Console log app version
 	log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__);
 	// Console log user notification
-	if (import.meta.env.MODE != 'development') {
+	if (import.meta.env.MODE !== 'development') {
 		log(
 			'info',
 			'[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'

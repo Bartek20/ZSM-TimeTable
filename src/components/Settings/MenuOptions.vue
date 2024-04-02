@@ -63,7 +63,7 @@
 <template>
 	<div class="configs__options" v-if="status == 200">
 		<span class="configs__options__title"><b>Opcje</b></span>
-		<a class="configs__options__option" :href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`" target="_blank">
+		<a class="configs__options__option" :href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`" target="_blank" rel="noopener noreferrer">
 			<i class="configs__options__option__icon zsm-old-timetable-icon"></i>
 			<span class="configs__options__option__name">Otwórz oryginalny plan</span>
 		</a>

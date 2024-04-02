@@ -6,5 +6,5 @@ async function getFile(domain, url) {
 }
 
 export async function onRequest(context) {
-	return await getFile(context.env.CF_PAGES_URL, `https://zsm.resman.pl/plan_lekcji/timetableData.js`);
+	return await getFile(context.env.CF_PAGES_URL, 'https://zsm.resman.pl/plan_lekcji/timetableData.js');
 }

@@ -1,5 +1,5 @@
 <script setup>
-	const props = defineProps({
+	defineProps({
 		id: {
 			type: String,
 			required: true,
@@ -24,8 +24,8 @@
 	function changeMenu(e) {
 		e.preventDefault();
 		let element = e.target;
-		if (element.tagName != 'LABEL') element = element.parentElement;
-		if (element.tagName != 'LABEL') element = element.parentElement;
+		if (element.tagName !== 'LABEL') element = element.parentElement;
+		if (element.tagName !== 'LABEL') element = element.parentElement;
 		if (!document.querySelector('.sidebar__menu--checkbox:checked')) element.parentElement.classList.add('only');
 		element = element.control;
 		element.checked = !element.checked;

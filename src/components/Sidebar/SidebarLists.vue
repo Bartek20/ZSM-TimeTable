@@ -1,6 +1,6 @@
 <script setup>
 	import { useElementScrollbarSize } from '@/functions/useScrollbarSize';
-	const props = defineProps({
+	defineProps({
 		links: {
 			type: Object,
 			required: true,

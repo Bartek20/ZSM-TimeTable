@@ -1,6 +1,6 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
-	const props = defineProps({
+	defineProps({
 		data: {
 			type: Array,
 			required: true,

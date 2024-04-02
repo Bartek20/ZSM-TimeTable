@@ -25,7 +25,7 @@
 					msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
 				};
 			case 200:
-				if (appData.timetable.value.hours.length == 0) {
+				if (appData.timetable.value.hours.length === 0) {
 					const MESSAGES = {
 						o: 'Wybrana klasa nie ma w planie żadnych zajęć',
 						n: 'Wybrany nauczyciel nie ma w planie żadnych lekcji',
@@ -48,10 +48,10 @@
 	const DAY = useDateFormat(useNow({ interval: 3600000 }), 'd', {
 		locales: 'pl-PL',
 	});
-	const activeDay = ref(DAY.value == 6 || DAY.value == 0 ? 0 : parseInt(DAY.value) - 1);
+	const activeDay = ref(DAY.value === 6 || DAY.value === 0 ? 0 : parseInt(DAY.value) - 1);
 	function changeDay(dir) {
-		if (dir) activeDay.value == 4 ? (activeDay.value = 0) : (activeDay.value += 1);
-		else activeDay.value == 0 ? (activeDay.value = 4) : (activeDay.value -= 1);
+		if (dir) activeDay.value === 4 ? (activeDay.value = 0) : (activeDay.value += 1);
+		else activeDay.value === 0 ? (activeDay.value = 4) : (activeDay.value -= 1);
 		document.querySelector('.timetable').scrollTo({
 			top: 0,
 			behavior: 'instant',

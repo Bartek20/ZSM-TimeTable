@@ -5,12 +5,12 @@
 		const query = e.target.value.replace(/[^a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ -]/g, '');
 		const searchQuery = query.trim().toLowerCase();
 		const outcome = {
-			query: searchQuery == 'nauczyciel' ? '' : searchQuery,
-			text: searchQuery == 'nauczyciel' ? '' : query,
+			query: searchQuery === 'nauczyciel' ? '' : searchQuery,
+			text: searchQuery === 'nauczyciel' ? '' : query,
 		};
 		search.value = outcome;
-		e.target.value = searchQuery == 'nauczyciel' ? '' : query;
-		if (searchQuery == 'nauczyciel') {
+		e.target.value = searchQuery === 'nauczyciel' ? '' : query;
+		if (searchQuery === 'nauczyciel') {
 			appConfigs.value.isTeacher = true
 			document.getElementById('teleporter')?.click();
 		}

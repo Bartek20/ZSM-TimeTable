@@ -19,7 +19,7 @@ const proxyConfigure = (proxy, _options) => {
 
 async function getProxy() {
 	const proxy = {};
-	const schoolData = await import('../public/schoolData').then(e => e.default).catch(e => ({}));
+	const schoolData = await import('../public/schoolData').then(e => e.default).catch(() => ({}));
 	if (!schoolData.schoolTimeTableRootURL) return proxy
 	console.log('Setting up PROXY for:', schoolData.schoolTimeTableRootURL);
 	proxy[ schoolData.schoolTimeTableRootURL ] = {

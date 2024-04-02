@@ -47,8 +47,7 @@
 	const marquee = computed(() => {
 		if (!headElSize.value) return false;
 		if (!titleElSize.value) return false;
-		if (titleElSize.value > headElSize.value) return true;
-		return false;
+		return (titleElSize.value > headElSize.value);
 	});
 </script>
 

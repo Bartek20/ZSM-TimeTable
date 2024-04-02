@@ -19,7 +19,7 @@ function parseClass(name) {
 			const specialityData = appConfigs.value.timetable.classes[speciality];
 			sidebar = `${sidebar} ${speciality}`;
 			search[speciality] = speciality;
-			if (specialityData == undefined) {
+			if (specialityData === undefined) {
 				addUnknowns('classes', speciality);
 				heading = `${heading} ${speciality}`;
 			} else {
@@ -39,7 +39,7 @@ function parseTeacher(name) {
 	let title, heading, sidebar, search;
 
 	let teacherData = appConfigs.value.timetable.teachers[name];
-	if (teacherData == undefined) {
+	if (teacherData === undefined) {
 		addUnknowns('teachers', name);
 		const regexData = name.match(/(.*\.)(.*) \((.*)\)/);
 		if (regexData) {
@@ -54,7 +54,7 @@ function parseTeacher(name) {
 	heading = [teacherData.name, teacherData.surname, `(${teacherData.code})`].filter((e) => e).join(' ');
 	sidebar =
 		// CKZ
-		name == 'c.Centrum Kształcenia Zawodowego (CK)'
+		name === 'c.Centrum Kształcenia Zawodowego (CK)'
 			? `CKZ (${teacherData.code})`
 			: // Nauczyciel VACAT
 			name.includes('vacat')
@@ -81,16 +81,16 @@ function parseClassroom(name) {
 	let title, heading, sidebar, search;
 
 	const roomData = appConfigs.value.timetable.rooms[name];
-	if (roomData == undefined) {
+	if (roomData === undefined) {
 		addUnknowns('rooms', name);
 	} else {
 		title = name;
 		heading = roomData.name ? `${name} (${roomData.name})` : name;
-		sidebar = roomData.level != undefined ? `${name} (${appConfigs.value.timetable.levels[roomData.level]})` : name;
+		sidebar = roomData.level !== undefined ? `${name} (${appConfigs.value.timetable.levels[roomData.level]})` : name;
 		search = {
 			name: name,
 			fullName: roomData.name,
-			level: roomData.level != undefined ? appConfigs.value.timetable.levels[roomData.level] : undefined,
+			level: roomData.level !== undefined ? appConfigs.value.timetable.levels[roomData.level] : undefined,
 		};
 	}
 

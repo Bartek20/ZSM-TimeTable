@@ -171,7 +171,7 @@ export default async function loadTimeTable(mode, id) {
 	}
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}plany/${mode}${id}.html`);
-		if (res == undefined) {
+		if (res === undefined) {
 			appData.timetable.value = {
 				status: 500,
 			};
@@ -189,11 +189,11 @@ export default async function loadTimeTable(mode, id) {
 		const lessonsNr = result.days[0].length;
 		for (let i = 0; i < lessonsNr; i++) {
 			if (
-				result.days[0][0].length == 0 &&
-				result.days[1][0].length == 0 &&
-				result.days[2][0].length == 0 &&
-				result.days[3][0].length == 0 &&
-				result.days[4][0].length == 0
+				result.days[0][0].length === 0 &&
+				result.days[1][0].length === 0 &&
+				result.days[2][0].length === 0 &&
+				result.days[3][0].length === 0 &&
+				result.days[4][0].length === 0
 			) {
 				result.days[0].shift();
 				result.days[1].shift();
@@ -206,11 +206,11 @@ export default async function loadTimeTable(mode, id) {
 		appData.timetable.value = result;
 	} catch (err) {
 		log('error', '[App] Wystąpił błąd przy wczytywaniu planu:\n', err);
-		if (err.response && err.response.status == 404) {
+		if (err.response && err.response.status === 404) {
 			appData.timetable.value = {
 				status: 404,
 			};
-		} else if (err.code == 'ERR_NETWORK') {
+		} else if (err.code === 'ERR_NETWORK') {
 			appData.timetable.value = {
 				status: 900,
 			};

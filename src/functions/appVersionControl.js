@@ -7,15 +7,14 @@ function cmpVersion(version = __APP_VERSION__) {
 	let current_version = (appConfigs.value.version ?? 'v0.0.0').replace('v', '').split('.');
 	version = version.replace('v', '').split('.');
 	if (current_version[0] < version[0]) return true;
-	if (current_version[0] == version[0] && current_version[1] < version[1]) return true;
-	if (current_version[0] == version[0] && current_version[1] == version[1] && current_version[2] < version[2]) return true;
-	return false;
+	if (current_version[0] === version[0] && current_version[1] < version[1]) return true;
+	return (current_version[0] === version[0] && current_version[1] === version[1] && current_version[2] < version[2]);
 }
 
 export default async function validateApp() {
 	const version = appConfigs.value.version;
-	if (version != __APP_VERSION__) {
-		log('info', '[App]', version == undefined ? 'Instalowanie aplikacji' : 'Aktualizacja aplikacji');
+	if (version !== __APP_VERSION__) {
+		log('info', '[App]', version === undefined ? 'Instalowanie aplikacji' : 'Aktualizacja aplikacji');
 		// Updating from legacy NO-VERSION app to v1.0.0
 		if (cmpVersion('v1.0.0')) {
 			window.localStorage.removeItem('selectedTimeTable');
