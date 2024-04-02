@@ -1,157 +1,169 @@
 <script setup>
-	import appConfigs from '@/stores/configs';
-	import parseColor from '@/functions/parseColor';
+import appConfigs from "@/stores/configs";
+import parseColor from "@/functions/parseColor";
 
-	const user = useRouteParams('user');
-	const mode = useRouteParams('mode');
+const user = useRouteParams("user");
+const mode = useRouteParams("mode");
 
-	const props = defineProps({
-		data: {
-			type: Object,
-			required: true,
-		},
-	});
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
 
-	const subject = computed(() => {
-		const subject = props.data.subject;
-		let subjectData = appConfigs.value.timetable.subjects[subject];
-		if (subject.includes('ckz')) subjectData = appConfigs.value.timetable.praktyki;
-		if (subjectData === undefined) {
-			addUnknowns('subjects', subject);
-			return { short: subject };
-		}
-		return subjectData;
-	});
+const subject = computed(() => {
+  const subject = props.data.subject;
+  let subjectData = appConfigs.value.timetable.subjects[subject];
+  if (subject.includes("ckz"))
+    subjectData = appConfigs.value.timetable.praktyki;
+  if (subjectData === undefined) {
+    addUnknowns("subjects", subject);
+    return { short: subject };
+  }
+  return subjectData;
+});
 
-	const col1 = computed(() => {
-		if (props.data.subject.includes('ckz'))
-			return {
-				name: '@',
-			};
-		const ver = ['n', 's'].includes(mode.value);
-		if (ver)
-			return {
-				mode: 'o',
-				id: props.data.classId,
-				name: props.data.className,
-			};
-		return {
-			mode: 'n',
-			id: user.value === 'nauczyciel' ? props.data.teacherId : undefined,
-			name: props.data.teacher,
-		};
-	});
-	const col2 = computed(() => {
-		if (props.data.subject.includes('ckz'))
-			return {
-				name: 'CKZ',
-			};
-		const ver = ['o', 'n'].includes(mode.value);
-		if (ver)
-			return {
-				mode: 's',
-				id: props.data.roomId,
-				name: props.data.room,
-			};
-		return {
-			mode: 'n',
-			id: user.value === 'nauczyciel' ? props.data.teacherId : undefined,
-			name: props.data.teacher,
-		};
-	});
-	const colors = computed(() => {
-		if (!appConfigs.value.showColors)
-			return {
-				light: 'white',
-				dark: 'lightgray',
-			};
-		const name = subject.value.short.replace(/ \([UR]{1}\)/, '');
-		if (!appConfigs.value.database.subjects[name]) parseColor(name);
-		return appConfigs.value.database.subjects[name];
-	});
+const col1 = computed(() => {
+  if (props.data.subject.includes("ckz"))
+    return {
+      name: "@",
+    };
+  const ver = ["n", "s"].includes(mode.value);
+  if (ver)
+    return {
+      mode: "o",
+      id: props.data.classId,
+      name: props.data.className,
+    };
+  return {
+    mode: "n",
+    id: user.value === "nauczyciel" ? props.data.teacherId : undefined,
+    name: props.data.teacher,
+  };
+});
+const col2 = computed(() => {
+  if (props.data.subject.includes("ckz"))
+    return {
+      name: "CKZ",
+    };
+  const ver = ["o", "n"].includes(mode.value);
+  if (ver)
+    return {
+      mode: "s",
+      id: props.data.roomId,
+      name: props.data.room,
+    };
+  return {
+    mode: "n",
+    id: user.value === "nauczyciel" ? props.data.teacherId : undefined,
+    name: props.data.teacher,
+  };
+});
+const colors = computed(() => {
+  if (!appConfigs.value.showColors)
+    return {
+      light: "white",
+      dark: "lightgray",
+    };
+  const name = subject.value.short.replace(/ \([UR]{1}\)/, "");
+  if (!appConfigs.value.database.subjects[name]) parseColor(name);
+  return appConfigs.value.database.subjects[name];
+});
 
-	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
+const gridArea = computed(() => (props.data.groupName ? "3fr 1fr" : "1fr"));
 </script>
 
 <template>
-	<div
-		class="lesson"
-		v-tooltip.top="{
-			content: `<b>${subject.full ? subject.full : subject.short}</b>`,
-			html: true,
-			distance: 12,
-			overflowPadding: 40,
-			shift: false,
-			delay: { show: 500, hide: 0 },
-			disposeTimeout: 0,
-			triggers: ['hover', 'touch'],
-			container: '.timetable__container',
-		}">
-		<div class="row">
-			<!-- Subject -->
-			<div>
-				<b>{{ subject.short }}</b>
-			</div>
-			<!-- Group -->
-			<div v-if="data.groupName">
-				<b>{{ data.groupName }}</b>
-			</div>
-		</div>
-		<div class="row">
-			<!-- Column #1 -->
-			<div v-if="col1.id">
-				<RouterLink :to="{ name: 'plan', params: { user: user, mode: col1.mode, id: col1.id } }" class="text-muted text-decoration-none">{{
-					col1.name
-				}}</RouterLink>
-			</div>
-			<div v-else-if="!col1.id && col1.name">{{ col1.name }}</div>
-			<div v-else>-</div>
-			<!-- Column #2 -->
-			<div v-if="col2.id">
-				<RouterLink :to="{ name: 'plan', params: { user: user, mode: col2.mode, id: col2.id } }" class="text-muted text-decoration-none">{{
-					col2.name
-				}}</RouterLink>
-			</div>
-			<div v-else-if="!col2.id && col2.name">{{ col2.name }}</div>
-			<div v-else>-</div>
-		</div>
-	</div>
+  <div
+    class="lesson"
+    v-tooltip.top="{
+      content: `<b>${subject.full ? subject.full : subject.short}</b>`,
+      html: true,
+      distance: 12,
+      overflowPadding: 40,
+      shift: false,
+      delay: { show: 500, hide: 0 },
+      disposeTimeout: 0,
+      triggers: ['hover', 'touch'],
+      container: '.timetable__container',
+    }"
+  >
+    <div class="row">
+      <!-- Subject -->
+      <div>
+        <b>{{ subject.short }}</b>
+      </div>
+      <!-- Group -->
+      <div v-if="data.groupName">
+        <b>{{ data.groupName }}</b>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Column #1 -->
+      <div v-if="col1.id">
+        <RouterLink
+          :to="{
+            name: 'plan',
+            params: { user: user, mode: col1.mode, id: col1.id },
+          }"
+          class="text-muted text-decoration-none"
+          >{{ col1.name }}</RouterLink
+        >
+      </div>
+      <div v-else-if="!col1.id && col1.name">{{ col1.name }}</div>
+      <div v-else>-</div>
+      <!-- Column #2 -->
+      <div v-if="col2.id">
+        <RouterLink
+          :to="{
+            name: 'plan',
+            params: { user: user, mode: col2.mode, id: col2.id },
+          }"
+          class="text-muted text-decoration-none"
+          >{{ col2.name }}</RouterLink
+        >
+      </div>
+      <div v-else-if="!col2.id && col2.name">{{ col2.name }}</div>
+      <div v-else>-</div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
-	.lesson {
-		background-color: v-bind('colors.light');
-		box-shadow: inset 0 0 0 9999px v-bind('colors.light');
-		border-bottom: 5px solid;
-		border-color: v-bind('colors.dark');
-		white-space: nowrap;
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
-		min-width: 150px;
-		&:not(:last-child) {
-			margin-bottom: 5px;
-		}
-		.row {
-			display: grid;
-			gap: 0.5rem;
-			:last-child {
-				text-align: end;
-			}
-			:first-child {
-				text-align: start;
-			}
-			&:nth-child(1) {
-				grid-template-columns: v-bind(gridArea);
-				color: black;
-				margin-bottom: 3px;
-			}
-			&:nth-child(2) {
-				grid-template-columns: 1fr 1fr;
-				a,
-				div {
-					color: rgba(33, 37, 41, 0.75);
-				}
-			}
-		}
-	}
+.lesson {
+  background-color: v-bind("colors.light");
+  box-shadow: inset 0 0 0 9999px v-bind("colors.light");
+  border-bottom: 5px solid;
+  border-color: v-bind("colors.dark");
+  white-space: nowrap;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  min-width: 150px;
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+  .row {
+    display: grid;
+    gap: 0.5rem;
+    :last-child {
+      text-align: end;
+    }
+    :first-child {
+      text-align: start;
+    }
+    &:nth-child(1) {
+      grid-template-columns: v-bind(gridArea);
+      color: black;
+      margin-bottom: 3px;
+    }
+    &:nth-child(2) {
+      grid-template-columns: 1fr 1fr;
+      a,
+      div {
+        color: rgba(33, 37, 41, 0.75);
+      }
+    }
+  }
+}
 </style>
