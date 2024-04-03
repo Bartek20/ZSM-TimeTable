@@ -168,5 +168,6 @@ export default function parseData(obj, data) {
 				}
 			}
 			break;
+		// no default
 	}
 }

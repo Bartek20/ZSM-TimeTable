@@ -128,9 +128,9 @@ async function cacheTimeTables() {
 	try {
 		const res = await axios.get(`${appConfigs.value.school.timetableURL}lista.html`);
 		const list = new TimeTableList(res.data).getList();
-		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch((_) => { }));
-		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch((_) => { }));
-		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch((_) => { }));
+		const classMap = list.classes.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/o${obj.value}.html`).catch(() => undefined));
+		const teacherMap = list.teachers.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/n${obj.value}.html`).catch(() => undefined));
+		const roomMap = list.rooms.map((obj) => axios.get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`).catch(() => undefined));
 		await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
 		log('info', '[Service Worker] Zakończono pobieranie planów do pamięci cache.');
 		appConfigs.value.lastFetched = Date.now();
@@ -170,7 +170,7 @@ registerSW({
 		log('error', '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n', err);
 	},
 });
-navigator.serviceWorker.addEventListener('message', async event => {
+navigator.serviceWorker.addEventListener('message', event => {
 	if (fetching) return
 	if (event.data !== 'Timetable Update Available') return
 	log('info', '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...')

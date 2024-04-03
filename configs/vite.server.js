@@ -8,11 +8,11 @@ const proxyConfigure = (proxy, _options) => {
 		console.log(headings.ERROR, err);
 	});
 	proxy.on('proxyReq', (_proxyReq, req, _res) => {
-		const method = '[' + req.method + ']'.padEnd(5, ' ');
+		const method = `[${req.method}]`.padEnd(5, ' ');
 		console.log(headings.REQUEST, method, req.url);
 	});
 	proxy.on('proxyRes', (proxyRes, req, _res) => {
-		const code = '[' + proxyRes.statusCode + ']'.padEnd(5, ' ');
+		const code = `[${proxyRes.statusCode}]`.padEnd(5, ' ');
 		console.log(headings.RESPONSE, code, req.url);
 	});
 };
