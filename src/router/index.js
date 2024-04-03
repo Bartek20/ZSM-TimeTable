@@ -76,10 +76,10 @@ router.beforeEach((to, from) => {
       log('warn', '[Vue Router] Doszło do pętli przekierowań:', to)
       return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
     }
-    return
+    return undefined
   }
 
-  if (to.name !== 'plan') return
+  if (to.name !== 'plan') return undefined
   if (appPWA.status.value !== 'standalone') {
     appConfigs.value.isTeacher = to.params.user === 'nauczyciel'
   }
@@ -109,7 +109,7 @@ router.beforeEach((to, from) => {
 router.afterEach((to, _from, failure) => {
   if (failure) {
     log('error', '[Vue Router] Wystąpił błąd przy przekierowaniu:', failure)
-    return
+    return undefined
   }
   if (to.name === 'plan') setTitle('Wczytywanie planu lekcji.')
 })
