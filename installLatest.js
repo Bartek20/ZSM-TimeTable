@@ -9,6 +9,10 @@ fs.copyFile('./package.json', './package.json.bak', () => {
 	// Development dependencies
 	let cmdD = 'npm i -D';
 	Object.keys(pkg.devDependencies).forEach((dependency) => (cmdD += ` ${dependency}@latest`));
+
+	// Fix for some deps
+	cmd = cmd.replace('vue-toastification@latest', 'https://github.com/Bartek20/vue-toastification.git#next')
+
 	// Output
 	console.log(cmd, '&&', cmdD);
 });
