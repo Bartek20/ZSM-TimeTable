@@ -1,8 +1,8 @@
-import appConfigs from '@/stores/configs';
-import log from '@/functions/logger';
-import { useToast } from 'vue-toastification';
+import appConfigs from '@/stores/configs'
+import log from '@/functions/logger'
+import { useToast } from 'vue-toastification'
 
-const toast = useToast();
+const toast = useToast()
 
 export default function parseData(obj, data) {
 	switch (obj) {

@@ -18,27 +18,27 @@ const proxyConfigure = (proxy, _options) => {
 };
 
 export default {
-	proxy: {
-		'/plan_vulcan': {
-			target: 'https://zsm.resman.pl',
-			changeOrigin: true,
-			secure: false,
-			ws: true,
-			configure: proxyConfigure,
-		},
-		'/timetableData.js': {
-			target: 'https://zsm.resman.pl/plan_lekcji',
-			changeOrigin: true,
-			secure: false,
-			ws: true,
-			configure: proxyConfigure,
-		},
-		'/schoolData.js': {
-			target: 'https://zsm.resman.pl/plan_lekcji',
-			changeOrigin: true,
-			secure: false,
-			ws: true,
-			configure: proxyConfigure,
-		},
-	},
-};
+  proxy: {
+    '/plan_vulcan': {
+      target: 'https://zsm.resman.pl',
+      changeOrigin: true,
+      secure: false,
+      ws: true,
+      configure: proxyConfigure
+    },
+    '/timetableData.js': {
+      target: 'https://zsm.resman.pl/plan_lekcji',
+      changeOrigin: true,
+      secure: false,
+      ws: true,
+      configure: proxyConfigure
+    },
+    '/schoolData.js': {
+      target: 'https://zsm.resman.pl/plan_lekcji',
+      changeOrigin: true,
+      secure: false,
+      ws: true,
+      configure: proxyConfigure
+    }
+  }
+}

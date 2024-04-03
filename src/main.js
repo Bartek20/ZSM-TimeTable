@@ -1,67 +1,77 @@
 // Floating tooltip css
-import 'floating-vue/dist/style.css';
+import 'floating-vue/dist/style.css'
 // Toast css
-import "../node_modules/vue-toastification/dist/index.css";
+import '../node_modules/vue-toastification/dist/index.css'
 // App css
-import './assets/main.scss';
+import './assets/main.scss'
 
-import { createApp } from 'vue';
-import { vTooltip } from 'floating-vue';
-import Toast, { useToast } from "vue-toastification";
+import { createApp } from 'vue'
+import { vTooltip } from 'floating-vue'
+import Toast, { useToast } from 'vue-toastification'
 
-import App from './App.vue';
-import router from './router';
+import App from './App.vue'
+import router from './router'
 
-import appConfigs from '@/stores/configs';
-import appPWA from '@/stores/pwa';
-import log from '@/functions/logger';
-import validateApp from '@/functions/appVersionControl';
-import colorHandler from '@/functions/colorModeHandler';
-import parseData from '@/functions/timetableDataHandler';
+import appConfigs from '@/stores/configs'
+import appPWA from '@/stores/pwa'
+import log from '@/functions/logger'
+import validateApp from '@/functions/appVersionControl'
+import colorHandler from '@/functions/colorModeHandler'
+import parseData from '@/functions/timetableDataHandler'
 
-import { init as Sentry_init, browserTracingIntegration as Sentry_browserTracingIntegration, replayIntegration as Sentry_replayIntegration } from '@sentry/vue';
+import {
+  init as Sentry_init,
+  browserTracingIntegration as Sentry_browserTracingIntegration,
+  replayIntegration as Sentry_replayIntegration
+} from '@sentry/vue'
 
-const app = createApp(App);
+const app = createApp(App)
 
 // Sentry Error Reporting
-if (__SENTRY_DSN__) Sentry_init({
-	// Sentry config
-	dsn: __SENTRY_DSN__,
-	integrations: [
-		Sentry_browserTracingIntegration({ router }),
-		Sentry_replayIntegration({
-			maskAllText: false,
-			blockAllMedia: false,
-		}),
-	],
-	// Performance Monitoring
-	tracesSampleRate: 0.1,
-	tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
-	// Session Replay
-	replaysSessionSampleRate: 0.0,
-	replaysOnErrorSampleRate: 1.0,
-	// Vue settings
-	app,
-	trackComponents: true,
-	// App settings
-	initialScope: (scope) => {
-		const data = JSON.parse(localStorage.getItem('appConfigs'));
-		scope.setTag('appVersion', __APP_VERSION__);
-		scope.setContext('appConfigs', data);
-		return scope;
-	},
-	beforeSend: (event, hint) => {
-		const confs = JSON.stringify(JSON.parse(localStorage.getItem('appConfigs') ?? '{}'), null, '\t')
-		if (confs === '{}') return event;
-		hint.attachments = [ { filename: 'appConfigs.json', data: confs } ];
-		return event;
-	},
-});
+if (__SENTRY_DSN__) {
+  Sentry_init({
+    // Sentry config
+    dsn: __SENTRY_DSN__,
+    integrations: [
+      Sentry_browserTracingIntegration({ router }),
+      Sentry_replayIntegration({
+        maskAllText: false,
+        blockAllMedia: false
+      })
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 0.1,
+    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    // Session Replay
+    replaysSessionSampleRate: 0.0,
+    replaysOnErrorSampleRate: 1.0,
+    // Vue settings
+    app,
+    trackComponents: true,
+    // App settings
+    initialScope: (scope) => {
+      const data = JSON.parse(localStorage.getItem('appConfigs'))
+      scope.setTag('appVersion', __APP_VERSION__)
+      scope.setContext('appConfigs', data)
+      return scope
+    },
+    beforeSend: (event, hint) => {
+      const confs = JSON.stringify(
+        JSON.parse(localStorage.getItem('appConfigs') ?? '{}'),
+        null,
+        '\t'
+      )
+      if (confs === '{}') return event
+      hint.attachments = [{ filename: 'appConfigs.json', data: confs }]
+      return event
+    }
+  })
+}
 
 // Check custom css scrollbar support
-function checkScrollStyllability() {
-	const style = document.createElement('style');
-	style.textContent = `
+function checkScrollStyllability () {
+  const style = document.createElement('style')
+  style.textContent = `
 	.scrolltest {
 		position: fixed;
 		visibility: hidden;
@@ -81,38 +91,46 @@ function checkScrollStyllability() {
 	}
 	.scrolltest::-webkit-scrollbar-thumb {
 		background: green;
-	}`;
-	const test = document.createElement('div');
-	test.classList.add('scrolltest');
-	document.head.appendChild(style);
-	document.body.appendChild(test);
-	if (test.clientWidth !== 97) document.body.classList.add('notstyllablescroll');
-	if (test.clientWidth !== 97 && test.clientWidth !== 100) document.body.classList.add('thinscroll');
-	log(
-		'info',
-		'[App] Test zakończony z wynikiem:\nCustomowy scrollbar: ',
-		test.clientWidth !== 97 ? (test.clientWidth !== 100 ? 'Nie wspierany (Aktywny cienki scrollbar)' : 'Nie wspierany (Aktywny normalny scrollbar)') : 'Wspierany'
-	);
-	style.remove();
-	test.remove();
+	}`
+  const test = document.createElement('div')
+  test.classList.add('scrolltest')
+  document.head.appendChild(style)
+  document.body.appendChild(test)
+  if (test.clientWidth !== 97) {
+    document.body.classList.add('notstyllablescroll')
+  }
+  if (test.clientWidth !== 97 && test.clientWidth !== 100) {
+    document.body.classList.add('thinscroll')
+  }
+  log(
+    'info',
+    '[App] Test zakończony z wynikiem:\nCustomowy scrollbar: ',
+    test.clientWidth !== 97
+      ? test.clientWidth !== 100
+        ? 'Nie wspierany (Aktywny cienki scrollbar)'
+        : 'Nie wspierany (Aktywny normalny scrollbar)'
+      : 'Wspierany'
+  )
+  style.remove()
+  test.remove()
 }
 
 // Set PWA eventlistener
 window.addEventListener('beforeinstallprompt', (e) => {
-	e.preventDefault();
-	appPWA.event.value = e;
-	appPWA.installed.value = false;
-});
-window.addEventListener('appinstalled', () => {
-	appPWA.event.value = undefined;
-	appPWA.installed.value = true;
+  e.preventDefault()
+  appPWA.event.value = e
+  appPWA.installed.value = false
 })
-window.removeEventListener('beforeinstallprompt', window.installhandler);
+window.addEventListener('appinstalled', () => {
+  appPWA.event.value = undefined
+  appPWA.installed.value = true
+})
+window.removeEventListener('beforeinstallprompt', window.installhandler)
 if (window.installevent) {
-	appPWA.event.value = window.installevent;
-	appPWA.installed.value = false;
-	window.installhandler = undefined;
-	window.installevent = undefined;
+  appPWA.event.value = window.installevent
+  appPWA.installed.value = false
+  window.installhandler = undefined
+  window.installevent = undefined
 }
 
 // Service Worker, Timetable caching
@@ -183,95 +201,111 @@ if (navigator.serviceWorker.controller) navigator.serviceWorker.addEventListener
 
 // Main app functions
 (async () => {
-	// Console log app version
-	log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__);
-	// Console log user notification
-	if (import.meta.env.MODE !== 'development') {
-		log(
-			'info',
-			'[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
-		);
-		log('warn', '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.');
-	}
+  // Console log app version
+  log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__)
+  // Console log user notification
+  if (import.meta.env.MODE !== 'development') {
+    log(
+      'info',
+      '[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
+    )
+    log(
+      'warn',
+      '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.'
+    )
+  }
 
-	// App setup
-	app.use(Toast, {
-		transition: "Vue-Toastification__bounce",
-		maxToasts: 10,
-		newestOnTop: true,
-		filterBeforeCreate: (toast, toasts) => {
-			if (toasts.filter(t => t.content === toast.content).length !== 0) return false;
-			return toast;
-		},
-		position: "top-right",
-		timeout: 3000,
-		closeOnClick: false,
-		pauseOnFocusLoss: false,
-		pauseOnHover: false,
-		draggable: false,
-		draggablePercent: 0.3,
-		showCloseButtonOnHover: true,
-		hideProgressBar: false,
-		closeButton: "button",
-		rtl: false
-	})
-	app.directive('tooltip', vTooltip);
-	// Check supported scrollbars
-	checkScrollStyllability();
-	// Setup cache headers
-	axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache';
-	// Setup color mode handler
-	colorHandler();
+  // App setup
+  app.use(Toast, {
+    transition: 'Vue-Toastification__bounce',
+    maxToasts: 10,
+    newestOnTop: true,
+    filterBeforeCreate: (toast, toasts) => {
+      if (toasts.filter((t) => t.content === toast.content).length !== 0) {
+        return false
+      }
+      return toast
+    },
+    position: 'top-right',
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: false,
+    pauseOnHover: false,
+    draggable: false,
+    draggablePercent: 0.3,
+    showCloseButtonOnHover: true,
+    hideProgressBar: false,
+    closeButton: 'button',
+    rtl: false
+  })
+  app.directive('tooltip', vTooltip)
+  // Check supported scrollbars
+  checkScrollStyllability()
+  // Setup cache headers
+  axios.defaults.headers.get['Cache-Control'] = 'no-cache'
+  // Setup color mode handler
+  colorHandler()
 
-	const toast = useToast();
-	// Fetch School Data
-	try {
-		const { default: schoolData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
-		appConfigs.value.school.homeURL = schoolData.schoolHomeURL;
-		appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL;
-		appConfigs.value.school.logoDescription = schoolData.schoolLogoDescription || 'Logo Szkoły';
-	} catch (e) {
-		log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
-		toast.error('Wystąpił błąd przy wczytywaniu danych szkoły');
-	}
-	// Fetch TimeTable Data
-	try {
-		const { default: timetableData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`);
-		parseData('shortLessons', timetableData.shortLessons || []);
-		parseData('levels', timetableData.levels || {});
-		parseData('classes', timetableData.classes || {});
-		parseData('teachers', timetableData.teachers || {});
-		parseData('rooms', timetableData.rooms || {});
-		parseData('subjects', timetableData.subjects || {});
-	} catch (e) {
-		log('error', '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
-		toast.error('Wystąpił błąd przy wczytywaniu danych planu lekcji');
-	}
+  const toast = useToast()
+  // Fetch School Data
+  try {
+    const { default: schoolData } = await import(
+      /* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`
+    )
+    appConfigs.value.school.homeURL = schoolData.schoolHomeURL
+    appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL
+    appConfigs.value.school.logoDescription =
+      schoolData.schoolLogoDescription || 'Logo Szkoły'
+  } catch (e) {
+    log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e)
+    toast.error('Wystąpił błąd przy wczytywaniu danych szkoły')
+  }
+  // Fetch TimeTable Data
+  try {
+    const { default: timetableData } = await import(
+      /* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`
+    )
+    parseData('shortLessons', timetableData.shortLessons || [])
+    parseData('levels', timetableData.levels || {})
+    parseData('classes', timetableData.classes || {})
+    parseData('teachers', timetableData.teachers || {})
+    parseData('rooms', timetableData.rooms || {})
+    parseData('subjects', timetableData.subjects || {})
+  } catch (e) {
+    log(
+      'error',
+      '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n',
+      e
+    )
+    toast.error('Wystąpił błąd przy wczytywaniu danych planu lekcji')
+  }
 
-	// Prevent app from running without required data
-	if (!appConfigs.value.school.timetableURL) {
-		const loader = document.body.querySelector('#loader');
-		loader.querySelector('h1').innerText = 'Wystąpił błąd przy wczytywaniu aplikacji';
-		loader.querySelector('p').innerText = 'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.';
-		toast.error('Wystąpił błąd przy wczytywaniu aplikacji');
-		return;
-	}
+  // Prevent app from running without required data
+  if (!appConfigs.value.school.timetableURL) {
+    const loader = document.body.querySelector('#loader')
+    loader.querySelector('h1').innerText =
+      'Wystąpił błąd przy wczytywaniu aplikacji'
+    loader.querySelector('p').innerText =
+      'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.'
+    toast.error('Wystąpił błąd przy wczytywaniu aplikacji')
+    return
+  }
 
-	// Try to lock screen orientation
-	try {
-		await screen.orientation.lock('portrait');
-	} catch (e) {
-		log('warn', '[App] Nie udało się zablokować orientacji ekranu:\n', e);
-	}
+  // Try to lock screen orientation
+  try {
+    await screen.orientation.lock('portrait')
+  } catch (e) {
+    log('warn', '[App] Nie udało się zablokować orientacji ekranu:\n', e)
+  }
 
-	// Reset session configs
-	appConfigs.value.shortLessons = false;
-	if (window.sessionStorage.getItem('swUpdate') !== null) {
-		window.sessionStorage.removeItem('swUpdate');
-		toast.success('Zaktualizowano aplikację do najnowszej wersji');
-	}
+  // Reset session configs
+  appConfigs.value.shortLessons = false
+  if (window.sessionStorage.getItem('swUpdate') !== null) {
+    window.sessionStorage.removeItem('swUpdate')
+    toast.success('Zaktualizowano aplikację do najnowszej wersji')
+  }
 
-	// Render application
-	app.use(router);
-	app.mount('#app');
-})();
+  // Render application
+  app.use(router)
+  app.mount('#app')
+})()
