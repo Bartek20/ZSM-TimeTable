@@ -10,7 +10,13 @@ export default function parseData (obj, data) {
       if (appConfigs.value.timetable.shortLessons.length === 0) {
         appConfigs.value.timetable.shortLessons = data
       } else if (
-        appConfigs.value.timetable.shortLessons.length !== data.length
+        appConfigs.value.timetable.shortLessons.length !== data.length ||
+        appConfigs.value.timetable.shortLessons.some(
+          (v, i) =>
+            v.number !== data[i].number ||
+            v.timeFrom !== data[i].timeFrom ||
+            v.timeTo !== data[i].timeTo
+        )
       ) {
         log('warn', '[App] Zmodyfikowano godziny trwania skróconych lekcji')
         toast.info('Zmodyfikowano godziny trwania skróconych lekcji')
