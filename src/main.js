@@ -51,7 +51,9 @@ if (__SENTRY_DSN__) Sentry_init({
 		return scope;
 	},
 	beforeSend: (event, hint) => {
-		hint.attachments = [ { filename: 'appConfigs.json', data: () => localStorage.getItem('appConfigs') } ];
+		const confs = JSON.stringify(JSON.parse(localStorage.getItem('appConfigs') ?? '{}'), null, '\t')
+		if (confs === '{}') return event;
+		hint.attachments = [ { filename: 'appConfigs.json', data: confs } ];
 		return event;
 	},
 });
