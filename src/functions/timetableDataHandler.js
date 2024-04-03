@@ -1,5 +1,8 @@
 import appConfigs from '@/stores/configs';
 import log from '@/functions/logger';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export default function parseData(obj, data) {
 	switch (obj) {
@@ -8,6 +11,7 @@ export default function parseData(obj, data) {
 				appConfigs.value.timetable.shortLessons = data;
 			} else if (appConfigs.value.timetable.shortLessons.length !== data.length) {
 				log('warn', '[App] Zmodyfikowano godziny trwania skróconych lekcji');
+				toast.info('Zmodyfikowano godziny trwania skróconych lekcji');
 				appConfigs.value.timetable.shortLessons = data;
 			}
 			break;
@@ -31,6 +35,7 @@ export default function parseData(obj, data) {
 					let msg = 'Zmodyfikowno nazwy poziomów:';
 					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`.replace(/ [(]?undefined[)]?/g, '').replace(': ->', ': Nieznany ->')));
 					log('warn', '[App]', msg);
+					toast.info('Zmodyfikowano nazwy poziomów');
 					appConfigs.value.database.rooms = {};
 				}
 			}
@@ -55,6 +60,7 @@ export default function parseData(obj, data) {
 					let msg = 'Zmodyfikowno nazwy kierunków:';
 					diff.forEach((d) => (msg += `\n${d.idx}: ${d.src} -> ${d.dest}`.replace(/ [(]?undefined[)]?/g, '').replace(': ->', ': Nieznany ->')));
 					log('warn', '[App]', msg);
+					toast.info('Zmodyfikowano nazwy kierunków');
 					appConfigs.value.database.classes = {};
 				}
 			}
@@ -90,6 +96,7 @@ export default function parseData(obj, data) {
 								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
+					toast.info('Zmodyfikowano dane nauczycieli');
 				}
 			}
 			break;
@@ -123,6 +130,7 @@ export default function parseData(obj, data) {
 								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
+					toast.info('Zmodyfikowano dane sali');
 				}
 			}
 			break;
@@ -156,6 +164,7 @@ export default function parseData(obj, data) {
 								.replace(': ->', ': Nieznany ->'))
 					);
 					log('warn', '[App]', msg);
+					toast.info('Zmodyfikowano dane przedmiotów');
 				}
 			}
 			break;

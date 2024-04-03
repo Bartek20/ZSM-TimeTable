@@ -1,10 +1,13 @@
 // Floating tooltip css
 import 'floating-vue/dist/style.css';
+// Toast css
+import "../node_modules/vue-toastification/dist/index.css";
 // App css
 import './assets/main.scss';
 
 import { createApp } from 'vue';
 import { vTooltip } from 'floating-vue';
+import Toast, { useToast } from "vue-toastification";
 
 import App from './App.vue';
 import router from './router';
@@ -172,6 +175,9 @@ navigator.serviceWorker.addEventListener('message', async event => {
 	appConfigs.value.lastFetched = null
 	cacheTimeTables()
 });
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+	window.sessionStorage.setItem('swUpdate', 'true');
+});
 
 // Main app functions
 (async () => {
@@ -187,6 +193,27 @@ navigator.serviceWorker.addEventListener('message', async event => {
 	}
 
 	// App setup
+	app.use(Toast, {
+		transition: "Vue-Toastification__bounce",
+		maxToasts: 10,
+		newestOnTop: true,
+		filterBeforeCreate: (toast, toasts) => {
+			if (toasts.filter(t => t.content === toast.content).length !== 0) return false;
+			return toast;
+		},
+		position: "top-right",
+		timeout: 3000,
+		closeOnClick: false,
+		pauseOnFocusLoss: false,
+		pauseOnHover: false,
+		draggable: false,
+		draggablePercent: 0.3,
+		showCloseButtonOnHover: true,
+		hideProgressBar: false,
+		closeButton: "button",
+		rtl: false
+	})
+	app.directive('tooltip', vTooltip);
 	// Check supported scrollbars
 	checkScrollStyllability();
 	// Setup cache headers
@@ -194,6 +221,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 	// Setup color mode handler
 	colorHandler();
 
+	const toast = useToast();
 	// Fetch School Data
 	try {
 		const { default: schoolData } = await import(/* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`);
@@ -202,6 +230,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 		appConfigs.value.school.logoDescription = schoolData.schoolLogoDescription || 'Logo Szkoły';
 	} catch (e) {
 		log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e);
+		toast.error('Wystąpił błąd przy wczytywaniu danych szkoły');
 	}
 	// Fetch TimeTable Data
 	try {
@@ -214,6 +243,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 		parseData('subjects', timetableData.subjects || {});
 	} catch (e) {
 		log('error', '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n', e);
+		toast.error('Wystąpił błąd przy wczytywaniu danych planu lekcji');
 	}
 
 	// Prevent app from running without required data
@@ -221,6 +251,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 		const loader = document.body.querySelector('#loader');
 		loader.querySelector('h1').innerText = 'Wystąpił błąd przy wczytywaniu aplikacji';
 		loader.querySelector('p').innerText = 'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.';
+		toast.error('Wystąpił błąd przy wczytywaniu aplikacji');
 		return;
 	}
 
@@ -233,9 +264,12 @@ navigator.serviceWorker.addEventListener('message', async event => {
 
 	// Reset session configs
 	appConfigs.value.shortLessons = false;
-
+	if (window.sessionStorage.getItem('swUpdate') !== null) {
+		window.sessionStorage.removeItem('swUpdate');
+		toast.success('Zaktualizowano aplikację do najnowszej wersji');
+	}
+	
 	// Render application
 	app.use(router);
-	app.directive('tooltip', vTooltip);
 	app.mount('#app');
 })();

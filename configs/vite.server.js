@@ -17,21 +17,28 @@ const proxyConfigure = (proxy, _options) => {
 	});
 };
 
-async function getProxy() {
-	const proxy = {};
-	const schoolData = await import('../public/schoolData').then(e => e.default).catch(() => ({}));
-	if (!schoolData.schoolTimeTableRootURL) return proxy
-	console.log('Setting up PROXY for:', schoolData.schoolTimeTableRootURL);
-	proxy[ schoolData.schoolTimeTableRootURL ] = {
-		target: schoolData.schoolHomeURL,
-		changeOrigin: true,
-		secure: false,
-		ws: true,
-		configure: proxyConfigure,
-	}
-	return proxy;
-}
-
 export default {
-	proxy: await getProxy(),
+	proxy: {
+		'/plan_vulcan': {
+			target: 'https://zsm.resman.pl',
+			changeOrigin: true,
+			secure: false,
+			ws: true,
+			configure: proxyConfigure,
+		},
+		'/timetableData.js': {
+			target: 'https://zsm.resman.pl/plan_lekcji',
+			changeOrigin: true,
+			secure: false,
+			ws: true,
+			configure: proxyConfigure,
+		},
+		'/schoolData.js': {
+			target: 'https://zsm.resman.pl/plan_lekcji',
+			changeOrigin: true,
+			secure: false,
+			ws: true,
+			configure: proxyConfigure,
+		},
+	},
 };
