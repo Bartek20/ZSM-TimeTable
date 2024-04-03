@@ -177,7 +177,6 @@ navigator.serviceWorker.addEventListener('message', async event => {
 });
 if (navigator.serviceWorker.controller) navigator.serviceWorker.addEventListener('controllerchange', () => {
 	window.sessionStorage.setItem('swUpdate', 'true');
-	debugger
 });
 
 // Main app functions
