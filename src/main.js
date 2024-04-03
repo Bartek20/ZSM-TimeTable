@@ -175,9 +175,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 	appConfigs.value.lastFetched = null
 	cacheTimeTables()
 });
-console.log(navigator.serviceWorker.controller)
-navigator.serviceWorker.addEventListener('controllerchange', () => {
-	console.log(navigator.serviceWorker.controller)
+if (navigator.serviceWorker.controller) navigator.serviceWorker.addEventListener('controllerchange', () => {
 	window.sessionStorage.setItem('swUpdate', 'true');
 	debugger
 });
