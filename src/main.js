@@ -178,6 +178,9 @@ navigator.serviceWorker.addEventListener('message', async event => {
 navigator.serviceWorker.addEventListener('controllerchange', (e) => {
 	window.sessionStorage.setItem('swUpdate', 'true');
 	console.log(e)
+	console.log('Current Target:', e.currentTarget.controller.state)
+	console.log('Target:', e.target.controller.state)
+	console.log('SRC Element:', e.srcElement.controller.state)
 	debugger
 });
 
