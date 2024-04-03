@@ -49,6 +49,11 @@ export default defineConfig({
 	],
 	build: {
 		minify: 'terser',
+		terserOptions: {
+			compress: {
+				drop_debugger: false
+			}
+		},
 		assetsInlineLimit: 10240,
 		cssCodeSplit: false,
 		rollupOptions: {

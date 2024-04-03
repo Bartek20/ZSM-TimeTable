@@ -178,7 +178,7 @@ navigator.serviceWorker.addEventListener('message', async event => {
 navigator.serviceWorker.addEventListener('controllerchange', (e) => {
 	window.sessionStorage.setItem('swUpdate', 'true');
 	console.log(e)
-	eval('debugger')
+	debugger
 });
 
 // Main app functions
@@ -270,7 +270,7 @@ navigator.serviceWorker.addEventListener('controllerchange', (e) => {
 		window.sessionStorage.removeItem('swUpdate');
 		toast.success('Zaktualizowano aplikację do najnowszej wersji');
 	}
-	
+
 	// Render application
 	app.use(router);
 	app.mount('#app');
