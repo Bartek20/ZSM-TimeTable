@@ -109,7 +109,7 @@ router.beforeEach((to, from) => {
 router.afterEach((to, _from, failure) => {
   if (failure) {
     log('error', '[Vue Router] Wystąpił błąd przy przekierowaniu:', failure)
-    return undefined
+    return
   }
   if (to.name === 'plan') setTitle('Wczytywanie planu lekcji.')
 })
