@@ -39,9 +39,10 @@ if (__SENTRY_DSN__) {
         blockAllMedia: false
       })
     ],
+    normalizeDepth: 10,
     // Performance Monitoring
     tracesSampleRate: 0.1,
-    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -62,14 +63,14 @@ if (__SENTRY_DSN__) {
         '\t'
       )
       if (confs === '{}') return event
-      hint.attachments = [{ filename: 'appConfigs.json', data: confs }]
+      hint.attachments = [ { filename: 'appConfigs.json', data: confs } ]
       return event
     }
   })
 }
 
 // Check custom css scrollbar support
-function checkScrollStyllability () {
+function checkScrollStyllability() {
   const style = document.createElement('style')
   style.textContent = `
 	.scrolltest {
@@ -135,7 +136,7 @@ if (window.installevent) {
 
 // Service Worker, Timetable caching
 let fetching = false
-async function cacheTimeTables () {
+async function cacheTimeTables() {
   if (!appConfigs.value.school.timetableURL) return
   if (import.meta.env.MODE === 'development') return
   if (fetching) return
@@ -166,7 +167,7 @@ async function cacheTimeTables () {
         .get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`)
         .catch(() => undefined)
     )
-    await Promise.all([...classMap, ...teacherMap, ...roomMap])
+    await Promise.all([ ...classMap, ...teacherMap, ...roomMap ])
     log(
       'info',
       '[Service Worker] Zakończono pobieranie planów do pamięci cache.'
@@ -184,13 +185,13 @@ async function cacheTimeTables () {
 }
 registerSW({
   immediate: true,
-  onNeedRefresh () {
+  onNeedRefresh() {
     log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.')
   },
-  onOfflineReady () {
+  onOfflineReady() {
     log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.')
   },
-  async onRegisteredSW (_, SW) {
+  async onRegisteredSW(_, SW) {
     log('info', '[Service Worker] Zainstalowano Service Workera.')
     // Waiting for Service Worker to install
     await new Promise((resolve) => {
@@ -208,7 +209,7 @@ registerSW({
       SW.update()
     }, 3600000)
   },
-  onRegisterError (err) {
+  onRegisterError(err) {
     log(
       'error',
       '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n',
@@ -216,20 +217,31 @@ registerSW({
     )
   }
 })
-navigator.serviceWorker.addEventListener('message', (event) => {
-  if (fetching) return
-  if (event.data !== 'Timetable Update Available') return
-  log(
-    'info',
-    '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...'
-  )
-  appConfigs.value.lastFetched = null
-  cacheTimeTables()
-})
-if (navigator.serviceWorker.controller) {
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.sessionStorage.setItem('swUpdate', 'true')
-  })
+
+if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorker && typeof navigator.serviceWorker.addEventListener === 'function') {
+  try {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (fetching) return
+      if (event.data !== 'Timetable Update Available') return
+      log(
+        'info',
+        '[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...'
+      )
+      appConfigs.value.lastFetched = null
+      cacheTimeTables()
+    })
+  } catch (e) {
+    log('warn', '[Service Worker] Nie udało się zarejestrować eventlistenera:\n', e)
+  }
+  try {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.sessionStorage.setItem('swUpdate', 'true')
+      })
+    }
+  } catch (e) {
+    log('warn', '[Service Worker] Nie udało się zarejestrować eventlistenera:\n', e)
+  }
 }
 
 // Main app functions
@@ -275,7 +287,7 @@ if (navigator.serviceWorker.controller) {
   // Check supported scrollbars
   checkScrollStyllability()
   // Setup cache headers
-  axios.defaults.headers.get['Cache-Control'] = 'no-cache'
+  axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache'
   // Setup color mode handler
   colorHandler()
 
