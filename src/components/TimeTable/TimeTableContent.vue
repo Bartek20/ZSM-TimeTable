@@ -60,8 +60,7 @@
 <template>
 	<TimeTableMessage v-if="message" :icon="message.icon" :text="message.msg" />
 	<div class="timetable__container" v-else>
-		<TimeTableTableOld v-if="appConfigs.viewMode == 'old'" :data="data" :activeDay="activeDay" />
-		<TimeTableTableNew v-else :data="data" :activeDay="activeDay" />
+		<TimeTableTable :data="data" :activeDay="activeDay" />
 	</div>
 </template>
 

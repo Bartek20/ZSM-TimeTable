@@ -32,6 +32,8 @@ if (__SENTRY_DSN__) {
   Sentry_init({
     // Sentry config
     dsn: __SENTRY_DSN__,
+    normalizeDepth: 10,
+    tunnel: window.localStorage.getItem('isAd-Blocker') ?'https://sentry.tata2676.workers.dev/' : undefined,
     integrations: [
       Sentry_browserTracingIntegration({ router }),
       Sentry_replayIntegration({
@@ -39,7 +41,6 @@ if (__SENTRY_DSN__) {
         blockAllMedia: false
       })
     ],
-    normalizeDepth: 10,
     // Performance Monitoring
     tracesSampleRate: 0.1,
     tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
