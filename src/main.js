@@ -206,8 +206,14 @@ registerSW({
     log('info', '[Service Worker] Service Worker został aktywowany.')
     await validateApp()
     cacheTimeTables()
-    setInterval(() => {
-      SW.update()
+    // Service Worker update detection and handle
+    setInterval(async () => {
+      try {
+        const res = await axios.get(import.meta.env.BASE_URL + 'sw.js')
+        if (res.status === 200) SW.update()
+      } catch (e) {
+        log('error', 'Wystąpił błąd przy sprawdzaniu aktualizacji Service Workera:\n', e)
+      }
     }, 3600000)
   },
   onRegisterError(err) {

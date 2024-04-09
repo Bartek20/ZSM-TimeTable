@@ -72,6 +72,7 @@ export default defineConfig({
           vue: ['vue'],
           'vue-router': ['vue-router'],
           'floating-vue': ['floating-vue'],
+          'vue-toastification': ['vue-toastification'],
           sentry: ['@sentry/vue', '@sentry/vite-plugin']
         }
       }

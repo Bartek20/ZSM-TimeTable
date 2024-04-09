@@ -74,6 +74,7 @@ npm run build -- --base "/ściezka/"
 - Axios.js - Pobieranie planów lekcji
 - Chroma.js - Generowanie kolorów lekcji
 - @nozbe/microfuzz - Wyszukiwarka
+- vue-toastification - Powiadomienia w formie toastów
 
 #### Do monitorowania błędów i wydajności
 
