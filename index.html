@@ -56,11 +56,6 @@
 		</style>
 	</head>
 	<body class="light">
-		<script>
-			if (location.search.includes('PWA=true')) {
-				window.isPWA = true
-			}
-		</script>
 		<div id="loader" class="loading hidden">
 			<h1>Trwa wczytywanie aplikacji</h1>
 			<p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
@@ -76,39 +71,6 @@
 				window.installevent = e;
 			};
 			window.addEventListener('beforeinstallprompt', installhandler);
-		</script>
-		<script>
-			const unknownData = {
-				subjects: new Set(),
-				classes: new Set(),
-				teachers: new Set(),
-				rooms: new Set(),
-			};
-			function addUnknowns(target, unknown) {
-				unknownData[target].add(unknown);
-			}
-			function getUnknowns(target = 'all') {
-				switch (target) {
-					case 'subjects':
-						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
-						break;
-					case 'classes':
-						console.warn('Nieznane kierunki:\n', unknownData.classes);
-						break;
-					case 'teachers':
-						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
-						break;
-					case 'rooms':
-						console.warn('Nieznane sale:\n', unknownData.rooms);
-						break;
-					case 'all':
-						console.warn('Nieznane przedmioty:\n', unknownData.subjects);
-						console.warn('Nieznane kierunki:\n', unknownData.classes);
-						console.warn('Nieznani nauczyciele:\n', unknownData.teachers);
-						console.warn('Nieznane sale:\n', unknownData.rooms);
-						break;
-				}
-			}
 		</script>
 		<noscript>
 			<div class="loading">

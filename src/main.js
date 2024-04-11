@@ -291,12 +291,41 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
     rtl: false
   })
   app.directive('tooltip', vTooltip)
+  // Check for isPWA
+  if (location.search.includes('PWA=true')) {
+    window.isPWA = true
+  }
   // Check supported scrollbars
   checkScrollStyllability()
   // Setup cache headers
   axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache'
   // Setup color mode handler
   colorHandler()
+  // Setup global functions
+  window.axios = axios
+  window.addUnknowns = (target, unknown) => (!appConfigs.value.database.unknowns[target].includes(unknown) ? appConfigs.value.database.unknowns[target].push(unknown) : '');
+  window.getUnknowns = (target = 'all') => {
+    switch (target) {
+      case 'subjects':
+        console.warn('Nieznane przedmioty:\n', appConfigs.value.database.unknowns.subjects);
+        break;
+      case 'classes':
+        console.warn('Nieznane kierunki:\n', appConfigs.value.database.unknowns.classes);
+        break;
+      case 'teachers':
+        console.warn('Nieznani nauczyciele:\n', appConfigs.value.database.unknowns.teachers);
+        break;
+      case 'rooms':
+        console.warn('Nieznane sale:\n', appConfigs.value.database.unknowns.rooms);
+        break;
+      case 'all':
+        console.warn('Nieznane przedmioty:\n', appConfigs.value.database.unknowns.subjects);
+        console.warn('Nieznane kierunki:\n', appConfigs.value.database.unknowns.classes);
+        console.warn('Nieznani nauczyciele:\n', appConfigs.value.database.unknowns.teachers);
+        console.warn('Nieznane sale:\n', appConfigs.value.database.unknowns.rooms);
+        break;
+    }
+  };
 
   const toast = useToast()
   // Fetch School Data

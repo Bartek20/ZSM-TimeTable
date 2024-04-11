@@ -26,6 +26,12 @@ const appConfigs = useStorage(
 			teachers: {},
 			classes: {},
 			subjects: {},
+			unknowns: {
+				subjects: [],
+				classes: [],
+				teachers: [],
+				rooms: [],
+			}
 		},
 		// History
 		history: [],
