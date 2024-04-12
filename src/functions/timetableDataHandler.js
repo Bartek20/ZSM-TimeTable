@@ -14,8 +14,8 @@ const MESSAGES = {
 const toast = useToast()
 
 export default function parseData(obj, data) {
-  if (!obj || !data) {
-    log('error', '[App] Brak danych do przetworzenia')
+  if (!obj || ![ 'shortLessons', 'levels', 'classes', 'teachers', 'rooms', 'subjects' ].includes(obj) || !data) {
+    log('error', '[App] Brak danych do przetworzenia lub nieprawidłowy obiekt danych')
     return
   }
   const diff = []
@@ -192,8 +192,8 @@ export default function parseData(obj, data) {
         if (obj === 'rooms') text = `\n${d.idx}: ${d.src?.name} (${d.src?.level}) -> ${d.dest?.name} (${d.dest?.level})`
         if (obj === 'subjects') text = `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
         msg += text.replace(/ [(]?undefined[)]?/g, '')
-        .replace(': ->', ': Nieznany ->')
-        .replace(/->$/, '-> Nieznany')
+          .replace(': ->', ': Nieznany ->')
+          .replace(/->$/, '-> Nieznany')
       }
     )
     log('warn', '[App]', msg)
