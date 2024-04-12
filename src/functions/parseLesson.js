@@ -1,16 +1,20 @@
-import appConfigs from '@/stores/configs';
-import parseColor from '@/functions/parseColor';
+import appConfigs from "@/stores/configs";
+import parseColor from "@/functions/parseColor";
 
 export default function parseLesson(lesson) {
   // Variables
-  const user = useRouteParams('user');
-  const mode = useRouteParams('mode');
+  const user = useRouteParams("user");
+  const mode = useRouteParams("mode");
 
-  let subject = {}, columns = {}, colors = {};
+  let subject = {};
+  const columns = {};
+  let colors = {};
 
   // Subject parsing
-  let subjectData = appConfigs.value.timetable.subjects[ lesson.subject ];
-  if (lesson.subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects.praktyki;
+  let subjectData = appConfigs.value.timetable.subjects[lesson.subject];
+  if (lesson.subject.includes("ckz")) {
+    subjectData = appConfigs.value.timetable.subjects.praktyki;
+  }
   if (subjectData === undefined) {
     addUnknowns(lesson.subject);
     subject = { short: lesson.subject };
@@ -19,49 +23,53 @@ export default function parseLesson(lesson) {
 
   // Columns parsing
   // Column #1
-  if (lesson.subject.includes('ckz'))
+  if (lesson.subject.includes("ckz")) {
     columns.left = {
-      name: '@',
+      name: "@",
     };
-  else if ([ 'n', 's' ].includes(mode.value))
+  } else if (["n", "s"].includes(mode.value)) {
     columns.left = {
-      mode: 'o',
+      mode: "o",
       id: lesson.classId,
       name: lesson.className,
     };
-  else columns.left = {
-    mode: 'n',
-    id: user.value === 'nauczyciel' ? lesson.teacherId : undefined,
-    name: lesson.teacher,
-  };
+  } else {
+    columns.left = {
+      mode: "n",
+      id: user.value === "nauczyciel" ? lesson.teacherId : undefined,
+      name: lesson.teacher,
+    };
+  }
 
   // Column #2
-  if (lesson.subject.includes('ckz'))
+  if (lesson.subject.includes("ckz")) {
     columns.right = {
-      name: 'CKZ',
+      name: "CKZ",
     };
-  else if ([ 'o', 'n' ].includes(mode.value))
+  } else if (["o", "n"].includes(mode.value)) {
     columns.right = {
-      mode: 's',
+      mode: "s",
       id: lesson.roomId,
       name: lesson.room,
     };
-  else columns.right = {
-    mode: 'n',
-    id: user.value === 'nauczyciel' ? lesson.teacherId : undefined,
-    name: lesson.teacher,
-  };
+  } else {
+    columns.right = {
+      mode: "n",
+      id: user.value === "nauczyciel" ? lesson.teacherId : undefined,
+      name: lesson.teacher,
+    };
+  }
 
   // Colors parsing
-  if (!appConfigs.value.showColors)
+  if (!appConfigs.value.showColors) {
     colors = {
-      light: 'white',
-      dark: 'lightgray',
+      light: "white",
+      dark: "lightgray",
     };
-  else {
-    const name = subject.short.replace(/ \([UR]{1}\)/, '');
-    if (!appConfigs.value.database.subjects[ name ]) parseColor(name);
-    colors = appConfigs.value.database.subjects[ name ];
+  } else {
+    const name = subject.short.replace(/ \([UR]{1}\)/, "");
+    if (!appConfigs.value.database.subjects[name]) parseColor(name);
+    colors = appConfigs.value.database.subjects[name];
   }
 
   // Return
