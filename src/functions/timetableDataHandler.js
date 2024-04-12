@@ -185,12 +185,16 @@ export default function parseData(obj, data) {
   if (diff.length) {
     let msg = MESSAGES[ obj ] + ':'
     diff.forEach(
-      (d) =>
-      (msg +=
-        `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
-          .replace(/ [(]?undefined[)]?/g, '')
-          .replace(': ->', ': Nieznany ->')
-          .replace(/->$/, '-> Nieznany'))
+      (d) => {
+        let text = ''
+        if (obj === 'levels' || obj === 'classes') text = `\n${d.idx}: ${d.src} -> ${d.dest}`
+        if (obj === 'teachers') text = `\n${d.idx}: ${d.src?.name} ${d.src?.surname} (${d.src?.code}) -> ${d.dest?.name} ${d.dest?.surname} (${d.dest?.code})`
+        if (obj === 'rooms') text = `\n${d.idx}: ${d.src?.name} (${d.src?.level}) -> ${d.dest?.name} (${d.dest?.level})`
+        if (obj === 'subjects') text = `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
+        msg += text.replace(/ [(]?undefined[)]?/g, '')
+        .replace(': ->', ': Nieznany ->')
+        .replace(/->$/, '-> Nieznany')
+      }
     )
     log('warn', '[App]', msg)
     toast.info(MESSAGES[ obj ])
