@@ -28,7 +28,18 @@ export default function parseData(obj, data) {
         appConfigs.value.timetable.levels = data
       } else {
         const diff = []
+        const oldData = Object.keys(appConfigs.value.timetable.levels)
         const newData = Object.keys(data)
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.levels[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.levels[key] = undefined
+          }
+        })
         newData.forEach((key) => {
           if (data[key] !== appConfigs.value.timetable.levels[key]) {
             diff.push({
@@ -58,7 +69,18 @@ export default function parseData(obj, data) {
         appConfigs.value.timetable.classes = data
       } else {
         const diff = []
+        const oldData = Object.keys(appConfigs.value.timetable.classes)
         const newData = Object.keys(data)
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.classes[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.classes[key] = undefined
+          }
+        })
         newData.forEach((key) => {
           if (data[key] !== appConfigs.value.timetable.classes[key]) {
             diff.push({
@@ -88,7 +110,19 @@ export default function parseData(obj, data) {
         appConfigs.value.timetable.teachers = data
       } else {
         const diff = []
+        const oldData = Object.keys(appConfigs.value.timetable.teachers)
         const newData = Object.keys(data)
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.teachers[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.teachers[key] = undefined
+            appConfigs.value.database.teachers[key] = undefined
+          }
+        })
         newData.forEach((key) => {
           if (
             !appConfigs.value.timetable.teachers[key] ||
@@ -125,7 +159,19 @@ export default function parseData(obj, data) {
         appConfigs.value.timetable.rooms = data
       } else {
         const diff = []
+        const oldData = Object.keys(appConfigs.value.timetable.rooms)
         const newData = Object.keys(data)
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.rooms[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.rooms[key] = undefined
+            appConfigs.value.database.rooms[key] = undefined
+          }
+        })
         newData.forEach((key) => {
           if (
             !appConfigs.value.timetable.rooms[key] ||
@@ -162,6 +208,19 @@ export default function parseData(obj, data) {
         const diff = []
         const oldData = Object.keys(appConfigs.value.timetable.subjects)
         const newData = Object.keys(data)
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.subjects[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.subjects[key] = undefined
+            appConfigs.value.database.subjects[
+              key.replace(/ \([UR]{1}\)/, '')
+            ] = undefined
+          }
+        })
         newData.forEach((key) => {
           if (
             !appConfigs.value.timetable.subjects[key] ||
@@ -180,28 +239,15 @@ export default function parseData(obj, data) {
             ] = undefined
           }
         })
-        oldData.forEach((key) => {
-          if (!newData.includes(key)) {
-            diff.push({
-              idx: key,
-              src: appConfigs.value.timetable.subjects[key],
-              dest: undefined
-            })
-            appConfigs.value.timetable.subjects[key] = undefined
-            appConfigs.value.database.subjects[
-              key.replace(/ \([UR]{1}\)/, '')
-            ] = undefined
-          }
-        })
         if (diff.length) {
           let msg = 'Zmodyfikowno dane przedmiotów:'
           diff.forEach(
             (d) =>
               (msg +=
-                `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
+                `\n"${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})"`
                   .replace(/ [(]?undefined[)]?/g, '')
                   .replace(': ->', ': Nieznany ->'))
-                  .replace(/->[ ]*$/, '-> Nieznany')
+                  .replace(/->$/, '-> Nieznany')
           )
           log('warn', '[App]', msg)
           toast.info('Zmodyfikowano dane przedmiotów')
