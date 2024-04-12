@@ -198,7 +198,7 @@ export default function parseData(obj, data) {
           diff.forEach(
             (d) =>
               (msg +=
-                `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest.short} (${d.dest.full})`
+                `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
                   .replace(/ [(]?undefined[)]?/g, '')
                   .replace(': ->', ': Nieznany ->'))
                   .replace('-> ', '-> Nieznany')
