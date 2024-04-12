@@ -303,28 +303,13 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
   colorHandler()
   // Setup global functions
   window.axios = axios
-  window.addUnknowns = (target, unknown) => (!appConfigs.value.database.unknowns[target].includes(unknown) ? appConfigs.value.database.unknowns[target].push(unknown) : '');
+  const unknownLessons = new Set()
+  window.addUnknowns = (unknown) => unknownLessons.add(unknown);
   window.getUnknowns = (target = 'all') => {
-    switch (target) {
-      case 'subjects':
-        console.warn('Nieznane przedmioty:\n', appConfigs.value.database.unknowns.subjects);
-        break;
-      case 'classes':
-        console.warn('Nieznane kierunki:\n', appConfigs.value.database.unknowns.classes);
-        break;
-      case 'teachers':
-        console.warn('Nieznani nauczyciele:\n', appConfigs.value.database.unknowns.teachers);
-        break;
-      case 'rooms':
-        console.warn('Nieznane sale:\n', appConfigs.value.database.unknowns.rooms);
-        break;
-      case 'all':
-        console.warn('Nieznane przedmioty:\n', appConfigs.value.database.unknowns.subjects);
-        console.warn('Nieznane kierunki:\n', appConfigs.value.database.unknowns.classes);
-        console.warn('Nieznani nauczyciele:\n', appConfigs.value.database.unknowns.teachers);
-        console.warn('Nieznane sale:\n', appConfigs.value.database.unknowns.rooms);
-        break;
-    }
+    if (target === 'all' || target === 'subjects') console.warn('Nieznane przedmioty:\n', unknownLessons);
+    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', Object.entries(appConfigs.value.database.classes).filter((e) => e[1].isUnknown).map((e) => e[1].isUnknown));
+    if (target === 'all' || target === 'teachers') console.warn('Nieznani nauczyciele:\n', Object.keys(appConfigs.value.database.teachers).filter((e) => appConfigs.value.database.teachers[e].isUnknown));
+    if (target === 'all' || target === 'rooms') console.warn('Nieznane sale:\n', Object.keys(appConfigs.value.database.rooms).filter((e) => appConfigs.value.database.rooms[e].isUnknown));
   };
 
   const toast = useToast()

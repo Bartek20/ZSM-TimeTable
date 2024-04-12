@@ -1,7 +1,7 @@
 import appConfigs from '@/stores/configs';
 
 function parseClass(name) {
-	let title, heading, sidebar, search;
+	let title, heading, sidebar, search, isUnknown = [];
 
 	const regexData = name.match(/(\d\w+) \d([\w ]+)/);
 	if (regexData) {
@@ -20,7 +20,7 @@ function parseClass(name) {
 			sidebar = `${sidebar} ${speciality}`;
 			search[speciality] = speciality;
 			if (specialityData === undefined) {
-				addUnknowns('classes', speciality);
+				isUnknown.push(speciality);
 				heading = `${heading} ${speciality}`;
 			} else {
 				heading = `${heading} ${specialityData}`;
@@ -33,14 +33,15 @@ function parseClass(name) {
 		heading: heading ?? name,
 		sidebar: sidebar ?? name,
 		search: search ?? { name },
+		isUnknown: isUnknown.length > 0 ? isUnknown : undefined,
 	};
 }
 function parseTeacher(name) {
-	let title, heading, sidebar, search;
+	let title, heading, sidebar, search, isUnknown;
 
 	let teacherData = appConfigs.value.timetable.teachers[name];
 	if (teacherData === undefined) {
-		addUnknowns('teachers', name);
+		isUnknown = true;
 		const regexData = name.match(/(.*\.)(.*) \((.*)\)/);
 		if (regexData) {
 			teacherData = {
@@ -75,14 +76,15 @@ function parseTeacher(name) {
 		heading: heading ?? name,
 		sidebar: sidebar ?? name,
 		search: search ?? { name },
+		isUnknown: isUnknown,
 	};
 }
 function parseClassroom(name) {
-	let title, heading, sidebar, search;
+	let title, heading, sidebar, search, isUnknown;
 
 	const roomData = appConfigs.value.timetable.rooms[name];
 	if (roomData === undefined) {
-		addUnknowns('rooms', name);
+		isUnknown = true;
 	} else {
 		title = name;
 		heading = roomData.name ? `${name} (${roomData.name})` : name;
@@ -99,6 +101,7 @@ function parseClassroom(name) {
 		heading: heading ?? name,
 		sidebar: sidebar ?? name,
 		search: search ?? { name },
+		isUnknown: isUnknown,
 	};
 }
 

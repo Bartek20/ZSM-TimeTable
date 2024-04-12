@@ -12,7 +12,7 @@ export default function parseLesson(lesson) {
   let subjectData = appConfigs.value.timetable.subjects[ lesson.subject ];
   if (lesson.subject.includes('ckz')) subjectData = appConfigs.value.timetable.subjects.praktyki;
   if (subjectData === undefined) {
-    addUnknowns('subjects', lesson.subject);
+    addUnknowns(lesson.subject);
     subject = { short: lesson.subject };
   }
   subject = subjectData;
