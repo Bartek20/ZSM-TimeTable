@@ -160,6 +160,7 @@ export default function parseData(obj, data) {
         appConfigs.value.timetable.subjects = data
       } else {
         const diff = []
+        const oldData = Object.keys(appConfigs.value.timetable.subjects)
         const newData = Object.keys(data)
         newData.forEach((key) => {
           if (
@@ -179,6 +180,19 @@ export default function parseData(obj, data) {
             ] = undefined
           }
         })
+        oldData.forEach((key) => {
+          if (!newData.includes(key)) {
+            diff.push({
+              idx: key,
+              src: appConfigs.value.timetable.subjects[key],
+              dest: undefined
+            })
+            appConfigs.value.timetable.subjects[key] = undefined
+            appConfigs.value.database.subjects[
+              key.replace(/ \([UR]{1}\)/, '')
+            ] = undefined
+          }
+        })
         if (diff.length) {
           let msg = 'Zmodyfikowno dane przedmiotów:'
           diff.forEach(
@@ -187,6 +201,7 @@ export default function parseData(obj, data) {
                 `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest.short} (${d.dest.full})`
                   .replace(/ [(]?undefined[)]?/g, '')
                   .replace(': ->', ': Nieznany ->'))
+                  .replace('-> ', '-> Nieznany)
           )
           log('warn', '[App]', msg)
           toast.info('Zmodyfikowano dane przedmiotów')
