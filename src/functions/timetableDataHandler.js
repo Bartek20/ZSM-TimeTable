@@ -14,7 +14,7 @@ const MESSAGES = {
 const toast = useToast()
 
 export default function parseData(obj, data) {
-  if (!object || !data) {
+  if (!obj || !data) {
     log('error', '[App] Brak danych do przetworzenia')
     return
   }
