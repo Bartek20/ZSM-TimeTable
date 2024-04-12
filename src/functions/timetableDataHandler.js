@@ -201,7 +201,7 @@ export default function parseData(obj, data) {
                 `\n${d.idx}: ${d.src?.short} (${d.src?.full}) -> ${d.dest?.short} (${d.dest?.full})`
                   .replace(/ [(]?undefined[)]?/g, '')
                   .replace(': ->', ': Nieznany ->'))
-                  .replace(/->$/, '-> Nieznany')
+                  .replace(/->[ ]*$/, '-> Nieznany')
           )
           log('warn', '[App]', msg)
           toast.info('Zmodyfikowano dane przedmiotów')
