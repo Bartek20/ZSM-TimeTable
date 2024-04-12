@@ -4,7 +4,7 @@ import { useToast } from 'vue-toastification'
 
 const toast = useToast()
 
-export default function parseData (obj, data) {
+export default function parseData(obj, data) {
   switch (obj) {
     case 'shortLessons':
       if (appConfigs.value.timetable.shortLessons.length === 0) {

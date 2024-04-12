@@ -6,7 +6,7 @@ export default function parseLesson(lesson) {
   const user = useRouteParams('user');
   const mode = useRouteParams('mode');
 
-  let subject, columns = {}, colors = {};
+  let subject = {}, columns = {}, colors = {};
 
   // Subject parsing
   let subjectData = appConfigs.value.timetable.subjects[ lesson.subject ];

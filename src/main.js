@@ -307,7 +307,7 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
   window.addUnknowns = (unknown) => unknownLessons.add(unknown);
   window.getUnknowns = (target = 'all') => {
     if (target === 'all' || target === 'subjects') console.warn('Nieznane przedmioty:\n', unknownLessons);
-    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', new Set(Object.entries(appConfigs.value.database.classes).filter((e) => e[1].isUnknown).map((e) => [...e[1].isUnknown]).flat()));
+    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', new Set(Object.values(appConfigs.value.database.classes).filter((e) => e.isUnknown).map((e) => [...e.isUnknown]).flat()));
     if (target === 'all' || target === 'teachers') console.warn('Nieznani nauczyciele:\n', Object.keys(appConfigs.value.database.teachers).filter((e) => appConfigs.value.database.teachers[e].isUnknown));
     if (target === 'all' || target === 'rooms') console.warn('Nieznane sale:\n', Object.keys(appConfigs.value.database.rooms).filter((e) => appConfigs.value.database.rooms[e].isUnknown));
   };
