@@ -21,167 +21,69 @@ export default function parseData(obj, data) {
   const diff = []
   const oldData = Object.keys(appConfigs.value.timetable[ obj ])
   const newData = Object.keys(data)
-  if (obj === 'shortLessons' && appConfigs.value.timetable.shortLessons.length === 0) {
-    appConfigs.value.timetable.shortLessons = data
-    return
-  }
-  if (obj !== 'shortLessons' && Object.keys(appConfigs.value.timetable[ obj ]).length === 0) {
+  if (Object.keys(appConfigs.value.timetable[ obj ]).length === 0) {
     appConfigs.value.timetable[ obj ] = data
     return
   }
-  switch (obj) {
-    case 'shortLessons':
-      if (
-        appConfigs.value.timetable.shortLessons.length !== data.length ||
-        appConfigs.value.timetable.shortLessons.some(
-          (v, i) =>
-            v.number !== data[ i ].number ||
-            v.timeFrom !== data[ i ].timeFrom ||
-            v.timeTo !== data[ i ].timeTo
-        )
-      ) {
-        log('warn', '[App] Zmodyfikowano godziny trwania skróconych lekcji')
-        toast.info('Zmodyfikowano godziny trwania skróconych lekcji')
-        appConfigs.value.timetable.shortLessons = data
-      }
-      break
-    case 'levels':
-      oldData.forEach((key) => {
-        if (!newData.includes(key)) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.levels[ key ],
-            dest: undefined
-          })
-          appConfigs.value.timetable.levels[ key ] = undefined
-        }
-      })
-      newData.forEach((key) => {
-        if (data[ key ] !== appConfigs.value.timetable.levels[ key ]) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.levels[ key ],
-            dest: data[ key ]
-          })
-          appConfigs.value.timetable.levels[ key ] = data[ key ]
-        }
-      })
-      break
-    case 'classes':
-      oldData.forEach((key) => {
-        if (!newData.includes(key)) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.classes[ key ],
-            dest: undefined
-          })
-          appConfigs.value.timetable.classes[ key ] = undefined
-        }
-      })
-      newData.forEach((key) => {
-        if (data[ key ] !== appConfigs.value.timetable.classes[ key ]) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.classes[ key ],
-            dest: data[ key ]
-          })
-          appConfigs.value.timetable.classes[ key ] = data[ key ]
-        }
-      })
-      break
-    case 'teachers':
-      oldData.forEach((key) => {
-        if (!newData.includes(key)) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.teachers[ key ],
-            dest: undefined
-          })
-          appConfigs.value.timetable.teachers[ key ] = undefined
-          appConfigs.value.database.teachers[ key ] = undefined
-        }
-      })
-      newData.forEach((key) => {
-        if (
-          !appConfigs.value.timetable.teachers[ key ] ||
-          data[ key ].name !== appConfigs.value.timetable.teachers[ key ].name ||
-          data[ key ].surname !==
-          appConfigs.value.timetable.teachers[ key ].surname ||
-          data[ key ].code !== appConfigs.value.timetable.teachers[ key ].code
-        ) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.teachers[ key ],
-            dest: data[ key ]
-          })
-          appConfigs.value.timetable.teachers[ key ] = data[ key ]
-          appConfigs.value.database.teachers[ key ] = undefined
-        }
-      })
-      break
-    case 'rooms':
-      oldData.forEach((key) => {
-        if (!newData.includes(key)) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.rooms[ key ],
-            dest: undefined
-          })
-          appConfigs.value.timetable.rooms[ key ] = undefined
-          appConfigs.value.database.rooms[ key ] = undefined
-        }
-      })
-      newData.forEach((key) => {
-        if (
-          !appConfigs.value.timetable.rooms[ key ] ||
-          data[ key ].level !== appConfigs.value.timetable.rooms[ key ].level ||
-          data[ key ].name !== appConfigs.value.timetable.rooms[ key ].name
-        ) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.rooms[ key ],
-            dest: data[ key ]
-          })
-          appConfigs.value.timetable.rooms[ key ] = data[ key ]
-          appConfigs.value.database.rooms[ key ] = undefined
-        }
-      })
-      break
-    case 'subjects':
-      oldData.forEach((key) => {
-        if (!newData.includes(key)) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.subjects[ key ],
-            dest: undefined
-          })
-          appConfigs.value.timetable.subjects[ key ] = undefined
-          appConfigs.value.database.subjects[
-            key.replace(/ \([UR]{1}\)/, '')
-          ] = undefined
-        }
-      })
-      newData.forEach((key) => {
-        if (
-          !appConfigs.value.timetable.subjects[ key ] ||
-          data[ key ].short !==
-          appConfigs.value.timetable.subjects[ key ].short ||
-          data[ key ].full !== appConfigs.value.timetable.subjects[ key ].full
-        ) {
-          diff.push({
-            idx: key,
-            src: appConfigs.value.timetable.subjects[ key ],
-            dest: data[ key ]
-          })
-          appConfigs.value.timetable.subjects[ key ] = data[ key ]
-          appConfigs.value.database.subjects[
-            data[ key ].short.replace(/ \([UR]{1}\)/, '')
-          ] = undefined
-        }
-      })
-      break
-    // no default
+  if (obj === 'shortLessons') {
+    if (
+      appConfigs.value.timetable.shortLessons.length !== data.length ||
+      appConfigs.value.timetable.shortLessons.some(
+        (v, i) =>
+          v.number !== data[ i ].number ||
+          v.timeFrom !== data[ i ].timeFrom ||
+          v.timeTo !== data[ i ].timeTo
+      )
+    ) {
+      log('warn', '[App] Zmodyfikowano godziny trwania skróconych lekcji')
+      toast.info('Zmodyfikowano godziny trwania skróconych lekcji')
+      appConfigs.value.timetable.shortLessons = data
+    }
+    return
   }
+  oldData.forEach((key) => {
+    if (!newData.includes(key)) {
+      diff.push({
+        idx: key,
+        src: appConfigs.value.timetable[ obj ][ key ],
+        dest: undefined
+      })
+      appConfigs.value.timetable[ obj ][ key ] = undefined
+      if (obj === 'teachers' || obj === 'rooms') appConfigs.value.database[obj][ key ] = undefined
+      if (obj === 'subjects') appConfigs.value.database.subjects[
+        key.replace(/ \([UR]{1}\)/, '')
+      ] = undefined
+    }
+  })
+  newData.forEach((key) => {
+    let isDiff = false
+    if ((obj === 'levels' || obj === 'classes') && data[ key ] !== appConfigs.value.timetable[obj][key]) isDiff = true
+    if (obj === 'teachers' && (
+      data[ key ].name !== appConfigs.value.timetable.teachers[ key ].name ||
+      data[ key ].surname !== appConfigs.value.timetable.teachers[ key ].surname ||
+      data[ key ].code !== appConfigs.value.timetable.teachers[ key ].code
+    )) isDiff = true
+    if (obj === 'rooms' && (
+      data[ key ].name !== appConfigs.value.timetable.rooms[ key ].name ||
+      data[ key ].level !== appConfigs.value.timetable.rooms[ key ].level
+    )) isDiff = true
+    if (obj === 'subjects' && (
+      data[ key ].short !== appConfigs.value.timetable.subjects[ key ].short ||
+      data[ key ].full !== appConfigs.value.timetable.subjects[ key ].full
+    )) isDiff = true
+    if (isDiff) {
+      diff.push({
+        idx: key,
+        src: appConfigs.value.timetable[obj][ key ],
+        dest: data[ key ]
+      })
+      appConfigs.value.timetable[obj][ key ] = data[ key ]
+      if (obj === 'teachers' || obj === 'rooms') appConfigs.value.database[obj][ key ] = undefined
+      if (obj === 'subjects') appConfigs.value.database.subjects[
+        key.replace(/ \([UR]{1}\)/, '')
+      ] = undefined
+    }
+  })
   if (diff.length) {
     let msg = MESSAGES[ obj ] + ':'
     diff.forEach(
