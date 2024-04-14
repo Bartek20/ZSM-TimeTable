@@ -1,72 +1,27 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
-	const mode = useRouteParams('mode');
-	const id = useRouteParams('id');
-	function printTimeTable() {
-		// Open printed page
-		const page = window.open(`${appConfigs.value.school.timetableURL}plany/${mode.value}${id.value}.html`, '_print');
-		if (!page) return;
-		// Hide unnecessary items and open print dialog
-		page.onload = () => {
-			const style = page.document.createElement('style');
-			style.textContent = `a {
-				text-decoration: none;
-				color: inherit;
-			}
-				body > div:nth-child(2) > table > tbody > tr:nth-child(3),
-				body > div:nth-child(2) > table > tbody > tr:nth-child(4) {
-					display: none
-				}
-				.tabtytul {
-					display:table;
-					color:black
-				}
-				@media print {
-					body {
-						height:100vh;
-						width:100vw;
-					}
-					@page {
-						orientation:landscape !important;
-						size:A4 landscape !important;
-						margin: 0.5cm;
-					}
-				}`;
-			page.document.head.appendChild(style);
-			// Template
-			const template = '<tr><td align="left">{gen}</td><td align="right">{apply}</td></tr>';
-			// Variables
-			const genDateValue = /(.*)<br>/
-				.exec(
-					page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(3) > td.op > table > tbody > tr > td:nth-child(1)').innerHTML
-				)[1]
-				.trim();
-			const genDate = genDateValue.charAt(0).toUpperCase() + genDateValue.slice(1);
-			const appDate = page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2) > td').innerHTML.trim();
-			// Change footer
-			page.document.querySelector('body > div:nth-child(2) > table > tbody > tr:nth-child(2)').innerHTML = template
-				.replace('{gen}', genDate)
-				.replace('{apply}', appDate);
 
-			// Print page
-			page.print();
-		};
-		// Close page after print
-		page.onafterprint = () => {
-			page.close();
-		};
+	const oldMode = ref(appConfigs.value.viewMode)
+	const isPrinting = ref(false)
+
+	function printTimeTable() {
+		if (isPrinting.value) return
+		isPrinting.value = true
+		oldMode.value = appConfigs.value.viewMode
+		appConfigs.value.viewMode = 'old'
+		window.setTimeout(() => {
+			window.print()
+			appConfigs.value.viewMode = oldMode.value
+			isPrinting.value = false
+		}, 25)
 	}
 	const status = computed(() => appData.timetable.value.status);
 </script>
 
 <template>
-	<div class="configs__options" v-if="status == 200">
+	<div class="configs__options" v-if="status == 200 && !isPrinting">
 		<span class="configs__options__title"><b>Opcje</b></span>
-		<a class="configs__options__option" :href="`${appConfigs.school.timetableURL}plany/${mode}${id}.html`" target="_blank" rel="noopener noreferrer">
-			<i class="configs__options__option__icon zsm-old-timetable-icon"></i>
-			<span class="configs__options__option__name">Otwórz oryginalny plan</span>
-		</a>
 		<div class="configs__options__option" @click="printTimeTable">
 			<i class="configs__options__option__icon zsm-print-timetable-icon"></i>
 			<span class="configs__options__option__name">Wydrukuj plan</span>
