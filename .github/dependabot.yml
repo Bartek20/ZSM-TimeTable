@@ -11,8 +11,3 @@ updates:
       interval: "daily"
       time: "08:00"
       timezone: "Europe/Warsaw"
-    groups:
-      deps-version:
-        applies-to: version-updates
-      deps-security:
-        applies-to: security-updates
