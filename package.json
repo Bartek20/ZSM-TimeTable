@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
 		"@sentry/vite-plugin": "^2.16.1",
-		"@sentry/vue": "^7.110.0",
+		"@sentry/vue": "^7.111.0",
 		"@vueuse/core": "^10.9.0",
 		"@vueuse/router": "^10.9.0",
 		"axios": "^1.6.8",
