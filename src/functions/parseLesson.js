@@ -31,7 +31,7 @@ export default function parseLesson(lesson) {
     };
   else columns.left = {
     mode: 'n',
-    id: user.value === 'nauczyciel' ? lesson.teacherId : undefined,
+    id: appConfigs.value.school.allowStrudentsViewTeachers || user.value === 'nauczyciel' ? lesson.teacherId : undefined,
     name: lesson.teacher,
   };
 
@@ -43,12 +43,12 @@ export default function parseLesson(lesson) {
   else if ([ 'o', 'n' ].includes(mode.value))
     columns.right = {
       mode: 's',
-      id: lesson.roomId,
+      id: appConfigs.value.school.allowStrudentsViewRooms || user.value === 'nauczyciel' ? lesson.roomId : undefined,
       name: lesson.room,
     };
   else columns.right = {
     mode: 'n',
-    id: user.value === 'nauczyciel' ? lesson.teacherId : undefined,
+    id: appConfigs.value.school.allowStrudentsViewTeachers || user.value === 'nauczyciel' ? lesson.teacherId : undefined,
     name: lesson.teacher,
   };
 
