@@ -52,6 +52,7 @@
 			display: inline-block;
 			min-width: 40px;
 			height: 23px;
+			margin-left: 16px;
 			&__checkbox {
 				display: none;
 				&:checked + .configs__setting__toggle__slider {

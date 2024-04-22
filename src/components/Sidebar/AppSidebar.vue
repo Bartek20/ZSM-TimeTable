@@ -50,6 +50,7 @@
 	.sidebar {
 		display: grid;
 		min-width: $sidebar-width;
+		max-width: $sidebar-width;
 		min-height: 100%;
 		max-height: 100%;
 		grid-template-rows: auto 1fr auto;

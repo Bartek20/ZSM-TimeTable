@@ -22,6 +22,7 @@
 	.configs {
 		display: grid;
 		min-width: $sidebar-width;
+		max-width: $sidebar-width;
 		min-height: 100%;
 		max-height: 100%;
 		padding-top: 0.75rem;
