@@ -33,7 +33,7 @@ if (__SENTRY_DSN__) {
     // Sentry config
     dsn: __SENTRY_DSN__,
     normalizeDepth: 10,
-    tunnel: window.localStorage.getItem('isAd-Blocker') ?'https://sentry.tata2676.workers.dev/' : undefined,
+    tunnel: window.localStorage.getItem('isAd-Blocker') ? 'https://sentry.tata2676.workers.dev/' : undefined,
     integrations: [
       Sentry_browserTracingIntegration({ router }),
       Sentry_replayIntegration({
@@ -307,9 +307,9 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
   window.addUnknowns = (unknown) => unknownLessons.add(unknown);
   window.getUnknowns = (target = 'all') => {
     if (target === 'all' || target === 'subjects') console.warn('Nieznane przedmioty:\n', unknownLessons);
-    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', new Set(Object.values(appConfigs.value.database.classes).filter((e) => e.isUnknown).map((e) => [...e.isUnknown]).flat()));
-    if (target === 'all' || target === 'teachers') console.warn('Nieznani nauczyciele:\n', Object.keys(appConfigs.value.database.teachers).filter((e) => appConfigs.value.database.teachers[e].isUnknown));
-    if (target === 'all' || target === 'rooms') console.warn('Nieznane sale:\n', Object.keys(appConfigs.value.database.rooms).filter((e) => appConfigs.value.database.rooms[e].isUnknown));
+    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', new Set(Object.values(appConfigs.value.database.classes).filter((e) => e.isUnknown).map((e) => [ ...e.isUnknown ]).flat()));
+    if (target === 'all' || target === 'teachers') console.warn('Nieznani nauczyciele:\n', Object.keys(appConfigs.value.database.teachers).filter((e) => appConfigs.value.database.teachers[ e ].isUnknown));
+    if (target === 'all' || target === 'rooms') console.warn('Nieznane sale:\n', Object.keys(appConfigs.value.database.rooms).filter((e) => appConfigs.value.database.rooms[ e ].isUnknown));
   };
 
   const toast = useToast()
@@ -322,6 +322,9 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
     appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL
     appConfigs.value.school.logoDescription =
       schoolData.schoolLogoDescription || 'Logo Szkoły'
+    appConfigs.value.school.allowStudentsOldView = schoolData.allowStudentsOldView ?? false
+    appConfigs.value.school.allowStrudentsViewTeachers = schoolData.allowStrudentsViewTeachers ?? true
+    appConfigs.value.school.allowStrudentsViewRooms = schoolData.allowStrudentsViewRooms ?? true
   } catch (e) {
     log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e)
     toast.error('Wystąpił błąd przy wczytywaniu danych szkoły')

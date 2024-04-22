@@ -30,7 +30,7 @@ const now = getNow()
 
 export default defineConfig({
   define: {
-    __APP_VERSION__: JSON.stringify('v3.1.2'),
+    __APP_VERSION__: JSON.stringify('v3.1.3'),
     __SENTRY_DSN__: JSON.stringify(process.env.SENTRY_DSN_URL ?? ''),
     __VUE_PROD_DEVTOOLS__: true
   },

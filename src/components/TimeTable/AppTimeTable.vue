@@ -60,7 +60,7 @@
 </script>
 
 <template>
-	<main class="timetable" :class="{ 'timetable--forced': appConfigs.forceTablet }">
+	<main class="timetable" :class="{ 'timetable--forced': appConfigs.forceTablet, 'timetable--old': appConfigs.viewMode === 'old' }">
 		<TimeTableHeader />
 		<Suspense :timeout="0">
 			<TimeTableContent :activeDay="activeDay" :message="message" />
@@ -68,7 +68,7 @@
 				<TimeTableMessage icon="zsm-loading-icon loading" text="Trwa wczytywanie planu lekcji" />
 			</template>
 		</Suspense>
-		<div class="timetable__controls" v-if="!appConfigs.forceTablet && !message">
+		<div class="timetable__controls" v-if="!appConfigs.forceTablet && appConfigs.viewMode === 'new' && !message">
 			<div class="timetable__controls__button" @click="changeDay(0)">&lt; Poprzedni</div>
 			<div class="timetable__controls__button" @click="changeDay(1)">Następny &gt;</div>
 		</div>
@@ -84,7 +84,7 @@
 		min-height: 100%;
 		grid-template-rows: $header-height 1fr;
 		@include phone {
-			&:not(&--forced) {
+			&:not(&--forced):not(&--old) {
 				grid-template-rows: $header-height 1fr 48px;
 			}
 		}

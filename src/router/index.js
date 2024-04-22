@@ -9,7 +9,7 @@ import { useToast } from 'vue-toastification'
 
 import AppView from '@/views/AppView.vue'
 
-function addHistory (mode, id) {
+function addHistory(mode, id) {
   let historyRecords = appConfigs.value.history
   // Filter added path
   historyRecords = historyRecords.filter(
@@ -18,14 +18,14 @@ function addHistory (mode, id) {
   // Change history size to 24 records
   historyRecords = historyRecords.filter((_, idx) => idx < 24)
   // Add newest record
-  historyRecords = [{ mode, id }, ...historyRecords]
+  historyRecords = [ { mode, id }, ...historyRecords ]
   // Save history
   appConfigs.value.history = historyRecords
 }
 
 const toast = useToast()
 
-const selected = appConfigs.value.history?.[0]
+const selected = appConfigs.value.history?.[ 0 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,10 +49,9 @@ const router = createRouter({
       path: '/:user?',
       name: 'home',
       redirect: (to) =>
-        `/${['uczen', 'nauczyciel'].includes(to.params.user) ? to.params.user : 'uczen'}/${['o', 'n', 's'].includes(selected?.mode) ? selected.mode : 'o'}/${
-          typeof selected?.id === 'string' && !isNaN(selected?.id)
-            ? selected.id
-            : 1
+        `/${[ 'uczen', 'nauczyciel' ].includes(to.params.user) ? to.params.user : 'uczen'}/${[ 'o', 'n', 's' ].includes(selected?.mode) ? selected.mode : 'o'}/${typeof selected?.id === 'string' && !isNaN(selected?.id)
+          ? selected.id
+          : 1
         }`
     },
     {
@@ -94,10 +93,14 @@ router.beforeEach((to, from) => {
     }
   }
   // Prevent students from using old view
-  if (to.params.user === 'uczen') appConfigs.value.viewMode = 'new'
-  // Prevent students from accessing teacher's timetables.
-  if (to.params.user === 'uczen' && to.params.mode === 'n') {
+  if (!appConfigs.value.school.allowStudentsOldView && to.params.user === 'uczen') appConfigs.value.viewMode = 'new'
+  // Check if student is allowed to view requested timetable
+  if (!appConfigs.value.school.allowStrudentsViewTeachers && to.params.user === 'uczen' && to.params.mode === 'n') {
     toast.error('Uczniowie nie mają dostępu do planów nauczycieli')
+    return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
+  }
+  if (!appConfigs.value.school.allowStrudentsViewRooms && to.params.user === 'uczen' && to.params.mode === 's') {
+    toast.error('Uczniowie nie mają dostępu do planów sal lekcyjnych')
     return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
   }
 

@@ -10,6 +10,9 @@ const appConfigs = useStorage(
 			homeURL: undefined,
 			timetableURL: undefined,
 			logoDescription: 'Logo Szkoły',
+			allowStudentsOldView: false,
+			allowStrudentsViewTeachers: true,
+			allowStrudentsViewRooms: true,
 		},
 		// Timetable Data configured in timetableData.js
 		timetable: {

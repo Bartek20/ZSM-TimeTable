@@ -15,7 +15,7 @@
 			]"
 			v-model="appConfigs.colorMode" />
 		<SettingsSettingGroup
-			v-if="user == 'nauczyciel'"
+			v-if="appConfigs.school.allowStudentsOldView || user == 'nauczyciel'"
 			name="Wygląd aplikacji"
 			:options="[
 				{ class: 'zsm-old-mode-icon', value: 'old', name: 'Stary' },

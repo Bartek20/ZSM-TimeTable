@@ -42,11 +42,17 @@ export default async function validateApp() {
 			await window.caches.delete('google-fonts-cache');
 			await window.caches.delete('gstatic-fonts-cache');
 		}
+		// Updating from v3.1.0 to v3.1.1
 		if (cmpVersion('v3.1.1')) {
 			appConfigs.value.currentTimeTable = undefined;
 		}
+		// Updating from v3.1.1 to v3.1.2
 		if (cmpVersion('v3.1.2')) {
 			appConfigs.value.database.teachers = {}
+		}
+		// Updating from v3.1.2 to v3.1.3
+		if (cmpVersion('v3.1.3')) {
+			await window.caches.delete('fonts-data');
 		}
 		// Save new version
 		appConfigs.value.version = __APP_VERSION__;
