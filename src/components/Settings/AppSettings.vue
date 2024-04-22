@@ -21,7 +21,7 @@
 <style lang="scss">
 	.configs {
 		display: grid;
-		width: $sidebar-width;
+		min-width: $sidebar-width;
 		min-height: 100%;
 		max-height: 100%;
 		padding-top: 0.75rem;

@@ -49,7 +49,7 @@
 <style lang="scss">
 	.sidebar {
 		display: grid;
-		width: $sidebar-width;
+		min-width: $sidebar-width;
 		min-height: 100%;
 		max-height: 100%;
 		grid-template-rows: auto 1fr auto;
