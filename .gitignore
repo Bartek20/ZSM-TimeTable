@@ -34,8 +34,8 @@ coverage
 /public/schoolData.js
 /public/timetableData.js
 
-# Sentry Config File
-.env.sentry-build-plugin
+# Config File
+.env
 
 # Compressed app data
 app.tar.gz

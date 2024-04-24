@@ -33,7 +33,9 @@ if (__SENTRY_DSN__) {
     // Sentry config
     dsn: __SENTRY_DSN__,
     normalizeDepth: 10,
-    tunnel: window.localStorage.getItem('isAd-Blocker') ?'https://sentry.tata2676.workers.dev/' : undefined,
+    tunnel: window.localStorage.getItem('isAd-Blocker')
+      ? 'https://sentry.tata2676.workers.dev/'
+      : undefined,
     integrations: [
       Sentry_browserTracingIntegration({ router }),
       Sentry_replayIntegration({
@@ -43,7 +45,7 @@ if (__SENTRY_DSN__) {
     ],
     // Performance Monitoring
     tracesSampleRate: 0.1,
-    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
+    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -64,14 +66,14 @@ if (__SENTRY_DSN__) {
         '\t'
       )
       if (confs === '{}') return event
-      hint.attachments = [ { filename: 'appConfigs.json', data: confs } ]
+      hint.attachments = [{ filename: 'appConfigs.json', data: confs }]
       return event
     }
   })
 }
 
 // Check custom css scrollbar support
-function checkScrollStyllability() {
+function checkScrollStyllability () {
   const style = document.createElement('style')
   style.textContent = `
 	.scrolltest {
@@ -137,7 +139,7 @@ if (window.installevent) {
 
 // Service Worker, Timetable caching
 let fetching = false
-async function cacheTimeTables() {
+async function cacheTimeTables () {
   if (!appConfigs.value.school.timetableURL) return
   if (import.meta.env.MODE === 'development') return
   if (fetching) return
@@ -168,7 +170,7 @@ async function cacheTimeTables() {
         .get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`)
         .catch(() => undefined)
     )
-    await Promise.all([ ...classMap, ...teacherMap, ...roomMap ])
+    await Promise.all([...classMap, ...teacherMap, ...roomMap])
     log(
       'info',
       '[Service Worker] Zakończono pobieranie planów do pamięci cache.'
@@ -186,13 +188,13 @@ async function cacheTimeTables() {
 }
 registerSW({
   immediate: true,
-  onNeedRefresh() {
+  onNeedRefresh () {
     log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.')
   },
-  onOfflineReady() {
+  onOfflineReady () {
     log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.')
   },
-  async onRegisteredSW(_, SW) {
+  async onRegisteredSW (_, SW) {
     log('info', '[Service Worker] Zainstalowano Service Workera.')
     // Waiting for Service Worker to install
     await new Promise((resolve) => {
@@ -212,11 +214,15 @@ registerSW({
         const res = await axios.get(import.meta.env.BASE_URL + 'sw.js')
         if (res.status === 200) SW.update()
       } catch (e) {
-        log('error', 'Wystąpił błąd przy sprawdzaniu aktualizacji Service Workera:\n', e)
+        log(
+          'error',
+          'Wystąpił błąd przy sprawdzaniu aktualizacji Service Workera:\n',
+          e
+        )
       }
     }, 3600000)
   },
-  onRegisterError(err) {
+  onRegisterError (err) {
     log(
       'error',
       '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n',
@@ -225,7 +231,11 @@ registerSW({
   }
 })
 
-if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorker && typeof navigator.serviceWorker.addEventListener === 'function') {
+if (
+  'serviceWorker' in navigator &&
+  'addEventListener' in navigator.serviceWorker &&
+  typeof navigator.serviceWorker.addEventListener === 'function'
+) {
   try {
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (fetching) return
@@ -238,7 +248,11 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
       cacheTimeTables()
     })
   } catch (e) {
-    log('warn', '[Service Worker] Nie udało się zarejestrować eventlistenera:\n', e)
+    log(
+      'warn',
+      '[Service Worker] Nie udało się zarejestrować eventlistenera:\n',
+      e
+    )
   }
   try {
     if (navigator.serviceWorker.controller) {
@@ -247,7 +261,11 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
       })
     }
   } catch (e) {
-    log('warn', '[Service Worker] Nie udało się zarejestrować eventlistenera:\n', e)
+    log(
+      'warn',
+      '[Service Worker] Nie udało się zarejestrować eventlistenera:\n',
+      e
+    )
   }
 }
 
@@ -298,19 +316,45 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
   // Check supported scrollbars
   checkScrollStyllability()
   // Setup cache headers
-  axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache'
+  axios.defaults.headers.get['Cache-Control'] = 'no-cache'
   // Setup color mode handler
   colorHandler()
   // Setup global functions
   window.axios = axios
   const unknownLessons = new Set()
-  window.addUnknowns = (unknown) => unknownLessons.add(unknown);
+  window.addUnknowns = (unknown) => unknownLessons.add(unknown)
   window.getUnknowns = (target = 'all') => {
-    if (target === 'all' || target === 'subjects') console.warn('Nieznane przedmioty:\n', unknownLessons);
-    if (target === 'all' || target === 'classes') console.warn('Nieznane kierunki:\n', new Set(Object.values(appConfigs.value.database.classes).filter((e) => e.isUnknown).map((e) => [...e.isUnknown]).flat()));
-    if (target === 'all' || target === 'teachers') console.warn('Nieznani nauczyciele:\n', Object.keys(appConfigs.value.database.teachers).filter((e) => appConfigs.value.database.teachers[e].isUnknown));
-    if (target === 'all' || target === 'rooms') console.warn('Nieznane sale:\n', Object.keys(appConfigs.value.database.rooms).filter((e) => appConfigs.value.database.rooms[e].isUnknown));
-  };
+    if (target === 'all' || target === 'subjects') {
+      console.warn('Nieznane przedmioty:\n', unknownLessons)
+    }
+    if (target === 'all' || target === 'classes') {
+      console.warn(
+        'Nieznane kierunki:\n',
+        new Set(
+          Object.values(appConfigs.value.database.classes)
+            .filter((e) => e.isUnknown)
+            .map((e) => [...e.isUnknown])
+            .flat()
+        )
+      )
+    }
+    if (target === 'all' || target === 'teachers') {
+      console.warn(
+        'Nieznani nauczyciele:\n',
+        Object.keys(appConfigs.value.database.teachers).filter(
+          (e) => appConfigs.value.database.teachers[e].isUnknown
+        )
+      )
+    }
+    if (target === 'all' || target === 'rooms') {
+      console.warn(
+        'Nieznane sale:\n',
+        Object.keys(appConfigs.value.database.rooms).filter(
+          (e) => appConfigs.value.database.rooms[e].isUnknown
+        )
+      )
+    }
+  }
 
   const toast = useToast()
   // Fetch School Data
@@ -322,6 +366,12 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
     appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL
     appConfigs.value.school.logoDescription =
       schoolData.schoolLogoDescription || 'Logo Szkoły'
+    appConfigs.value.school.allowStudentsOldView =
+      schoolData.allowStudentsOldView ?? false
+    appConfigs.value.school.allowStrudentsViewTeachers =
+      schoolData.allowStrudentsViewTeachers ?? true
+    appConfigs.value.school.allowStrudentsViewRooms =
+      schoolData.allowStrudentsViewRooms ?? true
   } catch (e) {
     log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e)
     toast.error('Wystąpił błąd przy wczytywaniu danych szkoły')

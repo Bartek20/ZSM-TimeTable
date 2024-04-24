@@ -94,10 +94,27 @@ router.beforeEach((to, from) => {
     }
   }
   // Prevent students from using old view
-  if (to.params.user === 'uczen') appConfigs.value.viewMode = 'new'
-  // Prevent students from accessing teacher's timetables.
-  if (to.params.user === 'uczen' && to.params.mode === 'n') {
+  if (
+    !appConfigs.value.school.allowStudentsOldView &&
+    to.params.user === 'uczen'
+  ) {
+    appConfigs.value.viewMode = 'new'
+  }
+  // Check if student is allowed to view requested timetable
+  if (
+    !appConfigs.value.school.allowStrudentsViewTeachers &&
+    to.params.user === 'uczen' &&
+    to.params.mode === 'n'
+  ) {
     toast.error('Uczniowie nie mają dostępu do planów nauczycieli')
+    return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
+  }
+  if (
+    !appConfigs.value.school.allowStrudentsViewRooms &&
+    to.params.user === 'uczen' &&
+    to.params.mode === 's'
+  ) {
+    toast.error('Uczniowie nie mają dostępu do planów sal lekcyjnych')
     return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
   }
 
