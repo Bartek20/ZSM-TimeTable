@@ -34,7 +34,7 @@
 		padding: 0.25rem 0.75rem 0.25rem 0;
 		text-decoration: none;
 		color: var(--sb-text);
-		height: 50px;
+		min-height: 50px;
 		display: flex;
 		align-items: center;
 		cursor: pointer;
