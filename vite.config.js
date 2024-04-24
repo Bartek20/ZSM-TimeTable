@@ -65,15 +65,15 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          '@vueuse': [ '@vueuse/core', '@vueuse/router' ],
-          axios: [ 'axios' ],
-          'chroma-js': [ 'chroma-js' ],
-          'string-to-color': [ 'string-to-color' ],
-          vue: [ 'vue' ],
-          'vue-router': [ 'vue-router' ],
-          'floating-vue': [ 'floating-vue' ],
-          'vue-toastification': [ 'vue-toastification' ],
-          sentry: [ '@sentry/vue', '@sentry/vite-plugin' ]
+          '@vueuse': ['@vueuse/core', '@vueuse/router'],
+          axios: ['axios'],
+          'chroma-js': ['chroma-js'],
+          'string-to-color': ['string-to-color'],
+          vue: ['vue'],
+          'vue-router': ['vue-router'],
+          'floating-vue': ['floating-vue'],
+          'vue-toastification': ['vue-toastification'],
+          sentry: ['@sentry/vue', '@sentry/vite-plugin']
         }
       }
     },
@@ -87,7 +87,7 @@ export default defineConfig({
       }
     },
     postcss: {
-      plugins: [ autoprefixer({}) ]
+      plugins: [autoprefixer({})]
     }
   },
   resolve: {
