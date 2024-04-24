@@ -69,7 +69,6 @@ export function generateHTACCESS() {
 		},
 	};
 }
-
 export function getCloudflareBeacon() {
 	return {
 		name: 'getCloudflareBeacon',
