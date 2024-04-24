@@ -21,8 +21,7 @@
 <style lang="scss">
 	.configs {
 		display: grid;
-		min-width: $sidebar-width;
-		max-width: $sidebar-width;
+		width: $sidebar-width;
 		min-height: 100%;
 		max-height: 100%;
 		padding-top: 0.75rem;
@@ -34,7 +33,7 @@
 		z-index: 11;
 		position: fixed;
 		top: 0;
-		right: -#{$sidebar-width};
+		right: -#{$sidebar-width + 12};
 		@include printer {
 			display: none;
 		}
