@@ -61,7 +61,7 @@
 			z-index: 11;
 			position: fixed;
 			top: 0;
-			left: -#{$sidebar-width + 12};
+			left: -#{$sidebar-width};
 			&.open {
 				left: 0;
 			}
@@ -92,6 +92,7 @@
 			}
 		}
 		&__footer {
+			overflow: hidden;
 			text-align: center;
 			color: white;
 			&--dates,
@@ -104,6 +105,7 @@
 					display: grid;
 					grid-template-columns: auto auto;
 					justify-content: space-between;
+					align-items: center;
 					&:first-child {
 						margin-bottom: 3px;
 					}

@@ -33,7 +33,7 @@
 		z-index: 11;
 		position: fixed;
 		top: 0;
-		right: -#{$sidebar-width + 12};
+		right: -#{$sidebar-width};
 		@include printer {
 			display: none;
 		}
