@@ -19,7 +19,7 @@
 		"chroma-js": "^2.4.2",
 		"floating-vue": "^5.2.2",
 		"string-to-color": "^2.2.2",
-		"vue": "^3.4.25",
+		"vue": "^3.4.29",
 		"vue-router": "^4.3.2",
 		"vue-toastification": "github:Bartek20/vue-toastification#next"
 	},
