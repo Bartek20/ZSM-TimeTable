@@ -30,14 +30,6 @@ const status = computed(() => appData.timetable.value.status);
     </div>
   </div>
   <div v-else></div>
-  <div class="configs__options" v-if="status == 200 && !isPrinting">
-    <span class="configs__options__title"><b>Opcje</b></span>
-    <div class="configs__options__option" @click="printTimeTable">
-      <i class="configs__options__option__icon zsm-print-timetable-icon"></i>
-      <span class="configs__options__option__name">Wydrukuj plan</span>
-    </div>
-  </div>
-  <div v-else></div>
 </template>
 
 <style lang="scss">
