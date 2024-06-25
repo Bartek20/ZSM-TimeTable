@@ -74,7 +74,6 @@ export default function parseLesson (lesson) {
 
   // Colors parsing
   if (!appConfigs.value.showColors) {
-  if (!appConfigs.value.showColors) {
     colors = {
       light: "white",
       dark: "lightgray",
