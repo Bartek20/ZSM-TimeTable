@@ -35,9 +35,9 @@ const dates = computed(() => {
 });
 const title = computed(() => {
   const MODES = {
-    o: 'classes',
-    n: 'teachers',
-    s: 'rooms',
+    o: "classes",
+    n: "teachers",
+    s: "rooms",
   };
   const name = appData.timetable.value.title;
   if (!name) {
@@ -45,17 +45,18 @@ const title = computed(() => {
       case 0:
         return;
       case 404:
-        setTitle('Wybrany plan nie został odnaleziony.');
+        setTitle("Wybrany plan nie został odnaleziony.");
         return;
       case 500:
-        setTitle('Wystąpił nieznany błąd.');
+        setTitle("Wystąpił nieznany błąd.");
         return;
       case 900:
-        setTitle('Pobieranie planu nie powiodło się.');
+        setTitle("Pobieranie planu nie powiodło się.");
         return;
     }
   }
-  if (!appConfigs.value.database[MODES[mode.value]][name]) parseName(mode.value, name);
+  if (!appConfigs.value.database[MODES[mode.value]][name])
+    parseName(mode.value, name);
   setTitle(appConfigs.value.database[MODES[mode.value]]?.[name]?.title ?? name);
   return appConfigs.value.database[MODES[mode.value]]?.[name]?.heading ?? name;
 });
@@ -95,7 +96,12 @@ const data = computed(() => {
 <template>
   <TimeTableMessage v-if="message" :icon="message.icon" :text="message.msg" />
   <div class="timetable__container" v-else>
-    <TimeTableTable :data="data" :dates="dates" :title="title" :activeDay="activeDay" />
+    <TimeTableTable
+      :data="data"
+      :dates="dates"
+      :title="title"
+      :activeDay="activeDay"
+    />
   </div>
 </template>
 
