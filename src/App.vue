@@ -8,7 +8,7 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     e.stopImmediatePropagation();
     log('warn', '[App] Próba drukowania planu skrótem została zablokowana.')
-    toast.warn('Aby wydrukować plan lekcji skorzystaj z opcji w menu.')
+    toast.warning('Aby wydrukować plan lekcji skorzystaj z opcji w menu.')
   }
 })
 </script>
