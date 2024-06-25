@@ -1,5 +1,5 @@
 const appConfigs = useStorage(
-  'appConfigs',
+  "appConfigs",
   {
     // PWA Configs
     version: undefined,
@@ -9,10 +9,10 @@ const appConfigs = useStorage(
     school: {
       homeURL: undefined,
       timetableURL: undefined,
-      logoDescription: 'Logo Szkoły',
+      logoDescription: "Logo Szkoły",
       allowStudentsOldView: false,
       allowStrudentsViewTeachers: true,
-      allowStrudentsViewRooms: true
+      allowStrudentsViewRooms: true,
     },
     // Timetable Data configured in timetableData.js
     timetable: {
@@ -21,28 +21,28 @@ const appConfigs = useStorage(
       classes: {},
       teachers: {},
       rooms: {},
-      subjects: {}
+      subjects: {},
     },
     // Parsed data store
     database: {
       rooms: {},
       teachers: {},
       classes: {},
-      subjects: {}
+      subjects: {},
     },
     // History
     history: [],
     // Settings
-    colorMode: 'light',
-    viewMode: 'new',
+    colorMode: "light",
+    viewMode: "new",
     forceTablet: false,
     shortLessons: false,
     showCurrent: true,
     showColors: true,
-    showBreaks: true
+    showBreaks: true,
   },
   localStorage,
-  { mergeDefaults: true }
-)
+  { mergeDefaults: true },
+);
 
-export default appConfigs
+export default appConfigs;

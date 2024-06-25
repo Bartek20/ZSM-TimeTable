@@ -10,12 +10,12 @@ function printTimeTable() {
   isPrinting.value = true;
   oldMode.value = appConfigs.value.viewMode;
   appConfigs.value.viewMode = "old";
-  document.body.classList.remove('preventPrint')
+  document.body.classList.remove("preventPrint");
   window.setTimeout(() => {
     window.print();
     appConfigs.value.viewMode = oldMode.value;
     isPrinting.value = false;
-    document.body.classList.add('preventPrint')
+    document.body.classList.add("preventPrint");
   }, 25);
 }
 const status = computed(() => appData.timetable.value.status);
