@@ -9,7 +9,6 @@
 		document.querySelector('.overlay')?.classList.remove('overlay--configs');
 	}
 	onMounted(() => {
-		document.getElementById('loader-styles')?.remove();
 		document.getElementById('loader-script')?.remove();
 		document.getElementById('loader')?.remove();
 	});

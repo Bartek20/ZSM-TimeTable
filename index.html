@@ -88,7 +88,7 @@
         font-family: "Roboto Condensed", sans-serif;
       }
     </style>
-    <style id="loader-styles">
+    <style>
       html,
       body,
       .loading {
@@ -113,12 +113,26 @@
       .loading.hidden {
         display: none;
       }
+      .warnPrint {
+        display: none;
+      }
+      @media print {
+        .warnPrint {
+          display: flex;
+        }
+      }
     </style>
   </head>
-  <body class="light">
+  <body class="light preventPrint">
     <div id="loader" class="loading hidden">
       <h1>Trwa wczytywanie aplikacji</h1>
       <p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
+    </div>
+    <div class="loading warnPrint">
+      <h1>Błąd</h1>
+      <p>
+        Aby wydrukować plan lekcji skorzystaj z opcji w menu
+      </p>
     </div>
     <div id="app"></div>
     <script id="loader-script">

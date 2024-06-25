@@ -26,6 +26,7 @@ import {
 } from '@sentry/vue'
 
 const app = createApp(App)
+const toast = useToast()
 
 // Sentry Error Reporting
 if (__SENTRY_DSN__) {
@@ -45,7 +46,7 @@ if (__SENTRY_DSN__) {
     ],
     // Performance Monitoring
     tracesSampleRate: 0.1,
-    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -66,14 +67,14 @@ if (__SENTRY_DSN__) {
         '\t'
       )
       if (confs === '{}') return event
-      hint.attachments = [{ filename: 'appConfigs.json', data: confs }]
+      hint.attachments = [ { filename: 'appConfigs.json', data: confs } ]
       return event
     }
   })
 }
 
 // Check custom css scrollbar support
-function checkScrollStyllability () {
+function checkScrollStyllability() {
   const style = document.createElement('style')
   style.textContent = `
 	.scrolltest {
@@ -139,7 +140,7 @@ if (window.installevent) {
 
 // Service Worker, Timetable caching
 let fetching = false
-async function cacheTimeTables () {
+async function cacheTimeTables() {
   if (!appConfigs.value.school.timetableURL) return
   if (import.meta.env.MODE === 'development') return
   if (fetching) return
@@ -170,7 +171,7 @@ async function cacheTimeTables () {
         .get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`)
         .catch(() => undefined)
     )
-    await Promise.all([...classMap, ...teacherMap, ...roomMap])
+    await Promise.all([ ...classMap, ...teacherMap, ...roomMap ])
     log(
       'info',
       '[Service Worker] Zakończono pobieranie planów do pamięci cache.'
@@ -188,13 +189,13 @@ async function cacheTimeTables () {
 }
 registerSW({
   immediate: true,
-  onNeedRefresh () {
+  onNeedRefresh() {
     log('info', '[Service Worker] Aplikacja oczekuje na odświeżenie strony.')
   },
-  onOfflineReady () {
+  onOfflineReady() {
     log('info', '[Service Worker] Aplikacja jest gotowa do pracy offline.')
   },
-  async onRegisteredSW (_, SW) {
+  async onRegisteredSW(_, SW) {
     log('info', '[Service Worker] Zainstalowano Service Workera.')
     // Waiting for Service Worker to install
     await new Promise((resolve) => {
@@ -222,7 +223,7 @@ registerSW({
       }
     }, 3600000)
   },
-  onRegisterError (err) {
+  onRegisterError(err) {
     log(
       'error',
       '[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n',
@@ -269,159 +270,168 @@ if (
   }
 }
 
-// Main app functions
-(async () => {
-  // Console log app version
-  log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__)
-  // Console log user notification
-  if (import.meta.env.MODE !== 'development') {
-    log(
-      'info',
-      '[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
-    )
-    log(
-      'warn',
-      '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.'
-    )
+// Prevent print screen using shortcut
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    log('warn', '[App] Próba drukowania planu skrótem została zablokowana.')
+    toast.warn('Aby wydrukować plan lekcji skorzystaj z opcji w menu.')
   }
+})
 
-  // App setup
-  app.use(Toast, {
-    transition: 'Vue-Toastification__bounce',
-    maxToasts: 10,
-    newestOnTop: true,
-    filterBeforeCreate: (toast, toasts) => {
-      if (toasts.filter((t) => t.content === toast.content).length !== 0) {
-        return false
+  // Main app functions
+  (async () => {
+    // Console log app version
+    log('info', '[App] Wczytywanie aplikacji w wersji:', __APP_VERSION__)
+    // Console log user notification
+    if (import.meta.env.MODE !== 'development') {
+      log(
+        'info',
+        '[App] Witaj użytkowniku!\nWidzę, że zainteresowało cię działanie mojej aplikacji.\nJeśli masz jakieś pomysły na udoskonalenie jej zapraszam do kontaktu poprzez wątek na githubie:\nhttps://github.com/Bartek20/ZSM-TimeTable/issues'
+      )
+      log(
+        'warn',
+        '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.'
+      )
+    }
+
+    // App setup
+    app.use(Toast, {
+      transition: 'Vue-Toastification__bounce',
+      maxToasts: 10,
+      newestOnTop: true,
+      filterBeforeCreate: (toast, toasts) => {
+        if (toasts.filter((t) => t.content === toast.content).length !== 0) {
+          return false
+        }
+        return toast
+      },
+      position: 'top-right',
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: false,
+      pauseOnHover: false,
+      draggable: false,
+      draggablePercent: 0.3,
+      showCloseButtonOnHover: true,
+      hideProgressBar: false,
+      closeButton: 'button',
+      rtl: false
+    })
+    app.directive('tooltip', vTooltip)
+    // Check for isPWA
+    if (location.search.includes('PWA=true')) {
+      window.isPWA = true
+    }
+    // Check supported scrollbars
+    checkScrollStyllability()
+    // Setup cache headers
+    axios.defaults.headers.get[ 'Cache-Control' ] = 'no-cache'
+    // Setup color mode handler
+    colorHandler()
+    // Setup global functions
+    window.axios = axios
+    const unknownLessons = new Set()
+    window.addUnknowns = (unknown) => unknownLessons.add(unknown)
+    window.getUnknowns = (target = 'all') => {
+      if (target === 'all' || target === 'subjects') {
+        console.warn('Nieznane przedmioty:\n', unknownLessons)
       }
-      return toast
-    },
-    position: 'top-right',
-    timeout: 3000,
-    closeOnClick: false,
-    pauseOnFocusLoss: false,
-    pauseOnHover: false,
-    draggable: false,
-    draggablePercent: 0.3,
-    showCloseButtonOnHover: true,
-    hideProgressBar: false,
-    closeButton: 'button',
-    rtl: false
-  })
-  app.directive('tooltip', vTooltip)
-  // Check for isPWA
-  if (location.search.includes('PWA=true')) {
-    window.isPWA = true
-  }
-  // Check supported scrollbars
-  checkScrollStyllability()
-  // Setup cache headers
-  axios.defaults.headers.get['Cache-Control'] = 'no-cache'
-  // Setup color mode handler
-  colorHandler()
-  // Setup global functions
-  window.axios = axios
-  const unknownLessons = new Set()
-  window.addUnknowns = (unknown) => unknownLessons.add(unknown)
-  window.getUnknowns = (target = 'all') => {
-    if (target === 'all' || target === 'subjects') {
-      console.warn('Nieznane przedmioty:\n', unknownLessons)
-    }
-    if (target === 'all' || target === 'classes') {
-      console.warn(
-        'Nieznane kierunki:\n',
-        new Set(
-          Object.values(appConfigs.value.database.classes)
-            .filter((e) => e.isUnknown)
-            .map((e) => [...e.isUnknown])
-            .flat()
+      if (target === 'all' || target === 'classes') {
+        console.warn(
+          'Nieznane kierunki:\n',
+          new Set(
+            Object.values(appConfigs.value.database.classes)
+              .filter((e) => e.isUnknown)
+              .map((e) => [ ...e.isUnknown ])
+              .flat()
+          )
         )
-      )
-    }
-    if (target === 'all' || target === 'teachers') {
-      console.warn(
-        'Nieznani nauczyciele:\n',
-        Object.keys(appConfigs.value.database.teachers).filter(
-          (e) => appConfigs.value.database.teachers[e].isUnknown
+      }
+      if (target === 'all' || target === 'teachers') {
+        console.warn(
+          'Nieznani nauczyciele:\n',
+          Object.keys(appConfigs.value.database.teachers).filter(
+            (e) => appConfigs.value.database.teachers[ e ].isUnknown
+          )
         )
-      )
-    }
-    if (target === 'all' || target === 'rooms') {
-      console.warn(
-        'Nieznane sale:\n',
-        Object.keys(appConfigs.value.database.rooms).filter(
-          (e) => appConfigs.value.database.rooms[e].isUnknown
+      }
+      if (target === 'all' || target === 'rooms') {
+        console.warn(
+          'Nieznane sale:\n',
+          Object.keys(appConfigs.value.database.rooms).filter(
+            (e) => appConfigs.value.database.rooms[ e ].isUnknown
+          )
         )
-      )
+      }
     }
-  }
 
-  const toast = useToast()
-  // Fetch School Data
-  try {
-    const { default: schoolData } = await import(
+    // Fetch School Data
+    try {
+      const { default: schoolData } = await import(
       /* @vite-ignore */ `${import.meta.env.BASE_URL}schoolData.js?t=${Date.now()}`
-    )
-    appConfigs.value.school.homeURL = schoolData.schoolHomeURL
-    appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL
-    appConfigs.value.school.logoDescription =
-      schoolData.schoolLogoDescription || 'Logo Szkoły'
-    appConfigs.value.school.allowStudentsOldView =
-      schoolData.allowStudentsOldView ?? false
-    appConfigs.value.school.allowStrudentsViewTeachers =
-      schoolData.allowStrudentsViewTeachers ?? true
-    appConfigs.value.school.allowStrudentsViewRooms =
-      schoolData.allowStrudentsViewRooms ?? true
-  } catch (e) {
-    log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e)
-    toast.error('Wystąpił błąd przy wczytywaniu danych szkoły')
-  }
-  // Fetch TimeTable Data
-  try {
-    const { default: timetableData } = await import(
+      )
+      appConfigs.value.school.homeURL = schoolData.schoolHomeURL
+      appConfigs.value.school.timetableURL = schoolData.schoolTimeTableRootURL
+      appConfigs.value.school.logoDescription =
+        schoolData.schoolLogoDescription || 'Logo Szkoły'
+      appConfigs.value.school.allowStudentsOldView =
+        schoolData.allowStudentsOldView ?? false
+      appConfigs.value.school.allowStrudentsViewTeachers =
+        schoolData.allowStrudentsViewTeachers ?? true
+      appConfigs.value.school.allowStrudentsViewRooms =
+        schoolData.allowStrudentsViewRooms ?? true
+    } catch (e) {
+      log('error', '[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n', e)
+      toast.error('Wystąpił błąd przy wczytywaniu danych szkoły')
+    }
+    // Fetch TimeTable Data
+    try {
+      const { default: timetableData } = await import(
       /* @vite-ignore */ `${import.meta.env.BASE_URL}timetableData.js?t=${Date.now()}`
-    )
-    parseData('shortLessons', timetableData.shortLessons || [])
-    parseData('levels', timetableData.levels || {})
-    parseData('classes', timetableData.classes || {})
-    parseData('teachers', timetableData.teachers || {})
-    parseData('rooms', timetableData.rooms || {})
-    parseData('subjects', timetableData.subjects || {})
-  } catch (e) {
-    log(
-      'error',
-      '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n',
-      e
-    )
-    toast.error('Wystąpił błąd przy wczytywaniu danych planu lekcji')
-  }
+      )
+      parseData('shortLessons', timetableData.shortLessons || [])
+      parseData('levels', timetableData.levels || {})
+      parseData('classes', timetableData.classes || {})
+      parseData('teachers', timetableData.teachers || {})
+      parseData('rooms', timetableData.rooms || {})
+      parseData('subjects', timetableData.subjects || {})
+    } catch (e) {
+      log(
+        'error',
+        '[App] Wystąpił błąd przy wczytywaniu danych planu lekcji:\n',
+        e
+      )
+      toast.error('Wystąpił błąd przy wczytywaniu danych planu lekcji')
+    }
 
-  // Prevent app from running without required data
-  if (!appConfigs.value.school.timetableURL) {
-    const loader = document.body.querySelector('#loader')
-    loader.querySelector('h1').innerText =
-      'Wystąpił błąd przy wczytywaniu aplikacji'
-    loader.querySelector('p').innerText =
-      'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.'
-    toast.error('Wystąpił błąd przy wczytywaniu aplikacji')
-    return
-  }
+    // Prevent app from running without required data
+    if (!appConfigs.value.school.timetableURL) {
+      const loader = document.body.querySelector('#loader')
+      loader.querySelector('h1').innerText =
+        'Wystąpił błąd przy wczytywaniu aplikacji'
+      loader.querySelector('p').innerText =
+        'Nie udało się wczytać wymaganych danych.\nSprawdź połączenie z siecią i spróbuj ponownie później.'
+      toast.error('Wystąpił błąd przy wczytywaniu aplikacji')
+      return
+    }
 
-  // Try to lock screen orientation
-  try {
-    await screen.orientation.lock('portrait')
-  } catch (e) {
-    log('warn', '[App] Nie udało się zablokować orientacji ekranu:\n', e)
-  }
+    // Try to lock screen orientation
+    try {
+      await screen.orientation.lock('portrait')
+    } catch (e) {
+      log('warn', '[App] Nie udało się zablokować orientacji ekranu:\n', e)
+    }
 
-  // Reset session configs
-  appConfigs.value.shortLessons = false
-  if (window.sessionStorage.getItem('swUpdate') !== null) {
-    window.sessionStorage.removeItem('swUpdate')
-    toast.success('Zaktualizowano aplikację do najnowszej wersji')
-  }
+    // Reset session configs
+    appConfigs.value.shortLessons = false
+    if (window.sessionStorage.getItem('swUpdate') !== null) {
+      window.sessionStorage.removeItem('swUpdate')
+      toast.success('Zaktualizowano aplikację do najnowszej wersji')
+    }
 
-  // Render application
-  app.use(router)
-  app.mount('#app')
-})()
+    // Render application
+    app.use(router)
+    app.mount('#app')
+  })()
