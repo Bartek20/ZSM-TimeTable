@@ -4,6 +4,12 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 // Prevent print screen using shortcut
 document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.querySelector("aside.sidebar")?.classList.remove("open");
+    document.querySelector("aside.configs")?.classList.remove("open");
+    document.querySelector(".overlay")?.classList.remove("overlay--sidebar");
+    document.querySelector(".overlay")?.classList.remove("overlay--configs");
+  }
   if ((e.ctrlKey || e.metaKey) && e.key === "p") {
     e.preventDefault();
     e.stopImmediatePropagation();
