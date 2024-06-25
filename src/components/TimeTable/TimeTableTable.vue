@@ -9,6 +9,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
   activeDay: {
     type: Number,
     required: true,
@@ -127,8 +131,9 @@ watch(
       <tr class="timetable__old__dates" v-if="dates.generated && dates.apply">
         <td colspan="7">
           <div>
-            <div>Wygenerowano: {{ dates.generated }}</div>
-            <div>Obowiązuje od: {{ dates.apply }}</div>
+            <div>Wygenerowano:&nbsp;{{ dates.generated }}</div>
+            <h3>{{ title }}</h3>
+            <div>Obowiązuje&nbsp;od:&nbsp;{{ dates.apply }}</div>
           </div>
         </td>
       </tr>
@@ -264,6 +269,9 @@ watch(
   padding-bottom: 10px;
   border-color: #c0c0c0;
   border-width: 0;
+  @include printer {
+    width: 100%;
+  }
   &__dates {
     display: none;
     @include printer {
@@ -275,9 +283,14 @@ watch(
       > div {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         flex-wrap: nowrap;
         flex-direction: row;
+        gap: 12px;
+        h3 {
+          font-size: 1.5rem;
+          text-align: center;
+        }
       }
       font-size: 0.875rem !important;
     }

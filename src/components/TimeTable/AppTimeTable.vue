@@ -110,7 +110,7 @@ function changeDay(dir) {
     }
   }
   @include printer {
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr;
   }
   background-color: var(--bg-timetable);
   &__controls {

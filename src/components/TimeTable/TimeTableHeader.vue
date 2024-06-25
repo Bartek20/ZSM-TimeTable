@@ -86,7 +86,7 @@
 			grid-template-columns: $icon 1fr $icon;
 		}
 		@include printer {
-			grid-template-columns: 1fr;
+			display: none;
 		}
 		gap: var(--padding);
 		color: var(--tt-text);
@@ -126,7 +126,6 @@
 				white-space: nowrap;
 				@include printer {
 					text-align: center;
-					white-space: normal;
 				}
 			}
 			.marquee {

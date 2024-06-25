@@ -33,6 +33,32 @@ const dates = computed(() => {
     apply: appData.timetable.value.apply_date,
   };
 });
+const title = computed(() => {
+  const MODES = {
+    o: 'classes',
+    n: 'teachers',
+    s: 'rooms',
+  };
+  const name = appData.timetable.value.title;
+  if (!name) {
+    switch (appData.timetable.value.status) {
+      case 0:
+        return;
+      case 404:
+        setTitle('Wybrany plan nie został odnaleziony.');
+        return;
+      case 500:
+        setTitle('Wystąpił nieznany błąd.');
+        return;
+      case 900:
+        setTitle('Pobieranie planu nie powiodło się.');
+        return;
+    }
+  }
+  if (!appConfigs.value.database[MODES[mode.value]][name]) parseName(mode.value, name);
+  setTitle(appConfigs.value.database[MODES[mode.value]]?.[name]?.title ?? name);
+  return appConfigs.value.database[MODES[mode.value]]?.[name]?.heading ?? name;
+});
 const data = computed(() => {
   const src = appData.timetable.value;
   const shortHours =
@@ -69,7 +95,7 @@ const data = computed(() => {
 <template>
   <TimeTableMessage v-if="message" :icon="message.icon" :text="message.msg" />
   <div class="timetable__container" v-else>
-    <TimeTableTable :data="data" :dates="dates" :activeDay="activeDay" />
+    <TimeTableTable :data="data" :dates="dates" :title="title" :activeDay="activeDay" />
   </div>
 </template>
 
