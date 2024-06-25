@@ -82,7 +82,7 @@ const data = computed(() => {
   overflow: auto;
   @include printer {
     overflow: visible;
-    margin-top: -32px;
+    width: 100%;
   }
 }
 </style>

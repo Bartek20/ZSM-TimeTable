@@ -109,6 +109,9 @@ function changeDay(dir) {
       grid-template-rows: $header-height 1fr 48px;
     }
   }
+  @include printer {
+    grid-template-rows: auto 1fr;
+  }
   background-color: var(--bg-timetable);
   &__controls {
     display: none;

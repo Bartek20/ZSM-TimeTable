@@ -126,6 +126,7 @@
 				white-space: nowrap;
 				@include printer {
 					text-align: center;
+					white-space: normal;
 				}
 			}
 			.marquee {
