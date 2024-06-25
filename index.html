@@ -91,12 +91,12 @@
     <style>
       html,
       body,
-      .loading {
+      .appMessage {
         margin: 0;
         height: 100%;
         width: 100%;
       }
-      .loading {
+      .appMessage {
         position: fixed;
         display: flex;
         flex-direction: column;
@@ -104,13 +104,13 @@
         justify-content: center;
         text-align: center;
       }
-      .loading > * {
+      .appMessage > * {
         text-decoration: none;
         max-width: min(100% - 20px, 600px);
         margin: 0;
         margin-bottom: 10px;
       }
-      .loading.hidden {
+      .appMessage.hidden {
         display: none;
       }
       .warnPrint {
@@ -124,11 +124,11 @@
     </style>
   </head>
   <body class="light preventPrint">
-    <div id="loader" class="loading hidden">
+    <div id="loader" class="appMessage hidden">
       <h1>Trwa wczytywanie aplikacji</h1>
       <p>Przy wolniejszym połączeniu z siecią może to chwilę potrwać.</p>
     </div>
-    <div class="loading warnPrint">
+    <div class="appMessage warnPrint">
       <h1>Błąd</h1>
       <p>Aby wydrukować plan lekcji skorzystaj z opcji w menu.</p>
     </div>
@@ -145,7 +145,7 @@
       window.addEventListener("beforeinstallprompt", installhandler);
     </script>
     <noscript>
-      <div class="loading">
+      <div class="appMessage">
         <h1>Błąd</h1>
         <p>
           Niestety twoja przeglądarka nie wspiera javascript, który jest
