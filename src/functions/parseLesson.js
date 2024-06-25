@@ -1,7 +1,7 @@
 import appConfigs from "@/stores/configs";
 import parseColor from "@/functions/parseColor";
 
-export default function parseLesson (lesson) {
+export default function parseLesson(lesson) {
   // Variables
   const user = useRouteParams("user");
   const mode = useRouteParams("mode");
@@ -16,10 +16,10 @@ export default function parseLesson (lesson) {
     subjectData = appConfigs.value.timetable.subjects.praktyki;
   }
   if (subjectData === undefined) {
-    addUnknowns(lesson.subject)
-    subjectData = { short: lesson.subject }
+    addUnknowns(lesson.subject);
+    subjectData = { short: lesson.subject };
   }
-  subject = subjectData
+  subject = subjectData;
 
   // Columns parsing
   // Column #1
@@ -88,7 +88,6 @@ export default function parseLesson (lesson) {
   return {
     subject,
     columns,
-    colors
-  }
+    colors,
+  };
 }
-
