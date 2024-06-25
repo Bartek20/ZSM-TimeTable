@@ -26,7 +26,6 @@ import {
 } from '@sentry/vue'
 
 const app = createApp(App)
-const toast = useToast()
 
 // Sentry Error Reporting
 if (__SENTRY_DSN__) {
@@ -270,16 +269,6 @@ if (
   }
 }
 
-// Prevent print screen using shortcut
-document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    log('warn', '[App] Próba drukowania planu skrótem została zablokowana.')
-    toast.warn('Aby wydrukować plan lekcji skorzystaj z opcji w menu.')
-  }
-})
-
   // Main app functions
   (async () => {
     // Console log app version
@@ -331,6 +320,7 @@ document.addEventListener('keydown', (e) => {
     // Setup color mode handler
     colorHandler()
     // Setup global functions
+    const toast = useToast()
     window.axios = axios
     const unknownLessons = new Set()
     window.addUnknowns = (unknown) => unknownLessons.add(unknown)

@@ -1,4 +1,17 @@
-<script setup></script>
+<script setup>
+import log from '@/functions/logger'
+import { useToast } from 'vue-toastification'
+const toast = useToast()
+// Prevent print screen using shortcut
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    log('warn', '[App] Próba drukowania planu skrótem została zablokowana.')
+    toast.warn('Aby wydrukować plan lekcji skorzystaj z opcji w menu.')
+  }
+})
+</script>
 
 <template>
 	<Suspense>
