@@ -223,7 +223,7 @@ registerSW({
       }
     }, 3600000);
   },
-  onRegisterError (err) {
+  onRegisterError(err) {
     log(
       "error",
       "[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n",

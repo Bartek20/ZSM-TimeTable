@@ -45,4 +45,4 @@ const appConfigs = useStorage(
   { mergeDefaults: true },
 );
 
-export default appConfigs
+export default appConfigs;
