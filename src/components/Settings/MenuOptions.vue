@@ -23,7 +23,10 @@ const length = computed(() => appData.timetable.value.hours.length);
 </script>
 
 <template>
-  <div class="configs__options" v-if="status == 200 && length > 0 && !isPrinting">
+  <div
+    class="configs__options"
+    v-if="status == 200 && length > 0 && !isPrinting"
+  >
     <span class="configs__options__title"><b>Opcje</b></span>
     <div class="configs__options__option" @click="printTimeTable">
       <i class="configs__options__option__icon zsm-print-timetable-icon"></i>
