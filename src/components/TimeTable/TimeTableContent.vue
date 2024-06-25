@@ -27,6 +27,12 @@
 		end_time.setHours(end_el[0], end_el[1], 0, 0);
 		return (end_time - start_time) / 1000 / 60;
 	}
+	const dates = computed(() => {
+		return {
+			generated: appData.timetable.value.gen_date,
+			apply: appData.timetable.value.apply_date
+		}
+	})
 	const data = computed(() => {
 		const src = appData.timetable.value;
 		const shortHours =
@@ -60,7 +66,7 @@
 <template>
 	<TimeTableMessage v-if="message" :icon="message.icon" :text="message.msg" />
 	<div class="timetable__container" v-else>
-		<TimeTableTable :data="data" :activeDay="activeDay" />
+		<TimeTableTable :data="data" :dates="dates" :activeDay="activeDay" />
 	</div>
 </template>
 
@@ -73,6 +79,7 @@
 		overflow: auto;
 		@include printer {
 			overflow: visible;
+			margin-top: -32px;
 		}
 	}
 </style>

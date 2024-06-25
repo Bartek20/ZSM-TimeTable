@@ -5,6 +5,10 @@
 			type: Array,
 			required: true,
 		},
+		dates: {
+			type: Object,
+			required: true,
+		},
 		activeDay: {
 			type: Number,
 			required: true,
@@ -91,8 +95,16 @@
 			</template>
 		</tbody>
 	</table>
-	<table class="timetable__old" border="1" cellspacing="0" cellpadding="4" v-else>
+	<table class="timetable__old" border="1" cellspacing="0" v-else>
 		<thead>
+			<tr class="timetable__old__dates" v-if="dates.generated && dates.apply">
+				<td colspan="7">
+					<div>
+						<div>Wygenerowano: {{ dates.generated }}</div>
+					<div>Obowiązuje od: {{ dates.apply }}</div>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<th>#</th>
 				<th>Czas</th>
@@ -105,7 +117,7 @@
 			<template v-for="row in data">
 				<tr>
 					<th class="nrOld">{{ row.nr }}</th>
-					<td class="timeOld">{{ row.hours.from }}-{{ row.hours.to }}</td>
+					<td class="timeOld">{{ row.hours.from }}&nbsp;-&nbsp;{{ row.hours.to }}</td>
 					<td class="lessonOld" v-for="(day, i) in row.lessons">
 						<div>
 							<TimeTableLesson v-for="lesson in day" :data="lesson" />
@@ -215,13 +227,31 @@
 		padding-bottom: 10px;
 		border-color: #c0c0c0;
 		border-width: 0;
+		&__dates {
+			display: none;
+			@include printer {
+				display: table-row;
+			}
+			td {
+				border: 0;
+				padding-bottom: 10px !important;
+				> div {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: nowrap;
+					flex-direction: row;
+				}
+				font-size: .875rem !important;
+			}
+		}
 		th, td {
 			padding: 4px;
 		}
 		th {
 			background-color: #e1e6f5;
 			color: #2e448f;
-			font-size: 13px;
+			font-size: .875rem;
 			&.nrOld {
 				background-color: #e1e6f5;
 				color: #2e448f;
@@ -232,7 +262,7 @@
 			}
 		}
 		td {
-			font-size: 11px;
+			font-size: .75rem;
 			&.timeOld {
 				background-color: #f0f2fa;
 				color: #2e448f;
@@ -249,6 +279,10 @@
 		}
 		&__break {
 			text-align: center;
+			padding: 6px !important;
+			@include printer {
+				padding: 4px !important;
+			}
 		}
 	}
 </style>
