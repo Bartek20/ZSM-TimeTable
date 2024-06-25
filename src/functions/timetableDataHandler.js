@@ -82,24 +82,24 @@ export default function parseData(obj, data) {
     }
     if (
       obj === "teachers" &&
-      (data[key].name !== appConfigs.value.timetable.teachers[key].name ||
+      (data[key].name !== appConfigs.value.timetable.teachers[key]?.name ||
         data[key].surname !==
-          appConfigs.value.timetable.teachers[key].surname ||
-        data[key].code !== appConfigs.value.timetable.teachers[key].code)
+          appConfigs.value.timetable.teachers[key]?.surname ||
+        data[key].code !== appConfigs.value.timetable.teachers[key]?.code)
     ) {
       isDiff = true;
     }
     if (
       obj === "rooms" &&
-      (data[key].name !== appConfigs.value.timetable.rooms[key].name ||
-        data[key].level !== appConfigs.value.timetable.rooms[key].level)
+      (data[key].name !== appConfigs.value.timetable.rooms[key]?.name ||
+        data[key].level !== appConfigs.value.timetable.rooms[key]?.level)
     ) {
       isDiff = true;
     }
     if (
       obj === "subjects" &&
-      (data[key].short !== appConfigs.value.timetable.subjects[key].short ||
-        data[key].full !== appConfigs.value.timetable.subjects[key].full)
+      (data[key].short !== appConfigs.value.timetable.subjects[key]?.short ||
+        data[key].full !== appConfigs.value.timetable.subjects[key]?.full)
     ) {
       isDiff = true;
     }
