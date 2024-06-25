@@ -46,6 +46,7 @@ if (__SENTRY_DSN__) {
     // Performance Monitoring
     tracesSampleRate: 0.1,
     tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -222,7 +223,7 @@ registerSW({
       }
     }, 3600000);
   },
-  onRegisterError(err) {
+  onRegisterError (err) {
     log(
       "error",
       "[Service Worker] Wystąpił błąd przy rejestracji Service Workera:\n",

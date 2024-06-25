@@ -117,6 +117,14 @@ router.beforeEach((to, from) => {
     toast.error("Uczniowie nie mają dostępu do planów sal lekcyjnych");
     return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
   }
+  if (
+    !appConfigs.value.school.allowStrudentsViewRooms &&
+    to.params.user === 'uczen' &&
+    to.params.mode === 's'
+  ) {
+    toast.error('Uczniowie nie mają dostępu do planów sal lekcyjnych')
+    return { name: 'plan', params: { user: 'uczen', mode: 'o', id: '1' } }
+  }
 
   // Add current timetable to history
   addHistory(to.params.mode, to.params.id);
