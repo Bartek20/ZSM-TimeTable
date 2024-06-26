@@ -20,7 +20,6 @@ onMounted(() => {
   <AppTimeTable :key="user + mode + id" />
   <AppSettings />
   <div ref="overlay" class="overlay" @click="closeMenus"></div>
-  <div class="exit-container"></div>
   <RouterLink
     v-if="user == 'uczen'"
     :to="{ name: 'plan', params: { user: 'nauczyciel' } }"
@@ -52,8 +51,5 @@ onMounted(() => {
   @include printer {
     display: none;
   }
-}
-.exit-container {
-  position: fixed;
 }
 </style>

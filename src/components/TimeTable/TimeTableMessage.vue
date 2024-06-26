@@ -22,6 +22,7 @@
 	.timetable__message {
 		text-align: center;
 		display: grid;
+		gap: 0.5rem;
 		align-content: center;
 		justify-items: center;
 		height: 100%;
@@ -31,7 +32,6 @@
 		}
 		&__icon {
 			font-size: 4rem;
-			margin-bottom: 0.5rem;
 		}
 		&__text {
 			font-size: 1.5rem;

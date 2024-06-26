@@ -40,11 +40,9 @@ const length = computed(() => appData.timetable.value.hours.length);
     </div>
   </div>
   <div v-else></div>
-  <Teleport to=".overlay + div" v-if="requireMenu">
-    <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting">
-      <div class="exit-btn">Zakończ drukowanie</div>
-    </div>
-  </Teleport>
+  <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting" v-if="requireMenu">
+    <div class="exit-overlay__btn">Zakończ drukowanie</div>
+  </div>
 </template>
 
 <style lang="scss">
@@ -96,7 +94,7 @@ const length = computed(() => appData.timetable.value.hours.length);
   @include printer {
     display: none;
   }
-  .exit-btn {
+  &__btn {
     padding: 1rem;
     background-color: red;
     cursor: pointer;
