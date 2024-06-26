@@ -4,19 +4,28 @@ import appData from "@/stores/data";
 
 const oldMode = ref(appConfigs.value.viewMode);
 const isPrinting = ref(false);
+const requireMenu = ref(false);
 
 function printTimeTable() {
   if (isPrinting.value) return;
+  let isWaiting = true
   isPrinting.value = true;
   oldMode.value = appConfigs.value.viewMode;
   appConfigs.value.viewMode = "old";
   document.body.classList.remove("preventPrint");
   window.setTimeout(() => {
+    const start = Date.now();
     window.print();
-    appConfigs.value.viewMode = oldMode.value;
-    isPrinting.value = false;
-    document.body.classList.add("preventPrint");
+    if (isWaiting && start + 250 > Date.now()) isWaiting = false;
+    if (!isWaiting) {
+      requireMenu.value = true;
+    } else finishPrinting()
   }, 25);
+}
+function finishPrinting() {
+  appConfigs.value.viewMode = oldMode.value;
+  isPrinting.value = false;
+  requireMenu.value = false;
 }
 const status = computed(() => appData.timetable.value.status);
 const length = computed(() => appData.timetable.value.hours.length);
@@ -31,6 +40,11 @@ const length = computed(() => appData.timetable.value.hours.length);
     </div>
   </div>
   <div v-else></div>
+  <Teleport to=".overlay + div" v-if="requireMenu">
+    <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting">
+      <div class="exit-btn">Zakończ drukowanie</div>
+    </div>
+  </Teleport>
 </template>
 
 <style lang="scss">
@@ -69,39 +83,26 @@ const length = computed(() => appData.timetable.value.hours.length);
     }
   }
 }
-.configs__options {
-  margin-inline: 0.75rem;
-  &__title {
-    font-size: 1.1rem;
-    + * {
-      margin-top: 0.25rem;
-    }
+.exit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0 0 0 / 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include printer {
+    display: none;
   }
-  > *:not(span):not(label):not(:last-child) {
-    margin-bottom: 0.25rem;
-  }
-  &__option {
-    padding: 0.25rem 0.75rem 0.25rem 0;
-    text-decoration: none;
-    color: var(--sb-text);
-    height: 50px;
-    display: flex;
-    align-items: center;
+  .exit-btn {
+    padding: 1rem;
+    background-color: red;
     cursor: pointer;
-    &__icon {
-      display: block;
-      font-size: 20px;
-      min-width: 40px;
-      text-align: center;
-    }
-    &__name {
-      width: 100%;
-    }
-    &:hover {
-      background-color: var(--bg-sidebar-hover);
-      color: var(--tt-text);
-      border-radius: 6px;
-    }
+    border-radius: 6px;
+    color: white;
+    font-size: 1.3rem;
   }
 }
 </style>

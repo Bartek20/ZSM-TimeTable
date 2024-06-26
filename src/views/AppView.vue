@@ -2,11 +2,12 @@
 const user = useRouteParams("user");
 const mode = useRouteParams("mode");
 const id = useRouteParams("id");
+const overlay = ref()
 function closeMenus() {
   document.querySelector("aside.sidebar")?.classList.remove("open");
   document.querySelector("aside.configs")?.classList.remove("open");
-  document.querySelector(".overlay")?.classList.remove("overlay--sidebar");
-  document.querySelector(".overlay")?.classList.remove("overlay--configs");
+  overlay.value?.classList.remove("overlay--sidebar");
+  overlay.value?.classList.remove("overlay--configs");
 }
 onMounted(() => {
   document.getElementById("loader-script")?.remove();
@@ -18,7 +19,8 @@ onMounted(() => {
   <AppSidebar />
   <AppTimeTable :key="user + mode + id" />
   <AppSettings />
-  <div class="overlay" @click="closeMenus"></div>
+  <div ref="overlay" class="overlay" @click="closeMenus"></div>
+  <div class="exit-container"></div>
   <RouterLink
     v-if="user == 'uczen'"
     :to="{ name: 'plan', params: { user: 'nauczyciel' } }"
@@ -38,6 +40,9 @@ onMounted(() => {
     background-color: rgba(0 0 0 / 0.4);
     z-index: 10;
   }
+  &.overlay + .exit-container {
+    z-index: 25;
+  }
   @include tablet {
     &.overlay--sidebar {
       background-color: rgba(0 0 0 / 0.4);
@@ -47,5 +52,8 @@ onMounted(() => {
   @include printer {
     display: none;
   }
+}
+.exit-container {
+  position: fixed;
 }
 </style>
