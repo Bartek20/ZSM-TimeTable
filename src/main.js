@@ -373,6 +373,7 @@ if (
       schoolData.allowStrudentsViewTeachers ?? true;
     appConfigs.value.school.allowStrudentsViewRooms =
       schoolData.allowStrudentsViewRooms ?? true;
+    appConfigs.value.school.showHolidaysView = schoolData.showHolidaysView ?? true;
   } catch (e) {
     log("error", "[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n", e);
     toast.error("Wystąpił błąd przy wczytywaniu danych szkoły");

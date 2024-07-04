@@ -9,6 +9,17 @@ import { useToast } from "vue-toastification";
 
 import AppView from "@/views/AppView.vue";
 
+function checkHoliday() {
+  const today = new Date();
+  const begin = new Date(today.getFullYear(), 6, 1);
+  const end = new Date(today.getFullYear(), 7, 24);
+  return (
+    today >= begin &&
+    today <= end &&
+    appConfigs.value.school.showHolidaysView
+  )
+}
+
 function addHistory(mode, id) {
   let historyRecords = appConfigs.value.history;
   // Filter added path
@@ -18,14 +29,17 @@ function addHistory(mode, id) {
   // Change history size to 24 records
   historyRecords = historyRecords.filter((_, idx) => idx < 24);
   // Add newest record
-  historyRecords = [{ mode, id }, ...historyRecords];
+  historyRecords = [ { mode, id }, ...historyRecords ];
   // Save history
   appConfigs.value.history = historyRecords;
 }
 
 const toast = useToast();
 
-const selected = appConfigs.value.history?.[0];
+const selected = appConfigs.value.history?.[ 0 ];
+
+const isHoliday = checkHoliday();
+let redirectHoliday = false
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,11 +63,15 @@ const router = createRouter({
       path: "/:user?",
       name: "home",
       redirect: (to) =>
-        `/${["uczen", "nauczyciel"].includes(to.params.user) ? to.params.user : "uczen"}/${["o", "n", "s"].includes(selected?.mode) ? selected.mode : "o"}/${
-          typeof selected?.id === "string" && !isNaN(selected?.id)
-            ? selected.id
-            : 1
+        `/${[ "uczen", "nauczyciel" ].includes(to.params.user) ? to.params.user : "uczen"}/${[ "o", "n", "s" ].includes(selected?.mode) ? selected.mode : "o"}/${typeof selected?.id === "string" && !isNaN(selected?.id)
+          ? selected.id
+          : 1
         }`,
+    },
+    {
+      path: "/wakacje",
+      name: 'holidays',
+      component: () => import("@/views/HolidaysView.vue"),
     },
     {
       path: "/:catchAll(.*)",
@@ -65,6 +83,16 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   log("info", "[Vue Router]", from.fullPath, "->", to.fullPath);
+
+  // Check if summer holidays are active
+  if (to.name !== 'holidays' && isHoliday && !redirectHoliday) {
+    redirectHoliday = true
+    return { name: "holidays" };
+  }
+  if (to.name === 'holidays') {
+    redirectHoliday = true
+    if (!isHoliday) return { name: "home" };
+  }
 
   // Prevent redirection loop
   if (to.name === "404" || to.name === "home" || to.name === "redirector") {
@@ -139,7 +167,7 @@ router.afterEach((to, _from, failure) => {
   if (to.name === "plan") setTitle("Wczytywanie planu lekcji.");
 });
 router.onError((e) =>
-  log("error", "[Vue Router] Wystąpił błąd przy przekierowaniu:", e),
+  log("error", "[Vue Router] Wystąpił błąd przy przekierowaniu:", e)
 );
 
 export default router;

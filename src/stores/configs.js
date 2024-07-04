@@ -13,6 +13,7 @@ const appConfigs = useStorage(
       allowStudentsOldView: false,
       allowStrudentsViewTeachers: true,
       allowStrudentsViewRooms: true,
+      showHolidaysView: true,
     },
     // Timetable Data configured in timetableData.js
     timetable: {

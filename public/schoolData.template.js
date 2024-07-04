@@ -5,4 +5,5 @@ export default {
   allowStudentsOldView: false, // Czy uczniowie mogą wykorzystywać stary widok planu
   allowStrudentsViewTeachers: true, // Czy uczniowie mogą zobaczyć plany nauczycieli
   allowStrudentsViewRooms: true, // Czy uczniowie mogą zobaczyć plany sal lekcyjnych
+  showHolidaysView: true, // Czy pokazywać ekran wakacji
 };
