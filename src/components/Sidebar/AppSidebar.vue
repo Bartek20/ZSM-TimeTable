@@ -31,16 +31,10 @@ function closeMenu() {
       <i class="zsm-close-icon"></i>
     </div>
     <header class="sidebar__home">
-      <a
-        :href="appConfigs.school.homeURL"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          class="sidebar__home__logo"
-          src="/assets/images/logo.png"
+      <a :href="appConfigs.school.homeURL" target="_blank" rel="noopener noreferrer">
+        <img class="sidebar__home__logo" src="/assets/images/logo.png"
           :alt="appConfigs.school.logoDescription || 'Logo Szkoły'"
-        />
+          onerror="(this) => {this.parentElement.parentElement.style.paddingBottom = '0.5rem'; this.style.display = 'none';}" />
       </a>
     </header>
     <Suspense>
@@ -73,18 +67,22 @@ function closeMenu() {
   background-color: var(--bg-sidebar);
   color: var(--sb-text);
   transition: 0.4s ease-in-out left;
+
   @include tablet {
     z-index: 11;
     position: fixed;
     top: 0;
     left: -#{$sidebar-width};
+
     &.open {
       left: 0;
     }
   }
+
   @include printer {
     display: none;
   }
+
   &__close {
     position: absolute;
     left: 0;
@@ -96,39 +94,49 @@ function closeMenu() {
     height: 48px;
     justify-content: center;
     align-items: center;
+
     @include tablet {
       display: flex;
     }
   }
+
   &__home {
     text-align: center;
+
     &__logo {
       padding: 6px 24px 0;
       width: 175px;
     }
   }
+
   &__footer {
     overflow: hidden;
     text-align: center;
     color: white;
+
     &--dates,
     &--copyright {
       padding: 12px 24px;
     }
+
     &--dates {
       background-color: darkslategray;
+
       p {
         display: grid;
         grid-template-columns: auto auto;
         justify-content: space-between;
         align-items: center;
+
         &:first-child {
           margin-bottom: 3px;
         }
       }
     }
+
     &--copyright {
       background-color: teal;
+
       i {
         font-size: 0.9rem;
         padding-right: 0.25rem;
