@@ -2,7 +2,7 @@
 import appConfigs from "@/stores/configs";
 import appData from "@/stores/data";
 
-const oldMode = ref(appConfigs.value.viewMode);
+const oldMode = ref(appConfigs.value.user.viewMode);
 const isPrinting = ref(false);
 const requireMenu = ref(false);
 
@@ -10,8 +10,8 @@ function printTimeTable() {
   if (isPrinting.value) return;
   let isWaiting = true
   isPrinting.value = true;
-  oldMode.value = appConfigs.value.viewMode;
-  appConfigs.value.viewMode = "old";
+  oldMode.value = appConfigs.value.user.viewMode;
+  appConfigs.value.user.viewMode = "old";
   document.body.classList.remove("preventPrint");
   window.setTimeout(() => {
     const start = Date.now();
@@ -23,7 +23,7 @@ function printTimeTable() {
   }, 25);
 }
 function finishPrinting() {
-  appConfigs.value.viewMode = oldMode.value;
+  appConfigs.value.user.viewMode = oldMode.value;
   isPrinting.value = false;
   requireMenu.value = false;
 }
@@ -40,7 +40,8 @@ const length = computed(() => appData.timetable.value.hours.length);
     </div>
   </div>
   <div v-else></div>
-  <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting" v-if="requireMenu">
+  <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting"
+    v-if="requireMenu">
     <div class="exit-overlay__btn">Zakończ drukowanie</div>
   </div>
 </template>
@@ -48,15 +49,19 @@ const length = computed(() => appData.timetable.value.hours.length);
 <style lang="scss">
 .configs__options {
   margin-inline: 0.75rem;
+
   &__title {
     font-size: 1.1rem;
-    + * {
+
+    +* {
       margin-top: 0.25rem;
     }
   }
-  > *:not(span):not(label):not(:last-child) {
+
+  >*:not(span):not(label):not(:last-child) {
     margin-bottom: 0.25rem;
   }
+
   &__option {
     padding: 0.25rem 0.75rem 0.25rem 0;
     text-decoration: none;
@@ -65,15 +70,18 @@ const length = computed(() => appData.timetable.value.hours.length);
     display: flex;
     align-items: center;
     cursor: pointer;
+
     &__icon {
       display: block;
       font-size: 20px;
       min-width: 40px;
       text-align: center;
     }
+
     &__name {
       width: 100%;
     }
+
     &:hover {
       background-color: var(--bg-sidebar-hover);
       color: var(--tt-text);
@@ -81,6 +89,7 @@ const length = computed(() => appData.timetable.value.hours.length);
     }
   }
 }
+
 .exit-overlay {
   position: fixed;
   top: 0;
@@ -91,9 +100,11 @@ const length = computed(() => appData.timetable.value.hours.length);
   display: flex;
   justify-content: center;
   align-items: center;
+
   @include printer {
     display: none;
   }
+
   &__btn {
     padding: 1rem;
     background-color: red;

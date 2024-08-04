@@ -2,9 +2,11 @@ const appConfigs = useStorage(
   "appConfigs",
   {
     // PWA Configs
-    version: undefined,
-    lastFetched: null,
-    isTeacher: false,
+    app: {
+      version: undefined,
+      lastFetched: null,
+      isTeacher: false,
+    },
     // School Data configured in schoolData.js
     school: {
       homeURL: undefined,
@@ -34,13 +36,15 @@ const appConfigs = useStorage(
     // History
     history: [],
     // Settings
-    colorMode: "light",
-    viewMode: "new",
-    forceTablet: false,
-    shortLessons: false,
-    showCurrent: true,
-    showColors: true,
-    showBreaks: true,
+    user: {
+      colorMode: "light",
+      viewMode: "new",
+      forceTablet: false,
+      shortLessons: false,
+      showCurrent: true,
+      showColors: true,
+      showBreaks: true,
+    },
   },
   localStorage,
   { mergeDefaults: true },

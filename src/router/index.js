@@ -109,11 +109,11 @@ router.beforeEach((to, from) => {
 
   if (to.name !== "plan") return undefined;
   if (appPWA.status.value !== "standalone") {
-    appConfigs.value.isTeacher = to.params.user === "nauczyciel";
+    appConfigs.value.app.isTeacher = to.params.user === "nauczyciel";
   }
   if (
     appPWA.status.value === "standalone" &&
-    appConfigs.value.isTeacher &&
+    appConfigs.value.app.isTeacher &&
     to.params.user === "uczen"
   ) {
     return {
@@ -126,7 +126,7 @@ router.beforeEach((to, from) => {
     !appConfigs.value.school.allowStudentsOldView &&
     to.params.user === "uczen"
   ) {
-    appConfigs.value.viewMode = "new";
+    appConfigs.value.user.viewMode = "new";
   }
   // Check if student is allowed to view requested timetable
   if (

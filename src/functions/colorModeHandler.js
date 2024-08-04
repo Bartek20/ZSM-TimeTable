@@ -4,7 +4,7 @@ export default function colorHandler() {
 	const colorScheme = usePreferredDark();
 	let stopwatch;
 	function updateColorMode() {
-		if (appConfigs.value.colorMode === 'system') {
+		if (appConfigs.value.user.colorMode === 'system') {
 			window.document.body.classList.replace(colorScheme.value ? 'light' : 'dark', colorScheme.value ? 'dark' : 'light');
 			if (!stopwatch)
 				stopwatch = watch(colorScheme, () => {
@@ -15,12 +15,12 @@ export default function colorHandler() {
 				stopwatch();
 				stopwatch = undefined;
 			}
-			const color = appConfigs.value.colorMode === 'light' ? ['dark', 'light'] : ['light', 'dark'];
-			window.document.body.classList.replace(color[0], color[1]);
+			const color = appConfigs.value.user.colorMode === 'light' ? [ 'dark', 'light' ] : [ 'light', 'dark' ];
+			window.document.body.classList.replace(color[ 0 ], color[ 1 ]);
 		}
 	}
 	watch(
-		() => appConfigs.value.colorMode,
+		() => appConfigs.value.user.colorMode,
 		() => {
 			updateColorMode();
 		},

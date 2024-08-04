@@ -33,7 +33,7 @@ const message = computed(() => {
         };
         return {
           icon: "zsm-empty-icon",
-          msg: MESSAGES[mode.value],
+          msg: MESSAGES[ mode.value ],
         };
       }
       return undefined;
@@ -63,29 +63,20 @@ function changeDay(dir) {
 </script>
 
 <template>
-  <main
-    class="timetable"
-    :class="{
-      'timetable--forced': appConfigs.forceTablet,
-      'timetable--old': appConfigs.viewMode === 'old',
-    }"
-  >
+  <main class="timetable" :class="{
+    'timetable--forced': appConfigs.user.forceTablet,
+    'timetable--old': appConfigs.user.viewMode === 'old',
+  }">
     <TimeTableHeader />
     <Suspense :timeout="0">
       <TimeTableContent :activeDay="activeDay" :message="message" />
       <template #fallback>
-        <TimeTableMessage
-          icon="zsm-loading-icon loading"
-          text="Trwa wczytywanie planu lekcji"
-        />
+        <TimeTableMessage icon="zsm-loading-icon loading" text="Trwa wczytywanie planu lekcji" />
       </template>
     </Suspense>
-    <div
-      class="timetable__controls"
-      v-if="
-        !appConfigs.forceTablet && appConfigs.viewMode === 'new' && !message
-      "
-    >
+    <div class="timetable__controls" v-if="
+      !appConfigs.user.forceTablet && appConfigs.user.viewMode === 'new' && !message
+    ">
       <div class="timetable__controls__button" @click="changeDay(0)">
         &lt; Poprzedni
       </div>
@@ -104,15 +95,19 @@ function changeDay(dir) {
   max-height: 100%;
   min-height: 100%;
   grid-template-rows: $header-height 1fr;
+
   @include phone {
     &:not(&--forced):not(&--old) {
       grid-template-rows: $header-height 1fr 48px;
     }
   }
+
   @include printer {
     grid-template-rows: 1fr;
   }
+
   background-color: var(--bg-timetable);
+
   &__controls {
     display: none;
     align-items: center;
@@ -120,11 +115,13 @@ function changeDay(dir) {
     font-size: 1.4rem;
     white-space: nowrap;
     color: var(--tt-text);
+
     @include phone {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
+
     &__button {
       width: 100%;
       height: 100%;

@@ -45,8 +45,8 @@ if (__SENTRY_DSN__) {
     ],
     // Performance Monitoring
     tracesSampleRate: 0.1,
-    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
-    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
+    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -67,7 +67,7 @@ if (__SENTRY_DSN__) {
         "\t",
       );
       if (confs === "{}") return event;
-      hint.attachments = [{ filename: "appConfigs.json", data: confs }];
+      hint.attachments = [ { filename: "appConfigs.json", data: confs } ];
       return event;
     },
   });
@@ -145,7 +145,7 @@ async function cacheTimeTables() {
   if (import.meta.env.MODE === "development") return;
   if (fetching) return;
   fetching = true;
-  const last = appConfigs.value.lastFetched;
+  const last = appConfigs.value.app.lastFetched;
   if (last != null && last + 86400000 > Date.now()) return;
   log(
     "info",
@@ -171,12 +171,12 @@ async function cacheTimeTables() {
         .get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`)
         .catch(() => undefined),
     );
-    await Promise.all([...classMap, ...teacherMap, ...roomMap]);
+    await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
     log(
       "info",
       "[Service Worker] Zakończono pobieranie planów do pamięci cache.",
     );
-    appConfigs.value.lastFetched = Date.now();
+    appConfigs.value.app.lastFetched = Date.now();
     fetching = false;
   } catch (e) {
     log(
@@ -245,7 +245,7 @@ if (
         "info",
         "[Service Worker] Wykryto aktualizację planu lekcji - pobieranie aktualnych planów...",
       );
-      appConfigs.value.lastFetched = null;
+      appConfigs.value.app.lastFetched = null;
       cacheTimeTables();
     });
   } catch (e) {
@@ -317,7 +317,7 @@ if (
   // Check supported scrollbars
   checkScrollStyllability();
   // Setup cache headers
-  axios.defaults.headers.get["Cache-Control"] = "no-cache";
+  axios.defaults.headers.get[ "Cache-Control" ] = "no-cache";
   // Setup color mode handler
   colorHandler();
   // Setup global functions
@@ -335,7 +335,7 @@ if (
         new Set(
           Object.values(appConfigs.value.database.classes)
             .filter((e) => e.isUnknown)
-            .map((e) => [...e.isUnknown])
+            .map((e) => [ ...e.isUnknown ])
             .flat(),
         ),
       );
@@ -344,7 +344,7 @@ if (
       console.warn(
         "Nieznani nauczyciele:\n",
         Object.keys(appConfigs.value.database.teachers).filter(
-          (e) => appConfigs.value.database.teachers[e].isUnknown,
+          (e) => appConfigs.value.database.teachers[ e ].isUnknown,
         ),
       );
     }
@@ -352,7 +352,7 @@ if (
       console.warn(
         "Nieznane sale:\n",
         Object.keys(appConfigs.value.database.rooms).filter(
-          (e) => appConfigs.value.database.rooms[e].isUnknown,
+          (e) => appConfigs.value.database.rooms[ e ].isUnknown,
         ),
       );
     }
@@ -417,7 +417,7 @@ if (
   }
 
   // Reset session configs
-  appConfigs.value.shortLessons = false;
+  appConfigs.value.user.shortLessons = false;
   if (window.sessionStorage.getItem("swUpdate") !== null) {
     window.sessionStorage.removeItem("swUpdate");
     toast.success("Zaktualizowano aplikację do najnowszej wersji");
