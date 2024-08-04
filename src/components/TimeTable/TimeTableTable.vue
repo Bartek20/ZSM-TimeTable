@@ -22,7 +22,7 @@ const props = defineProps({
 function addTime(clock, time) {
   const padClock = (part) => (part < 10 ? "0" + part : part);
   if (!clock || !time) return undefined;
-  const [ hour, minute ] = clock.split(":");
+  const [hour, minute] = clock.split(":");
   const date = new Date();
   date.setHours(hour, minute, 0, 0);
   date.setTime(date.getTime() + time * 60000);
@@ -35,8 +35,8 @@ function checkBetween(from, to) {
   const eTime = new Date();
   const startTime = from.split(":");
   const endTime = to.split(":");
-  sTime.setHours(startTime[ 0 ], startTime[ 1 ], 0, 0);
-  eTime.setHours(endTime[ 0 ], endTime[ 1 ] - 1, 59, 999);
+  sTime.setHours(startTime[0], startTime[1], 0, 0);
+  eTime.setHours(endTime[0], endTime[1] - 1, 59, 999);
   return current >= sTime && current <= eTime;
 }
 
@@ -46,10 +46,10 @@ const TIME = useDateFormat(useNow({ interval: 100 }), "d;HH:mm", {
 const currentDay = ref(-1);
 const currentLesson = ref(-1);
 watch(
-  [ TIME, () => props.data ],
+  [TIME, () => props.data],
   () => {
     const timeData = TIME.value.split(";");
-    currentDay.value = parseInt(timeData[ 0 ]) - 1;
+    currentDay.value = parseInt(timeData[0]) - 1;
     currentLesson.value = -1;
     props.data.forEach((row) => {
       if (checkBetween(row.hours.from, row.hours.to)) {
@@ -71,40 +71,53 @@ watch(
       <tr class="timetable__table__head__row timetable__table__row--headings">
         <th>#</th>
         <th>Czas</th>
-        <th :class="{ active: appConfigs.user.forceTablet || activeDay == i }" v-for="(day, i) in [
-          'Poniedziałek',
-          'Wtorek',
-          'Środa',
-          'Czwartek',
-          'Piątek',
-        ]">
+        <th
+          :class="{ active: appConfigs.user.forceTablet || activeDay == i }"
+          v-for="(day, i) in [
+            'Poniedziałek',
+            'Wtorek',
+            'Środa',
+            'Czwartek',
+            'Piątek',
+          ]"
+        >
           {{ day }}
         </th>
       </tr>
     </thead>
     <tbody class="timetable__table__body">
       <template v-for="row in data">
-        <tr class="timetable__table__body__row timetable__table__body__row--lessons">
+        <tr
+          class="timetable__table__body__row timetable__table__body__row--lessons"
+        >
           <th>{{ row.nr }}</th>
           <td>{{ row.hours.from }}<br />-<br />{{ row.hours.to }}</td>
-          <td :class="{ active: appConfigs.user.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons">
-            <div :class="{
-              current:
-                appConfigs.user.showCurrent &&
-                day.length > 0 &&
-                currentLesson == row.nr &&
-                currentDay == i,
-            }">
+          <td
+            :class="{ active: appConfigs.user.forceTablet || activeDay == i }"
+            v-for="(day, i) in row.lessons"
+          >
+            <div
+              :class="{
+                current:
+                  appConfigs.user.showCurrent &&
+                  day.length > 0 &&
+                  currentLesson == row.nr &&
+                  currentDay == i,
+              }"
+            >
               <TimeTableLesson v-for="lesson in day" :data="lesson" />
             </div>
           </td>
         </tr>
-        <tr class="timetable__table__body__row timetable__table__body__row--break"
-          v-if="appConfigs.user.showBreaks && row.break != 0" :class="{
+        <tr
+          class="timetable__table__body__row timetable__table__body__row--break"
+          v-if="appConfigs.user.showBreaks && row.break != 0"
+          :class="{
             active: appConfigs.user.forceTablet || activeDay == currentDay,
             current:
               appConfigs.user.showCurrent && currentLesson == row.nr + 'break',
-          }">
+          }"
+        >
           <th></th>
           <td colspan="6">
             {{ `Przerwa ${row.break}-minutowa` }}
@@ -127,13 +140,15 @@ watch(
       <tr>
         <th>#</th>
         <th>Czas</th>
-        <th v-for="day in [
-          'Poniedziałek',
-          'Wtorek',
-          'Środa',
-          'Czwartek',
-          'Piątek',
-        ]">
+        <th
+          v-for="day in [
+            'Poniedziałek',
+            'Wtorek',
+            'Środa',
+            'Czwartek',
+            'Piątek',
+          ]"
+        >
           {{ day }}
         </th>
       </tr>
@@ -176,7 +191,6 @@ watch(
   }
 
   @include phone {
-
     th:not(:nth-child(1)):not(:nth-child(2)):not(.active),
     td:not(:first-of-type):not(.active) {
       display: none;
@@ -211,11 +225,11 @@ watch(
     &__row {
       break-inside: avoid;
 
-      &:nth-child(even)>* {
+      &:nth-child(even) > * {
         background-color: var(--tt-primary);
       }
 
-      &:nth-child(odd)>* {
+      &:nth-child(odd) > * {
         background-color: var(--tt-secondary);
       }
 
@@ -232,7 +246,7 @@ watch(
           z-index: 1;
         }
 
-        td>div {
+        td > div {
           margin: -0.5rem;
           padding: 0.5rem;
 
@@ -251,12 +265,12 @@ watch(
           right: 0;
         }
 
-        &.current>* {
+        &.current > * {
           animation: blink 2s linear infinite;
         }
 
         @include phone {
-          &:not(.active)>* {
+          &:not(.active) > * {
             animation: none;
           }
         }
@@ -288,7 +302,7 @@ watch(
       border: 0;
       padding-bottom: 10px !important;
 
-      >div {
+      > div {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;

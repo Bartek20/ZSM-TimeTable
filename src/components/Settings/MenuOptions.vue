@@ -8,7 +8,7 @@ const requireMenu = ref(false);
 
 function printTimeTable() {
   if (isPrinting.value) return;
-  let isWaiting = true
+  let isWaiting = true;
   isPrinting.value = true;
   oldMode.value = appConfigs.value.user.viewMode;
   appConfigs.value.user.viewMode = "old";
@@ -19,7 +19,7 @@ function printTimeTable() {
     if (isWaiting && start + 250 > Date.now()) isWaiting = false;
     if (!isWaiting) {
       requireMenu.value = true;
-    } else finishPrinting()
+    } else finishPrinting();
   }, 25);
 }
 function finishPrinting() {
@@ -32,7 +32,10 @@ const length = computed(() => appData.timetable.value.hours.length);
 </script>
 
 <template>
-  <div class="configs__options" v-if="status == 200 && length > 0 && !isPrinting">
+  <div
+    class="configs__options"
+    v-if="status == 200 && length > 0 && !isPrinting"
+  >
     <span class="configs__options__title"><b>Opcje</b></span>
     <div class="configs__options__option" @click="printTimeTable">
       <i class="configs__options__option__icon zsm-print-timetable-icon"></i>
@@ -40,8 +43,13 @@ const length = computed(() => appData.timetable.value.hours.length);
     </div>
   </div>
   <div v-else></div>
-  <div class="exit-overlay" @keydown.esc="finishPrinting" @click="finishPrinting" @mouseover="finishPrinting"
-    v-if="requireMenu">
+  <div
+    class="exit-overlay"
+    @keydown.esc="finishPrinting"
+    @click="finishPrinting"
+    @mouseover="finishPrinting"
+    v-if="requireMenu"
+  >
     <div class="exit-overlay__btn">Zakończ drukowanie</div>
   </div>
 </template>
@@ -53,12 +61,12 @@ const length = computed(() => appData.timetable.value.hours.length);
   &__title {
     font-size: 1.1rem;
 
-    +* {
+    + * {
       margin-top: 0.25rem;
     }
   }
 
-  >*:not(span):not(label):not(:last-child) {
+  > *:not(span):not(label):not(:last-child) {
     margin-bottom: 0.25rem;
   }
 

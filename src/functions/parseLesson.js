@@ -11,7 +11,7 @@ export default function parseLesson(lesson) {
   let colors = {};
 
   // Subject parsing
-  let subjectData = appConfigs.value.timetable.subjects[ lesson.subject ];
+  let subjectData = appConfigs.value.timetable.subjects[lesson.subject];
   if (lesson.subject.includes("ckz")) {
     subjectData = appConfigs.value.timetable.subjects.praktyki;
   }
@@ -27,7 +27,7 @@ export default function parseLesson(lesson) {
     columns.left = {
       name: "@",
     };
-  } else if ([ "n", "s" ].includes(mode.value)) {
+  } else if (["n", "s"].includes(mode.value)) {
     columns.left = {
       mode: "o",
       id: lesson.classId,
@@ -38,7 +38,7 @@ export default function parseLesson(lesson) {
       mode: "n",
       id:
         appConfigs.value.school.allowStrudentsViewTeachers ||
-          user.value === "nauczyciel"
+        user.value === "nauczyciel"
           ? lesson.teacherId
           : undefined,
       name: lesson.teacher,
@@ -50,12 +50,12 @@ export default function parseLesson(lesson) {
     columns.right = {
       name: "CKZ",
     };
-  } else if ([ "o", "n" ].includes(mode.value)) {
+  } else if (["o", "n"].includes(mode.value)) {
     columns.right = {
       mode: "s",
       id:
         appConfigs.value.school.allowStrudentsViewRooms ||
-          user.value === "nauczyciel"
+        user.value === "nauczyciel"
           ? lesson.roomId
           : undefined,
       name: lesson.room,
@@ -65,7 +65,7 @@ export default function parseLesson(lesson) {
       mode: "n",
       id:
         appConfigs.value.school.allowStrudentsViewTeachers ||
-          user.value === "nauczyciel"
+        user.value === "nauczyciel"
           ? lesson.teacherId
           : undefined,
       name: lesson.teacher,
@@ -80,8 +80,8 @@ export default function parseLesson(lesson) {
     };
   } else {
     const name = subject.short.replace(/ \([UR]{1}\)/, "");
-    if (!appConfigs.value.database.subjects[ name ]) parseColor(name);
-    colors = appConfigs.value.database.subjects[ name ];
+    if (!appConfigs.value.database.subjects[name]) parseColor(name);
+    colors = appConfigs.value.database.subjects[name];
   }
 
   // Return

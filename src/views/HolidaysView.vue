@@ -1,5 +1,5 @@
 <script setup>
-const text = ref()
+const text = ref();
 onMounted(() => {
   document.getElementById("loader-script")?.remove();
   document.getElementById("loader")?.remove();
@@ -8,8 +8,10 @@ onMounted(() => {
 
 <template>
   <div class="holidays">
-    <img class="holidays__img" src="/assets/images/Wakacje.png" alt="Wakacje">
-    <RouterLink class="holidays__link" :to="{ name: 'home' }">Przejdź do planu</RouterLink>
+    <img class="holidays__img" src="/assets/images/Wakacje.png" alt="Wakacje" />
+    <RouterLink class="holidays__link" :to="{ name: 'home' }"
+      >Przejdź do planu</RouterLink
+    >
   </div>
 </template>
 

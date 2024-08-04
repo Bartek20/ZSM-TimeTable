@@ -45,8 +45,8 @@ if (__SENTRY_DSN__) {
     ],
     // Performance Monitoring
     tracesSampleRate: 0.1,
-    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
-    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
+    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
+    tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
     // Session Replay
     replaysSessionSampleRate: 0.0,
     replaysOnErrorSampleRate: 1.0,
@@ -67,7 +67,7 @@ if (__SENTRY_DSN__) {
         "\t",
       );
       if (confs === "{}") return event;
-      hint.attachments = [ { filename: "appConfigs.json", data: confs } ];
+      hint.attachments = [{ filename: "appConfigs.json", data: confs }];
       return event;
     },
   });
@@ -171,7 +171,7 @@ async function cacheTimeTables() {
         .get(`${appConfigs.value.school.timetableURL}plany/s${obj.value}.html`)
         .catch(() => undefined),
     );
-    await Promise.all([ ...classMap, ...teacherMap, ...roomMap ]);
+    await Promise.all([...classMap, ...teacherMap, ...roomMap]);
     log(
       "info",
       "[Service Worker] Zakończono pobieranie planów do pamięci cache.",
@@ -317,7 +317,7 @@ if (
   // Check supported scrollbars
   checkScrollStyllability();
   // Setup cache headers
-  axios.defaults.headers.get[ "Cache-Control" ] = "no-cache";
+  axios.defaults.headers.get["Cache-Control"] = "no-cache";
   // Setup color mode handler
   colorHandler();
   // Setup global functions
@@ -335,7 +335,7 @@ if (
         new Set(
           Object.values(appConfigs.value.database.classes)
             .filter((e) => e.isUnknown)
-            .map((e) => [ ...e.isUnknown ])
+            .map((e) => [...e.isUnknown])
             .flat(),
         ),
       );
@@ -344,7 +344,7 @@ if (
       console.warn(
         "Nieznani nauczyciele:\n",
         Object.keys(appConfigs.value.database.teachers).filter(
-          (e) => appConfigs.value.database.teachers[ e ].isUnknown,
+          (e) => appConfigs.value.database.teachers[e].isUnknown,
         ),
       );
     }
@@ -352,7 +352,7 @@ if (
       console.warn(
         "Nieznane sale:\n",
         Object.keys(appConfigs.value.database.rooms).filter(
-          (e) => appConfigs.value.database.rooms[ e ].isUnknown,
+          (e) => appConfigs.value.database.rooms[e].isUnknown,
         ),
       );
     }
@@ -373,7 +373,8 @@ if (
       schoolData.allowStrudentsViewTeachers ?? true;
     appConfigs.value.school.allowStrudentsViewRooms =
       schoolData.allowStrudentsViewRooms ?? true;
-    appConfigs.value.school.showHolidaysView = schoolData.showHolidaysView ?? true;
+    appConfigs.value.school.showHolidaysView =
+      schoolData.showHolidaysView ?? true;
   } catch (e) {
     log("error", "[App] Wystąpił błąd przy wczytywaniu danych szkoły:\n", e);
     toast.error("Wystąpił błąd przy wczytywaniu danych szkoły");

@@ -31,10 +31,17 @@ function closeMenu() {
       <i class="zsm-close-icon"></i>
     </div>
     <header class="sidebar__home">
-      <a :href="appConfigs.school.homeURL" target="_blank" rel="noopener noreferrer">
-        <img class="sidebar__home__logo" src="/assets/images/logo.png"
+      <a
+        :href="appConfigs.school.homeURL"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          class="sidebar__home__logo"
+          src="/assets/images/logo.png"
           :alt="appConfigs.school.logoDescription || 'Logo Szkoły'"
-          onerror="(this) => {this.parentElement.parentElement.style.paddingBottom = '0.5rem'; this.style.display = 'none';}" />
+          onerror="(this) => {this.parentElement.parentElement.style.paddingBottom = '0.5rem'; this.style.display = 'none';}"
+        />
       </a>
     </header>
     <Suspense>

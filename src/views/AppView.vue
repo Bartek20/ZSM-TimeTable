@@ -2,7 +2,7 @@
 const user = useRouteParams("user");
 const mode = useRouteParams("mode");
 const id = useRouteParams("id");
-const overlay = ref()
+const overlay = ref();
 function closeMenus() {
   document.querySelector("aside.sidebar")?.classList.remove("open");
   document.querySelector("aside.configs")?.classList.remove("open");
