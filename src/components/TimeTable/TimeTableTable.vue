@@ -299,6 +299,7 @@ watch(
     td {
       border: 0;
       padding-bottom: 10px !important;
+      font-size: 0.875rem !important;
 
       >div {
         display: flex;
@@ -314,7 +315,6 @@ watch(
         }
       }
 
-      font-size: 0.875rem !important;
     }
   }
 
