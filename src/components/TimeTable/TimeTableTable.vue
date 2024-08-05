@@ -42,11 +42,11 @@ function checkBetween(from, to) {
 function getKey(lesson) {
   let out = lesson.subject + '/'
   if (lesson.room && lesson.teacher) {
-    out += `o${lesson.room}/${lesson.teacher}`
+    out += `o/${lesson.room}/${lesson.teacher}`
   } else if (lesson.className && lesson.room) {
-    out += `n${lesson.className}/${lesson.room}`
+    out += `n/${lesson.className}/${lesson.room}`
   } else if (lesson.className && lesson.teacher) {
-    out += `s${lesson.className}/${lesson.teacher}`
+    out += `s/${lesson.className}/${lesson.teacher}`
   }
   return out
 }
