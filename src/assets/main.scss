@@ -65,10 +65,10 @@
 ::-webkit-scrollbar-track {
   background-color: var(--bg-scrollbar);
   margin: 0 0 0 0.25rem;
+  border-radius: 100vw;
   @include tablet {
     margin: 0;
   }
-  border-radius: 100vw;
 }
 ::-webkit-scrollbar-corner {
   background-color: transparent;

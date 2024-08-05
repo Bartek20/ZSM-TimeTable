@@ -82,14 +82,14 @@
 		--padding: 1rem;
 		display: grid;
 		grid-template-columns: 1fr $icon;
+		gap: var(--padding);
+		color: var(--tt-text);
 		@include tablet {
 			grid-template-columns: $icon 1fr $icon;
 		}
 		@include printer {
 			display: none;
 		}
-		gap: var(--padding);
-		color: var(--tt-text);
 		&__button {
 			display: flex;
 			cursor: pointer;

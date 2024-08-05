@@ -95,6 +95,7 @@ function changeDay(dir) {
   max-height: 100%;
   min-height: 100%;
   grid-template-rows: $header-height 1fr;
+  background-color: var(--bg-timetable);
 
   @include phone {
     &:not(&--forced):not(&--old) {
@@ -105,8 +106,6 @@ function changeDay(dir) {
   @include printer {
     grid-template-rows: 1fr;
   }
-
-  background-color: var(--bg-timetable);
 
   &__controls {
     display: none;

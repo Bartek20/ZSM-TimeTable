@@ -59,11 +59,11 @@
 			margin-top: auto;
 			div {
 				background-color: teal;
+				padding: 12px 24px;
 				i {
 					font-size: 0.9rem;
 					padding-right: 0.25rem;
 				}
-				padding: 12px 24px;
 			}
 		}
 	}

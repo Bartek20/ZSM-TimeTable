@@ -5,6 +5,7 @@ import appData from "@/stores/data";
 import appPWA from "@/stores/pwa";
 import log from "@/functions/logger";
 import setTitle from "@/functions/setTitle";
+import { addHistory } from "@/functions/recentHistory";
 import { useToast } from "vue-toastification";
 
 import AppView from "@/views/AppView.vue";
@@ -18,20 +19,6 @@ function checkHoliday() {
     today <= end &&
     appConfigs.value.school.showHolidaysView
   )
-}
-
-function addHistory(mode, id) {
-  let historyRecords = appConfigs.value.history;
-  // Filter added path
-  historyRecords = historyRecords.filter(
-    (record) => !(record.mode === mode && record.id === id),
-  );
-  // Change history size to 24 records
-  historyRecords = historyRecords.filter((_, idx) => idx < 24);
-  // Add newest record
-  historyRecords = [ { mode, id }, ...historyRecords ];
-  // Save history
-  appConfigs.value.history = historyRecords;
 }
 
 const toast = useToast();
@@ -102,7 +89,10 @@ function routeHoliday(to, from) {
   }
   if (to.name === 'holidays') {
     redirectHoliday = true
-    if (!isHoliday) return { name: "home" };
+    if (!isHoliday) return { 
+      name: "home",
+      params: { user: appConfigs.value.app.isTeacher ? "nauczyciel" : "uczen" }
+    };
   }
   return undefined;
 }
@@ -150,15 +140,15 @@ function routeAccess(to, from) {
 
 
 router.beforeEach((to, from) => {
-  log("info", "[Vue Router]", from.fullPath, "->", to.fullPath);
-
-  // Check if summer holidays are active
-  const holidayRedirect = routeHoliday(to, from);
-  if (holidayRedirect) return holidayRedirect;
+  log("info", `[Vue Router]${from.fullPath}->${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
 
   // Prevent redirection loop
   const loopRedirect = routeLoop(to, from);
   if (loopRedirect) return loopRedirect;
+
+  // Check if summer holidays are active
+  const holidayRedirect = routeHoliday(to, from);
+  if (holidayRedirect) return holidayRedirect;
 
   // Check if destination path is plan view stop if not
   if (to.name !== "plan") return undefined;
