@@ -15,16 +15,14 @@ function checkHoliday() {
   const begin = new Date(today.getFullYear(), 6, 1);
   const end = new Date(today.getFullYear(), 7, 24);
   return (
-    today >= begin &&
-    today <= end &&
-    appConfigs.value.school.showHolidaysView
-  )
+    today >= begin && today <= end && appConfigs.value.school.showHolidaysView
+  );
 }
 
 const toast = useToast();
 
 const isHoliday = checkHoliday();
-let redirectHoliday = false
+let redirectHoliday = false;
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,17 +46,22 @@ const router = createRouter({
       path: "/:user?",
       name: "home",
       redirect: (to) => {
-        const selected = getHistory('nauczyciel', 1)[ 0 ]
-        return [ '',
-          [ "uczen", "nauczyciel" ].includes(to.params.user) ? to.params.user : "uczen", // User
-          [ "o", "n", "s" ].includes(selected?.mode) ? selected.mode : "o", // Mode
-          typeof selected?.id === "string" && !isNaN(selected?.id) ? selected.id : 1 // ID
-        ].join('/')
+        const selected = getHistory("nauczyciel", 1)[0];
+        return [
+          "",
+          ["uczen", "nauczyciel"].includes(to.params.user)
+            ? to.params.user
+            : "uczen", // User
+          ["o", "n", "s"].includes(selected?.mode) ? selected.mode : "o", // Mode
+          typeof selected?.id === "string" && !isNaN(selected?.id)
+            ? selected.id
+            : 1, // ID
+        ].join("/");
       },
     },
     {
       path: "/wakacje",
-      name: 'holidays',
+      name: "holidays",
       component: () => import("@/views/HolidaysView.vue"),
     },
     {
@@ -84,16 +87,20 @@ function routeLoop(to, from) {
   return undefined;
 }
 function routeHoliday(to, from) {
-  if (to.name !== 'holidays' && isHoliday && !redirectHoliday) {
-    redirectHoliday = true
+  if (to.name !== "holidays" && isHoliday && !redirectHoliday) {
+    redirectHoliday = true;
     return { name: "holidays" };
   }
-  if (to.name === 'holidays') {
-    redirectHoliday = true
-    if (!isHoliday) return {
-      name: "home",
-      params: { user: appConfigs.value.app.isTeacher ? "nauczyciel" : "uczen" }
-    };
+  if (to.name === "holidays") {
+    redirectHoliday = true;
+    if (!isHoliday) {
+      return {
+        name: "home",
+        params: {
+          user: appConfigs.value.app.isTeacher ? "nauczyciel" : "uczen",
+        },
+      };
+    }
   }
   return undefined;
 }
@@ -136,12 +143,18 @@ function routeAccess(to, from) {
     toast.error("Uczniowie nie mają dostępu do planów sal lekcyjnych");
     return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
   }
-  return undefined
+  return undefined;
 }
 
-
 router.beforeEach((to, from) => {
-  log("info", `[ Vue Router]${from.fullPath} -> ${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
+  log(
+    "info",
+    `[ Vue Router]${from.fullPath} -> ${to.fullPath}`,
+    "\nFrom:",
+    from,
+    "\nTo:",
+    to,
+  );
 
   // Prevent redirection loop
   const loopRedirect = routeLoop(to, from);
@@ -175,7 +188,7 @@ router.afterEach((to, _from, failure) => {
   if (to.name === "plan") setTitle("Wczytywanie planu lekcji.");
 });
 router.onError((e) =>
-  log("error", "[Vue Router] Wystąpił błąd przy przekierowaniu:", e)
+  log("error", "[Vue Router] Wystąpił błąd przy przekierowaniu:", e),
 );
 
 export default router;

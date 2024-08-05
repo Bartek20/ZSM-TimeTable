@@ -1,17 +1,17 @@
 *,
 *::before,
 *::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	user-select: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
 }
 html,
 body,
 #app {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 body {
-	color-scheme: light dark;
+  color-scheme: light dark;
 }

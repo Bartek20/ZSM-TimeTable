@@ -17,7 +17,11 @@ const status = defineModel({ required: true });
     <i class="configs__setting__icon" :class="icon"></i>
     <span class="configs__setting__text">{{ name }}</span>
     <div class="configs__setting__toggle">
-      <input class="configs__setting__toggle__checkbox" type="checkbox" v-model="status" />
+      <input
+        class="configs__setting__toggle__checkbox"
+        type="checkbox"
+        v-model="status"
+      />
       <div class="configs__setting__toggle__slider"></div>
     </div>
   </label>
@@ -62,7 +66,7 @@ const status = defineModel({ required: true });
     &__checkbox {
       display: none;
 
-      &:checked+.configs__setting__toggle__slider {
+      &:checked + .configs__setting__toggle__slider {
         background-color: $accent-color;
 
         &::before {
@@ -70,7 +74,7 @@ const status = defineModel({ required: true });
         }
       }
 
-      &:focus+.configs__setting__toggle__slider {
+      &:focus + .configs__setting__toggle__slider {
         box-shadow: 0 0 1px $accent-color;
       }
     }

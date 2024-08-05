@@ -33,7 +33,7 @@ const message = computed(() => {
         };
         return {
           icon: "zsm-empty-icon",
-          msg: MESSAGES[ mode.value ],
+          msg: MESSAGES[mode.value],
         };
       }
       return undefined;
@@ -63,20 +63,31 @@ function changeDay(dir) {
 </script>
 
 <template>
-  <main class="timetable" :class="{
-    'timetable--forced': appConfigs.user.forceTablet,
-    'timetable--old': appConfigs.user.viewMode === 'old',
-  }">
+  <main
+    class="timetable"
+    :class="{
+      'timetable--forced': appConfigs.user.forceTablet,
+      'timetable--old': appConfigs.user.viewMode === 'old',
+    }"
+  >
     <TimeTableHeader />
     <Suspense :timeout="0">
       <TimeTableContent :activeDay="activeDay" :message="message" />
       <template #fallback>
-        <TimeTableMessage icon="zsm-loading-icon loading" text="Trwa wczytywanie planu lekcji" />
+        <TimeTableMessage
+          icon="zsm-loading-icon loading"
+          text="Trwa wczytywanie planu lekcji"
+        />
       </template>
     </Suspense>
-    <div class="timetable__controls" v-if="
-      !appConfigs.user.forceTablet && appConfigs.user.viewMode === 'new' && !message
-    ">
+    <div
+      class="timetable__controls"
+      v-if="
+        !appConfigs.user.forceTablet &&
+        appConfigs.user.viewMode === 'new' &&
+        !message
+      "
+    >
       <div class="timetable__controls__button" @click="changeDay(0)">
         &lt; Poprzedni
       </div>

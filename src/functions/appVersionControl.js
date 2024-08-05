@@ -4,18 +4,22 @@ import log from "@/functions/logger";
 
 // Returns true if older, false if newer or equal
 function cmpVersion(version = __APP_VERSION__) {
-  const current_version = (appConfigs.value.app.version ?? appConfigs.value.version ?? "v0.0.0")
+  const current_version = (
+    appConfigs.value.app.version ??
+    appConfigs.value.version ??
+    "v0.0.0"
+  )
     .replace("v", "")
     .split(".");
   version = version.replace("v", "").split(".");
-  if (current_version[ 0 ] < version[ 0 ]) return true;
-  if (current_version[ 0 ] === version[ 0 ] && current_version[ 1 ] < version[ 1 ]) {
+  if (current_version[0] < version[0]) return true;
+  if (current_version[0] === version[0] && current_version[1] < version[1]) {
     return true;
   }
   return (
-    current_version[ 0 ] === version[ 0 ] &&
-    current_version[ 1 ] === version[ 1 ] &&
-    current_version[ 2 ] < version[ 2 ]
+    current_version[0] === version[0] &&
+    current_version[1] === version[1] &&
+    current_version[2] < version[2]
   );
 }
 
@@ -69,30 +73,30 @@ export default async function validateApp() {
       await window.caches.delete("fonts-data");
     }
     // Updating from v3.1.5 to v3.2.0
-    if (cmpVersion('v3.2.0')) {
+    if (cmpVersion("v3.2.0")) {
       // Move App Configs to separate section
-      appConfigs.value.app.version = appConfigs.value.version
-      appConfigs.value.version = undefined
-      appConfigs.value.app.lastFetched = appConfigs.value.lastFetched
-      appConfigs.value.lastFetched = undefined
-      appConfigs.value.app.isTeacher = appConfigs.value.isTeacher
-      appConfigs.value.isTeacher = undefined
-      
+      appConfigs.value.app.version = appConfigs.value.version;
+      appConfigs.value.version = undefined;
+      appConfigs.value.app.lastFetched = appConfigs.value.lastFetched;
+      appConfigs.value.lastFetched = undefined;
+      appConfigs.value.app.isTeacher = appConfigs.value.isTeacher;
+      appConfigs.value.isTeacher = undefined;
+
       // Move User Configs to separate section
-      appConfigs.value.user.colorMode = appConfigs.value.colorMode
-      appConfigs.value.colorMode = undefined
-      appConfigs.value.user.viewMode = appConfigs.value.viewMode
-      appConfigs.value.viewMode = undefined
-      appConfigs.value.user.forceTablet = appConfigs.value.forceTablet
-      appConfigs.value.forceTablet = undefined
-      appConfigs.value.user.shortLessons = appConfigs.value.shortLessons
-      appConfigs.value.shortLessons = undefined
-      appConfigs.value.user.showCurrent = appConfigs.value.showCurrent
-      appConfigs.value.showCurrent = undefined
-      appConfigs.value.user.showColors = appConfigs.value.showColors
-      appConfigs.value.showColors = undefined
-      appConfigs.value.user.showBreaks = appConfigs.value.showBreaks
-      appConfigs.value.showBreaks = undefined
+      appConfigs.value.user.colorMode = appConfigs.value.colorMode;
+      appConfigs.value.colorMode = undefined;
+      appConfigs.value.user.viewMode = appConfigs.value.viewMode;
+      appConfigs.value.viewMode = undefined;
+      appConfigs.value.user.forceTablet = appConfigs.value.forceTablet;
+      appConfigs.value.forceTablet = undefined;
+      appConfigs.value.user.shortLessons = appConfigs.value.shortLessons;
+      appConfigs.value.shortLessons = undefined;
+      appConfigs.value.user.showCurrent = appConfigs.value.showCurrent;
+      appConfigs.value.showCurrent = undefined;
+      appConfigs.value.user.showColors = appConfigs.value.showColors;
+      appConfigs.value.showColors = undefined;
+      appConfigs.value.user.showBreaks = appConfigs.value.showBreaks;
+      appConfigs.value.showBreaks = undefined;
     }
     // Save new version
     appConfigs.value.app.version = __APP_VERSION__;
