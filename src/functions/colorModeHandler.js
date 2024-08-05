@@ -2,7 +2,7 @@ import appConfigs from '@/stores/configs';
 
 export default function colorHandler() {
 	const colorScheme = usePreferredDark();
-	let stopwatch;
+	let stopwatch = undefined;
 	function updateColorMode() {
 		if (appConfigs.value.user.colorMode === 'system') {
 			window.document.body.classList.replace(colorScheme.value ? 'light' : 'dark', colorScheme.value ? 'dark' : 'light');

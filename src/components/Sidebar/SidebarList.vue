@@ -45,7 +45,7 @@
 		</label>
 		<div class="sidebar__menu__list" @transitionend="transitioned">
 			<ul class="sidebar__menu__list__container">
-				<li class="sidebar__menu__list__container__item" v-for="item in list">
+				<li class="sidebar__menu__list__container__item" v-for="item in list" :key="`${mode}/${item.id}`">
 					<RouterLink class="sidebar__menu__list__container__item__link" :to="{ name: 'plan', params: { mode: mode, id: item.id } }">
 						<span class="sidebar__menu__list__container__item__link__text">{{ item.name }}</span>
 					</RouterLink>

@@ -17,7 +17,7 @@ onMounted(() => {
 
 <template>
   <AppSidebar />
-  <AppTimeTable :key="user + mode + id" />
+  <AppTimeTable :key="`${user}/${mode}/${id}`" />
   <AppSettings />
   <div ref="overlay" class="overlay" @click="closeMenus"></div>
   <RouterLink

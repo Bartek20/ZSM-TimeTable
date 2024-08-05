@@ -81,10 +81,21 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
-  log("info", "[Vue Router]", from.fullPath, "->", to.fullPath);
-
-  // Check if summer holidays are active
+// Routing guards
+function routeLoop(to, from) {
+  if (to.name === "404" || to.name === "home" || to.name === "redirector") {
+    if (
+      from.name === "404" ||
+      from.name === "home" ||
+      from.name === "redirector"
+    ) {
+      log("warn", "[Vue Router] Doszło do pętli przekierowań:", to);
+      return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
+    }
+  }
+  return undefined;
+}
+function routeHoliday(to, from) {
   if (to.name !== 'holidays' && isHoliday && !redirectHoliday) {
     redirectHoliday = true
     return { name: "holidays" };
@@ -93,34 +104,23 @@ router.beforeEach((to, from) => {
     redirectHoliday = true
     if (!isHoliday) return { name: "home" };
   }
-
-  // Prevent redirection loop
-  if (to.name === "404" || to.name === "home" || to.name === "redirector") {
-    if (
-      to.redirectedFrom.name === "404" ||
-      to.redirectedFrom.name === "home" ||
-      to.redirectedFrom === "redirector"
-    ) {
-      log("warn", "[Vue Router] Doszło do pętli przekierowań:", to);
-      return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
-    }
-    return undefined;
-  }
-
-  if (to.name !== "plan") return undefined;
+  return undefined;
+}
+function routeStandalone(to, from) {
   if (appPWA.status.value !== "standalone") {
     appConfigs.value.app.isTeacher = to.params.user === "nauczyciel";
   }
-  if (
-    appPWA.status.value === "standalone" &&
-    appConfigs.value.app.isTeacher &&
-    to.params.user === "uczen"
-  ) {
-    return {
-      name: "plan",
-      params: { user: "nauczyciel", mode: to.params.mode, id: to.params.id },
-    };
+  if (appPWA.status.value === "standalone") {
+    if (to.params.user === "uczen" && appConfigs.value.app.isTeacher) {
+      return {
+        name: "plan",
+        params: { user: "nauczyciel", mode: to.params.mode, id: to.params.id },
+      };
+    }
   }
+  return undefined;
+}
+function routeAccess(to, from) {
   // Prevent students from using old view
   if (
     !appConfigs.value.school.allowStudentsOldView &&
@@ -145,14 +145,31 @@ router.beforeEach((to, from) => {
     toast.error("Uczniowie nie mają dostępu do planów sal lekcyjnych");
     return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
   }
-  if (
-    !appConfigs.value.school.allowStrudentsViewRooms &&
-    to.params.user === "uczen" &&
-    to.params.mode === "s"
-  ) {
-    toast.error("Uczniowie nie mają dostępu do planów sal lekcyjnych");
-    return { name: "plan", params: { user: "uczen", mode: "o", id: "1" } };
-  }
+  return undefined
+}
+
+
+router.beforeEach((to, from) => {
+  log("info", "[Vue Router]", from.fullPath, "->", to.fullPath);
+
+  // Check if summer holidays are active
+  const holidayRedirect = routeHoliday(to, from);
+  if (holidayRedirect) return holidayRedirect;
+
+  // Prevent redirection loop
+  const loopRedirect = routeLoop(to, from);
+  if (loopRedirect) return loopRedirect;
+
+  // Check if destination path is plan view stop if not
+  if (to.name !== "plan") return undefined;
+
+  // Check if app is in standalone mode
+  const standaloneRedirect = routeStandalone(to, from);
+  if (standaloneRedirect) return standaloneRedirect;
+
+  // Check if user is allowed to view requested timetable
+  const accessRedirect = routeAccess(to, from);
+  if (accessRedirect) return accessRedirect;
 
   // Add current timetable to history
   addHistory(to.params.mode, to.params.id);

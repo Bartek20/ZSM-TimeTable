@@ -43,16 +43,16 @@ const title = computed(() => {
   if (!name) {
     switch (appData.timetable.value.status) {
       case 0:
-        return;
+        return '';
       case 404:
         setTitle('Wybrany plan nie został odnaleziony.');
-        return;
+        return '';
       case 500:
         setTitle('Wystąpił nieznany błąd.');
-        return;
+        return '';
       case 900:
         setTitle('Pobieranie planu nie powiodło się.');
-        return;
+        return '';
     }
   }
   if (!appConfigs.value.database[ MODES[ mode.value ] ][ name ]) parseName(mode.value, name);

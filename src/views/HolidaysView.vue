@@ -1,5 +1,4 @@
 <script setup>
-const text = ref()
 onMounted(() => {
   document.getElementById("loader-script")?.remove();
   document.getElementById("loader")?.remove();

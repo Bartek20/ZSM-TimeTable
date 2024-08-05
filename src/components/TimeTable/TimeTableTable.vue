@@ -39,6 +39,17 @@ function checkBetween(from, to) {
   eTime.setHours(endTime[ 0 ], endTime[ 1 ] - 1, 59, 999);
   return current >= sTime && current <= eTime;
 }
+function getKey(lesson) {
+  let out = lesson.subject + '/'
+  if (lesson.room && lesson.teacher) {
+    out += `o${lesson.room}/${lesson.teacher}`
+  } else if (lesson.className && lesson.room) {
+    out += `n${lesson.className}/${lesson.room}`
+  } else if (lesson.className && lesson.teacher) {
+    out += `s${lesson.className}/${lesson.teacher}`
+  }
+  return out
+}
 
 const TIME = useDateFormat(useNow({ interval: 100 }), "d;HH:mm", {
   locales: "pl-PL",
@@ -77,17 +88,17 @@ watch(
           'Środa',
           'Czwartek',
           'Piątek',
-        ]">
+        ]" :key="day">
           {{ day }}
         </th>
       </tr>
     </thead>
     <tbody class="timetable__table__body">
-      <template v-for="row in data">
+      <template v-for="row in data" :key="`new/${title}/${row.nr}`">
         <tr class="timetable__table__body__row timetable__table__body__row--lessons">
           <th>{{ row.nr }}</th>
           <td>{{ row.hours.from }}<br />-<br />{{ row.hours.to }}</td>
-          <td :class="{ active: appConfigs.user.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons">
+          <td :class="{ active: appConfigs.user.forceTablet || activeDay == i }" v-for="(day, i) in row.lessons" :key="`new/${title}/${row.nr}/${i}`">
             <div :class="{
               current:
                 appConfigs.user.showCurrent &&
@@ -95,7 +106,7 @@ watch(
                 currentLesson == row.nr &&
                 currentDay == i,
             }">
-              <TimeTableLesson v-for="lesson in day" :data="lesson" />
+              <TimeTableLesson v-for="lesson in day" :data="lesson" :key="getKey(lesson)" />
             </div>
           </td>
         </tr>
@@ -133,21 +144,22 @@ watch(
           'Środa',
           'Czwartek',
           'Piątek',
-        ]">
+        ]"
+        :key="day">
           {{ day }}
         </th>
       </tr>
     </thead>
     <tbody>
-      <template v-for="row in data">
+      <template v-for="row in data" :key="`old/${title}/${row.nr}`">
         <tr>
           <th class="nrOld">{{ row.nr }}</th>
           <td class="timeOld">
             {{ row.hours.from }}&nbsp;-&nbsp;{{ row.hours.to }}
           </td>
-          <td class="lessonOld" v-for="(day, i) in row.lessons">
+          <td class="lessonOld" v-for="(day, i) in row.lessons" :key="`old/${title}/${row.nr}/${i}`">
             <div>
-              <TimeTableLesson v-for="lesson in day" :data="lesson" />
+              <TimeTableLesson v-for="lesson in day" :data="lesson" :key="getKey(lesson)" />
             </div>
           </td>
         </tr>

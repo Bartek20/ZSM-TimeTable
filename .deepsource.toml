@@ -9,6 +9,7 @@ name = "javascript"
     "nodejs",
     "browser"
   ]
+  skip_doc_coverage = ["class-expression", "method-definition"]
 
 [[transformers]]
 name = "prettier"

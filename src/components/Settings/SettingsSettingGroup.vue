@@ -17,7 +17,7 @@
 	<div>
 		<span>{{ name }}</span>
 		<div class="configs__options">
-			<template v-for="option in options">
+			<template v-for="option in options" :key="`${option.name}/${option.value}`">
 				<input class="configs__options__checkbox" type="radio" :name="name" :value="option.value" v-model="color" :id="option.value" />
 				<label class="configs__options__label" :for="option.value">
 					<i class="configs__options__label__icon" :class="option.class"></i>
