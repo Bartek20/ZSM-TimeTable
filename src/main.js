@@ -46,9 +46,8 @@ if (__SENTRY_DSN__) {
     // Performance Monitoring
     tracesSampleRate: 0.1,
     tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
-    tracePropagationTargets: [ /^(?!.*cloudflareinsights\.com).*/ ],
     // Session Replay
-    replaysSessionSampleRate: 0.0,
+    replaysSessionSampleRate: 0.3,
     replaysOnErrorSampleRate: 1.0,
     // Vue settings
     app,

@@ -26,7 +26,7 @@ export function getBanner(now, file) {
 // Plugins
 export function generateBrowserConfigXML() {
   const xmlTemplate =
-    '<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="${root}assets/images/mstile-70x70.png"/><square150x150logo src="${root}assets/images/mstile-150x150.png"/><square310x310logo src="${root}assets/images/mstile-310x310.png"/><wide310x150logo src="${root}assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>';
+    '<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="%%ROOT%%assets/images/mstile-70x70.png"/><square150x150logo src="%%ROOT%%assets/images/mstile-150x150.png"/><square310x310logo src="%%ROOT%%assets/images/mstile-310x310.png"/><wide310x150logo src="%%ROOT%%assets/images/mstile-310x150.png"/><TileColor>#da532c</TileColor></tile></msapplication></browserconfig>';
   let base;
   return {
     name: "generateBrowserConfigXML",
@@ -35,7 +35,7 @@ export function generateBrowserConfigXML() {
       base = config.base;
     },
     async writeBundle(outputOptions, _) {
-      const data = xmlTemplate.replace(/\$\{root\}/g, base);
+      const data = xmlTemplate.replace(/%%ROOT%%/g, base);
       try {
         fs.writeFileSync(
           (outputOptions.dir || outputOptions.file) + "/browserconfig.xml",

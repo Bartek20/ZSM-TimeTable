@@ -83,7 +83,7 @@ function routeLoop(to, from) {
   }
   return undefined;
 }
-function routeHoliday(to, from) {
+function routeHoliday(to) {
   if (to.name !== 'holidays' && isHoliday && !redirectHoliday) {
     redirectHoliday = true
     return { name: "holidays" };
@@ -97,7 +97,7 @@ function routeHoliday(to, from) {
   }
   return undefined;
 }
-function routeStandalone(to, from) {
+function routeStandalone(to) {
   if (appPWA.status.value !== "standalone") {
     appConfigs.value.app.isTeacher = to.params.user === "nauczyciel";
   }
@@ -111,7 +111,7 @@ function routeStandalone(to, from) {
   }
   return undefined;
 }
-function routeAccess(to, from) {
+function routeAccess(to) {
   // Prevent students from using old view
   if (
     !appConfigs.value.school.allowStudentsOldView &&
@@ -148,18 +148,18 @@ router.beforeEach((to, from) => {
   if (loopRedirect) return loopRedirect;
 
   // Check if summer holidays are active
-  const holidayRedirect = routeHoliday(to, from);
+  const holidayRedirect = routeHoliday(to);
   if (holidayRedirect) return holidayRedirect;
 
   // Check if destination path is plan view stop if not
   if (to.name !== "plan") return undefined;
 
   // Check if app is in standalone mode
-  const standaloneRedirect = routeStandalone(to, from);
+  const standaloneRedirect = routeStandalone(to);
   if (standaloneRedirect) return standaloneRedirect;
 
   // Check if user is allowed to view requested timetable
-  const accessRedirect = routeAccess(to, from);
+  const accessRedirect = routeAccess(to);
   if (accessRedirect) return accessRedirect;
 
   // Add current timetable to history

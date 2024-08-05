@@ -69,7 +69,7 @@ const data = computed(() => {
     appConfigs.value.user.shortLessons && src.hours?.length === shortHours.length
       ? shortHours
       : src.hours;
-  let out = [];
+  const out = [];
   const rows = hours?.length || 0;
   for (let i = 0; i < rows; i++) {
     out.push({

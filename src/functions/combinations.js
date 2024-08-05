@@ -5,8 +5,8 @@ function permute(values) {
 	const length = values.length;
 	const c = new Array(length).fill(0);
 	let i = 1,
-		k,
-		p;
+		k = undefined,
+		p = undefined;
 
 	while (i < length) {
 		if (c[i] < i) {

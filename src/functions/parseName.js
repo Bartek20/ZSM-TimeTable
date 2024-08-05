@@ -1,7 +1,7 @@
 import appConfigs from '@/stores/configs';
 
 function parseClass(name) {
-	let title, heading, sidebar, search, isUnknown = [];
+	let title = heading = sidebar = search = undefined, isUnknown = [];
 
 	const regexData = name.match(/(\d\w+) \d([\w ]+)/);
 	if (regexData) {
@@ -37,7 +37,7 @@ function parseClass(name) {
 	};
 }
 function parseTeacher(name) {
-	let title, heading, sidebar, search, isUnknown;
+	let title = heading = sidebar = search = isUnknown = undefined;
 
 	let teacherData = appConfigs.value.timetable.teachers[name];
 	if (teacherData === undefined) {
@@ -76,11 +76,11 @@ function parseTeacher(name) {
 		heading: heading ?? name,
 		sidebar: sidebar ?? name,
 		search: search ?? { name },
-		isUnknown: isUnknown,
+		isUnknown,
 	};
 }
 function parseClassroom(name) {
-	let title, heading, sidebar, search, isUnknown;
+	let title = heading = sidebar = search = isUnknown = undefined;
 
 	const roomData = appConfigs.value.timetable.rooms[name];
 	if (roomData === undefined) {
@@ -90,7 +90,7 @@ function parseClassroom(name) {
 		heading = roomData.name ? `${name} (${roomData.name})` : name;
 		sidebar = roomData.level !== undefined ? `${name} (${appConfigs.value.timetable.levels[roomData.level]})` : name;
 		search = {
-			name: name,
+			name,
 			fullName: roomData.name,
 			level: roomData.level !== undefined ? appConfigs.value.timetable.levels[roomData.level] : undefined,
 		};
@@ -101,7 +101,7 @@ function parseClassroom(name) {
 		heading: heading ?? name,
 		sidebar: sidebar ?? name,
 		search: search ?? { name },
-		isUnknown: isUnknown,
+		isUnknown,
 	};
 }
 

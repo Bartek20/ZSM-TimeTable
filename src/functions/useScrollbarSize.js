@@ -1,13 +1,12 @@
 import { tryOnMounted } from '@vueuse/shared';
 import { ref } from 'vue';
-import { useResizeObserver } from '@vueuse/core';
-import { unrefElement } from '@vueuse/core';
+import { useResizeObserver, unrefElement } from '@vueuse/core';
 
 export function useElementScrollbarSize(target) {
 	const width = ref(0);
 	const height = ref(0);
 
-	const { stop } = useResizeObserver(target, ([entry]) => {
+	const { stop } = useResizeObserver(target, ([ entry ]) => {
 		const target = entry.target;
 		width.value = target.offsetWidth - target.clientWidth;
 		height.value = target.offsetHeight - target.clientHeight;

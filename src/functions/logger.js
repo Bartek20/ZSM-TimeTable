@@ -1,5 +1,5 @@
 export default function log(mode, ...args) {
-	let icon, code;
+	let icon = code = undefined;
 	if (!['log', 'info', 'warn', 'error'].includes(mode)) return;
 	switch (mode) {
 		case 'log':
