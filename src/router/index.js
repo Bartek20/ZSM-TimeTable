@@ -5,7 +5,7 @@ import appData from "@/stores/data";
 import appPWA from "@/stores/pwa";
 import log from "@/functions/logger";
 import setTitle from "@/functions/setTitle";
-import { addHistory } from "@/functions/recentHistory";
+import { addHistory, getHistory } from "@/functions/recentHistory";
 import { useToast } from "vue-toastification";
 
 import AppView from "@/views/AppView.vue";
@@ -22,8 +22,6 @@ function checkHoliday() {
 }
 
 const toast = useToast();
-
-const selected = appConfigs.value.history?.[ 0 ];
 
 const isHoliday = checkHoliday();
 let redirectHoliday = false
@@ -49,11 +47,14 @@ const router = createRouter({
     {
       path: "/:user?",
       name: "home",
-      redirect: (to) =>
-        `/${[ "uczen", "nauczyciel" ].includes(to.params.user) ? to.params.user : "uczen"}/${[ "o", "n", "s" ].includes(selected?.mode) ? selected.mode : "o"}/${typeof selected?.id === "string" && !isNaN(selected?.id)
-          ? selected.id
-          : 1
-        }`,
+      redirect: (to) => {
+        const selected = getHistory('nauczyciel', 1)[ 0 ]
+        return [ '',
+          [ "uczen", "nauczyciel" ].includes(to.params.user) ? to.params.user : "uczen", // User
+          [ "o", "n", "s" ].includes(selected?.mode) ? selected.mode : "o", // Mode
+          typeof selected?.id === "string" && !isNaN(selected?.id) ? selected.id : 1 // ID
+        ].join('/')
+      },
     },
     {
       path: "/wakacje",
@@ -89,7 +90,7 @@ function routeHoliday(to, from) {
   }
   if (to.name === 'holidays') {
     redirectHoliday = true
-    if (!isHoliday) return { 
+    if (!isHoliday) return {
       name: "home",
       params: { user: appConfigs.value.app.isTeacher ? "nauczyciel" : "uczen" }
     };
@@ -140,7 +141,7 @@ function routeAccess(to, from) {
 
 
 router.beforeEach((to, from) => {
-  log("info", `[Vue Router]${from.fullPath}->${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
+  log("info", `[ Vue Router]${from.fullPath} -> ${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
 
   // Prevent redirection loop
   const loopRedirect = routeLoop(to, from);
