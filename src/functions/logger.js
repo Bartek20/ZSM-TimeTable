@@ -1,6 +1,7 @@
 export default function log(mode, ...args) {
-	let icon = code = undefined;
-	if (!['log', 'info', 'warn', 'error'].includes(mode)) return;
+	let icon = undefined,
+		code = undefined;
+	if (![ 'log', 'info', 'warn', 'error' ].includes(mode)) return;
 	switch (mode) {
 		case 'log':
 			icon = '🔷';
@@ -19,6 +20,6 @@ export default function log(mode, ...args) {
 			code = 'ERROR';
 			break;
 	}
-	console[mode](`${icon} [${code}]`, ...args);
+	console[ mode ](`${icon} [${code}]`, ...args);
 	return;
 }
