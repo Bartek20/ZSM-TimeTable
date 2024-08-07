@@ -20,7 +20,7 @@
 		"floating-vue": "^5.2.2",
 		"string-to-color": "^2.2.2",
 		"vue": "^3.4.35",
-		"vue-router": "^4.4.2",
+		"vue-router": "^4.4.3",
 		"vue-toastification": "github:Bartek20/vue-toastification#next"
 	},
 	"devDependencies": {
