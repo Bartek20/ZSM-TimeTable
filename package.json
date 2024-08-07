@@ -11,27 +11,27 @@
 	},
 	"dependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
-		"@sentry/vite-plugin": "^2.21.1",
-		"@sentry/vue": "^8.22.0",
+		"@sentry/vite-plugin": "^2.22.0",
+		"@sentry/vue": "^8.24.0",
 		"@vueuse/core": "^10.11.0",
 		"@vueuse/router": "^10.11.0",
 		"axios": "^1.7.3",
 		"chroma-js": "^2.6.0",
 		"floating-vue": "^5.2.2",
 		"string-to-color": "^2.2.2",
-		"vue": "^3.4.35",
-		"vue-router": "^4.4.2",
+		"vue": "^3.4.36",
+		"vue-router": "^4.4.3",
 		"vue-toastification": "github:Bartek20/vue-toastification#next"
 	},
 	"devDependencies": {
 		"@rollup/plugin-terser": "^0.4.4",
 		"@vitejs/plugin-vue": "^5.1.2",
 		"autoprefixer": "^10.4.20",
-		"postcss": "^8.4.40",
+		"postcss": "^8.4.41",
 		"sass": "^1.77.8",
 		"unplugin-auto-import": "^0.18.2",
 		"unplugin-vue-components": "^0.27.3",
-		"vite": "^5.3.5",
+		"vite": "^5.4.0",
 		"vite-plugin-banner": "^0.7.1",
 		"vite-plugin-pwa": "^0.20.1"
 	}
