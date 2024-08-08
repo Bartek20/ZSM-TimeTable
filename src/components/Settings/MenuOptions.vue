@@ -6,21 +6,20 @@ const oldMode = ref(appConfigs.value.user.viewMode);
 const isPrinting = ref(false);
 const requireMenu = ref(false);
 
-function printTimeTable() {
+async function printTimeTable() {
   if (isPrinting.value) return;
   let isWaiting = true
   isPrinting.value = true;
   oldMode.value = appConfigs.value.user.viewMode;
   appConfigs.value.user.viewMode = "old";
+  await nextTick()
   document.body.classList.remove("preventPrint");
-  window.setTimeout(() => {
-    const start = Date.now();
-    window.print();
-    if (isWaiting && start + 250 > Date.now()) isWaiting = false;
-    if (!isWaiting) {
-      requireMenu.value = true;
-    } else finishPrinting()
-  }, 25);
+  const start = Date.now();
+  window.print();
+  if (isWaiting && start + 250 > Date.now()) isWaiting = false;
+  if (!isWaiting) {
+    requireMenu.value = true;
+  } else finishPrinting()
 }
 function finishPrinting() {
   appConfigs.value.user.viewMode = oldMode.value;
