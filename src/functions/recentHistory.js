@@ -16,20 +16,19 @@ export function addHistory(mode, id) {
 }
 
 export function getHistory(mode, count = 5) {
-  return (
-    mode === "nauczyciel"
-      ? appConfigs.value.history
-      : appConfigs.value.history.filter((record) => {
-          // Exclude record not accessible for user based on school config
-          if (
-            (record.mode === "n" &&
-              !appConfigs.value.school.allowStrudentsViewTeachers) ||
-            (record.mode === "s" &&
-              !appConfigs.value.school.allowStrudentsViewRooms)
-          ) {
-            return false;
-          }
-          return true;
-        })
-  ).slice(0, count);
+  const history = mode === "nauczyciel"
+  ? appConfigs.value.history
+  : appConfigs.value.history.filter((record) => {
+      // Exclude record not accessible for user based on school config
+      if (
+        (record.mode === "n" &&
+          !appConfigs.value.school.allowStrudentsViewTeachers) ||
+        (record.mode === "s" &&
+          !appConfigs.value.school.allowStrudentsViewRooms)
+      ) {
+        return false;
+      }
+      return true;
+    })
+  return history.length <= count ? history : history.slice(0, count);
 }

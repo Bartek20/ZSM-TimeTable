@@ -62,11 +62,12 @@ function closeMenu() {
   width: $sidebar-width;
   min-height: 100%;
   max-height: 100%;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: min-content minmax(calc(160px + .5rem), 1fr) min-content;
   gap: 0.25rem;
   background-color: var(--bg-sidebar);
   color: var(--sb-text);
   transition: 0.4s ease-in-out left;
+  overflow: auto;
 
   @include tablet {
     z-index: 11;
