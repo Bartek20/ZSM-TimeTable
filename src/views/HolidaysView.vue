@@ -1,6 +1,6 @@
 <script setup>
-import appConfigs from '@/stores/configs';
-import { addHistory } from '@/functions/recentHistory';
+import appConfigs from "@/stores/configs";
+import { addHistory } from "@/functions/recentHistory";
 onMounted(() => {
   document.getElementById("loader-script")?.remove();
   document.getElementById("loader")?.remove();
@@ -8,17 +8,28 @@ onMounted(() => {
 const route = useRoute();
 const user = computed(() => {
   if (route.redirectedFrom?.params?.user) {
-    appConfigs.value.app.isTeacher = route.redirectedFrom.params.user === 'nauczyciel'
-    addHistory(route.redirectedFrom.params.mode, route.redirectedFrom.params.id)
-  };
-  return route.redirectedFrom?.params?.user ?? (appConfigs.value.app.isTeacher ? 'nauczyciel' : 'uczen');
-})
+    appConfigs.value.app.isTeacher =
+      route.redirectedFrom.params.user === "nauczyciel";
+    addHistory(
+      route.redirectedFrom.params.mode,
+      route.redirectedFrom.params.id,
+    );
+  }
+  return (
+    route.redirectedFrom?.params?.user ??
+    (appConfigs.value.app.isTeacher ? "nauczyciel" : "uczen")
+  );
+});
 </script>
 
 <template>
   <div class="holidays">
-    <img class="holidays__img" src="/assets/images/Wakacje.png" alt="Wakacje">
-    <RouterLink class="holidays__link" :to="{ name: 'home', params: { user: user } }">Przejdź do planu</RouterLink>
+    <img class="holidays__img" src="/assets/images/Wakacje.png" alt="Wakacje" />
+    <RouterLink
+      class="holidays__link"
+      :to="{ name: 'home', params: { user: user } }"
+      >Przejdź do planu</RouterLink
+    >
   </div>
 </template>
 
