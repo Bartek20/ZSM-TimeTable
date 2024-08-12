@@ -35,55 +35,6 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="preload" as="image" href="%BASE_URL%assets/images/logo.png" />
     <link rel="preload" as="image" href="%BASE_URL%assets/images/Wakacje.png" />
-    <link
-      rel="preconnect"
-      crossorigin="anonymous"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      crossorigin="anonymous"
-      href="https://fonts.gstatic.com"
-    />
-    <script>
-      const fontsData = {
-        fonts: [
-          {
-            name: "Roboto Condensed",
-            data: "wght@400;700",
-          },
-          {
-            name: "Roboto",
-            data: "wght@400;700",
-          },
-        ],
-        display: "swap",
-        text: {
-          letters:
-            "0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZąĄćĆęĘłŁńŃóÓśŚźŹżŹ",
-          symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?/\\'\"~`",
-        },
-      };
-      function getFontURL() {
-        let link = new URL("https://fonts.googleapis.com/css2");
-        link.searchParams.set("display", fontsData.display);
-        link.searchParams.set(
-          "text",
-          fontsData.text.letters + fontsData.text.symbols,
-        );
-        link = link.toString();
-        fontsData.fonts.forEach(
-          (font) =>
-            (link += `&family=${font.name.replace(" ", "+")}:${font.data}`),
-        );
-        return link;
-      }
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.crossOrigin = "anonymous";
-      link.href = getFontURL();
-      document.head.appendChild(link);
-    </script>
     <style>
       body,
       input[type="text"] {
