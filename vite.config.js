@@ -46,6 +46,7 @@ export default defineConfig({
       {
         injectAsStyleTag: true,
         embedFonts: false,
+        fontsSubfolder: 'fonts'
       }
     ),
     Components(components),
