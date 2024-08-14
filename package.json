@@ -15,7 +15,7 @@
 		"@sentry/vue": "^8.24.0",
 		"@vueuse/core": "^10.11.1",
 		"@vueuse/router": "^10.11.1",
-		"axios": "^1.7.3",
+		"axios": "^1.7.4",
 		"chroma-js": "^2.6.0",
 		"floating-vue": "^5.2.2",
 		"string-to-color": "^2.2.2",
