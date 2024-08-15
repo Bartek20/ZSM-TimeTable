@@ -11,5 +11,5 @@ function getLight(dark) {
 export default function parseColor(subject) {
 	const dark = getDark(subject);
 	const light = getLight(dark);
-	appConfigs.value.database.subjects[subject] = { light, dark };
+	appConfigs.value.database.subjects[subject] = {light, dark};
 }

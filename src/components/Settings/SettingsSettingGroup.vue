@@ -9,7 +9,7 @@
 			required: true,
 		},
 	});
-	const color = defineModel({ required: true });
+	const color = defineModel({required: true});
 	const optsLen = computed(() => props.options.length);
 </script>
 

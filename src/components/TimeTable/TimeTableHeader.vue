@@ -41,13 +41,13 @@
 		return appConfigs.value.database[MODES[mode.value]]?.[name]?.heading ?? name;
 	});
 	const headEl = ref(null);
-	const { width: headElSize } = useElementSize(headEl);
+	const {width: headElSize} = useElementSize(headEl);
 	const titleEl = ref(null);
-	const { width: titleElSize } = useElementSize(titleEl);
+	const {width: titleElSize} = useElementSize(titleEl);
 	const marquee = computed(() => {
 		if (!headElSize.value) return false;
 		if (!titleElSize.value) return false;
-		return (titleElSize.value > headElSize.value);
+		return titleElSize.value > headElSize.value;
 	});
 </script>
 
@@ -56,19 +56,29 @@
 		<div
 			class="timetable__header__button timetable__header__button--list"
 			@click="openSidebar"
-			v-tooltip.right="{ content: 'Lista', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
+			v-tooltip.right="{
+				content: 'Lista',
+				distance: 8,
+				delay: {show: 300, hide: 0},
+				triggers: ['hover'],
+			}">
 			<div>
 				<i class="timetable__header__button__icon zsm-menu-icon"></i>
 			</div>
 		</div>
-		<div ref="headEl" class="timetable__header__title" :class="{ noscroll: !marquee }">
-			<h3 ref="titleEl" :class="{ marquee: marquee }">{{ title }}</h3>
-			<h3 v-show="marquee" :class="{ marquee: marquee }">{{ title }}</h3>
+		<div ref="headEl" class="timetable__header__title" :class="{noscroll: !marquee}">
+			<h3 ref="titleEl" :class="{marquee: marquee}">{{ title }}</h3>
+			<h3 v-show="marquee" :class="{marquee: marquee}">{{ title }}</h3>
 		</div>
 		<div
 			class="timetable__header__button timetable__header__button--config"
 			@click="openConfigs"
-			v-tooltip.left="{ content: 'Ustawienia', distance: 8, delay: { show: 300, hide: 0 }, triggers: ['hover'] }">
+			v-tooltip.left="{
+				content: 'Ustawienia',
+				distance: 8,
+				delay: {show: 300, hide: 0},
+				triggers: ['hover'],
+			}">
 			<div>
 				<i class="timetable__header__button__icon zsm-settings-icon"></i>
 			</div>

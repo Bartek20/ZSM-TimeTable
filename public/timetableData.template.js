@@ -5,12 +5,12 @@ export default {
 			number: 0, // Identyfikator lekcji (nr)
 			timeFrom: '9:40', // Czas rozpoczęcia lekcji
 			timeTo: '10:05', // Czas zakończenia lekcji
-		}
+		},
 	],
 	// Nazwy poziomów stosowanych w części rooms
 	levels: {
 		'-1': 'Piwnica',
-		0: 'Parter'
+		0: 'Parter',
 	},
 	// Układ pomieszczeń na planie (nie wymagane)
 	// level - poziom (-1,0,1,2)

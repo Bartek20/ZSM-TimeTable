@@ -31,9 +31,9 @@ const appPWAState = createGlobalState(() => {
 		});
 	}
 
-	return { event, installed, status, install };
+	return {event, installed, status, install};
 });
 
-const appPWA = appPWAState()
+const appPWA = appPWAState();
 
 export default appPWA;

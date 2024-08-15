@@ -28,7 +28,9 @@ $zsm-download-app-icon: unquote('"\\e91a"');
 
 @font-face {
 	font-family: 'ZSM-TimeTable';
-	src: url('@/assets/fonts/ZSM-TimeTable.woff2') format('woff2'), url('@/assets/fonts/ZSM-TimeTable.woff') format('woff');
+	src:
+		url('@/assets/fonts/ZSM-TimeTable.woff2') format('woff2'),
+		url('@/assets/fonts/ZSM-TimeTable.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: block;

@@ -46,7 +46,7 @@ export class TimeTable {
 				if (lesson.innerText.trim() === '') {
 					days[index].push([]);
 				} else if (lesson.children.length === 0) {
-					days[index].push([{ subject: lesson.innerText.trim() }]);
+					days[index].push([{subject: lesson.innerText.trim()}]);
 				} else {
 					const groups = this.parseLessons([...lesson.children]);
 					days[index].push(groups);
@@ -106,7 +106,7 @@ export class TimeTable {
 			lines[lines.length - 1].push(element);
 		});
 		return lines.flatMap((line) => {
-			const common = { subject: '' };
+			const common = {subject: ''};
 			const groups = [{}];
 			line.forEach((el) => {
 				if (el.nodeName === '#text') {

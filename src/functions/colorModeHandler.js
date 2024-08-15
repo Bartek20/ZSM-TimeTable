@@ -15,8 +15,8 @@ export default function colorHandler() {
 				stopwatch();
 				stopwatch = undefined;
 			}
-			const color = appConfigs.value.user.colorMode === 'light' ? [ 'dark', 'light' ] : [ 'light', 'dark' ];
-			window.document.body.classList.replace(color[ 0 ], color[ 1 ]);
+			const color = appConfigs.value.user.colorMode === 'light' ? ['dark', 'light'] : ['light', 'dark'];
+			window.document.body.classList.replace(color[0], color[1]);
 		}
 	}
 	watch(
@@ -24,6 +24,6 @@ export default function colorHandler() {
 		() => {
 			updateColorMode();
 		},
-		{ immediate: true }
+		{immediate: true}
 	);
 }
