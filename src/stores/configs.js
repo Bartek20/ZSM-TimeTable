@@ -1,20 +1,20 @@
-function deepMerge(defaults, store) {
+function deepMerge (defaults, store) {
   if (!defaults) return undefined
   const keys = Object.keys(defaults)
-  for (let key of keys) {
+  for (const key of keys) {
     // Store key does not exist
-    if (store[ key ] === undefined) {
-      store[ key ] = defaults[ key ]
+    if (store[key] === undefined) {
+      store[key] = defaults[key]
       continue
     }
     // Key types does not match
-    if (typeof store[ key ] !== typeof defaults[ key ]) {
-      store[ key ] = defaults[ key ]
+    if (typeof store[key] !== typeof defaults[key]) {
+      store[key] = defaults[key]
       continue
     }
     // Key is object - deep merge
-    if (typeof defaults[ key ] === "object") {
-      deepMerge(defaults[ key ], store[ key ])
+    if (typeof defaults[key] === 'object') {
+      deepMerge(defaults[key], store[key])
       continue
     }
   }
@@ -22,23 +22,23 @@ function deepMerge(defaults, store) {
 }
 
 const appConfigs = useStorage(
-  "appConfigs",
+  'appConfigs',
   {
     // PWA Configs
     app: {
       version: undefined,
       lastFetched: null,
-      isTeacher: false,
+      isTeacher: false
     },
     // School Data configured in schoolData.js
     school: {
       homeURL: undefined,
       timetableURL: undefined,
-      logoDescription: "Logo Szkoły",
+      logoDescription: 'Logo Szkoły',
       allowStudentsOldView: false,
       allowStrudentsViewTeachers: true,
       allowStrudentsViewRooms: true,
-      showHolidaysView: true,
+      showHolidaysView: true
     },
     // Timetable Data configured in timetableData.js
     timetable: {
@@ -47,30 +47,30 @@ const appConfigs = useStorage(
       classes: {},
       teachers: {},
       rooms: {},
-      subjects: {},
+      subjects: {}
     },
     // Parsed data store
     database: {
       rooms: {},
       teachers: {},
       classes: {},
-      subjects: {},
+      subjects: {}
     },
     // History
     history: [],
     // Settings
     user: {
-      colorMode: "light",
-      viewMode: "new",
+      colorMode: 'light',
+      viewMode: 'new',
       forceTablet: false,
       shortLessons: false,
       showCurrent: true,
       showColors: true,
-      showBreaks: true,
-    },
+      showBreaks: true
+    }
   },
   localStorage,
-  { mergeDefaults: (store, defaults) => deepMerge(defaults, store) },
-);
+  { mergeDefaults: (store, defaults) => deepMerge(defaults, store) }
+)
 
-export default appConfigs;
+export default appConfigs
