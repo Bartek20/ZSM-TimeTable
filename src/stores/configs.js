@@ -1,3 +1,26 @@
+function deepMerge(defaults, store) {
+  if (!defaults) return undefined
+  const keys = Object.keys(defaults)
+  for (let key of keys) {
+    // Store key does not exist
+    if (store[ key ] === undefined) {
+      store[ key ] = defaults[ key ]
+      continue
+    }
+    // Key types does not match
+    if (typeof store[ key ] !== typeof defaults[ key ]) {
+      store[ key ] = defaults[ key ]
+      continue
+    }
+    // Key is object - deep merge
+    if (typeof defaults[ key ] === "object") {
+      deepMerge(defaults[ key ], store[ key ])
+      continue
+    }
+  }
+  return store
+}
+
 const appConfigs = useStorage(
   "appConfigs",
   {
@@ -47,7 +70,7 @@ const appConfigs = useStorage(
     },
   },
   localStorage,
-  { mergeDefaults: true },
+  { mergeDefaults: (store, defaults) => deepMerge(defaults, store) },
 );
 
 export default appConfigs;
