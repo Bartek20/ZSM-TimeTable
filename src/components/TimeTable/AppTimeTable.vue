@@ -48,7 +48,7 @@
 	const DAY = useDateFormat(useNow({interval: 3600000}), 'd', {
 		locales: 'pl-PL',
 	});
-	const activeDay = ref(DAY.value === 6 || DAY.value === 0 ? 0 : parseInt(DAY.value) - 1);
+	const activeDay = ref(DAY.value === '6' || DAY.value === '0' ? 0 : parseInt(DAY.value) - 1);
 	function changeDay(dir) {
 		if (dir) activeDay.value === 4 ? (activeDay.value = 0) : (activeDay.value += 1);
 		else activeDay.value === 0 ? (activeDay.value = 4) : (activeDay.value -= 1);

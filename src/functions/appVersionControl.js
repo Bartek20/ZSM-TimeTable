@@ -13,6 +13,14 @@ function cmpVersion(version = __APP_VERSION__) {
 	return current_version[0] === version[0] && current_version[1] === version[1] && current_version[2] < version[2];
 }
 
+// Function to move settings from old path to new path (appConfigs)
+function moveConfigs(type, name) {
+	if (appConfigs.value[name]) {
+		appConfigs.value[type][name] = appConfigs.value[name];
+		appConfigs.value[name] = undefined;
+	}
+}
+
 export default async function validateApp() {
 	const version = appConfigs.value.app?.version ?? appConfigs.value.version;
 	if (version !== __APP_VERSION__) {
@@ -59,28 +67,18 @@ export default async function validateApp() {
 		// Updating from v3.1.5 to v3.2.0
 		if (cmpVersion('v3.2.0')) {
 			// Move App Configs to separate section
-			appConfigs.value.app.version = appConfigs.value.version;
-			appConfigs.value.version = undefined;
-			appConfigs.value.app.lastFetched = appConfigs.value.lastFetched;
-			appConfigs.value.lastFetched = undefined;
-			appConfigs.value.app.isTeacher = appConfigs.value.isTeacher;
-			appConfigs.value.isTeacher = undefined;
+			moveConfigs('app', 'version');
+			moveConfigs('app', 'lastFetched');
+			moveConfigs('app', 'isTeacher');
 
 			// Move User Configs to separate section
-			appConfigs.value.user.colorMode = appConfigs.value.colorMode;
-			appConfigs.value.colorMode = undefined;
-			appConfigs.value.user.viewMode = appConfigs.value.viewMode;
-			appConfigs.value.viewMode = undefined;
-			appConfigs.value.user.forceTablet = appConfigs.value.forceTablet;
-			appConfigs.value.forceTablet = undefined;
-			appConfigs.value.user.shortLessons = appConfigs.value.shortLessons;
-			appConfigs.value.shortLessons = undefined;
-			appConfigs.value.user.showCurrent = appConfigs.value.showCurrent;
-			appConfigs.value.showCurrent = undefined;
-			appConfigs.value.user.showColors = appConfigs.value.showColors;
-			appConfigs.value.showColors = undefined;
-			appConfigs.value.user.showBreaks = appConfigs.value.showBreaks;
-			appConfigs.value.showBreaks = undefined;
+			moveConfigs('user', 'colorMode');
+			moveConfigs('user', 'viewMode');
+			moveConfigs('user', 'forceTablet');
+			moveConfigs('user', 'shortLessons');
+			moveConfigs('user', 'showCurrent');
+			moveConfigs('user', 'showColors');
+			moveConfigs('user', 'showBreaks');
 		}
 		// Save new version
 		appConfigs.value.app.version = __APP_VERSION__;
