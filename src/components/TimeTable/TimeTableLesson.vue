@@ -31,11 +31,13 @@ const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 		distance: 12,
 		overflowPadding: 40,
 		shift: false,
+		flip: true,
 		delay: { show: 500, hide: 0 },
 		disposeTimeout: 0,
 		triggers: ['hover', 'touch'],
 		container: '.timetable__container',
-		strategy: 'fixed',
+		strategy: 'absolute',
+		autoSize: 'max'
 	}" v-if="appConfigs.user.viewMode == 'new'">
 		<div class="row">
 			<!-- Subject -->
