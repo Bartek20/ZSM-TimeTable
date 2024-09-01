@@ -79,6 +79,9 @@ export default async function validateApp () {
       moveConfigs('user', 'showColors')
       moveConfigs('user', 'showBreaks')
     }
+    if (cmpVersion('v3.2.1')) {
+      await window.caches.delete('fonts-data')
+    }
     // Save new version
     appConfigs.value.app.version = __APP_VERSION__
   }

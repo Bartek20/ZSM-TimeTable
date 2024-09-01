@@ -56,26 +56,12 @@ export default {
   registerType: 'autoUpdate',
   includeManifestIcons: false,
   workbox: {
-    globPatterns: ['**/*.{js,css,png,svg,ico}', 'index.html'],
+    globPatterns: ['**/*.{js,css,png,svg,ico,woff2}', 'index.html'],
     globIgnores: ['schoolData.js', 'schoolData.template.js', 'timetableData.js', 'timetableData.template.js'],
     navigateFallback: `${BASE_URL}index.html`,
     navigateFallbackAllowlist: [/uczen/, /nauczyciel/],
     navigateFallbackDenylist: [timetableRegExp, /assets/],
     runtimeCaching: [
-      {
-        urlPattern: /^https:\/\/fonts\.(gstatic|googleapis)\.com\/.*/i,
-        handler: 'CacheFirst',
-        options: {
-          cacheName: 'fonts-data',
-          expiration: {
-            maxEntries: 25,
-            maxAgeSeconds: 60 * 60 * 24 * 365
-          },
-          cacheableResponse: {
-            statuses: [200]
-          }
-        }
-      },
       {
         urlPattern: timetableRegExp,
         handler: 'NetworkFirst',
