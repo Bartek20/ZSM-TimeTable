@@ -4,27 +4,32 @@
 	const mode = useRouteParams('mode');
 	const message = computed(() => {
 		switch (appData.timetable.value.status) {
-			case 0:
+			case 'FETCHING':
 				return {
 					icon: 'zsm-loading-icon loading',
 					msg: 'Trwa wczytywanie planu lekcji',
 				};
-			case 404:
+			case 'NOT_FOUND':
 				return {
 					icon: 'zsm-not-found-icon',
 					msg: 'Wybrany plan nie został odnaleziony',
 				};
-			case 500:
+			case 'UNKNOWN':
 				return {
 					icon: 'zsm-error-icon',
 					msg: 'Wystąpił nieznany błąd. Skontaktuj się z twórcą aplikacji.',
 				};
-			case 900:
+			case 'CORS_ERROR':
+				return {
+					icon: 'zsm-error-icon',
+					msg: 'Pobieranie planu nie powiodło się. Wystąpił błąd po stronie serwera.',
+				};
+			case 'OFFLINE':
 				return {
 					icon: 'zsm-offline-icon',
 					msg: 'Pobieranie planu nie powiodło się. Najprawdopodobniej jesteś offline.',
 				};
-			case 200:
+			case 'OK':
 				if (appData.timetable.value.hours.length === 0) {
 					const MESSAGES = {
 						o: 'Wybrana klasa nie ma w planie żadnych zajęć',

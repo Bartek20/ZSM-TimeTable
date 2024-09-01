@@ -42,15 +42,16 @@
 		const name = appData.timetable.value.title;
 		if (!name) {
 			switch (appData.timetable.value.status) {
-				case 0:
+				case 'FETCHING':
 					return '';
-				case 404:
+				case 'NOT_FOUND':
 					setTitle('Wybrany plan nie został odnaleziony.');
 					return '';
-				case 500:
+				case 'UNKNOWN':
 					setTitle('Wystąpił nieznany błąd.');
 					return '';
-				case 900:
+				case 'OFFLINE':
+				case 'CORS_ERROR':
 					setTitle('Pobieranie planu nie powiodło się.');
 					return '';
 			}

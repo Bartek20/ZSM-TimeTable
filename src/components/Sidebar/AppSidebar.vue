@@ -7,7 +7,7 @@
 	}
 	const dates = computed(() => {
 		const obj = appData.timetable.value;
-		if (!obj || obj.status === 0 || obj.gen_date === undefined || obj.apply_date === undefined) return undefined;
+		if (!obj || obj.status === 'FETCHING' || obj.gen_date === undefined || obj.apply_date === undefined) return undefined;
 		return {
 			gen: obj.gen_date,
 			apply: obj.apply_date,
