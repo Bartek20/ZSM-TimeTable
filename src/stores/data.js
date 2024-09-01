@@ -1,10 +1,10 @@
 const appDataState = createGlobalState(() => {
-	const list = ref({});
-	const timetable = ref({});
+  const list = ref({})
+  const timetable = ref({})
 
-	return {list, timetable};
-});
+  return { list, timetable }
+})
 
-const appData = appDataState();
+const appData = appDataState()
 
-export default appData;
+export default appData
