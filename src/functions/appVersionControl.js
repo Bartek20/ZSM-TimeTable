@@ -15,10 +15,9 @@ function cmpVersion(version = __APP_VERSION__) {
 
 // Function to move settings from old path to new path (appConfigs)
 function moveConfigs(type, name) {
-	if (appConfigs.value[name]) {
-		appConfigs.value[type][name] = appConfigs.value[name];
-		appConfigs.value[name] = undefined;
-	}
+	if (appConfigs.value[name] === undefined) return;
+	appConfigs.value[type][name] = appConfigs.value[name];
+	appConfigs.value[name] = undefined;
 }
 
 export default async function validateApp() {
