@@ -8,7 +8,7 @@ function deepMerge(defaults, store) {
 			continue;
 		}
 		// Key types does not match
-		if (typeof store[key] !== typeof defaults[key] && typeof defaults[key] !== 'undefined') {
+		if (typeof store[key] !== typeof defaults[key] && defaults[key] !== undefined && defaults[key] !== null) {
 			store[key] = defaults[key];
 			continue;
 		}
