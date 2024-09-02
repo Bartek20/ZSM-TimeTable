@@ -223,7 +223,7 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
 		);
 		log('warn', '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.');
 	}
-	
+
 	// App setup
 	// Run version checks and merge old data
 	await validateApp();

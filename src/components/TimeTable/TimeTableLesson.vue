@@ -1,44 +1,47 @@
 <script setup>
-import appConfigs from '@/stores/configs';
-import parseLesson from '@/functions/parseLesson';
+	import appConfigs from '@/stores/configs';
+	import parseLesson from '@/functions/parseLesson';
 
-const user = useRouteParams('user');
+	const user = useRouteParams('user');
 
-const props = defineProps({
-	data: {
-		type: Object,
-		required: true,
-	},
-});
+	const props = defineProps({
+		data: {
+			type: Object,
+			required: true,
+		},
+	});
 
-const lessonData = computed(() => parseLesson(props.data));
-const lessonColor = computed(() => {
-	if (!appConfigs.value.user.showColors) {
-		return {
-			light: 'white',
-			dark: 'lightgray',
-		};
-	}
-	return lessonData.value.colors;
-});
-const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
+	const lessonData = computed(() => parseLesson(props.data));
+	const lessonColor = computed(() => {
+		if (!appConfigs.value.user.showColors) {
+			return {
+				light: 'white',
+				dark: 'lightgray',
+			};
+		}
+		return lessonData.value.colors;
+	});
+	const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 </script>
 
 <template>
-	<div class="lesson" v-tooltip.top="{
-		content: `<b>${lessonData.subject.full ? lessonData.subject.full : lessonData.subject.short}</b>`,
-		html: true,
-		distance: 12,
-		overflowPadding: 40,
-		shift: false,
-		flip: true,
-		delay: { show: 500, hide: 0 },
-		disposeTimeout: 0,
-		triggers: ['hover', 'touch'],
-		container: '.timetable__container',
-		strategy: 'absolute',
-		autoSize: 'max'
-	}" v-if="appConfigs.user.viewMode == 'new'">
+	<div
+		class="lesson"
+		v-tooltip.top="{
+			content: `<b>${lessonData.subject.full ? lessonData.subject.full : lessonData.subject.short}</b>`,
+			html: true,
+			distance: 12,
+			overflowPadding: 40,
+			shift: false,
+			flip: true,
+			delay: {show: 500, hide: 0},
+			disposeTimeout: 0,
+			triggers: ['hover', 'touch'],
+			container: '.timetable__container',
+			strategy: 'absolute',
+			autoSize: 'max',
+		}"
+		v-if="appConfigs.user.viewMode == 'new'">
 		<div class="row">
 			<!-- Subject -->
 			<div>
@@ -52,14 +55,18 @@ const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 		<div class="row">
 			<!-- Column #1 -->
 			<div v-if="lessonData.columns.left.id">
-				<RouterLink :to="{
-					name: 'plan',
-					params: {
-						user: user,
-						mode: lessonData.columns.left.mode,
-						id: lessonData.columns.left.id,
-					},
-				}" class="text-muted text-decoration-none">{{ lessonData.columns.left.name }}</RouterLink>
+				<RouterLink
+					:to="{
+						name: 'plan',
+						params: {
+							user: user,
+							mode: lessonData.columns.left.mode,
+							id: lessonData.columns.left.id,
+						},
+					}"
+					class="text-muted text-decoration-none"
+					>{{ lessonData.columns.left.name }}</RouterLink
+				>
 			</div>
 			<div v-else-if="!lessonData.columns.left.id && lessonData.columns.left.name">
 				{{ lessonData.columns.left.name }}
@@ -67,14 +74,18 @@ const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 			<div v-else>-</div>
 			<!-- Column #2 -->
 			<div v-if="lessonData.columns.right.id">
-				<RouterLink :to="{
-					name: 'plan',
-					params: {
-						user: user,
-						mode: lessonData.columns.right.mode,
-						id: lessonData.columns.right.id,
-					},
-				}" class="text-muted text-decoration-none">{{ lessonData.columns.right.name }}</RouterLink>
+				<RouterLink
+					:to="{
+						name: 'plan',
+						params: {
+							user: user,
+							mode: lessonData.columns.right.mode,
+							id: lessonData.columns.right.id,
+						},
+					}"
+					class="text-muted text-decoration-none"
+					>{{ lessonData.columns.right.name }}</RouterLink
+				>
 			</div>
 			<div v-else-if="!lessonData.columns.right.id && lessonData.columns.right.name">
 				{{ lessonData.columns.right.name }}
@@ -87,91 +98,97 @@ const gridArea = computed(() => (props.data.groupName ? '3fr 1fr' : '1fr'));
 		<span class="subject" v-else>{{ lessonData.subject.short }}</span>
 		&nbsp;
 		<!-- Column #1 -->
-		<RouterLink v-if="lessonData.columns.left.id" :to="{
-			name: 'plan',
-			params: {
-				user: user,
-				mode: lessonData.columns.left.mode,
-				id: lessonData.columns.left.id,
-			},
-		}">
-			{{ lessonData.columns.left.name }}</RouterLink>
-		<span v-else-if="!lessonData.columns.left.id && lessonData.columns.left.name">{{ lessonData.columns.left.name
-			}}</span>
+		<RouterLink
+			v-if="lessonData.columns.left.id"
+			:to="{
+				name: 'plan',
+				params: {
+					user: user,
+					mode: lessonData.columns.left.mode,
+					id: lessonData.columns.left.id,
+				},
+			}">
+			{{ lessonData.columns.left.name }}</RouterLink
+		>
+		<span v-else-if="!lessonData.columns.left.id && lessonData.columns.left.name">{{ lessonData.columns.left.name }}</span>
 		<span v-else>-</span>
 		&nbsp;
 		<!-- Column #2 -->
-		<RouterLink v-if="lessonData.columns.right.id" :to="{
-			name: 'plan',
-			params: {
-				user: user,
-				mode: lessonData.columns.right.mode,
-				id: lessonData.columns.right.id,
-			},
-		}" class="text-muted text-decoration-none">{{ lessonData.columns.right.name }}</RouterLink>
-		<span v-else-if="!lessonData.columns.right.id && lessonData.columns.right.name">{{ lessonData.columns.right.name
-			}}</span>
+		<RouterLink
+			v-if="lessonData.columns.right.id"
+			:to="{
+				name: 'plan',
+				params: {
+					user: user,
+					mode: lessonData.columns.right.mode,
+					id: lessonData.columns.right.id,
+				},
+			}"
+			class="text-muted text-decoration-none"
+			>{{ lessonData.columns.right.name }}</RouterLink
+		>
+		<span v-else-if="!lessonData.columns.right.id && lessonData.columns.right.name">{{ lessonData.columns.right.name }}</span>
 		<span v-else>-</span>
 		<br />
 	</span>
 </template>
 
 <style lang="scss">
-// New View
-.lesson {
-	background-color: v-bind('lessonColor.light');
-	box-shadow: inset 0 0 0 9999px v-bind('lessonColor.light');
-	border-bottom: 5px solid;
-	border-color: v-bind('lessonColor.dark');
-	white-space: nowrap;
-	padding: 0.25rem 0.5rem;
-	border-radius: 0.25rem;
-	min-width: 150px;
+	// New View
+	.lesson {
+		background-color: v-bind('lessonColor.light');
+		box-shadow: inset 0 0 0 9999px v-bind('lessonColor.light');
+		border-bottom: 5px solid;
+		border-color: v-bind('lessonColor.dark');
+		white-space: nowrap;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		min-width: 150px;
 
-	&:not(:last-child) {
-		margin-bottom: 5px;
-	}
-
-	.row {
-		display: grid;
-		gap: 0.5rem;
-
-		:last-child {
-			text-align: end;
+		&:not(:last-child) {
+			margin-bottom: 5px;
 		}
 
-		:first-child {
-			text-align: start;
-		}
+		.row {
+			display: grid;
+			gap: 0.5rem;
 
-		&:nth-child(1) {
-			grid-template-columns: v-bind(gridArea);
-			color: black;
-			margin-bottom: 3px;
-		}
+			:last-child {
+				text-align: end;
+			}
 
-		&:nth-child(2) {
-			grid-template-columns: 1fr 1fr;
+			:first-child {
+				text-align: start;
+			}
 
-			a,
-			div {
-				color: rgba(33, 37, 41, 0.75);
+			&:nth-child(1) {
+				grid-template-columns: v-bind(gridArea);
+				color: black;
+				margin-bottom: 3px;
+			}
+
+			&:nth-child(2) {
+				grid-template-columns: 1fr 1fr;
+
+				a,
+				div {
+					color: rgba(33, 37, 41, 0.75);
+				}
 			}
 		}
 	}
-}
 
-// Old View
-.lessonOldData {
-	white-space: nowrap;
+	// Old View
+	.lessonOldData {
+		white-space: nowrap;
 
-	.subject {
-		color: #000000;
-		font-weight: bold;
+		.subject {
+			color: #000000;
+			font-weight: bold;
+		}
+
+		a {
+			color: #2e448f;
+		}
 	}
-
-	a {
-		color: #2e448f;
-	}
-}
 </style>

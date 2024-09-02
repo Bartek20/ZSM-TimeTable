@@ -4,7 +4,7 @@
 	import {useToast} from 'vue-toastification';
 	import log from '@/functions/logger';
 
-	const toast = useToast()
+	const toast = useToast();
 
 	const oldMode = ref(appConfigs.value.user.viewMode);
 	const isPrinting = ref(false);
@@ -25,8 +25,7 @@
 			if (!isWaiting) {
 				requireMenu.value = true;
 			} else finishPrinting();
-		}
-		catch (e) {
+		} catch (e) {
 			toast.error('Nie udało się wydrukować planu. Jeśli korzystasz z urządzenia marki Apple, spróbuj użyć przeglądarki Safari.');
 			log('error', 'Printing error', e);
 			finishPrinting();
