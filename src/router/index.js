@@ -126,7 +126,7 @@ function routeAccess(to) {
 }
 
 router.beforeEach((to, from) => {
-	log('info', `[ Vue Router]${from.fullPath} -> ${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
+	log('info', `[Vue Router] ${from.fullPath} -> ${to.fullPath}`, '\nFrom:', from, '\nTo:', to);
 
 	// Prevent redirection loop
 	const loopRedirect = routeLoop(to, from);
