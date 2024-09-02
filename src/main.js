@@ -172,7 +172,6 @@ registerSW({
 		});
 		// Service Worker Installed working
 		log('info', '[Service Worker] Service Worker został aktywowany.');
-		await validateApp();
 		cacheTimeTables();
 		// Service Worker update detection and handle
 		setInterval(async () => {
@@ -224,8 +223,11 @@ if ('serviceWorker' in navigator && 'addEventListener' in navigator.serviceWorke
 		);
 		log('warn', '[App] Jeśli jednak jesteś tu z innego powodu zalecam wycofanie się i zamknięcie tego okna.\nZ pozdrowieniami autor kodu.');
 	}
-
+	
 	// App setup
+	// Run version checks and merge old data
+	await validateApp();
+	// Setup app configs
 	app.use(Toast, {
 		transition: 'Vue-Toastification__bounce',
 		maxToasts: 10,
