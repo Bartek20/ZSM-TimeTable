@@ -1,6 +1,10 @@
 <script setup>
 	import appConfigs from '@/stores/configs';
 	import appData from '@/stores/data';
+	import {useToast} from 'vue-toastification';
+	import log from '@/functions/logger';
+
+	const toast = useToast()
 
 	const oldMode = ref(appConfigs.value.user.viewMode);
 	const isPrinting = ref(false);
@@ -15,11 +19,18 @@
 		await nextTick();
 		document.body.classList.remove('preventPrint');
 		const start = Date.now();
-		window.print();
-		if (isWaiting && start + 250 > Date.now()) isWaiting = false;
-		if (!isWaiting) {
-			requireMenu.value = true;
-		} else finishPrinting();
+		try {
+			window.print();
+			if (isWaiting && start + 250 > Date.now()) isWaiting = false;
+			if (!isWaiting) {
+				requireMenu.value = true;
+			} else finishPrinting();
+		}
+		catch (e) {
+			toast.error('Nie udało się wydrukować planu. Jeśli korzystasz z urządzenia marki Apple, spróbuj użyć przeglądarki Safari.');
+			log('error', 'Printing error', e);
+			finishPrinting();
+		}
 	}
 	function finishPrinting() {
 		appConfigs.value.user.viewMode = oldMode.value;
