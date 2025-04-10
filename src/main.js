@@ -29,7 +29,6 @@ if (__SENTRY_DSN__) {
 		// Sentry config
 		dsn: __SENTRY_DSN__,
 		normalizeDepth: 10,
-		tunnel: window.localStorage.getItem('isAd-Blocker') ? 'https://sentry.tata2676.workers.dev/' : undefined,
 		integrations: [
 			Sentry_browserTracingIntegration({router}),
 			Sentry_replayIntegration({
@@ -41,8 +40,8 @@ if (__SENTRY_DSN__) {
 		tracesSampleRate: 0.1,
 		tracePropagationTargets: [/^(?!.*cloudflareinsights\.com).*/],
 		// Session Replay
-		replaysSessionSampleRate: 0.3,
-		replaysOnErrorSampleRate: 1.0,
+		replaysSessionSampleRate: 0.0,
+		replaysOnErrorSampleRate: 0.1,
 		// Vue settings
 		app,
 		trackComponents: true,
